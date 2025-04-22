@@ -22,7 +22,7 @@ const Certifications = () => {
       icon: <SiUdemy className="text-2xl" />,
       platform: "Udemy",
       color: "rose",
-      image: "/certificates/python-django.jpg"
+      image: "/certificates/python-django.png"
     },
     {
       id: 2,
@@ -32,7 +32,7 @@ const Certifications = () => {
       icon: <FaCode className="text-2xl" />,
       platform: "365 Data Science",
       color: "blue",
-      image: "/certificates/intro-python.jpg"
+      image: "/certificates/intro-python.png"
     },
     {
       id: 3,
@@ -52,7 +52,7 @@ const Certifications = () => {
       icon: <FaCode className="text-2xl" />,
       platform: "365 Data Science",
       color: "blue",
-      image: "/certificates/git-github.jpg"
+      image: "/certificates/git-github.png"
     },
     {
       id: 5,
@@ -62,7 +62,7 @@ const Certifications = () => {
       icon: <FaGraduationCap className="text-2xl" />,
       platform: "MCIT",
       color: "green",
-      image: "/certificates/web-dev.jpg"
+      image: "/certificates/web-dev.png"
     },
     {
       id: 6,
@@ -72,7 +72,7 @@ const Certifications = () => {
       icon: <SiUdemy className="text-2xl" />,
       platform: "Udemy",
       color: "rose",
-      image: "/certificates/ui-ux.jpg"
+      image: "/certificates/ui-ux.png"
     },
     {
       id: 7,
@@ -82,7 +82,7 @@ const Certifications = () => {
       icon: <SiRedhat className="text-2xl" />,
       platform: "Mahara Tech",
       color: "red",
-      image: "/certificates/redhat.jpg"
+      image: "/certificates/redhat.png"
     },
     {
       id: 8,
@@ -92,7 +92,7 @@ const Certifications = () => {
       icon: <FaAndroid className="text-2xl" />,
       platform: "SkillsDynamix",
       color: "emerald",
-      image: "/certificates/android.jpg"
+      image: "/certificates/android.png"
     }
   ];
 

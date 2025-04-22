@@ -52,7 +52,8 @@ const projects = [
       "Real-time stock management",
       "Order processing and shipment tracking"
     ],
-    github: "#",
+    github:
+      "https://github.com/ChaoticMaximoff/Inventory-Management-System-ITI-Django-Project",
     live: "#",
     category: "Full Stack"
   },
@@ -68,7 +69,7 @@ const projects = [
       "Advanced search capabilities",
       "Language switching support"
     ],
-    github: "#",
+    github: "https://github.com/HamsEldakrory/Movies-App-react-project",
     live: "https://movies-app-react-project-mocha.vercel.app/",
     category: "Frontend"
   },
@@ -84,7 +85,7 @@ const projects = [
       "Real-time updates",
       "Enhanced user experience"
     ],
-    github: "#",
+    github: "https://github.com/Belalnajy/movieswebsiteproject",
     live: "https://movieswebsiteproject.vercel.app/",
     category: "Frontend"
   },
@@ -116,7 +117,7 @@ const projects = [
       "Dynamic content updates",
       "Enhanced user experience"
     ],
-    github: "#",
+    github: "https://github.com/Sara-Elagder/Front-end-ITI",
     live: "https://bookstoredeploytest.vercel.app/",
     category: "Frontend"
   },
@@ -132,7 +133,7 @@ const projects = [
       "Category management",
       "Search functionality"
     ],
-    github: "#",
+    github: "https://github.com/Belalnajy/LMSProject",
     live: "#",
     category: "Full Stack"
   }
