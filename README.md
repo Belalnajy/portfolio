@@ -57,7 +57,7 @@ npm run build
 
 ## 🌐 Deployment
 
-This project is deployed on Vercel. Visit the live site at: [https://portfolio-belalnajy.vercel.app](https://portfolio-belalnajy.vercel.app)
+This project is deployed on Vercel. Visit the live site at: [https://portfolio-belalnajy.vercel.app](https://portfolio-16ey.vercel.app/)
 
 ## 🎨 Design
 
