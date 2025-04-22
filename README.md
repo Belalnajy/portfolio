@@ -64,7 +64,6 @@ This project is deployed on Vercel. Visit the live site at: [https://portfolio-b
 - Modern and clean interface
 - Responsive layout for all devices
 - Smooth transitions and animations
-- Dark/Light mode support
 - Custom favicon and branding
 
 ## 📝 Project Structure
@@ -81,16 +80,6 @@ portfolio/
 ├── tailwind.config.js  # Tailwind configuration
 └── vercel.json         # Vercel deployment configuration
 ```
-
-## 🔄 Continuous Deployment
-
-- Automatic deployments on Vercel
-- Preview deployments for pull requests
-- Production deployments on main branch
-
-## 📄 License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
 ## 🤝 Contact
 
