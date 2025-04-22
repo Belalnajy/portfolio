@@ -4,7 +4,6 @@ A modern, responsive portfolio website showcasing my skills, projects, and exper
 
 ## 🚀 Features
 
-- 🌓 Dark/Light mode toggle with system preference detection
 - 📱 Fully responsive design
 - ✨ Smooth animations using Framer Motion
 - 📊 Interactive components and UI elements
