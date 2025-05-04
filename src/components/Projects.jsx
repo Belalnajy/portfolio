@@ -42,6 +42,33 @@ const getTechIcon = tech => {
 
 const projects = [
   {
+    title: "Clinic Management System (ITI Graduation Project)",
+    description:
+      "A comprehensive clinic management system using Django and PostgreSQL.",
+    image: "/clinic.png",
+    tags: [
+      "HTML",
+      "CSS",
+      "JavaScript",
+      "React",
+      "Django",
+      "PostgreSQL",
+      "Tailwind"
+    ],
+    features: [
+      "Patient registration and management",
+      "Appointment scheduling and reminders",
+      "Doctor and staff management",
+      "Prescription management",
+      "Billing and invoicing",
+      "Reporting and analytics",
+      "User authentication and role-based access control"
+    ],
+    github: "#",
+    live: "https://clinic-project-2.vercel.app/",
+    category: "Full Stack"
+  },
+  {
     title: "Inventory Management System",
     description:
       "A role-based inventory system using HTML, CSS, JavaScript, Bootstrap, Django, and PostgreSQL.",
@@ -50,7 +77,10 @@ const projects = [
     features: [
       "Role-based access control",
       "Real-time stock management",
-      "Order processing and shipment tracking"
+      "Order processing and shipment tracking",
+      "Supplier and customer management",
+      "Reporting and analytics",
+      "User authentication and role-based access control"
     ],
     github:
       "https://github.com/ChaoticMaximoff/Inventory-Management-System-ITI-Django-Project",

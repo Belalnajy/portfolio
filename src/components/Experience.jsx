@@ -8,7 +8,7 @@ const Experience = () => {
       title: "Full Stack Development Using Python Intern",
       company: "Information Technology Institute (ITI)",
       location: "Egypt",
-      period: "11/2024 - 04/2025",
+      period: "11/2024 - 05/2025",
       type: "work",
       icon: <FaLaptopCode />,
       description: [
