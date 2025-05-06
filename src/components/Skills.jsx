@@ -101,12 +101,12 @@ const skillCategories = [
     icon: <FaProjectDiagram className="text-4xl text-primary" />,
     skills: [
       {
-        name: "Network Security",
-        icon: <FaShieldAlt className="text-2xl text-[#4CAF50]" />
-      },
-      {
         name: "Agile Methodologies",
         icon: <FaProjectDiagram className="text-2xl text-[#2196F3]" />
+      },
+      {
+        name: "Network Security",
+        icon: <FaShieldAlt className="text-2xl text-[#4CAF50]" />
       },
       {
         name: "Problem Solving",
@@ -138,13 +138,13 @@ const SkillCard = ({ category, index }) => {
             initial={{ opacity: 0, x: -20 }}
             whileInView={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.5, delay: i * 0.1 }}
-            className="flex items-center space-x-3 p-3 rounded-lg hover:bg-[rgb(var(--muted))] transition-colors duration-200">
+            className="flex items-center space-x-2 p-3 rounded-lg hover:bg-[rgb(var(--muted))] transition-colors duration-200">
             <div className="bg-[rgb(var(--background))] p-2 rounded-lg">
               {skill.icon}
             </div>
-            <span className="text-[rgb(var(--foreground))]">
+            <p className="text-[rgb(var(--foreground))] font-semibold ">
               {skill.name}
-            </span>
+            </p>
           </motion.div>
         )}
       </div>
