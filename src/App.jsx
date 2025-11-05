@@ -3,35 +3,50 @@ import { motion, AnimatePresence } from "framer-motion";
 import Navbar from "./components/Navbar";
 import Hero from "./components/Hero";
 import About from "./components/About";
-import Experience from "./components/Experience";
+import InteractiveTimeline from "./components/InteractiveTimeline";
 import Projects from "./components/Projects";
 import Skills from "./components/Skills";
 import Contact from "./components/Contact";
 import ScrollProgress from "./components/ScrollProgress";
 import Notification from "./components/Notification";
+import ParticlesBackground from "./components/ParticlesBackground";
+import CustomCursor from "./components/CustomCursor";
+import AnimatedStats from "./components/AnimatedStats";
+import ThemeSwitcher from "./components/ThemeSwitcher";
+import Certifications from "./components/Certifications";
+import Services from "./components/Services";
+import Footer from "./components/Footer";
+import LoadingScreen from "./components/LoadingScreen";
+import DarkModeToggle from "./components/DarkModeToggle";
+import Testimonials from "./components/Testimonials";
 import AOS from "aos";
 import "aos/dist/aos.css";
-import Certifications from "./components/Certifications";
 
 function App() {
   const [notification, setNotification] = useState({
     message: "",
     type: "",
-    isVisible: false
+    isVisible: false,
   });
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     AOS.init({
       duration: 1000,
-      once: true
+      easing: "ease-in-out",
+      once: true,
     });
   }, []);
+
+  const handleLoadingComplete = () => {
+    setIsLoading(false);
+  };
 
   const showNotification = (message, type = "success") => {
     setNotification({
       message,
       type,
-      isVisible: true
+      isVisible: true,
     });
 
     setTimeout(() => {
@@ -62,25 +77,36 @@ function App() {
   };
 
   return (
-    <div className="min-h-screen bg-[rgb(var(--background))] text-[rgb(var(--foreground))] transition-colors duration-300">
-      <ScrollProgress />
-      <Notification
-        message={notification.message}
-        type={notification.type}
-        isVisible={notification.isVisible}
-        onClose={() => setNotification(prev => ({ ...prev, isVisible: false }))}
-      />
-      <Navbar onDownloadCV={handleDownloadCV} />
-      <main>
-        <Hero onDownloadCV={handleDownloadCV} />
-        <About />
-        <Experience />
-        <Certifications />
-        <Projects />
-        <Skills />
-        <Contact showNotification={showNotification} />
-      </main>
-    </div>
+    <>
+      {isLoading && <LoadingScreen onLoadingComplete={handleLoadingComplete} />}
+      <div className="min-h-screen bg-[rgb(var(--background))] text-[rgb(var(--foreground))] transition-colors duration-300 relative">
+        <CustomCursor />
+        <ParticlesBackground />
+        <DarkModeToggle />
+        <ThemeSwitcher />
+        <ScrollProgress />
+        <Notification
+          message={notification.message}
+          type={notification.type}
+          isVisible={notification.isVisible}
+          onClose={() => setNotification(prev => ({ ...prev, isVisible: false }))}
+        />
+        <Navbar onDownloadCV={handleDownloadCV} />
+        <main className="relative z-10">
+          <Hero onDownloadCV={handleDownloadCV} />
+          <About />
+          <AnimatedStats />
+          <InteractiveTimeline />
+          <Certifications />
+          <Projects />
+          <Skills />
+          <Services />
+          <Testimonials />
+          <Contact showNotification={showNotification} />
+        </main>
+        <Footer />
+      </div>
+    </>
   );
 }
 

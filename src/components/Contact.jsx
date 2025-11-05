@@ -56,16 +56,19 @@ const Contact = ({ showNotification }) => {
   };
 
   return (
-    <section id="contact" className="py-20 bg-gray-800">
-      <div className="container mx-auto px-6">
+    <section id="contact" className="py-20 relative">
+      
+      <div className="container mx-auto px-6 relative z-10">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
           className="text-center mb-16">
-          <h2 className="text-4xl font-bold text-white mb-4">Get In Touch</h2>
-          <p className="text-gray-400 max-w-2xl mx-auto">
-            Feel free to reach out for collaborations or just a friendly hello
+          <h2 className="text-5xl font-bold mb-4 text-[rgb(var(--foreground))]">
+            Get In Touch
+          </h2>
+          <p className="text-[rgb(var(--muted-foreground))] max-w-2xl mx-auto text-lg">
+            Feel free to reach out for collaborations or just a friendly hello 
           </p>
         </motion.div>
 
@@ -75,64 +78,63 @@ const Contact = ({ showNotification }) => {
             initial={{ opacity: 0, x: -20 }}
             whileInView={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.5 }}
-            className="space-y-8">
-            <div className="flex items-start space-x-4">
-              <div className="bg-blue-500/10 p-3 rounded-lg">
-                <FaEnvelope className="text-2xl text-blue-400" />
-              </div>
-              <div>
-                <h3 className="text-xl font-semibold text-white mb-1">Email</h3>
-                <a
-                  href="mailto:belalnajy9@gmail.com"
-                  className="text-gray-400 hover:text-blue-400 transition-colors">
-                  belalnajy9@gmail.com
-                </a>
-              </div>
-            </div>
-
-            <div className="flex items-start space-x-4">
-              <div className="bg-blue-500/10 p-3 rounded-lg">
-                <FaPhone className="text-2xl text-blue-400" />
-              </div>
-              <div>
-                <h3 className="text-xl font-semibold text-white mb-1">Phone</h3>
-                <a
-                  href="tel:01091906491"
-                  className="text-gray-400 hover:text-blue-400 transition-colors">
-                  01091906491
-                </a>
-              </div>
-            </div>
-
-            <div className="flex items-start space-x-4">
-              <div className="bg-blue-500/10 p-3 rounded-lg">
-                <FaMapMarkerAlt className="text-2xl text-blue-400" />
-              </div>
-              <div>
-                <h3 className="text-xl font-semibold text-white mb-1">
-                  Location
-                </h3>
-                <p className="text-gray-400">Cairo, Egypt</p>
-              </div>
-            </div>
-
-            <div className="flex items-start space-x-4">
-              <div className="bg-blue-500/10 p-3 rounded-lg">
-                <FaLinkedin className="text-2xl text-blue-400" />
-              </div>
-              <div>
-                <h3 className="text-xl font-semibold text-white mb-1">
-                  LinkedIn
-                </h3>
-                <a
-                  href="https://linkedin.com/in/belalnajy"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-gray-400 hover:text-blue-400 transition-colors">
-                  linkedin.com/in/belalnajy
-                </a>
-              </div>
-            </div>
+            className="space-y-6">
+            {[
+              {
+                icon: <FaEnvelope />,
+                title: "Email",
+                value: "belalnajy9@gmail.com",
+                href: "mailto:belalnajy9@gmail.com",
+                color: "blue"
+              },
+              {
+                icon: <FaPhone />,
+                title: "Phone",
+                value: "01201369949",
+                href: "tel:01201369949",
+                color: "purple"
+              },
+              {
+                icon: <FaMapMarkerAlt />,
+                title: "Location",
+                value: "Alexandria, Egypt",
+                href: null,
+                color: "pink"
+              },
+              {
+                icon: <FaLinkedin />,
+                title: "LinkedIn",
+                value: "linkedin.com/in/belalnajy",
+                href: "https://linkedin.com/in/belalnajy",
+                color: "cyan"
+              }
+            ].map((item, index) => (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, x: -20 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.5, delay: index * 0.1 }}
+                whileHover={{ x: 10, scale: 1.02 }}
+                className="flex items-start space-x-4 glass-card glass-hover p-6 rounded-xl cursor-pointer">
+                <div className={`bg-gradient-to-r from-${item.color}-500 to-${item.color}-600 p-4 rounded-lg`}>
+                  <div className="text-white text-2xl">{item.icon}</div>
+                </div>
+                <div>
+                  <h3 className="text-xl font-semibold text-[rgb(var(--foreground))] mb-2">{item.title}</h3>
+                  {item.href ? (
+                    <a
+                      href={item.href}
+                      target={item.href.startsWith('http') ? '_blank' : undefined}
+                      rel={item.href.startsWith('http') ? 'noopener noreferrer' : undefined}
+                      className="text-[rgb(var(--muted-foreground))] hover:text-[rgb(var(--primary))] transition-colors">
+                      {item.value}
+                    </a>
+                  ) : (
+                    <p className="text-[rgb(var(--muted-foreground))]">{item.value}</p>
+                  )}
+                </div>
+              </motion.div>
+            ))}
           </motion.div>
 
           {/* Contact Form */}
@@ -140,10 +142,10 @@ const Contact = ({ showNotification }) => {
             initial={{ opacity: 0, x: 20 }}
             whileInView={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.5 }}
-            className="bg-gray-900 p-8 rounded-xl">
+            className="glass-card p-8 rounded-xl">
             <form ref={formRef} onSubmit={handleSubmit} className="space-y-6">
               <div>
-                <label htmlFor="name" className="block text-gray-400 mb-2">
+                <label htmlFor="name" className="block text-[rgb(var(--foreground))] font-medium mb-2">
                   Name
                 </label>
                 <input
@@ -153,12 +155,12 @@ const Contact = ({ showNotification }) => {
                   value={formData.name}
                   onChange={handleChange}
                   required
-                  className="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-blue-500 transition-colors"
+                  className="w-full glass-card border border-[rgb(var(--border))] rounded-lg px-4 py-3 text-[rgb(var(--foreground))] focus:outline-none focus:border-[rgb(var(--primary))] transition-colors"
                   placeholder="Your Name"
                 />
               </div>
               <div>
-                <label htmlFor="email" className="block text-gray-400 mb-2">
+                <label htmlFor="email" className="block text-[rgb(var(--foreground))] font-medium mb-2">
                   Email
                 </label>
                 <input
@@ -168,12 +170,12 @@ const Contact = ({ showNotification }) => {
                   value={formData.email}
                   onChange={handleChange}
                   required
-                  className="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-blue-500 transition-colors"
+                  className="w-full glass-card border border-[rgb(var(--border))] rounded-lg px-4 py-3 text-[rgb(var(--foreground))] focus:outline-none focus:border-[rgb(var(--primary))] transition-colors"
                   placeholder="your@email.com"
                 />
               </div>
               <div>
-                <label htmlFor="message" className="block text-gray-400 mb-2">
+                <label htmlFor="message" className="block text-[rgb(var(--foreground))] font-medium mb-2">
                   Message
                 </label>
                 <textarea
@@ -183,21 +185,21 @@ const Contact = ({ showNotification }) => {
                   onChange={handleChange}
                   required
                   rows="4"
-                  className="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-blue-500 transition-colors"
+                  className="w-full glass-card border border-[rgb(var(--border))] rounded-lg px-4 py-3 text-[rgb(var(--foreground))] focus:outline-none focus:border-[rgb(var(--primary))] transition-colors resize-none"
                   placeholder="Your message..."
                 />
               </div>
               <motion.button
                 type="submit"
                 disabled={loading}
-                whileHover={{ scale: loading ? 1 : 1.02 }}
-                whileTap={{ scale: loading ? 1 : 0.98 }}
-                className={`w-full ${
+                whileHover={{ scale: loading ? 1 : 1.05 }}
+                whileTap={{ scale: loading ? 1 : 0.95 }}
+                className={`w-full py-3 rounded-lg font-semibold transition-all ${
                   loading
-                    ? "bg-blue-500 cursor-not-allowed"
-                    : "bg-blue-600 hover:bg-blue-700"
-                } text-white py-3 rounded-lg font-semibold transition-colors`}>
-                {loading ? "Sending..." : "Send Message"}
+                    ? "bg-gradient-to-r from-blue-400 to-purple-400 cursor-not-allowed opacity-70"
+                    : "bg-gradient-to-r from-blue-600 to-purple-600 hover:shadow-lg hover:shadow-blue-500/50"
+                } text-white`}>
+                {loading ? "Sending..." : "Send Message "}
               </motion.button>
             </form>
           </motion.div>

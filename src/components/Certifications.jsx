@@ -6,7 +6,7 @@ import {
   FaMobile,
   FaAndroid,
   FaDocker,
-  FaTimes
+  FaTimes,
 } from "react-icons/fa";
 import { SiRedhat, SiUdemy } from "react-icons/si";
 
@@ -22,7 +22,7 @@ const Certifications = () => {
       icon: <SiUdemy className="text-2xl" />,
       platform: "Udemy",
       color: "rose",
-      image: "/certificates/python-django.png"
+      image: "/certificates/python-django.png",
     },
     {
       id: 2,
@@ -32,7 +32,7 @@ const Certifications = () => {
       icon: <FaCode className="text-2xl" />,
       platform: "365 Data Science",
       color: "blue",
-      image: "/certificates/intro-python.png"
+      image: "/certificates/intro-python.png",
     },
     {
       id: 3,
@@ -42,7 +42,7 @@ const Certifications = () => {
       icon: <FaDocker className="text-2xl" />,
       platform: "KodeKloud",
       color: "cyan",
-      image: "/certificates/docker.jpg"
+      image: "/certificates/docker.jpg",
     },
     {
       id: 4,
@@ -52,7 +52,7 @@ const Certifications = () => {
       icon: <FaCode className="text-2xl" />,
       platform: "365 Data Science",
       color: "blue",
-      image: "/certificates/git-github.png"
+      image: "/certificates/git-github.png",
     },
     {
       id: 5,
@@ -62,7 +62,7 @@ const Certifications = () => {
       icon: <FaGraduationCap className="text-2xl" />,
       platform: "MCIT",
       color: "green",
-      image: "/certificates/web-dev.png"
+      image: "/certificates/web-dev.png",
     },
     {
       id: 6,
@@ -72,7 +72,7 @@ const Certifications = () => {
       icon: <SiUdemy className="text-2xl" />,
       platform: "Udemy",
       color: "rose",
-      image: "/certificates/ui-ux.png"
+      image: "/certificates/ui-ux.png",
     },
     {
       id: 7,
@@ -82,7 +82,7 @@ const Certifications = () => {
       icon: <SiRedhat className="text-2xl" />,
       platform: "Mahara Tech",
       color: "red",
-      image: "/certificates/redhat.png"
+      image: "/certificates/redhat.png",
     },
     {
       id: 8,
@@ -92,8 +92,8 @@ const Certifications = () => {
       icon: <FaAndroid className="text-2xl" />,
       platform: "SkillsDynamix",
       color: "emerald",
-      image: "/certificates/android.png"
-    }
+      image: "/certificates/android.png",
+    },
   ];
 
   const getColorClasses = color => {
@@ -109,21 +109,24 @@ const Certifications = () => {
       red:
         "bg-red-500/10 text-red-500 group-hover:bg-red-500 group-hover:text-white",
       emerald:
-        "bg-emerald-500/10 text-emerald-500 group-hover:bg-emerald-500 group-hover:text-white"
+        "bg-emerald-500/10 text-emerald-500 group-hover:bg-emerald-500 group-hover:text-white",
     };
     return colorMap[color] || colorMap.blue;
   };
 
   return (
-    <section id="certifications" className="py-20 bg-[rgb(var(--background))]">
-      <div className="container mx-auto px-4">
+    <section id="certifications" className="py-20 relative">
+
+      <div className="container mx-auto px-4 relative z-10">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
-          className="text-center mb-12">
-          <h2 className="text-3xl font-bold mb-4">Courses & Certifications</h2>
-          <p className="text-[rgb(var(--muted-foreground))]">
+          className="text-center mb-16">
+          <h2 className="text-5xl font-bold mb-4 text-[rgb(var(--foreground))]">
+            Courses & Certifications
+          </h2>
+          <p className="text-[rgb(var(--muted-foreground))] text-lg max-w-2xl mx-auto">
             Professional development and continuous learning journey
           </p>
         </motion.div>
@@ -135,8 +138,9 @@ const Certifications = () => {
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.3, delay: index * 0.1 }}
+              whileHover={{ y: -10, scale: 1.02 }}
               onClick={() => cert.image && setSelectedCert(cert)}
-              className="group relative bg-[rgb(var(--card))] rounded-xl p-6 border border-[rgb(var(--border))] hover:border-[rgb(var(--primary))] transition-all duration-300 hover:shadow-lg cursor-pointer">
+              className="group relative glass-card glass-hover rounded-xl p-6 cursor-pointer">
               <div
                 className={`w-12 h-12 rounded-lg flex items-center justify-center mb-4 transition-colors duration-300 ${getColorClasses(
                   cert.color

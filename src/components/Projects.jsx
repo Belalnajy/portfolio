@@ -283,12 +283,39 @@ const projects = [
 ];
 
 const ProjectCard = ({ project, index }) => {
+  const [rotateX, setRotateX] = useState(0);
+  const [rotateY, setRotateY] = useState(0);
+
+  const handleMouseMove = e => {
+    const card = e.currentTarget;
+    const rect = card.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    const centerX = rect.width / 2;
+    const centerY = rect.height / 2;
+    const rotateXValue = ((y - centerY) / centerY) * -10;
+    const rotateYValue = ((x - centerX) / centerX) * 10;
+    setRotateX(rotateXValue);
+    setRotateY(rotateYValue);
+  };
+
+  const handleMouseLeave = () => {
+    setRotateX(0);
+    setRotateY(0);
+  };
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5, delay: index * 0.2 }}
-      className="group relative bg-[rgb(var(--card))] rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500">
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
+      style={{
+        transform: `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`,
+        transition: "transform 0.1s ease-out"
+      }}
+      className="group relative glass-card glass-hover rounded-xl overflow-hidden shadow-lg transition-all duration-500">
       {/* Category Badge */}
       <div className="absolute top-4 left-4 z-20">
         <span
@@ -391,6 +418,8 @@ const ProjectCard = ({ project, index }) => {
 
 const Projects = () => {
   const [loading, setLoading] = useState(true);
+  const [filter, setFilter] = useState('All');
+  const [searchTerm, setSearchTerm] = useState('');
 
   useEffect(() => {
     // Simulate loading delay
@@ -401,19 +430,66 @@ const Projects = () => {
     return () => clearTimeout(timer);
   }, []);
 
+  const categories = ['All', 'Full Stack', 'Frontend', 'Backend'];
+
+  const filteredProjects = projects.filter(project => {
+    const matchesFilter = filter === 'All' || project.category === filter;
+    const matchesSearch = project.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                         project.description.toLowerCase().includes(searchTerm.toLowerCase());
+    return matchesFilter && matchesSearch;
+  });
+
   return (
-    <section id="projects" className="py-20 bg-[rgb(var(--background))]">
-      <div className="container mx-auto px-4">
+    <section id="projects" className="py-20 relative">
+      
+      <div className="container mx-auto px-4 relative z-10">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
-          className="text-center mb-16">
-          <h2 className="text-4xl font-bold mb-4">Featured Projects</h2>
-          <p className="text-[rgb(var(--muted-foreground))] max-w-2xl mx-auto">
-            Here are some of my notable projects that showcase my skills and
-            experience in software development.
+          className="text-center mb-12">
+          <h2 className="text-5xl font-bold mb-4 text-[rgb(var(--foreground))]">
+            Featured Projects
+          </h2>
+          <p className="text-[rgb(var(--muted-foreground))] max-w-2xl mx-auto text-lg">
+            Here are some of my notable projects that showcase my skills and experience
           </p>
+        </motion.div>
+
+        {/* Filter & Search */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.2 }}
+          className="mb-12 flex flex-col md:flex-row gap-4 items-center justify-between max-w-4xl mx-auto">
+          {/* Category Filter */}
+          <div className="flex gap-2 flex-wrap justify-center">
+            {categories.map(category => (
+              <motion.button
+                key={category}
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                onClick={() => setFilter(category)}
+                className={`px-6 py-2 rounded-full font-medium transition-all ${
+                  filter === category
+                    ? 'bg-gradient-to-r from-blue-600 to-purple-600 text-white shadow-lg'
+                    : 'glass-card text-[rgb(var(--foreground))] hover:bg-[rgb(var(--muted))]'
+                }`}>
+                {category}
+              </motion.button>
+            ))}
+          </div>
+
+          {/* Search */}
+          <div className="relative w-full md:w-auto">
+            <input
+              type="text"
+              placeholder="Search projects..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              className="w-full md:w-64 px-4 py-2 rounded-lg glass-card border border-[rgb(var(--border))] focus:border-[rgb(var(--primary))] focus:outline-none transition-colors"
+            />
+          </div>
         </motion.div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -421,9 +497,20 @@ const Projects = () => {
             ? Array.from({ length: 6 }).map((_, index) => (
                 <ProjectSkeleton key={index} index={index} />
               ))
-            : projects.map((project, index) => (
-                <ProjectCard key={index} project={project} index={index} />
-              ))}
+            : filteredProjects.length > 0
+              ? filteredProjects.map((project, index) => (
+                  <ProjectCard key={index} project={project} index={index} />
+                ))
+              : (
+                  <motion.div
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    className="col-span-full text-center py-20">
+                    <p className="text-2xl text-[rgb(var(--muted-foreground))]">
+                      No projects found matching your criteria
+                    </p>
+                  </motion.div>
+                )}
         </div>
       </div>
     </section>
