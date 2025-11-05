@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import {
   FaCode,
@@ -16,6 +17,7 @@ import {
   FaProjectDiagram,
   FaGraduationCap
 } from 'react-icons/fa';
+import SkillSkeleton from './skeletons/SkillSkeleton';
 import {
   SiDjango,
   SiPostgresql,
@@ -23,7 +25,17 @@ import {
   SiJavascript,
   SiTailwindcss,
   SiApache,
-  SiRedhat
+  SiRedhat,
+  SiNextdotjs,
+  SiNestjs,
+  SiTypescript,
+  SiMongodb,
+  SiPrisma,
+  SiSocketdotio,
+  SiNginx,
+  SiVercel,
+  SiNotion,
+  SiExpress
 } from 'react-icons/si';
 
 const skillCategories = [
@@ -61,6 +73,10 @@ const skillCategories = [
         icon: <SiDjango className="text-2xl text-[#44B78B]" />
       },
       {
+        name: 'Next.js',
+        icon: <SiNextdotjs className="text-2xl text-[#000000]" />
+      },
+      {
         name: 'React.js',
         icon: <FaReact className="text-2xl text-[#61DAFB]" />
       },
@@ -70,7 +86,11 @@ const skillCategories = [
       },
       {
         name: 'Express.js',
-        icon: <FaServer className="text-2xl text-[#000000]" />
+        icon: <SiExpress className="text-2xl text-[#000000]" />
+      },
+      {
+        name: 'NestJS',
+        icon: <SiNestjs className="text-2xl text-[#E0234E]" />
       },
       { name: 'Odoo', icon: <FaCode className="text-2xl text-[#814C94]" /> },
       { name: 'jQuery', icon: <FaCode className="text-2xl text-[#0769AD]" /> },
@@ -105,20 +125,58 @@ const skillCategories = [
         icon: <SiApache className="text-2xl text-[#D22128]" />
       },
       {
+        name: 'Nginx',
+        icon: <SiNginx className="text-2xl text-[#009639]" />
+      },
+      {
+        name: 'Vercel',
+        icon: <SiVercel className="text-2xl text-[#000000]" />
+      },
+      {
         name: 'Red Hat',
         icon: <SiRedhat className="text-2xl text-[#EE0000]" />
       }
     ]
   },
   {
-    title: 'Databases',
+    title: 'Databases & ORMs',
     icon: <FaDatabase className="text-4xl text-primary" />,
     skills: [
       {
         name: 'PostgreSQL',
         icon: <SiPostgresql className="text-2xl text-[#4169E1]" />
       },
-      { name: 'MySQL', icon: <SiMysql className="text-2xl text-[#4479A1]" /> }
+      { name: 'MySQL', icon: <SiMysql className="text-2xl text-[#4479A1]" /> },
+      {
+        name: 'MongoDB',
+        icon: <SiMongodb className="text-2xl text-[#47A248]" />
+      },
+      {
+        name: 'SQLite',
+        icon: <FaDatabase className="text-2xl text-[#003B57]" />
+      },
+      {
+        name: 'Prisma',
+        icon: <SiPrisma className="text-2xl text-[#2D3748]" />
+      },
+      {
+        name: 'TypeORM',
+        icon: <FaDatabase className="text-2xl text-[#FE0803]" />
+      }
+    ]
+  },
+  {
+    title: 'Real-Time & APIs',
+    icon: <FaServer className="text-4xl text-primary" />,
+    skills: [
+      {
+        name: 'Socket.io',
+        icon: <SiSocketdotio className="text-2xl text-[#010101]" />
+      },
+      {
+        name: 'REST APIs',
+        icon: <FaCode className="text-2xl text-[#61DAFB]" />
+      }
     ]
   },
 
@@ -141,8 +199,16 @@ const skillCategories = [
     icon: <FaProjectDiagram className="text-4xl text-primary" />,
     skills: [
       {
+        name: 'Agile',
+        icon: <FaProjectDiagram className="text-2xl text-[#0079BF]" />
+      },
+      {
         name: 'Trello',
         icon: <FaProjectDiagram className="text-2xl text-[#0079BF]" />
+      },
+      {
+        name: 'Notion',
+        icon: <SiNotion className="text-2xl text-[#000000]" />
       }
     ]
   },
@@ -151,12 +217,24 @@ const skillCategories = [
     icon: <FaGraduationCap className="text-4xl text-primary" />,
     skills: [
       {
-        name: 'Communication Skills',
+        name: 'Communication',
         icon: <FaCode className="text-2xl text-[#2196F3]" />
       },
       {
-        name: 'Presentation Skills',
+        name: 'Presentation',
         icon: <FaCode className="text-2xl text-[#FF9800]" />
+      },
+      {
+        name: 'Problem Solving',
+        icon: <FaCode className="text-2xl text-[#4CAF50]" />
+      },
+      {
+        name: 'Time Management',
+        icon: <FaCode className="text-2xl text-[#9C27B0]" />
+      },
+      {
+        name: 'Adaptability',
+        icon: <FaCode className="text-2xl text-[#FF5722]" />
       }
     ]
   }
@@ -197,6 +275,17 @@ const SkillCard = ({ category, index }) => {
 };
 
 const Skills = () => {
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    // Simulate loading delay
+    const timer = setTimeout(() => {
+      setLoading(false);
+    }, 1000);
+
+    return () => clearTimeout(timer);
+  }, []);
+
   return (
     <section id="skills" className="py-20">
       <div className="container mx-auto px-6 ">
@@ -212,9 +301,13 @@ const Skills = () => {
           </p>
         </motion.div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {skillCategories.map((category, index) => (
-            <SkillCard key={index} category={category} index={index} />
-          ))}
+          {loading
+            ? Array.from({ length: 8 }).map((_, index) => (
+                <SkillSkeleton key={index} index={index} />
+              ))
+            : skillCategories.map((category, index) => (
+                <SkillCard key={index} category={category} index={index} />
+              ))}
         </div>
       </div>
     </section>

@@ -78,12 +78,7 @@ function App() {
         <Certifications />
         <Projects />
         <Skills />
-        <Contact
-          onSubmit={data => {
-            console.log("Form submitted:", data);
-            showNotification("Message sent successfully!");
-          }}
-        />
+        <Contact showNotification={showNotification} />
       </main>
     </div>
   );

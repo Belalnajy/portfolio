@@ -19,8 +19,7 @@ const About = () => {
           className="text-center mb-16">
           <h2 className="text-4xl font-bold text-white mb-4">About Me</h2>
           <p className="text-gray-400 max-w-2xl mx-auto">
-            Software Engineer passionate about creating efficient and scalable
-            solutions
+            Full Stack Developer experienced in building scalable, multilingual web applications
           </p>
         </motion.div>
 
@@ -51,7 +50,7 @@ const About = () => {
                 </div>
                 <div>
                   <h4 className="text-white font-medium">Role</h4>
-                  <p className="text-gray-400">Software Engineer</p>
+                  <p className="text-gray-400">Full Stack Developer</p>
                 </div>
               </div>
 
@@ -71,7 +70,7 @@ const About = () => {
                 </div>
                 <div>
                   <h4 className="text-white font-medium">Location</h4>
-                  <p className="text-gray-400">Alexandria, Egypt</p>
+                  <p className="text-gray-400">Cairo, Egypt</p>
                 </div>
               </div>
             </div>
@@ -88,21 +87,19 @@ const About = () => {
             </h3>
             <div className="prose prose-invert">
               <p className="text-gray-300 leading-relaxed">
-                I am a dedicated Software Engineer with experience in full-stack
-                development, specializing in Python, Django, and modern web
-                technologies. Currently enhancing my skills at the Information
-                Technology Institute (ITI) while working on hands-on projects.
+                Full Stack Developer experienced in building scalable, multilingual web applications 
+                using React.js, Next.js, Django, NestJS, and PostgreSQL. Currently working at S&F 
+                (Saudi Arabia) developing full-stack applications and backend services for web and mobile platforms.
               </p>
               <p className="text-gray-300 leading-relaxed mt-4">
-                My background in Management Information Systems, combined with
-                practical experience in emergency response and IT
-                infrastructure, has given me a unique perspective on
-                problem-solving and crisis management.
+                Completed the ITI Full Stack program and served as an External Instructor at ITI, 
+                teaching Front-End Development to 200+ students. Delivered AI-integrated, RTL-ready 
+                platforms for Saudi startups and universities, focused on modern UI/UX and real-time systems.
               </p>
               <p className="text-gray-300 leading-relaxed mt-4">
-                I'm passionate about creating efficient, scalable solutions and
-                turning complex problems into elegant applications. Always eager
-                to learn new technologies and take on challenging projects.
+                Passionate about creating efficient, scalable solutions with expertise in multilingual 
+                platforms, real-time features, and modern development practices. Always eager to learn 
+                new technologies and deliver production-ready applications.
               </p>
             </div>
           </motion.div>

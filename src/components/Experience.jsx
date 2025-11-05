@@ -1,44 +1,71 @@
+import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { FaLaptopCode, FaGraduationCap } from 'react-icons/fa';
 import ExperienceCard from './ExperienceCard';
+import ExperienceSkeleton from './skeletons/ExperienceSkeleton';
 
 const Experience = () => {
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    // Simulate loading delay
+    const timer = setTimeout(() => {
+      setLoading(false);
+    }, 1200);
+
+    return () => clearTimeout(timer);
+  }, []);
+
   const experiences = [
     {
-      title: 'Freelance Full Stack Developer',
-      company: 'Self-Employed',
-      location: 'Remote',
-      period: '06/2025 - Present',
+      title: 'Full Stack Developer',
+      company: 'S&F (Saudi Arabia)',
+      location: 'Remote, Saudi Arabia',
+      period: '07/2025 - Present',
       type: 'work',
       icon: <FaLaptopCode />,
       description: [
-        'Built and deployed responsive web applications using Django, React, and PostgreSQL',
-        'Collaborated with clients to gather requirements and deliver custom software solutions',
-        'Worked with REST APIs, authentication systems, and admin dashboards'
+        'Built and maintained full-stack applications using Django, Node.js, React.js, and PostgreSQL',
+        'Designed and deployed backend services & RESTful APIs for web and mobile apps',
+        'Improved database performance and ensured application scalability',
+        'Collaborated with a remote agile team to deliver core product features'
+      ]
+    },
+    {
+      title: 'External Instructor - Front-End Development',
+      company: 'Information Technology Institute (ITI)',
+      location: 'Remote, Egypt',
+      period: '07/2025 - 10/2025',
+      type: 'work',
+      icon: <FaLaptopCode />,
+      description: [
+        'Taught Front-End Development (HTML, CSS, JavaScript) to more than 200 students',
+        'Designed and delivered practical coding sessions and real-world project guidance'
+      ]
+    },
+    {
+      title: 'Freelance Web Developer',
+      company: 'Self-Employed',
+      location: 'Remote, Egypt',
+      period: '03/2025 - Present',
+      type: 'work',
+      icon: <FaLaptopCode />,
+      description: [
+        'Built full-stack, production-ready web apps for Gulf clients, including Saudi startups and universities',
+        'Delivered scalable, multilingual, and RTL-supported platforms like fleet, journal, and e-commerce systems',
+        'Used React, Next.js, NestJS, Django, and PostgreSQL with focus on performance and modern UI/UX',
+        'Implemented real-time features to enhance business operations'
       ]
     },
     {
       title: 'Full Stack Development Using Python Intern',
       company: 'Information Technology Institute (ITI)',
-      location: 'Egypt',
-      period: '11/2024 - 05/2025',
+      location: 'Hybrid, Egypt',
+      period: '11/2024 - 04/2025',
       type: 'work',
       icon: <FaLaptopCode />,
       description: [
         'Worked on hands-on projects covering Python, Django, databases, and front-end technologies'
-      ]
-    },
-    {
-      title: 'Emergency Call Center Operator',
-      company: 'Ministry of Interior - Najda Unit',
-      location: 'Egypt',
-      period: '12/2023 - 12/2024',
-      type: 'work',
-      icon: <FaLaptopCode />,
-      description: [
-        'Handled emergency calls and provided immediate support in both Arabic and English',
-        'Managed sensitive calls related to security, medical, and criminal incidents',
-        'Operated under pressure and efficiently handled crisis situations'
       ]
     },
     {
@@ -62,8 +89,8 @@ const Experience = () => {
       type: 'education',
       icon: <FaGraduationCap />,
       description: [
-        'Graduated with a Very Good grade',
-        'Graduation Project: A Jewellery Store Website (Grade: A)'
+        'Graduated with Very Good (GPA: 3.265)',
+        'Graduation Project: Jewellery Store Website | Grade: A'
       ]
     }
   ];
@@ -82,9 +109,13 @@ const Experience = () => {
           </p>
         </motion.div>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {experiences.map((experience, index) => (
-            <ExperienceCard key={index} experience={experience} index={index} />
-          ))}
+          {loading
+            ? Array.from({ length: 6 }).map((_, index) => (
+                <ExperienceSkeleton key={index} index={index} />
+              ))
+            : experiences.map((experience, index) => (
+                <ExperienceCard key={index} experience={experience} index={index} />
+              ))}
         </div>
       </div>
     </section>

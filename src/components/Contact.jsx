@@ -1,4 +1,6 @@
+import { useState, useRef } from "react";
 import { motion } from "framer-motion";
+import emailjs from "@emailjs/browser";
 import {
   FaEnvelope,
   FaPhone,
@@ -6,7 +8,53 @@ import {
   FaLinkedin
 } from "react-icons/fa";
 
-const Contact = () => {
+const Contact = ({ showNotification }) => {
+  const formRef = useRef();
+  const [loading, setLoading] = useState(false);
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    message: ""
+  });
+
+  const handleChange = e => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value
+    });
+  };
+
+  const handleSubmit = async e => {
+    e.preventDefault();
+    setLoading(true);
+
+    try {
+      // EmailJS configuration
+      const serviceId = import.meta.env.VITE_EMAILJS_SERVICE_ID || "service_xxxxxxx";
+      const templateId = import.meta.env.VITE_EMAILJS_TEMPLATE_ID || "template_xxxxxxx";
+      const publicKey = import.meta.env.VITE_EMAILJS_PUBLIC_KEY || "your_public_key";
+
+      await emailjs.sendForm(serviceId, templateId, formRef.current, publicKey);
+
+      showNotification?.("Message sent successfully! I'll get back to you soon.", "success");
+      
+      // Reset form
+      setFormData({
+        name: "",
+        email: "",
+        message: ""
+      });
+    } catch (error) {
+      console.error("Error sending email:", error);
+      showNotification?.(
+        "Failed to send message. Please try again or email me directly.",
+        "error"
+      );
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <section id="contact" className="py-20 bg-gray-800">
       <div className="container mx-auto px-6">
@@ -64,7 +112,7 @@ const Contact = () => {
                 <h3 className="text-xl font-semibold text-white mb-1">
                   Location
                 </h3>
-                <p className="text-gray-400">Alexandria, Egypt</p>
+                <p className="text-gray-400">Cairo, Egypt</p>
               </div>
             </div>
 
@@ -93,7 +141,7 @@ const Contact = () => {
             whileInView={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.5 }}
             className="bg-gray-900 p-8 rounded-xl">
-            <form className="space-y-6">
+            <form ref={formRef} onSubmit={handleSubmit} className="space-y-6">
               <div>
                 <label htmlFor="name" className="block text-gray-400 mb-2">
                   Name
@@ -101,6 +149,10 @@ const Contact = () => {
                 <input
                   type="text"
                   id="name"
+                  name="name"
+                  value={formData.name}
+                  onChange={handleChange}
+                  required
                   className="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-blue-500 transition-colors"
                   placeholder="Your Name"
                 />
@@ -112,6 +164,10 @@ const Contact = () => {
                 <input
                   type="email"
                   id="email"
+                  name="email"
+                  value={formData.email}
+                  onChange={handleChange}
+                  required
                   className="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-blue-500 transition-colors"
                   placeholder="your@email.com"
                 />
@@ -122,16 +178,26 @@ const Contact = () => {
                 </label>
                 <textarea
                   id="message"
+                  name="message"
+                  value={formData.message}
+                  onChange={handleChange}
+                  required
                   rows="4"
                   className="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-blue-500 transition-colors"
                   placeholder="Your message..."
                 />
               </div>
               <motion.button
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
-                className="w-full bg-blue-600 text-white py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors">
-                Send Message
+                type="submit"
+                disabled={loading}
+                whileHover={{ scale: loading ? 1 : 1.02 }}
+                whileTap={{ scale: loading ? 1 : 0.98 }}
+                className={`w-full ${
+                  loading
+                    ? "bg-blue-500 cursor-not-allowed"
+                    : "bg-blue-600 hover:bg-blue-700"
+                } text-white py-3 rounded-lg font-semibold transition-colors`}>
+                {loading ? "Sending..." : "Send Message"}
               </motion.button>
             </form>
           </motion.div>
