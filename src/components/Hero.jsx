@@ -1,9 +1,9 @@
-import { motion } from "framer-motion";
-import { TypeAnimation } from "react-type-animation";
-import { Link } from "react-scroll";
-import { FaGithub, FaLinkedin } from "react-icons/fa";
-import MagneticButton from "./MagneticButton";
-import PlatformLinks from "./PlatformLinks";
+import { motion } from 'framer-motion';
+import { TypeAnimation } from 'react-type-animation';
+import { Link } from 'react-scroll';
+import { FaGithub, FaLinkedin } from 'react-icons/fa';
+import MagneticButton from './MagneticButton';
+import PlatformLinks from './PlatformLinks';
 
 const Hero = ({ onDownloadCV }) => {
   return (
@@ -48,18 +48,18 @@ const Hero = ({ onDownloadCV }) => {
 
             <div className="text-2xl md:text-3xl mb-8 h-12 flex items-center">
               <span className="text-[rgb(var(--muted-foreground))] mr-2">
-                I'm a{" "}
+                I'm a{' '}
               </span>
               <span className="text-[rgb(var(--primary))] font-bold">
                 <TypeAnimation
                   sequence={[
-                    "Full Stack Developer",
+                    'Full Stack Developer',
                     2000,
-                    "Software Engineer",
+                    'Software Engineer',
                     2000,
-                    "Web Developer",
+                    'Web Developer',
                     2000,
-                    "Problem Solver",
+                    'Problem Solver',
                     2000,
                   ]}
                   wrapper="span"
@@ -70,18 +70,19 @@ const Hero = ({ onDownloadCV }) => {
             </div>
 
             <p className="text-lg text-[rgb(var(--foreground))] mb-8 leading-relaxed max-w-xl">
-              Passionate about building{" "}
+              Passionate about building{' '}
               <span className="text-[rgb(var(--primary))] font-semibold">
                 scalable, high-performance web applications
-              </span>{" "}
-              and transforming complex ideas into{" "}
+              </span>{' '}
+              and transforming complex ideas into{' '}
               <span className="text-[rgb(var(--primary))] font-semibold">
                 intuitive, elegant user experiences
               </span>
-              . Currently crafting impactful digital solutions at{" "}
+              . Currently crafting impactful digital solutions at{' '}
               <span className="text-[rgb(var(--primary))] font-semibold">
                 S&amp;F
-              </span>.
+              </span>
+              .
             </p>
 
             {/* Social Links */}
@@ -200,7 +201,7 @@ const Hero = ({ onDownloadCV }) => {
                   transition={{
                     duration: 4,
                     repeat: Infinity,
-                    ease: "easeInOut",
+                    ease: 'easeInOut',
                   }}
                   className="absolute -top-4 -right-4 bg-blue-600 text-white p-4 rounded-full shadow-lg">
                   <svg

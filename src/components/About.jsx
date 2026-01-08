@@ -1,4 +1,4 @@
-import { motion } from "framer-motion";
+import { motion } from 'framer-motion';
 import {
   FaUser,
   FaCode,
@@ -7,30 +7,29 @@ import {
   FaRocket,
   FaHeart,
   FaLightbulb,
-} from "react-icons/fa";
+} from 'react-icons/fa';
 
 const About = () => {
   const highlights = [
     {
       icon: <FaRocket />,
-      title: "Fast Learner",
-      description: "Quick to adapt to new technologies and frameworks",
+      title: 'Fast Learner',
+      description: 'Quick to adapt to new technologies and frameworks',
     },
     {
       icon: <FaHeart />,
-      title: "Passionate",
-      description: "Love building elegant solutions to complex problems",
+      title: 'Passionate',
+      description: 'Love building elegant solutions to complex problems',
     },
     {
       icon: <FaLightbulb />,
-      title: "Creative",
-      description: "Always thinking of innovative ways to improve UX",
+      title: 'Creative',
+      description: 'Always thinking of innovative ways to improve UX',
     },
   ];
 
   return (
     <section id="about" className="py-20 relative">
-
       <div className="container mx-auto px-6 relative z-10">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -60,29 +59,29 @@ const About = () => {
               {[
                 {
                   icon: <FaUser />,
-                  label: "Name",
-                  value: "Belal Nagy",
-                  color: "blue",
+                  label: 'Name',
+                  value: 'Belal Nagy',
+                  color: 'blue',
                 },
                 {
                   icon: <FaCode />,
-                  label: "Role",
-                  value: "Full Stack Developer",
-                  color: "purple",
+                  label: 'Role',
+                  value: 'Full Stack Developer',
+                  color: 'purple',
                 },
                 {
                   icon: <FaGraduationCap />,
-                  label: "Education",
-                  value: "Bachelor of Business (MIS)",
-                  color: "pink",
+                  label: 'Education',
+                  value: 'Bachelor of Business (MIS)',
+                  color: 'pink',
                 },
                 {
                   icon: <FaMapMarkerAlt />,
-                  label: "Location",
-                  value: "Alexandria, Egypt",
-                  color: "cyan",
+                  label: 'Location',
+                  value: 'Alexandria, Egypt',
+                  color: 'cyan',
                 },
-              ].map((item, index) =>
+              ].map((item, index) => (
                 <motion.div
                   key={index}
                   initial={{ opacity: 0, x: -20 }}
@@ -92,9 +91,7 @@ const About = () => {
                   className="flex items-center space-x-4 glass-card glass-hover p-4 rounded-xl cursor-pointer">
                   <div
                     className={`bg-gradient-to-r from-${item.color}-500 to-${item.color}-600 p-3 rounded-lg`}>
-                    <div className="text-white text-xl">
-                      {item.icon}
-                    </div>
+                    <div className="text-white text-xl">{item.icon}</div>
                   </div>
                   <div>
                     <h4 className="text-[rgb(var(--foreground))] font-semibold">
@@ -105,7 +102,7 @@ const About = () => {
                     </p>
                   </div>
                 </motion.div>
-              )}
+              ))}
             </div>
           </motion.div>
 
@@ -120,26 +117,28 @@ const About = () => {
             </h3>
             <div className="glass-card p-6 rounded-xl space-y-4">
               <p className="text-[rgb(var(--foreground))] leading-relaxed">
-                Full Stack Developer experienced in building{" "}
+                Full Stack Developer experienced in building{' '}
                 <span className="text-[rgb(var(--primary))] font-semibold">
                   scalable, multilingual web applications
-                </span>{" "}
+                </span>{' '}
                 using React.js, Next.js, Django, NestJS, and PostgreSQL.
-                Currently working at{" "}
+                Currently working at{' '}
                 <span className="text-[rgb(var(--primary))] font-semibold">
                   S&F (Saudi Arabia)
-                </span>{" "}
+                </span>{' '}
                 developing full-stack applications and backend services for web
                 and mobile platforms.
               </p>
               <p className="text-[rgb(var(--foreground))] leading-relaxed">
-                Completed the ITI Full Stack program and served as an{" "}
+                Completed the ITI Full Stack program and served as an{' '}
                 <span className="text-[rgb(var(--primary))] font-semibold">
                   External Instructor at ITI
-                </span>, teaching Front-End Development to{" "}
+                </span>
+                , teaching Front-End Development to{' '}
                 <span className="text-[rgb(var(--primary))] font-semibold">
                   200+ students
-                </span>. Delivered AI-integrated, RTL-ready platforms for Saudi
+                </span>
+                . Delivered AI-integrated, RTL-ready platforms for Saudi
                 startups and universities, focused on modern UI/UX and real-time
                 systems.
               </p>
@@ -159,7 +158,7 @@ const About = () => {
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.3 }}
           className="mt-16 grid grid-cols-1 md:grid-cols-3 gap-6 max-w-6xl mx-auto">
-          {highlights.map((item, index) =>
+          {highlights.map((item, index) => (
             <motion.div
               key={index}
               initial={{ opacity: 0, y: 20 }}
@@ -177,7 +176,7 @@ const About = () => {
                 {item.description}
               </p>
             </motion.div>
-          )}
+          ))}
         </motion.div>
       </div>
     </section>

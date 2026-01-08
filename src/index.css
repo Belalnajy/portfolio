@@ -1,4 +1,4 @@
-@import "tailwindcss";
+@import 'tailwindcss';
 
 /* Glassmorphism utilities */
 @layer utilities {
@@ -8,7 +8,7 @@
     -webkit-backdrop-filter: blur(10px);
     border: 1px solid rgba(255, 255, 255, 0.1);
   }
-  
+
   .glass-card {
     background: rgba(255, 255, 255, 0.03);
     backdrop-filter: blur(20px);
@@ -16,7 +16,7 @@
     border: 1px solid rgba(255, 255, 255, 0.08);
     box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.15);
   }
-  
+
   .glass-hover:hover {
     background: rgba(255, 255, 255, 0.08);
     border: 1px solid rgba(255, 255, 255, 0.15);
@@ -25,18 +25,18 @@
   }
 
   /* Light Mode Glassmorphism */
-  :root[data-theme="light"] .glass {
+  :root[data-theme='light'] .glass {
     background: rgba(255, 255, 255, 0.7);
     border: 1px solid rgba(0, 0, 0, 0.1);
   }
-  
-  :root[data-theme="light"] .glass-card {
+
+  :root[data-theme='light'] .glass-card {
     background: rgba(255, 255, 255, 0.8);
     border: 1px solid rgba(0, 0, 0, 0.08);
     box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.1);
   }
-  
-  :root[data-theme="light"] .glass-hover:hover {
+
+  :root[data-theme='light'] .glass-hover:hover {
     background: rgba(255, 255, 255, 0.95);
     border: 1px solid rgba(0, 0, 0, 0.15);
     box-shadow: 0 12px 40px 0 rgba(0, 0, 0, 0.15);
@@ -117,7 +117,7 @@
 }
 
 /* Light Mode Colors */
-:root[data-theme="light"] {
+:root[data-theme='light'] {
   --background: 248 250 252;
   --foreground: 15 23 42;
   --card: 255 255 255;
@@ -139,7 +139,7 @@
 }
 
 /* Light Mode Specific Styles */
-:root[data-theme="light"] body {
+:root[data-theme='light'] body {
   background: linear-gradient(to bottom, #f8fafc, #e2e8f0);
 }
 
@@ -149,13 +149,13 @@
   }
   body {
     @apply bg-[rgb(var(--background))] text-[rgb(var(--foreground))];
-    font-family: "Inter", sans-serif;
+    font-family: 'Inter', sans-serif;
   }
   html {
     scroll-behavior: smooth;
     scroll-padding-top: 80px;
   }
-  
+
   /* Smooth scroll with custom easing */
   @media (prefers-reduced-motion: no-preference) {
     html {
@@ -331,7 +331,7 @@
   .custom-cursor {
     display: none !important;
   }
-  
+
   * {
     cursor: auto !important;
   }

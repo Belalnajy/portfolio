@@ -1,15 +1,15 @@
-import { useState, useEffect } from "react";
-import { Link } from "react-scroll";
-import { motion, AnimatePresence } from "framer-motion";
-import { FaDownload } from "react-icons/fa";
-import { FiMenu, FiX } from "react-icons/fi";
-import { HiSparkles } from "react-icons/hi";
-import MagneticButton from "./MagneticButton";
+import { useState, useEffect } from 'react';
+import { Link } from 'react-scroll';
+import { motion, AnimatePresence } from 'framer-motion';
+import { FaDownload } from 'react-icons/fa';
+import { FiMenu, FiX } from 'react-icons/fi';
+import { HiSparkles } from 'react-icons/hi';
+import MagneticButton from './MagneticButton';
 
 const Navbar = ({ onDownloadCV }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const [activeSection, setActiveSection] = useState("home");
+  const [activeSection, setActiveSection] = useState('home');
 
   useEffect(() => {
     const handleScroll = () => {
@@ -17,15 +17,15 @@ const Navbar = ({ onDownloadCV }) => {
       setScrolled(isScrolled);
     };
 
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
   // Intersection Observer for active section detection
   useEffect(() => {
     const observerOptions = {
       root: null,
-      rootMargin: "-20% 0px -70% 0px",
+      rootMargin: '-20% 0px -70% 0px',
       threshold: 0,
     };
 
@@ -37,10 +37,22 @@ const Navbar = ({ onDownloadCV }) => {
       });
     };
 
-    const observer = new IntersectionObserver(observerCallback, observerOptions);
+    const observer = new IntersectionObserver(
+      observerCallback,
+      observerOptions
+    );
 
     // Observe all sections
-    const sections = ["home", "about", "experience", "projects", "skills", "services", "testimonials", "contact"];
+    const sections = [
+      'home',
+      'about',
+      'experience',
+      'projects',
+      'skills',
+      'services',
+      'testimonials',
+      'contact',
+    ];
     sections.forEach((sectionId) => {
       const element = document.getElementById(sectionId);
       if (element) {
@@ -59,24 +71,26 @@ const Navbar = ({ onDownloadCV }) => {
   }, []);
 
   const navItems = [
-    { label: "Home", to: "home" },
-    { label: "About", to: "about" },
-    { label: "Experience", to: "experience" },
-    { label: "Projects", to: "projects" },
-    { label: "Skills", to: "skills" },
-    { label: "Services", to: "services" },
-    { label: "Testimonials", to: "testimonials" },
-    { label: "Contact", to: "contact" },
+    { label: 'Home', to: 'home' },
+    { label: 'About', to: 'about' },
+    { label: 'Experience', to: 'experience' },
+    { label: 'Projects', to: 'projects' },
+    { label: 'Skills', to: 'skills' },
+    { label: 'Services', to: 'services' },
+    { label: 'Testimonials', to: 'testimonials' },
+    { label: 'Contact', to: 'contact' },
   ];
 
   return (
     <motion.nav
       initial={{ y: -100, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
-      transition={{ duration: 0.6, ease: "easeOut" }}
-      className={`fixed w-full z-50 transition-all duration-500 ${scrolled
-        ? "bg-[rgb(var(--card))]/90 backdrop-blur-3xl shadow-2xl border-b border-[rgb(var(--border))]"
-        : "bg-transparent"}`}>
+      transition={{ duration: 0.6, ease: 'easeOut' }}
+      className={`fixed w-full z-50 transition-all duration-500 ${
+        scrolled
+          ? 'bg-[rgb(var(--card))]/90 backdrop-blur-3xl shadow-2xl border-b border-[rgb(var(--border))]'
+          : 'bg-transparent'
+      }`}>
       {/* Animated gradient line on top */}
       <motion.div
         className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-blue-500 to-transparent"
@@ -87,7 +101,7 @@ const Navbar = ({ onDownloadCV }) => {
         transition={{
           duration: 3,
           repeat: Infinity,
-          ease: "easeInOut",
+          ease: 'easeInOut',
         }}
       />
 
@@ -109,7 +123,7 @@ const Navbar = ({ onDownloadCV }) => {
                   transition={{
                     duration: 2,
                     repeat: Infinity,
-                    ease: "easeInOut",
+                    ease: 'easeInOut',
                   }}
                 />
 
@@ -122,7 +136,7 @@ const Navbar = ({ onDownloadCV }) => {
                     transition={{
                       duration: 2,
                       repeat: Infinity,
-                      ease: "easeInOut",
+                      ease: 'easeInOut',
                     }}
                     className="text-blue-500 opacity-0 group-hover:opacity-100 transition-opacity">
                     <HiSparkles className="w-4 h-4" />
@@ -133,8 +147,8 @@ const Navbar = ({ onDownloadCV }) => {
                 <motion.div
                   className="absolute -bottom-1 left-0 h-[2px] bg-gradient-to-r from-blue-500 via-purple-500 to-blue-500 rounded-full"
                   initial={{ width: 0 }}
-                  whileHover={{ width: "100%" }}
-                  transition={{ duration: 0.4, ease: "easeOut" }}
+                  whileHover={{ width: '100%' }}
+                  transition={{ duration: 0.4, ease: 'easeOut' }}
                 />
               </div>
             </motion.div>
@@ -150,16 +164,16 @@ const Navbar = ({ onDownloadCV }) => {
               <motion.div
                 className="absolute inset-0 rounded-full bg-gradient-to-r from-blue-500/10 via-purple-500/10 to-blue-500/10 opacity-0 group-hover:opacity-100"
                 animate={{
-                  backgroundPosition: ["0% 50%", "100% 50%", "0% 50%"],
+                  backgroundPosition: ['0% 50%', '100% 50%', '0% 50%'],
                 }}
                 transition={{
                   duration: 3,
                   repeat: Infinity,
-                  ease: "linear",
+                  ease: 'linear',
                 }}
               />
 
-              {navItems.map((item, index) =>
+              {navItems.map((item, index) => (
                 <Link
                   key={item.label}
                   to={item.to}
@@ -171,24 +185,24 @@ const Navbar = ({ onDownloadCV }) => {
                   <motion.div
                     whileHover={{ scale: 1.05, y: -2 }}
                     whileTap={{ scale: 0.95 }}
-                    className={`relative px-5 py-2 rounded-full text-sm font-medium transition-all duration-300 ${activeSection ===
-                    item.to
-                      ? "text-[rgb(var(--primary))] font-semibold"
-                      : "text-[rgb(var(--muted-foreground))] hover:text-[rgb(var(--foreground))]"}`}>
+                    className={`relative px-5 py-2 rounded-full text-sm font-medium transition-all duration-300 ${
+                      activeSection === item.to
+                        ? 'text-[rgb(var(--primary))] font-semibold'
+                        : 'text-[rgb(var(--muted-foreground))] hover:text-[rgb(var(--foreground))]'
+                    }`}>
                     {/* Active indicator with gradient */}
-                    {activeSection === item.to &&
+                    {activeSection === item.to && (
                       <motion.div
                         layoutId="activeSection"
                         className="absolute inset-0 bg-gradient-to-r from-blue-500/20 via-purple-500/20 to-blue-500/20 rounded-full border border-blue-500/30"
                         transition={{
-                          type: "spring",
+                          type: 'spring',
                           bounce: 0.2,
                           duration: 0.6,
                         }}
-                      />}
-                    <span className="relative z-10">
-                      {item.label}
-                    </span>
+                      />
+                    )}
+                    <span className="relative z-10">{item.label}</span>
 
                     {/* Hover dot indicator */}
                     <motion.span
@@ -198,7 +212,7 @@ const Navbar = ({ onDownloadCV }) => {
                     />
                   </motion.div>
                 </Link>
-              )}
+              ))}
             </motion.div>
           </div>
 
@@ -210,7 +224,7 @@ const Navbar = ({ onDownloadCV }) => {
               {/* Animated gradient background on hover */}
               <motion.div
                 className="absolute inset-0 bg-gradient-to-r from-blue-500 via-purple-500 to-blue-500"
-                initial={{ x: "-100%", opacity: 0 }}
+                initial={{ x: '-100%', opacity: 0 }}
                 whileHover={{ x: 0, opacity: 1 }}
                 transition={{ duration: 0.4 }}
               />
@@ -218,8 +232,8 @@ const Navbar = ({ onDownloadCV }) => {
               {/* Shimmer effect */}
               <motion.div
                 className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent"
-                animate={{ x: ["-100%", "200%"] }}
-                transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
+                animate={{ x: ['-100%', '200%'] }}
+                transition={{ duration: 3, repeat: Infinity, ease: 'linear' }}
               />
 
               <span className="relative z-10 flex items-center gap-2 group-hover:text-blue-500 transition-colors duration-300">
@@ -228,7 +242,7 @@ const Navbar = ({ onDownloadCV }) => {
                   transition={{
                     duration: 1.5,
                     repeat: Infinity,
-                    ease: "easeInOut",
+                    ease: 'easeInOut',
                   }}>
                   <FaDownload className="text-sm" />
                 </motion.span>
@@ -251,23 +265,31 @@ const Navbar = ({ onDownloadCV }) => {
               />
 
               <AnimatePresence mode="wait">
-                {isOpen
-                  ? <motion.div
-                      key="close"
-                      initial={{ rotate: -90, opacity: 0 }}
-                      animate={{ rotate: 0, opacity: 1 }}
-                      exit={{ rotate: 90, opacity: 0 }}
-                      transition={{ duration: 0.2 }}>
-                      <FiX size={24} className="text-[rgb(var(--foreground))] relative z-10" />
-                    </motion.div>
-                  : <motion.div
-                      key="menu"
-                      initial={{ rotate: 90, opacity: 0 }}
-                      animate={{ rotate: 0, opacity: 1 }}
-                      exit={{ rotate: -90, opacity: 0 }}
-                      transition={{ duration: 0.2 }}>
-                      <FiMenu size={24} className="text-[rgb(var(--foreground))] relative z-10" />
-                    </motion.div>}
+                {isOpen ? (
+                  <motion.div
+                    key="close"
+                    initial={{ rotate: -90, opacity: 0 }}
+                    animate={{ rotate: 0, opacity: 1 }}
+                    exit={{ rotate: 90, opacity: 0 }}
+                    transition={{ duration: 0.2 }}>
+                    <FiX
+                      size={24}
+                      className="text-[rgb(var(--foreground))] relative z-10"
+                    />
+                  </motion.div>
+                ) : (
+                  <motion.div
+                    key="menu"
+                    initial={{ rotate: 90, opacity: 0 }}
+                    animate={{ rotate: 0, opacity: 1 }}
+                    exit={{ rotate: -90, opacity: 0 }}
+                    transition={{ duration: 0.2 }}>
+                    <FiMenu
+                      size={24}
+                      className="text-[rgb(var(--foreground))] relative z-10"
+                    />
+                  </motion.div>
+                )}
               </AnimatePresence>
             </motion.button>
           </div>
@@ -276,18 +298,18 @@ const Navbar = ({ onDownloadCV }) => {
 
       {/* Mobile Navigation Menu - Enhanced with modern design */}
       <AnimatePresence>
-        {isOpen &&
+        {isOpen && (
           <motion.div
             initial={{ opacity: 0, y: -20, scale: 0.95 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: -20, scale: 0.95 }}
-            transition={{ duration: 0.3, ease: "easeOut" }}
+            transition={{ duration: 0.3, ease: 'easeOut' }}
             className="md:hidden absolute top-full left-0 right-0 mt-2 mx-4 rounded-2xl bg-[rgb(var(--card))]/95 backdrop-blur-2xl border border-[rgb(var(--border))] shadow-2xl overflow-hidden">
             {/* Gradient accent on top */}
             <div className="h-1 bg-gradient-to-r from-blue-500 via-purple-500 to-blue-500" />
 
             <div className="px-4 py-6 space-y-2">
-              {navItems.map((item, index) =>
+              {navItems.map((item, index) => (
                 <Link
                   key={item.label}
                   to={item.to}
@@ -329,7 +351,7 @@ const Navbar = ({ onDownloadCV }) => {
                     </motion.span>
                   </motion.div>
                 </Link>
-              )}
+              ))}
 
               {/* Divider */}
               <motion.div
@@ -365,11 +387,11 @@ const Navbar = ({ onDownloadCV }) => {
                   {/* Shimmer effect */}
                   <motion.div
                     className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent"
-                    animate={{ x: ["-100%", "200%"] }}
+                    animate={{ x: ['-100%', '200%'] }}
                     transition={{
                       duration: 2,
                       repeat: Infinity,
-                      ease: "linear",
+                      ease: 'linear',
                     }}
                   />
 
@@ -380,7 +402,8 @@ const Navbar = ({ onDownloadCV }) => {
                 </button>
               </motion.div>
             </div>
-          </motion.div>}
+          </motion.div>
+        )}
       </AnimatePresence>
     </motion.nav>
   );

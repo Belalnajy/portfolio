@@ -1,90 +1,90 @@
-import { useState } from "react";
-import { motion } from "framer-motion";
-import { FaLaptopCode, FaGraduationCap, FaBriefcase } from "react-icons/fa";
+import { useState } from 'react';
+import { motion } from 'framer-motion';
+import { FaLaptopCode, FaGraduationCap, FaBriefcase } from 'react-icons/fa';
 
 const InteractiveTimeline = () => {
   const [activeIndex, setActiveIndex] = useState(0);
 
   const experiences = [
     {
-      title: "Full Stack Developer",
-      company: "S&F (Saudi Arabia)",
-      location: "Remote, Saudi Arabia",
-      period: "07/2025 - Present",
-      type: "work",
+      title: 'Full Stack Developer',
+      company: 'S&F (Saudi Arabia)',
+      location: 'Remote, Saudi Arabia',
+      period: '07/2025 - Present',
+      type: 'work',
       icon: <FaBriefcase />,
-      color: "from-blue-500 to-cyan-500",
+      color: 'from-blue-500 to-cyan-500',
       description: [
-        "Built and maintained full-stack applications using Django, Node.js, React.js, and PostgreSQL",
-        "Designed and deployed backend services & RESTful APIs for web and mobile apps",
-        "Improved database performance and ensured application scalability"
-      ]
+        'Built and maintained full-stack applications using Django, Node.js, React.js, and PostgreSQL',
+        'Designed and deployed backend services & RESTful APIs for web and mobile apps',
+        'Improved database performance and ensured application scalability',
+      ],
     },
     {
-      title: "External Instructor - Front-End Development",
-      company: "Information Technology Institute (ITI)",
-      location: "Remote, Egypt",
-      period: "07/2025 - 10/2025",
-      type: "work",
+      title: 'External Instructor - Front-End Development',
+      company: 'Information Technology Institute (ITI)',
+      location: 'Remote, Egypt',
+      period: '07/2025 - 10/2025',
+      type: 'work',
       icon: <FaLaptopCode />,
-      color: "from-purple-500 to-pink-500",
+      color: 'from-purple-500 to-pink-500',
       description: [
-        "Taught Front-End Development (HTML, CSS, JavaScript) to more than 200 students",
-        "Designed and delivered practical coding sessions and real-world project guidance"
-      ]
+        'Taught Front-End Development (HTML, CSS, JavaScript) to more than 200 students',
+        'Designed and delivered practical coding sessions and real-world project guidance',
+      ],
     },
     {
-      title: "Freelance Web Developer",
-      company: "Self-Employed",
-      location: "Remote, Egypt",
-      period: "03/2025 - Present",
-      type: "work",
+      title: 'Freelance Web Developer',
+      company: 'Self-Employed',
+      location: 'Remote, Egypt',
+      period: '03/2025 - Present',
+      type: 'work',
       icon: <FaLaptopCode />,
-      color: "from-green-500 to-emerald-500",
+      color: 'from-green-500 to-emerald-500',
       description: [
-        "Built full-stack, production-ready web apps for Gulf clients",
-        "Delivered scalable, multilingual, and RTL-supported platforms",
-        "Used React, Next.js, NestJS, Django, and PostgreSQL"
-      ]
+        'Built full-stack, production-ready web apps for Gulf clients',
+        'Delivered scalable, multilingual, and RTL-supported platforms',
+        'Used React, Next.js, NestJS, Django, and PostgreSQL',
+      ],
     },
     {
-      title: "Full Stack Development Using Python Intern",
-      company: "Information Technology Institute (ITI)",
-      location: "Hybrid, Egypt",
-      period: "11/2024 - 04/2025",
-      type: "education",
+      title: 'Full Stack Development Using Python Intern',
+      company: 'Information Technology Institute (ITI)',
+      location: 'Hybrid, Egypt',
+      period: '11/2024 - 04/2025',
+      type: 'education',
       icon: <FaGraduationCap />,
-      color: "from-orange-500 to-red-500",
+      color: 'from-orange-500 to-red-500',
       description: [
-        "Worked on hands-on projects covering Python, Django, databases, and front-end technologies"
-      ]
+        'Worked on hands-on projects covering Python, Django, databases, and front-end technologies',
+      ],
     },
     {
-      title: "IT Infrastructure Intern",
-      company: "Al Ezz Dekheila Steel Co. EZDK",
-      location: "Alexandria, Egypt",
-      period: "09/2022 - 10/2022",
-      type: "work",
+      title: 'IT Infrastructure Intern',
+      company: 'Al Ezz Dekheila Steel Co. EZDK',
+      location: 'Alexandria, Egypt',
+      period: '09/2022 - 10/2022',
+      type: 'work',
       icon: <FaBriefcase />,
-      color: "from-yellow-500 to-amber-500",
+      color: 'from-yellow-500 to-amber-500',
       description: [
-        "Gained hands-on experience in IT infrastructure and software development",
-        "Assisted in software development tasks and IT support"
-      ]
+        'Gained hands-on experience in IT infrastructure and software development',
+        'Assisted in software development tasks and IT support',
+      ],
     },
     {
-      title: "Bachelor of Business (MIS)",
-      company: "Alexandria University",
-      location: "Alexandria, Egypt",
-      period: "07/2019 - 07/2023",
-      type: "education",
+      title: 'Bachelor of Business (MIS)',
+      company: 'Alexandria University',
+      location: 'Alexandria, Egypt',
+      period: '07/2019 - 07/2023',
+      type: 'education',
       icon: <FaGraduationCap />,
-      color: "from-indigo-500 to-purple-500",
+      color: 'from-indigo-500 to-purple-500',
       description: [
-        "Graduated with Very Good (GPA: 3.265)",
-        "Graduation Project: Jewellery Store Website | Grade: A"
-      ]
-    }
+        'Graduated with Very Good (GPA: 3.265)',
+        'Graduation Project: Jewellery Store Website | Grade: A',
+      ],
+    },
   ];
 
   return (
@@ -109,30 +109,30 @@ const InteractiveTimeline = () => {
 
           {/* Timeline Items */}
           <div className="space-y-12">
-            {experiences.map((exp, index) =>
+            {experiences.map((exp, index) => (
               <motion.div
                 key={index}
                 initial={{ opacity: 0, y: 50 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: index * 0.1 }}
-                className={`relative flex items-center ${index % 2 === 0
-                  ? "md:flex-row"
-                  : "md:flex-row-reverse"} flex-col`}
+                className={`relative flex items-center ${
+                  index % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse'
+                } flex-col`}
                 onMouseEnter={() => setActiveIndex(index)}
                 onClick={() => setActiveIndex(index)}>
                 {/* Content */}
                 <div
-                  className={`w-full md:w-5/12 ${index % 2 === 0
-                    ? "md:pr-8"
-                    : "md:pl-8"}`}>
+                  className={`w-full md:w-5/12 ${
+                    index % 2 === 0 ? 'md:pr-8' : 'md:pl-8'
+                  }`}>
                   <motion.div
                     whileHover={{ scale: 1.03, y: -5 }}
                     transition={{ duration: 0.3 }}
-                    className={`glass-card glass-hover p-6 rounded-xl cursor-pointer relative ${activeIndex ===
-                    index
-                      ? "ring-2 ring-[rgb(var(--primary))] shadow-xl shadow-[rgb(var(--primary))]/20"
-                      : ""}`}>
-                    
+                    className={`glass-card glass-hover p-6 rounded-xl cursor-pointer relative ${
+                      activeIndex === index
+                        ? 'ring-2 ring-[rgb(var(--primary))] shadow-xl shadow-[rgb(var(--primary))]/20'
+                        : ''
+                    }`}>
                     <div className="flex items-start justify-between mb-4 gap-3">
                       <div className="flex items-start flex-1 min-w-0">
                         <div className="w-14 h-14 rounded-xl bg-[rgb(var(--primary))]/10 flex items-center justify-center text-[rgb(var(--primary))] text-xl mr-4 border border-[rgb(var(--primary))]/20 flex-shrink-0">
@@ -150,7 +150,7 @@ const InteractiveTimeline = () => {
                       {/* Type badge */}
                       <div className="flex-shrink-0">
                         <span className="px-3 py-1 rounded-full text-xs font-medium bg-[rgb(var(--muted))] text-[rgb(var(--muted-foreground))] border border-[rgb(var(--border))] whitespace-nowrap">
-                          {exp.type === "work" ? "💼 Work" : "🎓 Education"}
+                          {exp.type === 'work' ? '💼 Work' : '🎓 Education'}
                         </span>
                       </div>
                     </div>
@@ -165,7 +165,7 @@ const InteractiveTimeline = () => {
                     </div>
 
                     <ul className="space-y-2.5 relative">
-                      {exp.description.map((desc, i) =>
+                      {exp.description.map((desc, i) => (
                         <motion.li
                           key={i}
                           initial={{ opacity: 0, x: -10 }}
@@ -175,11 +175,9 @@ const InteractiveTimeline = () => {
                           <span className="text-[rgb(var(--primary))] mr-2 mt-0.5 font-bold">
                             ▸
                           </span>
-                          <span>
-                            {desc}
-                          </span>
+                          <span>{desc}</span>
                         </motion.li>
-                      )}
+                      ))}
                     </ul>
                   </motion.div>
                 </div>
@@ -188,19 +186,21 @@ const InteractiveTimeline = () => {
                 <div className="hidden md:flex absolute left-1/2 transform -translate-x-1/2 w-8 h-8 items-center justify-center">
                   <motion.div
                     animate={{
-                      scale: activeIndex === index ? 1.3 : 1
+                      scale: activeIndex === index ? 1.3 : 1,
                     }}
                     transition={{ duration: 0.3 }}
-                    className={`w-6 h-6 rounded-full ${activeIndex === index
-                      ? "bg-[rgb(var(--primary))] ring-4 ring-[rgb(var(--primary))]/30 shadow-xl shadow-[rgb(var(--primary))]/50"
-                      : "bg-[rgb(var(--foreground))] ring-4 ring-[rgb(var(--background))] shadow-lg"}`}
+                    className={`w-6 h-6 rounded-full ${
+                      activeIndex === index
+                        ? 'bg-[rgb(var(--primary))] ring-4 ring-[rgb(var(--primary))]/30 shadow-xl shadow-[rgb(var(--primary))]/50'
+                        : 'bg-[rgb(var(--foreground))] ring-4 ring-[rgb(var(--background))] shadow-lg'
+                    }`}
                   />
                 </div>
 
                 {/* Spacer */}
                 <div className="w-full md:w-5/12" />
               </motion.div>
-            )}
+            ))}
           </div>
         </div>
       </div>
