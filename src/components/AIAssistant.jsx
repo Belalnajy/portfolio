@@ -431,7 +431,7 @@ const AIAssistant = () => {
             initial={{ opacity: 0, y: 20, scale: 0.95 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 20, scale: 0.95 }}
-            className="mb-4 w-[350px] md:w-[400px] h-[500px] glass-card flex flex-col shadow-2xl rounded-2xl overflow-hidden border border-[rgb(var(--primary))]/20">
+            className="mb-4 w-[350px] md:w-[400px] h-[500px] glass-card flex flex-col shadow-2xl rounded-2xl overflow-hidden border border-[rgb(var(--primary))]/40 bg-[rgb(var(--background))]/80 md:bg-transparent">
             {/* Header */}
             <div className="p-4 bg-gradient-to-r from-blue-600/20 to-purple-600/20 flex items-center justify-between border-b border-[rgb(var(--border))]">
               <div className="flex items-center space-x-3">
