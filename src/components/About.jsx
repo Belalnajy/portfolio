@@ -8,23 +8,54 @@ import {
   FaHeart,
   FaLightbulb,
 } from 'react-icons/fa';
+import { useTranslation, Trans } from 'react-i18next';
 
 const About = () => {
+  const { t, i18n } = useTranslation();
+  const isArabic = i18n.language === 'ar';
+
   const highlights = [
     {
       icon: <FaRocket />,
-      title: 'Fast Learner',
-      description: 'Quick to adapt to new technologies and frameworks',
+      title: t('about.highlights.fast_learner.title'),
+      description: t('about.highlights.fast_learner.desc'),
     },
     {
       icon: <FaHeart />,
-      title: 'Passionate',
-      description: 'Love building elegant solutions to complex problems',
+      title: t('about.highlights.passionate.title'),
+      description: t('about.highlights.passionate.desc'),
     },
     {
       icon: <FaLightbulb />,
-      title: 'Creative',
-      description: 'Always thinking of innovative ways to improve UX',
+      title: t('about.highlights.creative.title'),
+      description: t('about.highlights.creative.desc'),
+    },
+  ];
+
+  const infoItems = [
+    {
+      icon: <FaUser />,
+      label: t('about.labels.name'),
+      value: t('about.values.name'),
+      color: 'blue',
+    },
+    {
+      icon: <FaCode />,
+      label: t('about.labels.role'),
+      value: t('about.values.role'),
+      color: 'purple',
+    },
+    {
+      icon: <FaGraduationCap />,
+      label: t('about.labels.education'),
+      value: t('about.values.education'),
+      color: 'pink',
+    },
+    {
+      icon: <FaMapMarkerAlt />,
+      label: t('about.labels.location'),
+      value: t('about.values.location'),
+      color: 'cyan',
     },
   ];
 
@@ -34,66 +65,43 @@ const About = () => {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
           transition={{ duration: 0.5 }}
           className="text-center mb-16">
           <h2 className="text-5xl font-bold mb-4 text-[rgb(var(--foreground))]">
-            About Me
+            {t('about.title')}
           </h2>
           <p className="text-[rgb(var(--muted-foreground))] max-w-2xl mx-auto text-lg">
-            Full Stack Developer experienced in building scalable, multilingual
-            web applications
+            {t('about.subtitle')}
           </p>
         </motion.div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12 max-w-6xl mx-auto">
           {/* Personal Info */}
           <motion.div
-            initial={{ opacity: 0, x: -20 }}
+            initial={{ opacity: 0, x: isArabic ? 20 : -20 }}
             whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
             transition={{ duration: 0.5 }}
             className="space-y-6">
             <h3 className="text-3xl font-bold mb-8 bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
-              Personal Information
+              {t('about.personal_info')}
             </h3>
             <div className="space-y-4">
-              {[
-                {
-                  icon: <FaUser />,
-                  label: 'Name',
-                  value: 'Belal Nagy',
-                  color: 'blue',
-                },
-                {
-                  icon: <FaCode />,
-                  label: 'Role',
-                  value: 'Full Stack Developer',
-                  color: 'purple',
-                },
-                {
-                  icon: <FaGraduationCap />,
-                  label: 'Education',
-                  value: 'Bachelor of Business (MIS)',
-                  color: 'pink',
-                },
-                {
-                  icon: <FaMapMarkerAlt />,
-                  label: 'Location',
-                  value: 'Alexandria, Egypt',
-                  color: 'cyan',
-                },
-              ].map((item, index) => (
+              {infoItems.map((item, index) => (
                 <motion.div
                   key={index}
-                  initial={{ opacity: 0, x: -20 }}
+                  initial={{ opacity: 0, x: isArabic ? 20 : -20 }}
                   whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true }}
                   transition={{ duration: 0.5, delay: index * 0.1 }}
-                  whileHover={{ x: 10, scale: 1.02 }}
-                  className="flex items-center space-x-4 glass-card glass-hover p-4 rounded-xl cursor-pointer">
+                  whileHover={{ x: isArabic ? -10 : 10, scale: 1.02 }}
+                  className="flex items-center gap-6 glass-card glass-hover p-4 rounded-xl cursor-pointer">
                   <div
-                    className={`bg-gradient-to-r from-${item.color}-500 to-${item.color}-600 p-3 rounded-lg`}>
+                    className={`bg-gradient-to-r from-${item.color}-500 to-${item.color}-600 p-3 rounded-lg shrink-0`}>
                     <div className="text-white text-xl">{item.icon}</div>
                   </div>
-                  <div>
+                  <div className="flex-1 text-start">
                     <h4 className="text-[rgb(var(--foreground))] font-semibold">
                       {item.label}
                     </h4>
@@ -108,45 +116,23 @@ const About = () => {
 
           {/* About Text */}
           <motion.div
-            initial={{ opacity: 0, x: 20 }}
+            initial={{ opacity: 0, x: isArabic ? -20 : 20 }}
             whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
             transition={{ duration: 0.5 }}
             className="space-y-6">
             <h3 className="text-3xl font-bold mb-8 bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
-              Professional Summary
+              {t('about.professional_summary')}
             </h3>
             <div className="glass-card p-6 rounded-xl space-y-4">
               <p className="text-[rgb(var(--foreground))] leading-relaxed">
-                Full Stack Developer experienced in building{' '}
-                <span className="text-[rgb(var(--primary))] font-semibold">
-                  scalable, multilingual web applications
-                </span>{' '}
-                using React.js, Next.js, Django, NestJS, and PostgreSQL.
-                Currently working at{' '}
-                <span className="text-[rgb(var(--primary))] font-semibold">
-                  S&F (Saudi Arabia)
-                </span>{' '}
-                developing full-stack applications and backend services for web
-                and mobile platforms.
+                <Trans i18nKey="about.summary_p1" components={{ 1: <span className="text-[rgb(var(--primary))] font-semibold" />, 3: <span className="text-[rgb(var(--primary))] font-semibold" /> }} />
               </p>
               <p className="text-[rgb(var(--foreground))] leading-relaxed">
-                Completed the ITI Full Stack program and served as an{' '}
-                <span className="text-[rgb(var(--primary))] font-semibold">
-                  External Instructor at ITI
-                </span>
-                , teaching Front-End Development to{' '}
-                <span className="text-[rgb(var(--primary))] font-semibold">
-                  200+ students
-                </span>
-                . Delivered AI-integrated, RTL-ready platforms for Saudi
-                startups and universities, focused on modern UI/UX and real-time
-                systems.
+                <Trans i18nKey="about.summary_p2" components={{ 1: <span className="text-[rgb(var(--primary))] font-semibold" />, 3: <span className="text-[rgb(var(--primary))] font-semibold" /> }} />
               </p>
               <p className="text-[rgb(var(--foreground))] leading-relaxed">
-                Passionate about creating efficient, scalable solutions with
-                expertise in multilingual platforms, real-time features, and
-                modern development practices. Always eager to learn new
-                technologies and deliver production-ready applications.
+                {t('about.summary_p3')}
               </p>
             </div>
           </motion.div>
@@ -156,6 +142,7 @@ const About = () => {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
           transition={{ duration: 0.5, delay: 0.3 }}
           className="mt-16 grid grid-cols-1 md:grid-cols-3 gap-6 max-w-6xl mx-auto">
           {highlights.map((item, index) => (
@@ -163,6 +150,7 @@ const About = () => {
               key={index}
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
               transition={{ duration: 0.5, delay: index * 0.1 }}
               whileHover={{ y: -10, scale: 1.05 }}
               className="glass-card glass-hover p-6 rounded-xl text-center cursor-pointer">

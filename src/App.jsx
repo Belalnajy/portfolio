@@ -1,10 +1,13 @@
 import { useEffect, useState } from 'react';
+import './i18n';
+import { useTranslation } from 'react-i18next';
 import { motion, AnimatePresence } from 'framer-motion';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import About from './components/About';
 import InteractiveTimeline from './components/InteractiveTimeline';
 import Projects from './components/Projects';
+import BrandLogos from './components/BrandLogos';
 import Skills from './components/Skills';
 import Contact from './components/Contact';
 import ScrollProgress from './components/ScrollProgress';
@@ -15,6 +18,7 @@ import AnimatedStats from './components/AnimatedStats';
 import ThemeSwitcher from './components/ThemeSwitcher';
 import Certifications from './components/Certifications';
 import Services from './components/Services';
+import LaptopShowcase3D from './components/LaptopShowcase3D';
 import Footer from './components/Footer';
 import LoadingScreen from './components/LoadingScreen';
 import DarkModeToggle from './components/DarkModeToggle';
@@ -38,6 +42,13 @@ function App() {
       once: true,
     });
   }, []);
+
+  const { i18n } = useTranslation();
+
+  useEffect(() => {
+    document.dir = i18n.dir();
+    document.documentElement.lang = i18n.language;
+  }, [i18n.language, i18n]);
 
   const handleLoadingComplete = () => {
     setIsLoading(false);
@@ -98,10 +109,12 @@ function App() {
         <main className="relative z-10">
           <Hero onDownloadCV={handleDownloadCV} />
           <About />
-          <Skills />
-          <AnimatedStats />
-          <InteractiveTimeline />
           <Projects />
+          <LaptopShowcase3D />
+          <BrandLogos />
+          <Skills />
+          <InteractiveTimeline />
+          <AnimatedStats />
           <Certifications />
           <Services />
           <Testimonials />

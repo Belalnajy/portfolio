@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Selected Brands & Digital Interfaces</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+        body {
+            margin: 0;
+            padding: 0;
+            /* Using a premium dark blue aesthetic */
+            background-color: #0B0F19;
+            color: #FFFFFF;
+            font-family: 'Outfit', sans-serif;
+            display: flex;
+            justify-content: center;
+        }
+        .page {
+            /* Ideal resolution for a landscape portfolio page / PDF */
+            width: 1920px;
+            min-height: 1080px;
+            padding: 100px 120px;
+            position: relative;
+            background: radial-gradient(ellipse at top left, #121A2F 0%, #0B0F19 100%);
+            overflow: hidden;
+        }
+        /* Subtle grid background pattern for tech/premium feel */
+        .page::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-image: 
+                linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+            background-size: 40px 40px;
+            pointer-events: none;
+            z-index: 1;
+        }
+        .content {
+            position: relative;
+            z-index: 2;
+        }
+        .header {
+            margin-bottom: 80px;
+            text-align: center;
+        }
+        .header h1 {
+            font-size: 56px;
+            font-weight: 600;
+            margin: 0 0 16px 0;
+            letter-spacing: -1px;
+            background: linear-gradient(135deg, #FFFFFF 0%, #A3B8CC 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .header p {
+            font-size: 22px;
+            font-weight: 300;
+            color: #8A9BB3;
+            margin: 0;
+            max-width: 800px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 40px;
+            align-items: center;
+        }
+        .logo-card {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            height: 180px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 30px;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+        .logo-card:hover {
+            background: rgba(255, 255, 255, 0.05);
+            transform: translateY(-5px);
+            border-color: rgba(255, 255, 255, 0.1);
+            box-shadow: 0 20px 40px -10px rgba(0,0,0,0.5);
+        }
+        .logo-card img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+            filter: drop-shadow(0 4px 6px rgba(0,0,0,0.1));
+        }
+        
+        /* Handling potential brightness issues: some logos might be black and need white contrast or inversion */
+        /* Normally we'd use filter: brightness(0) invert(1) if they are pure black, but we leave them as is assuming they are colorful or white */
+        
+        /* Glowing accents */
+        .glow {
+            position: absolute;
+            width: 600px;
+            height: 600px;
+            background: #3B82F6;
+            filter: blur(250px);
+            border-radius: 50%;
+            opacity: 0.15;
+            z-index: 0;
+        }
+        .glow.top-right {
+            top: -200px;
+            right: -100px;
+            background: #8B5CF6;
+        }
+        .glow.bottom-left {
+            bottom: -200px;
+            left: -100px;
+            background: #0EA5E9;
+        }
+    </style>
+</head>
+<body>
+    <div class="page">
+        <div class="glow top-right"></div>
+        <div class="glow bottom-left"></div>
+        
+        <div class="content">
+            <div class="header">
+                <h1>Featured Brands & Platforms</h1>
+                <p>A curated collection of digital platforms, web applications, and corporate identities showcasing our commitment to premium design and technical excellence.</p>
+            </div>
+            
+            <div class="grid">
+                <!-- 18 logos = 3 rows of 6 -->
+                <div class="logo-card"><img src="./public/logos/21-secondary-logo.png" alt="Logo"></div>
+                <div class="logo-card"><img src="./public/logos/CME-logo.png" alt="Logo"></div>
+                <div class="logo-card"><img src="./public/logos/DiaMonitor-logo.png" alt="Logo"></div>
+                <div class="logo-card"><img src="./public/logos/KMBC-logo.png" alt="Logo"></div>
+                <div class="logo-card"><img src="./public/logos/amarna-logo.png" alt="Logo"></div>
+                <div class="logo-card"><img src="./public/logos/baserah-logo.png" alt="Logo"></div>
+                
+                <div class="logo-card"><img src="./public/logos/dmagni-logo.png" alt="Logo"></div>
+                <div class="logo-card"><img src="./public/logos/indstrz-logo.png" alt="Logo"></div>
+                <div class="logo-card"><img src="./public/logos/manqla-logo.png" alt="Logo"></div>
+                <div class="logo-card"><img src="./public/logos/nextstop-logo.png" alt="Logo"></div>
+                <div class="logo-card"><img src="./public/logos/profleet-logo.png" alt="Logo"></div>
+                <div class="logo-card"><img src="./public/logos/quotemate-logo.png" alt="Logo"></div>
+                
+                <div class="logo-card"><img src="./public/logos/rabzan-logo.svg" alt="Logo"></div>
+                <div class="logo-card"><img src="./public/logos/sf-logo.png" alt="Logo"></div>
+                <div class="logo-card"><img src="./public/logos/sonomedix-logo.png" alt="Logo"></div>
+                <div class="logo-card"><img src="./public/logos/uduipa-logo.png" alt="Logo"></div>
+                <div class="logo-card"><img src="./public/logos/upafa-edu-logo.png" alt="Logo"></div>
+                <div class="logo-card"><img src="./public/logos/waferlee.png" alt="Logo"></div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

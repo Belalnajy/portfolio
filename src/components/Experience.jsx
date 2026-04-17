@@ -24,6 +24,7 @@ const Experience = () => {
       period: '07/2025 - Present',
       type: 'work',
       icon: <FaLaptopCode />,
+      logo: '/logos/sf-logo.png',
       description: [
         'Built and maintained full-stack applications using Django, Node.js, React.js, and PostgreSQL',
         'Designed and deployed backend services & RESTful APIs for web and mobile apps',
@@ -38,6 +39,7 @@ const Experience = () => {
       period: '07/2025 - 10/2025',
       type: 'work',
       icon: <FaLaptopCode />,
+      logo: '/logos/iti-logo.png',
       description: [
         'Taught Front-End Development (HTML, CSS, JavaScript) to more than 200 students',
         'Designed and delivered practical coding sessions and real-world project guidance'
@@ -64,6 +66,7 @@ const Experience = () => {
       period: '11/2024 - 04/2025',
       type: 'work',
       icon: <FaLaptopCode />,
+      logo: '/logos/iti-logo.png',
       description: [
         'Worked on hands-on projects covering Python, Django, databases, and front-end technologies'
       ]
@@ -75,6 +78,7 @@ const Experience = () => {
       period: '09/2022 - 10/2022',
       type: 'work',
       icon: <FaLaptopCode />,
+      logo: '/logos/ezzsteel-logo.png',
       description: [
         'Gained hands-on experience in IT infrastructure and software development in a corporate setting',
         'Assisted in software development tasks and IT support'
@@ -88,6 +92,7 @@ const Experience = () => {
       period: '07/2019 - 07/2023',
       type: 'education',
       icon: <FaGraduationCap />,
+      logo: '/logos/alex-uni-logo.png',
       description: [
         'Graduated with Very Good (GPA: 3.265)',
         'Graduation Project: Jewellery Store Website | Grade: A'
@@ -101,6 +106,7 @@ const Experience = () => {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
           transition={{ duration: 0.5 }}
           className="text-center mb-12">
           <h2 className="text-3xl font-bold mb-4">Experience & Education</h2>

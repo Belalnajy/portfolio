@@ -149,7 +149,7 @@
   }
   body {
     @apply bg-[rgb(var(--background))] text-[rgb(var(--foreground))];
-    font-family: 'Inter', sans-serif;
+    font-family: 'Cairo', 'Inter', sans-serif;
   }
   html {
     scroll-behavior: smooth;

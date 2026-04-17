@@ -1,15 +1,22 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-scroll';
 import { motion, AnimatePresence } from 'framer-motion';
-import { FaDownload } from 'react-icons/fa';
+import { FaDownload, FaGlobe } from 'react-icons/fa';
 import { FiMenu, FiX } from 'react-icons/fi';
 import { HiSparkles } from 'react-icons/hi';
 import MagneticButton from './MagneticButton';
+import { useTranslation } from 'react-i18next';
 
 const Navbar = ({ onDownloadCV }) => {
+  const { t, i18n } = useTranslation();
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [activeSection, setActiveSection] = useState('home');
+
+  const toggleLanguage = () => {
+    const newLang = i18n.language === 'en' ? 'ar' : 'en';
+    i18n.changeLanguage(newLang);
+  };
 
   useEffect(() => {
     const handleScroll = () => {
@@ -39,7 +46,7 @@ const Navbar = ({ onDownloadCV }) => {
 
     const observer = new IntersectionObserver(
       observerCallback,
-      observerOptions
+      observerOptions,
     );
 
     // Observe all sections
@@ -71,14 +78,14 @@ const Navbar = ({ onDownloadCV }) => {
   }, []);
 
   const navItems = [
-    { label: 'Home', to: 'home' },
-    { label: 'About', to: 'about' },
-    { label: 'Experience', to: 'experience' },
-    { label: 'Projects', to: 'projects' },
-    { label: 'Skills', to: 'skills' },
-    { label: 'Services', to: 'services' },
-    { label: 'Testimonials', to: 'testimonials' },
-    { label: 'Contact', to: 'contact' },
+    { label: t('nav.home'), to: 'home' },
+    { label: t('nav.about'), to: 'about' },
+    { label: t('nav.timeline'), to: 'experience' },
+    { label: t('nav.projects'), to: 'projects' },
+    { label: t('nav.skills'), to: 'skills' },
+    { label: t('nav.services'), to: 'services' },
+    { label: t('nav.testimonials'), to: 'testimonials' },
+    { label: t('nav.contact'), to: 'contact' },
   ];
 
   return (
@@ -93,7 +100,7 @@ const Navbar = ({ onDownloadCV }) => {
       }`}>
       {/* Animated gradient line on top */}
       <motion.div
-        className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-blue-500 to-transparent"
+        className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-[rgb(var(--primary))] to-transparent"
         animate={{
           opacity: scrolled ? [0.3, 0.6, 0.3] : 0,
           scaleX: scrolled ? [0.8, 1, 0.8] : 0,
@@ -116,7 +123,7 @@ const Navbar = ({ onDownloadCV }) => {
               <div className="relative">
                 {/* Glow effect behind logo */}
                 <motion.div
-                  className="absolute -inset-2 bg-blue-500/20 rounded-lg blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+                  className="absolute -inset-2 bg-[rgb(var(--primary))]/20 rounded-lg blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"
                   animate={{
                     scale: [1, 1.1, 1],
                   }}
@@ -138,14 +145,14 @@ const Navbar = ({ onDownloadCV }) => {
                       repeat: Infinity,
                       ease: 'easeInOut',
                     }}
-                    className="text-blue-500 opacity-0 group-hover:opacity-100 transition-opacity">
+                    className="text-[rgb(var(--primary))] opacity-0 group-hover:opacity-100 transition-opacity">
                     <HiSparkles className="w-4 h-4" />
                   </motion.span>
                 </span>
 
                 {/* Animated underline */}
                 <motion.div
-                  className="absolute -bottom-1 left-0 h-[2px] bg-gradient-to-r from-blue-500 via-purple-500 to-blue-500 rounded-full"
+                  className="absolute -bottom-1 left-0 h-[2px] bg-gradient-to-r from-[rgb(var(--primary))] via-purple-500 to-[rgb(var(--primary))] rounded-full"
                   initial={{ width: 0 }}
                   whileHover={{ width: '100%' }}
                   transition={{ duration: 0.4, ease: 'easeOut' }}
@@ -154,28 +161,15 @@ const Navbar = ({ onDownloadCV }) => {
             </motion.div>
           </Link>
 
-          {/* Desktop Navigation - Enhanced pill design */}
-          <div className="hidden md:flex items-center">
+          {/* Desktop Navigation */}
+          <div className="hidden md:flex items-center gap-4">
             <motion.div
               className="relative flex items-center gap-1 px-3 py-2 rounded-full bg-[rgb(var(--card))]/80 backdrop-blur-xl border border-[rgb(var(--border))] shadow-lg"
               whileHover={{ scale: 1.02 }}
               transition={{ duration: 0.2 }}>
-              {/* Animated background glow */}
-              <motion.div
-                className="absolute inset-0 rounded-full bg-gradient-to-r from-blue-500/10 via-purple-500/10 to-blue-500/10 opacity-0 group-hover:opacity-100"
-                animate={{
-                  backgroundPosition: ['0% 50%', '100% 50%', '0% 50%'],
-                }}
-                transition={{
-                  duration: 3,
-                  repeat: Infinity,
-                  ease: 'linear',
-                }}
-              />
-
               {navItems.map((item, index) => (
                 <Link
-                  key={item.label}
+                  key={item.to}
                   to={item.to}
                   spy={false}
                   smooth={true}
@@ -185,16 +179,15 @@ const Navbar = ({ onDownloadCV }) => {
                   <motion.div
                     whileHover={{ scale: 1.05, y: -2 }}
                     whileTap={{ scale: 0.95 }}
-                    className={`relative px-5 py-2 rounded-full text-sm font-medium transition-all duration-300 ${
+                    className={`relative px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 ${
                       activeSection === item.to
                         ? 'text-[rgb(var(--primary))] font-semibold'
                         : 'text-[rgb(var(--muted-foreground))] hover:text-[rgb(var(--foreground))]'
                     }`}>
-                    {/* Active indicator with gradient */}
                     {activeSection === item.to && (
                       <motion.div
                         layoutId="activeSection"
-                        className="absolute inset-0 bg-gradient-to-r from-blue-500/20 via-purple-500/20 to-blue-500/20 rounded-full border border-blue-500/30"
+                        className="absolute inset-0 bg-gradient-to-r from-[rgb(var(--primary))]/10 to-[rgb(var(--primary))]/5 rounded-full border border-[rgb(var(--primary))]/20"
                         transition={{
                           type: 'spring',
                           bounce: 0.2,
@@ -203,50 +196,28 @@ const Navbar = ({ onDownloadCV }) => {
                       />
                     )}
                     <span className="relative z-10">{item.label}</span>
-
-                    {/* Hover dot indicator */}
-                    <motion.span
-                      className="absolute -top-1 left-1/2 -translate-x-1/2 w-1 h-1 bg-blue-500 rounded-full opacity-0"
-                      whileHover={{ opacity: 1, scale: 1.5 }}
-                      transition={{ duration: 0.2 }}
-                    />
                   </motion.div>
                 </Link>
               ))}
             </motion.div>
-          </div>
 
-          {/* CTA Button - Enhanced with gradient animation */}
-          <div className="hidden md:flex items-center">
+            {/* Language Switcher Toggle */}
+            <motion.button
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              onClick={toggleLanguage}
+              className="flex items-center gap-2 px-4 py-2 rounded-full bg-[rgb(var(--card))]/80 border border-[rgb(var(--border))] text-[rgb(var(--foreground))] hover:border-[rgb(var(--primary))]/50 transition-all font-bold text-sm shadow-sm group">
+              <FaGlobe className="text-[rgb(var(--primary))] group-hover:rotate-12 transition-transform duration-300" />
+              <span>{i18n.language === 'en' ? 'AR' : 'EN'}</span>
+            </motion.button>
+
+            {/* Resume Button */}
             <MagneticButton
               onClick={onDownloadCV}
-              className="group relative px-6 py-2.5 rounded-full bg-[rgb(var(--primary))] text-white font-semibold overflow-hidden transition-all duration-300 hover:shadow-xl hover:shadow-[rgb(var(--primary))]/30 flex items-center gap-2 border-2 border-transparent hover:border-[rgb(var(--primary))]/50">
-              {/* Animated gradient background on hover */}
-              <motion.div
-                className="absolute inset-0 bg-gradient-to-r from-blue-500 via-purple-500 to-blue-500"
-                initial={{ x: '-100%', opacity: 0 }}
-                whileHover={{ x: 0, opacity: 1 }}
-                transition={{ duration: 0.4 }}
-              />
-
-              {/* Shimmer effect */}
-              <motion.div
-                className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent"
-                animate={{ x: ['-100%', '200%'] }}
-                transition={{ duration: 3, repeat: Infinity, ease: 'linear' }}
-              />
-
-              <span className="relative z-10 flex items-center gap-2 group-hover:text-blue-500 transition-colors duration-300">
-                <motion.span
-                  animate={{ y: [0, -2, 0] }}
-                  transition={{
-                    duration: 1.5,
-                    repeat: Infinity,
-                    ease: 'easeInOut',
-                  }}>
-                  <FaDownload className="text-sm" />
-                </motion.span>
-                Resume
+              className="group relative px-6 py-2 rounded-full bg-[rgb(var(--primary))] text-white font-semibold overflow-hidden transition-all duration-300 hover:shadow-xl hover:shadow-[rgb(var(--primary))]/30 flex items-center gap-2">
+              <span className="relative z-10 flex items-center gap-2">
+                <FaDownload className="text-sm" />
+                {t('nav.download_cv')}
               </span>
             </MagneticButton>
           </div>
@@ -319,11 +290,11 @@ const Navbar = ({ onDownloadCV }) => {
                   offset={-100}
                   onClick={() => setIsOpen(false)}>
                   <motion.div
-                    initial={{ opacity: 0, x: -20 }}
+                    initial={{ opacity: 0, x: isArabic ? 20 : -20 }}
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ delay: index * 0.05, duration: 0.3 }}
                     whileTap={{ scale: 0.95 }}
-                    className="group relative block px-5 py-3 rounded-xl text-[rgb(var(--muted-foreground))] hover:text-[rgb(var(--foreground))] transition-all duration-200 cursor-pointer font-medium overflow-hidden">
+                    className={`group relative block px-5 py-3 rounded-xl text-[rgb(var(--muted-foreground))] hover:text-[rgb(var(--foreground))] transition-all duration-200 cursor-pointer font-medium overflow-hidden ${isArabic ? 'text-right' : 'text-left'}`}>
                     {/* Hover gradient background */}
                     <motion.div
                       className="absolute inset-0 bg-gradient-to-r from-blue-500/10 to-purple-500/10 opacity-0 group-hover:opacity-100"
@@ -334,7 +305,8 @@ const Navbar = ({ onDownloadCV }) => {
                     <div className="absolute inset-0 rounded-xl border border-transparent group-hover:border-blue-500/30 transition-all duration-200" />
 
                     {/* Number indicator */}
-                    <span className="relative z-10 flex items-center gap-3">
+                    <span
+                      className={`relative z-10 flex items-center gap-3 ${isArabic ? 'flex-row-reverse' : ''}`}>
                       <span className="text-xs text-blue-500 font-mono opacity-50 group-hover:opacity-100 transition-opacity">
                         0{index + 1}
                       </span>
@@ -343,8 +315,8 @@ const Navbar = ({ onDownloadCV }) => {
 
                     {/* Arrow indicator */}
                     <motion.span
-                      className="absolute right-4 top-1/2 -translate-y-1/2 text-blue-500 opacity-0 group-hover:opacity-100"
-                      initial={{ x: -10 }}
+                      className={`absolute ${isArabic ? 'left-4 rotate-180' : 'right-4'} top-1/2 -translate-y-1/2 text-blue-500 opacity-0 group-hover:opacity-100`}
+                      initial={{ x: isArabic ? 10 : -10 }}
                       whileHover={{ x: 0 }}
                       transition={{ duration: 0.2 }}>
                       →
@@ -397,7 +369,7 @@ const Navbar = ({ onDownloadCV }) => {
 
                   <span className="relative z-10 flex items-center gap-2 group-hover:text-white transition-colors">
                     <FaDownload className="text-sm" />
-                    Download Resume
+                    {t('nav.download_cv')}
                   </span>
                 </button>
               </motion.div>

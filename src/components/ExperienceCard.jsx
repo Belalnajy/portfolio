@@ -1,17 +1,26 @@
 import { motion } from "framer-motion";
-import { FaCalendarAlt, FaMapMarkerAlt, FaBuilding } from "react-icons/fa";
+import { FaCalendarAlt, FaMapMarkerAlt, FaBuilding, FaChevronRight } from "react-icons/fa";
 
 const ExperienceCard = ({ experience, index }) => {
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
       transition={{ duration: 0.5, delay: index * 0.1 }}
       className="relative flex items-start gap-6 p-6 bg-[rgb(var(--card))] rounded-xl border border-[rgb(var(--border))] hover:border-[rgb(var(--primary))] transition-colors duration-300">
-      <div className="flex-shrink-0 w-12 h-12 bg-[rgb(var(--primary))]/10 rounded-lg flex items-center justify-center">
-        <div className="text-[rgb(var(--primary))]">
-          {experience.icon}
-        </div>
+      <div className="flex-shrink-0 w-14 h-14 bg-white rounded-xl flex items-center justify-center overflow-hidden border border-[rgb(var(--border))]/50 shadow-sm p-2 transition-transform duration-300 group-hover:scale-110">
+        {experience.logo ? (
+          <img 
+            src={experience.logo} 
+            alt={experience.company} 
+            className="w-full h-full object-contain"
+          />
+        ) : (
+          <div className="text-[rgb(var(--primary))] text-2xl">
+            {experience.icon}
+          </div>
+        )}
       </div>
       <div className="flex-grow">
         <div className="flex items-center justify-between mb-2">
@@ -51,7 +60,7 @@ const ExperienceCard = ({ experience, index }) => {
             <li
               key={i}
               className="text-[rgb(var(--muted-foreground))] flex items-start">
-              <span className="mr-2 mt-1.5 text-[rgb(var(--primary))]">•</span>
+              <FaChevronRight className="mr-2 mt-1.5 text-[rgb(var(--primary))] text-[10px] shrink-0" />
               <span>
                 {item}
               </span>

@@ -1,11 +1,37 @@
 import { motion } from 'framer-motion';
 import { TypeAnimation } from 'react-type-animation';
 import { Link } from 'react-scroll';
-import { FaGithub, FaLinkedin } from 'react-icons/fa';
+import { FaGithub, FaLinkedin, FaDownload } from 'react-icons/fa';
 import MagneticButton from './MagneticButton';
 import PlatformLinks from './PlatformLinks';
+import { useTranslation } from 'react-i18next';
 
 const Hero = ({ onDownloadCV }) => {
+  const { t, i18n } = useTranslation();
+  const isArabic = i18n.language === 'ar';
+
+  const typingSequence = isArabic
+    ? [
+        'مطور Full Stack',
+        2000,
+        'مهندس برمجيات',
+        2000,
+        'مطور ويب',
+        2000,
+        'محلل مشكلات وبرمجيات',
+        2000,
+      ]
+    : [
+        'Full Stack Developer',
+        2000,
+        'Software Engineer',
+        2000,
+        'Web Developer',
+        2000,
+        'Problem Solver',
+        2000,
+      ];
+
   return (
     <section
       id="home"
@@ -25,16 +51,16 @@ const Hero = ({ onDownloadCV }) => {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           {/* Text Content */}
           <motion.div
-            initial={{ opacity: 0, x: -50 }}
+            initial={{ opacity: 0, x: isArabic ? 50 : -50 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8 }}
-            className="text-left">
+            className={`text-center lg:text-start`}>
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 0.5, delay: 0.3 }}>
               <span className="inline-block px-5 py-2 rounded-full bg-blue-500/10 border border-blue-500/30 text-blue-400 text-sm font-medium mb-6">
-                Welcome to my portfolio
+                {t('hero.welcome')}
               </span>
             </motion.div>
 
@@ -43,25 +69,19 @@ const Hero = ({ onDownloadCV }) => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.4 }}
               className="text-5xl md:text-7xl font-bold mb-6 text-[rgb(var(--foreground))]">
-              Hi, I'm Belal Nagy
+              {t('hero.greeting_start')}
+              {t('hero.name')}
             </motion.h1>
 
-            <div className="text-2xl md:text-3xl mb-8 h-12 flex items-center">
-              <span className="text-[rgb(var(--muted-foreground))] mr-2">
-                I'm a{' '}
+            <div
+              className={`text-2xl md:text-3xl mb-8 h-12 flex items-center justify-center lg:justify-start`}>
+              <span className="text-[rgb(var(--muted-foreground))] mx-2">
+                {t('hero.i_am_a')}
               </span>
               <span className="text-[rgb(var(--primary))] font-bold">
                 <TypeAnimation
-                  sequence={[
-                    'Full Stack Developer',
-                    2000,
-                    'Software Engineer',
-                    2000,
-                    'Web Developer',
-                    2000,
-                    'Problem Solver',
-                    2000,
-                  ]}
+                  key={i18n.language}
+                  sequence={typingSequence}
                   wrapper="span"
                   speed={50}
                   repeat={Infinity}
@@ -69,18 +89,18 @@ const Hero = ({ onDownloadCV }) => {
               </span>
             </div>
 
-            <p className="text-lg text-[rgb(var(--foreground))] mb-8 leading-relaxed max-w-xl">
-              Passionate about building{' '}
+            <p className="text-lg text-[rgb(var(--foreground))] mb-8 leading-relaxed max-w-xl mx-auto lg:mx-0">
+              {t('hero.description_1')}
               <span className="text-[rgb(var(--primary))] font-semibold">
-                scalable, high-performance web applications
-              </span>{' '}
-              and transforming complex ideas into{' '}
-              <span className="text-[rgb(var(--primary))] font-semibold">
-                intuitive, elegant user experiences
+                {t('hero.description_2')}
               </span>
-              . Currently crafting impactful digital solutions at{' '}
+              {t('hero.description_3')}
               <span className="text-[rgb(var(--primary))] font-semibold">
-                S&amp;F
+                {t('hero.description_4')}
+              </span>
+              {t('hero.description_5')}
+              <span className="text-[rgb(var(--primary))] font-semibold">
+                {t('hero.company')}
               </span>
               .
             </p>
@@ -90,7 +110,7 @@ const Hero = ({ onDownloadCV }) => {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 0.5, delay: 0.6 }}
-              className="flex items-center gap-4 mb-8">
+              className="flex items-center justify-center lg:justify-start gap-4 mb-8">
               <motion.a
                 href="https://github.com/Belalnajy"
                 target="_blank"
@@ -116,15 +136,15 @@ const Hero = ({ onDownloadCV }) => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.8 }}
-              className="flex flex-wrap gap-4">
+              className="flex flex-wrap justify-center lg:justify-start gap-4">
               <Link
                 to="projects"
                 spy={true}
                 smooth={true}
                 duration={300}
                 offset={-70}>
-                <MagneticButton className="bg-blue-600 text-white px-8 py-3 rounded-lg font-semibold hover:bg-blue-700 transition-all">
-                  View Projects
+                <MagneticButton className="bg-[rgb(var(--primary))] text-white px-8 py-3 rounded-lg font-semibold hover:bg-[rgb(var(--primary))]/90 transition-all">
+                  {t('hero.view_projects')}
                 </MagneticButton>
               </Link>
               <Link
@@ -133,26 +153,15 @@ const Hero = ({ onDownloadCV }) => {
                 smooth={true}
                 duration={300}
                 offset={-70}>
-                <MagneticButton className="border-2 border-blue-500 text-blue-400 px-8 py-3 rounded-lg font-semibold hover:bg-blue-600 hover:text-white transition-all">
-                  Contact Me
+                <MagneticButton className="border-2 border-[rgb(var(--primary))] text-[rgb(var(--primary))] px-8 py-3 rounded-lg font-semibold hover:bg-[rgb(var(--primary))] hover:text-white transition-all">
+                  {t('hero.contact_me')}
                 </MagneticButton>
               </Link>
               <MagneticButton
                 onClick={onDownloadCV}
-                className="bg-gray-800 text-white px-6 py-3 rounded-lg font-semibold hover:bg-gray-700 transition-all inline-flex items-center gap-2">
-                <svg
-                  className="w-5 h-5"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24">
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"
-                  />
-                </svg>
-                Download CV
+                className="bg-[rgb(var(--muted))] text-[rgb(var(--foreground))] px-6 py-3 rounded-lg font-semibold hover:bg-[rgb(var(--muted))]/80 transition-all inline-flex items-center gap-2">
+                <FaDownload className="text-sm" />
+                {t('hero.download_cv')}
               </MagneticButton>
             </motion.div>
 
@@ -162,10 +171,12 @@ const Hero = ({ onDownloadCV }) => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 1 }}
               className="mt-8">
-              <p className="text-[rgb(var(--muted-foreground))] text-sm mb-3 text-center md:text-left">
-                Follow me on Arabic platforms
+              <p className="text-[rgb(var(--muted-foreground))] text-sm mb-3">
+                {t('hero.follow_me')}
               </p>
-              <PlatformLinks variant="compact" />
+              <div className="flex justify-center lg:justify-start">
+                <PlatformLinks variant="compact" />
+              </div>
             </motion.div>
           </motion.div>
 

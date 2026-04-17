@@ -1,6 +1,7 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useMemo } from 'react';
 import { motion, useInView } from 'framer-motion';
 import { FaProjectDiagram, FaCode, FaClock, FaAward } from 'react-icons/fa';
+import { useTranslation } from 'react-i18next';
 
 const Counter = ({ end, duration = 2 }) => {
   const [count, setCount] = useState(0);
@@ -34,36 +35,41 @@ const Counter = ({ end, duration = 2 }) => {
 };
 
 const AnimatedStats = () => {
-  const stats = [
-    {
-      icon: <FaProjectDiagram className="text-4xl" />,
-      value: 20,
-      suffix: '+',
-      label: 'Projects Completed',
-      color: 'from-blue-500 to-cyan-500',
-    },
-    {
-      icon: <FaCode className="text-4xl" />,
-      value: 30,
-      suffix: '+',
-      label: 'Technologies Mastered',
-      color: 'from-purple-500 to-pink-500',
-    },
-    {
-      icon: <FaClock className="text-4xl" />,
-      value: 2500,
-      suffix: '+',
-      label: 'Hours of Coding',
-      color: 'from-orange-500 to-red-500',
-    },
-    {
-      icon: <FaAward className="text-4xl" />,
-      value: 200,
-      suffix: '+',
-      label: 'Students Taught',
-      color: 'from-green-500 to-emerald-500',
-    },
-  ];
+  const { t } = useTranslation();
+
+  const stats = useMemo(
+    () => [
+      {
+        icon: <FaProjectDiagram className="text-4xl" />,
+        value: 25,
+        suffix: '+',
+        label: t('stats.projects'),
+        color: 'from-blue-500 to-cyan-500',
+      },
+      {
+        icon: <FaCode className="text-4xl" />,
+        value: 30,
+        suffix: '+',
+        label: t('stats.technologies'),
+        color: 'from-purple-500 to-pink-500',
+      },
+      {
+        icon: <FaClock className="text-4xl" />,
+        value: 2,
+        suffix: '+',
+        label: t('stats.years'),
+        color: 'from-orange-500 to-red-500',
+      },
+      {
+        icon: <FaAward className="text-4xl" />,
+        value: 200,
+        suffix: '+',
+        label: t('stats.students'),
+        color: 'from-green-500 to-emerald-500',
+      },
+    ],
+    [t],
+  );
 
   return (
     <section className="py-20 relative">
@@ -74,6 +80,7 @@ const AnimatedStats = () => {
               key={index}
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
               transition={{ duration: 0.5, delay: index * 0.1 }}
               className="glass-card glass-hover p-8 rounded-xl text-center">
               <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-[rgb(var(--primary))]/10 text-[rgb(var(--primary))] border border-[rgb(var(--primary))]/20 mb-4">

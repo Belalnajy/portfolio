@@ -1,5 +1,5 @@
-import { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
+import { useState, useEffect, useMemo } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import {
   SiDjango,
   SiPostgresql,
@@ -40,8 +40,10 @@ import {
   FaRobot,
 } from 'react-icons/fa';
 import ProjectSkeleton from './skeletons/ProjectSkeleton';
+import ProjectModal from './ProjectModal';
+import { useTranslation } from 'react-i18next';
 
-const getTechIcon = (tech) => {
+export const getTechIcon = (tech) => {
   const iconMap = {
     HTML: <FaHtml5 className="text-[#E34F26]" />,
     CSS: <FaCss3Alt className="text-[#1572B6]" />,
@@ -87,364 +89,9 @@ const getTechIcon = (tech) => {
   );
 };
 
-const projects = [
-  {
-    title: 'Indstrz – B2B Industrial Marketplace',
-    description:
-      'A scalable full-stack B2B procurement platform with end-to-end digital RFQ workflows, real-time negotiations, and automated conversation management.',
-    image: '/indstrz.png',
-    tags: [
-      'Next.js',
-      'React',
-      'Flask',
-      'PostgreSQL',
-      'Socket.io',
-      'SQLAlchemy',
-      'Cloudinary',
-    ],
-    features: [
-      'End-to-end digital RFQ workflows between buyers and verified vendors',
-      'Real-time messaging and notifications using Socket.io',
-      'Secure RBAC with JWT token revocation and multi-role management',
-      'Modular Application Factory Pattern with layered architecture',
-    ],
-    github: '#',
-    live: '#',
-    category: 'Full Stack',
-  },
-  {
-    title: 'UDUIPA – University Union Digital Platform',
-    description:
-      'Official academic union platform for centralized membership management and automated verification workflows using a high-performance monorepo.',
-    image: '/uduipa.png',
-    tags: [
-      'Next.js',
-      'NestJS',
-      'TypeScript',
-      'PostgreSQL',
-      'Turborepo',
-      'Cloudinary',
-      'Puppeteer',
-      'Recharts',
-    ],
-    features: [
-      'Centralized membership management and official academic verification',
-      'Scalable RBAC system with secure JWT authentication',
-      'Automated document pipelines for PDF generation and QR codes',
-      'Fully localized RTL UI (Arabic, English, French) with analytics',
-    ],
-    github: '#',
-    live: 'https://uduipa.com',
-    category: 'Full Stack',
-  },
-  {
-    title: 'Alva AI (PULSE) – Marketing Automation',
-    description:
-      'AI-powered marketing automation platform generating localized content for Saudi social media markets using GPT-4o-mini and real-time enrichment.',
-    image: '/alva.png',
-    tags: [
-      'React',
-      'Node.js',
-      'Express.js',
-      'Knex.js',
-      'OpenAI',
-      'Tailwind',
-      'Vite',
-    ],
-    features: [
-      'AI content generation for TikTok, Instagram, X, Snapchat, and WhatsApp',
-      'Advanced localized prompt engineering for Saudi colloquial Arabic',
-      'Real-time hashtag enrichment via SerpAPI integration',
-      'Layered backend with subscription-based entitlements and throttling',
-    ],
-    github: '#',
-    live: '#',
-    category: 'Full Stack',
-  },
-  {
-    title: 'Waferlee – Community Deals & Coupons',
-    description:
-      "Discovery platform enabling community deal voting, submissions, and moderation with a custom 'Temperature' algorithm for trending content.",
-    image: '/waferlee.png',
-    tags: [
-      'Next.js',
-      'NestJS',
-      'TypeORM',
-      'PostgreSQL',
-      'Tailwind',
-      'Radix UI',
-      'Framer Motion',
-    ],
-    features: [
-      "Robust voting engine with custom 'Temperature' algorithm",
-      'Real-time community voting, deal submissions, and moderation',
-      'Secure interactions with RBAC and Google ReCAPTCHA',
-      'Automated email flows and multi-channel notifications',
-    ],
-    github: '#',
-    live: 'https://waferlee.ae',
-    category: 'Full Stack',
-  },
-  {
-    title: 'Baserah AI – Intelligent HR Platform',
-    description:
-      'Full-stack AI HR platform automating KPI extraction, assessment generation, and talent evaluation from unstructured data.',
-    image: '/baserah.png',
-    tags: ['FastAPI', 'Python', 'MongoDB', 'AI', 'Gemini'],
-    features: [
-      'Automated competency and KPI extraction from job descriptions',
-      'AI-driven MCQ generation and structured talent evaluation',
-      'Localized Arabic/English interface for large organizations',
-      'High-performance NoSQL backend with modular async workflows',
-    ],
-    github: '#',
-    live: '#',
-    category: 'Full Stack',
-  },
-  {
-    title: 'S&F Digital Portfolio – Corporate Portal',
-    description:
-      'Premium corporate portal consolidating investment inquiries, store requests, and job applications for multiple business verticals.',
-    image: '/smartfast.png',
-    tags: [
-      'React',
-      'TypeScript',
-      'Vite',
-      'Radix UI',
-      'Tailwind',
-      'Django',
-      'Recharts',
-    ],
-    features: [
-      'Modular UI library and interactive components using Framer Motion',
-      'Consolidated multi-vertical requests into a single platform',
-      'Robust multi-part form handling and real-time validation',
-      'Integrated with Django REST API for critical business workflows',
-    ],
-    github: '#',
-    live: '#',
-    category: 'Full Stack',
-  },
-  {
-    title: 'Scientific Journal Management System',
-    description:
-      'A full-stack double-blind peer-review system for managing academic journals for a Saudi University. Built with React, NestJS, TypeORM, and PostgreSQL within an Nx Monorepo architecture.',
-    image: '/journal.png',
-    tags: [
-      'React',
-      'NestJS',
-      'TypeORM',
-      'PostgreSQL',
-      'TypeScript',
-      'Nx Monorepo',
-    ],
-    features: [
-      'Four user roles: Admin, Editor, Reviewer, Researcher with JWT authentication',
-      'Double-blind peer-review system',
-      'Research submission and automated evaluation scoring',
-      'Issue management and online payments integration',
-      'PDF preview, QR code generation, and automated acceptance certificates',
-      'Advanced permission handling and role-based access control',
-    ],
-    github: '#',
-    live: 'https://upafa-edu.net/',
-    category: 'Full Stack',
-  },
-  {
-    title: 'Pro Fleet – Intelligent Fleet Management System',
-    description:
-      'A multilingual fleet management platform with real-time GPS tracking, analytics, and role-based dashboards for a Saudi startup. Features AI chatbot and interactive maps.',
-    image: '/profleet.png',
-    tags: [
-      'Next.js',
-      'TypeScript',
-      'Prisma',
-      'Socket.io',
-      'PostgreSQL',
-      'Leaflet',
-    ],
-    features: [
-      'Real-time GPS tracking with interactive Leaflet maps',
-      'AI chatbot for smart user assistance',
-      'Multilingual support with RTL for Arabic',
-      'Role-based dashboards and analytics',
-      'Automated billing and payment processing',
-      'Live shipment tracking and fleet operations management',
-    ],
-    github: '#',
-    live: 'https://pro-fleet.vercel.app/',
-    category: 'Full Stack',
-  },
-  {
-    title: 'Clinic Management System (ITI Graduation Project)',
-    description:
-      'A comprehensive clinic management system with smart appointment scheduling, role-based dashboards, and real-time analytics. Features AI chatbot using Hugging Face.',
-    image: '/clinic.png',
-    tags: ['React', 'Django', 'PostgreSQL', 'Tailwind', 'AI'],
-    features: [
-      'Smart appointment scheduling and reminders',
-      'AI chatbot for patient assistance and booking',
-      'Role-based dashboards for doctors, staff, and patients',
-      'Real-time analytics and reporting',
-      'Prescription and billing management',
-      'User authentication and role-based access control',
-    ],
-    github: '#',
-    live: 'https://clinic-project-2.vercel.app/',
-    category: 'Full Stack',
-  },
-
-  {
-    title: 'Manqla – Interior Design Web App',
-    description:
-      'A modern interior design showcase web app built for a Saudi company. Features animations, RTL support, and dynamic sliders for a smooth user experience.',
-    image: '/manqla.png',
-    tags: ['React', 'Tailwind', 'TypeScript'],
-    features: [
-      'Responsive design with RTL (Arabic) support',
-      'Animated hero sections and sliders',
-      'Interactive components for product exploration',
-      'Email contact form integrated with EmailJS',
-    ],
-    github: '#',
-    live: 'https://www.manqla.com/',
-    category: 'Frontend',
-  },
-  {
-    title: 'Orca – Premium Clothing Brand E-commerce Website',
-    description:
-      'A full-featured, modern e-commerce platform for a premium clothing startup. Features product browsing, cart/wishlist management, JWT-secured authentication, and Paymob payment integration.',
-    image: '/orca.png',
-    tags: ['Next.js', 'Tailwind', 'Node.js', 'Express.js', 'MongoDB'],
-    features: [
-      'Modern responsive UI with dark/light mode',
-      'Product catalog with advanced filtering',
-      'Cart and wishlist management',
-      'JWT-secured authentication and authorization',
-      'Paymob payment integration',
-      'Smooth animations using Framer Motion',
-    ],
-    github: '#',
-    live: '#',
-    category: 'Full Stack',
-  },
-  {
-    title: 'Amarna Travel – Website Customization',
-    description:
-      'Enhanced the official website of Amarna Travel (built using TrekkSoft CMS) for a better Arabic user experience and visual consistency.',
-    image: '/amarna.png',
-    tags: ['CMS', 'RTL', 'Customization'],
-    features: [
-      'RTL adjustments for Arabic content',
-      'Improved layout and section structure',
-      'Cross-platform UI consistency',
-    ],
-    github: '#',
-    live: 'https://amarna-travel.trekksoft.com/ar',
-    category: 'Frontend',
-  },
-  {
-    title: 'Inventory Management System',
-    description:
-      'A role-based inventory system using HTML, CSS, JavaScript, Bootstrap, Django, and PostgreSQL.',
-    image: '/inventory.png',
-    tags: ['Django', 'PostgreSQL', 'Bootstrap', 'JavaScript'],
-    features: [
-      'Role-based access control',
-      'Real-time stock management',
-      'Order processing and shipment tracking',
-      'Supplier and customer management',
-      'Reporting and analytics',
-      'User authentication and role-based access control',
-    ],
-    github:
-      'https://github.com/ChaoticMaximoff/Inventory-Management-System-ITI-Django-Project',
-    live: '#',
-    category: 'Full Stack',
-  },
-  {
-    title: 'CinemaScore',
-    description:
-      'A dynamic web app for movie/TV show lists with TMDB API integration.',
-    image: '/cinemascore.png',
-    tags: ['React', 'Bootstrap', 'TMDB API'],
-    features: [
-      'Movie/TV show browsing',
-      'Watchlist functionality',
-      'Advanced search capabilities',
-      'Language switching support',
-    ],
-    github: 'https://github.com/HamsEldakrory/Movies-App-react-project',
-    live: 'https://movies-app-react-project-mocha.vercel.app/',
-    category: 'Frontend',
-  },
-  {
-    title: 'Movie Web Application',
-    description:
-      'A dynamic movie web application using HTML, CSS, JavaScript, jQuery, and Tailwind CSS.',
-    image: '/movies.png',
-    tags: ['HTML', 'CSS', 'JavaScript', 'jQuery', 'Tailwind'],
-    features: [
-      'Responsive UI for browsing',
-      'Interactive features',
-      'Real-time updates',
-      'Enhanced user experience',
-    ],
-    github: 'https://github.com/Belalnajy/movieswebsiteproject',
-    live: 'https://movieswebsiteproject.vercel.app/',
-    category: 'Frontend',
-  },
-  {
-    title: 'Hospital Management System',
-    description:
-      'An HMS module for patients, departments, and doctors using Odoo.',
-    image: '/HMS.png',
-    tags: ['Odoo', 'Python', 'PostgreSQL'],
-    features: [
-      'Patient records management',
-      'Department organization',
-      'Automated email validation',
-      'CRM integration',
-    ],
-    github: '#',
-    live: '#',
-    category: 'Backend',
-  },
-  {
-    title: 'Bookstore Web Application',
-    description:
-      'A comprehensive bookstore web application with interactive UI.',
-    image: '/book.png',
-    tags: ['HTML', 'CSS', 'JavaScript', 'jQuery', 'Bootstrap'],
-    features: [
-      'Interactive browsing interface',
-      'Client-side validation',
-      'Dynamic content updates',
-      'Enhanced user experience',
-    ],
-    github: 'https://github.com/Sara-Elagder/Front-end-ITI',
-    live: 'https://bookstoredeploytest.vercel.app/',
-    category: 'Frontend',
-  },
-  {
-    title: 'Library Management System',
-    description:
-      'A comprehensive LMS using Django and PostgreSQL for efficient library operations.',
-    image: '/library.png',
-    tags: ['Django', 'PostgreSQL', 'Python'],
-    features: [
-      'Book cataloging system',
-      'CRUD operations for books',
-      'Category management',
-      'Search functionality',
-    ],
-    github: 'https://github.com/Belalnajy/LMSProject',
-    live: '#',
-    category: 'Full Stack',
-  },
-];
-
-const ProjectCard = ({ project, index }) => {
+const ProjectCard = ({ project, index, onClick }) => {
+  const { t, i18n } = useTranslation();
+  const isArabic = i18n.language === 'ar';
   const [rotateX, setRotateX] = useState(0);
   const [rotateY, setRotateY] = useState(0);
 
@@ -468,109 +115,65 @@ const ProjectCard = ({ project, index }) => {
 
   return (
     <motion.div
+      layoutId={`project-card-${project.slug}`}
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5, delay: index * 0.2 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.5, delay: index * 0.1 }}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
+      onClick={() => onClick(project)}
       style={{
         transform: `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`,
         transition: 'transform 0.1s ease-out',
       }}
-      className="group relative glass-card glass-hover rounded-xl overflow-hidden shadow-lg transition-all duration-500">
-      {/* Category Badge */}
-      <div className="absolute top-4 left-4 z-20">
-        <span
-          className={`px-3 py-1 rounded-full text-sm font-medium ${
-            project.category === 'Frontend'
-              ? 'bg-blue-500/20 text-blue-400'
-              : project.category === 'Backend'
-              ? 'bg-green-500/20 text-green-400'
-              : 'bg-purple-500/20 text-purple-400'
-          }`}>
-          {project.category}
-        </span>
-      </div>
+      className="group relative glass-card rounded-2xl overflow-hidden shadow-lg transition-all duration-300 cursor-pointer border border-transparent hover:border-[rgb(var(--primary))]/30 flex flex-col h-full bg-[rgb(var(--background))]">
+      {/* Sleek Image Container with inner padding */}
+      <div className="relative w-full aspect-video bg-[#0B0F19] p-4 pb-0 flex items-end justify-center overflow-hidden border-b border-[rgb(var(--border))]/30">
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-blue-900/20 via-[#0B0F19]/0 to-[#0B0F19] opacity-50 z-0" />
 
-      {/* Image Container */}
-      <div className="relative aspect-video w-full overflow-hidden bg-gray-900">
-        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-black/20 z-[1]" />
         <img
           src={project.image}
           alt={project.title}
-          className="w-full h-full object-contain transform group-hover:scale-110 transition-transform duration-700"
+          className="relative z-10 w-[90%] h-auto object-contain rounded-t-xl transform group-hover:-translate-y-2 transition-transform duration-500 will-change-transform drop-shadow-[0_-5px_15px_rgba(0,0,0,0.5)]"
           loading="lazy"
         />
-        <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-[2]" />
+
+        {/* Hover Glass Overlay - Click to View */}
+        <div className="absolute inset-0 z-20 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-black/40 backdrop-blur-[2px]">
+          <span className="px-6 py-2 rounded-full glass-card text-white text-sm font-semibold tracking-wider flex items-center gap-2 transform translate-y-4 group-hover:translate-y-0 transition-all duration-300">
+            {t('projects.view_details')}
+          </span>
+        </div>
       </div>
 
       {/* Content */}
-      <div className="p-6">
-        <h3 className="text-2xl font-bold mb-3 text-[rgb(var(--foreground))]">
-          {project.title}
-        </h3>
-        <p className="text-[rgb(var(--muted-foreground))] mb-4 line-clamp-2">
+      <div className="p-6 flex flex-col flex-grow text-start">
+        <div className="flex justify-between items-start mb-2">
+          <h3 className="text-xl font-bold text-[rgb(var(--foreground))] group-hover:text-[rgb(var(--primary))] transition-colors line-clamp-1">
+            {project.title}
+          </h3>
+        </div>
+
+        <p className="text-[rgb(var(--muted-foreground))] text-sm mb-6 line-clamp-2 leading-relaxed flex-grow">
           {project.description}
         </p>
 
-        {/* Tech Stack Icons */}
-        <div className="flex flex-wrap gap-3 mb-4">
-          {project.tags.map((tech, i) => (
-            <motion.div
+        {/* Minimal Tech Icons only (No redundant text pills) */}
+        <div className="flex flex-wrap gap-3 mt-auto relative z-10 pointer-events-none">
+          {project.tags.slice(0, 6).map((tech, i) => (
+            <div
               key={i}
-              whileHover={{ scale: 1.2 }}
-              className="group/icon relative">
-              <div className="text-xl">{getTechIcon(tech)}</div>
-              <div className="absolute -bottom-8 left-1/2 transform -translate-x-1/2 bg-[rgb(var(--background))] text-[rgb(var(--foreground))] text-xs py-1 px-2 rounded opacity-0 group-hover/icon:opacity-100 transition-opacity whitespace-nowrap shadow-lg z-30">
-                {tech}
-              </div>
-            </motion.div>
+              title={tech}
+              className="text-lg opacity-70 group-hover:opacity-100 transition-opacity">
+              {getTechIcon(tech)}
+            </div>
           ))}
-        </div>
-
-        {/* Tags */}
-        <div className="flex flex-wrap gap-2 mb-4">
-          {project.tags.map((tag, i) => (
-            <span
-              key={i}
-              className="bg-[rgb(var(--primary))]/10 text-[rgb(var(--primary))] px-3 py-1 rounded-full text-sm">
-              {tag}
+          {project.tags.length > 6 && (
+            <span className="text-xs text-[rgb(var(--muted-foreground))] flex items-center opacity-70 font-medium">
+              +{project.tags.length - 6}
             </span>
-          ))}
-        </div>
-
-        {/* Features */}
-        <div className="space-y-2 mb-6">
-          {project.features.map((feature, i) => (
-            <p
-              key={i}
-              className="text-[rgb(var(--muted-foreground))] text-sm flex items-start">
-              <FaCode className="mr-2 mt-1 text-[rgb(var(--primary))]" />
-              {feature}
-            </p>
-          ))}
-        </div>
-
-        {/* Links */}
-        <div className="flex justify-end space-x-4 pt-4 border-t border-[rgb(var(--border))]">
-          <motion.a
-            href={project.github}
-            target="_blank"
-            rel="noopener noreferrer"
-            whileHover={{ scale: 1.1 }}
-            whileTap={{ scale: 0.9 }}
-            className="text-[rgb(var(--muted-foreground))] hover:text-[rgb(var(--primary))] transition-colors">
-            <FaGithub size={24} />
-          </motion.a>
-          <motion.a
-            href={project.live}
-            target="_blank"
-            rel="noopener noreferrer"
-            whileHover={{ scale: 1.1 }}
-            whileTap={{ scale: 0.9 }}
-            className="text-[rgb(var(--muted-foreground))] hover:text-[rgb(var(--primary))] transition-colors">
-            <FaExternalLinkAlt size={22} />
-          </motion.a>
+          )}
         </div>
       </div>
     </motion.div>
@@ -578,9 +181,12 @@ const ProjectCard = ({ project, index }) => {
 };
 
 const Projects = () => {
+  const { t, i18n } = useTranslation();
+  const isArabic = i18n.language === 'ar';
   const [loading, setLoading] = useState(true);
   const [filter, setFilter] = useState('All');
   const [searchTerm, setSearchTerm] = useState('');
+  const [selectedProject, setSelectedProject] = useState(null);
 
   useEffect(() => {
     // Simulate loading delay
@@ -591,9 +197,224 @@ const Projects = () => {
     return () => clearTimeout(timer);
   }, []);
 
-  const categories = ['All', 'Full Stack', 'Frontend', 'Backend'];
+  // Lock scroll when modal is open
+  useEffect(() => {
+    if (selectedProject) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'auto';
+    }
+  }, [selectedProject]);
 
-  const filteredProjects = projects.filter((project) => {
+  const categories = [
+    { id: 'All', label: t('projects.categories.all') },
+    { id: 'Full Stack', label: t('projects.categories.fullstack') },
+    { id: 'Frontend', label: t('projects.categories.frontend') },
+    { id: 'Backend', label: t('projects.categories.backend') },
+  ];
+
+  const projectsData = useMemo(() => [
+    {
+      slug: 'indstrz',
+      title: t('projects.items.indstrz.title'),
+      description: t('projects.items.indstrz.desc'),
+      image: '/indstrz.png',
+      tags: ['Next.js', 'React', 'Flask', 'PostgreSQL', 'Socket.io', 'SQLAlchemy', 'Cloudinary'],
+      features: t('projects.items.indstrz.features', { returnObjects: true }),
+      github: '#',
+      live: '#',
+      category: 'Full Stack',
+    },
+    {
+      slug: 'uduipa',
+      title: t('projects.items.uduipa.title'),
+      description: t('projects.items.uduipa.desc'),
+      image: '/uduipa.png',
+      tags: ['Next.js', 'NestJS', 'TypeScript', 'PostgreSQL', 'Turborepo', 'Cloudinary', 'Puppeteer', 'Recharts'],
+      features: t('projects.items.uduipa.features', { returnObjects: true }),
+      github: '#',
+      live: 'https://uduipa.com',
+      category: 'Full Stack',
+    },
+    {
+      slug: 'waferlee',
+      title: t('projects.items.waferlee.title'),
+      description: t('projects.items.waferlee.desc'),
+      image: '/waferlee.png',
+      tags: ['Next.js', 'NestJS', 'TypeORM', 'PostgreSQL', 'Tailwind', 'Radix UI', 'Framer Motion'],
+      features: t('projects.items.waferlee.features', { returnObjects: true }),
+      github: '#',
+      live: 'https://waferlee.ae',
+      category: 'Full Stack',
+    },
+    {
+      slug: 'baserah',
+      title: t('projects.items.baserah.title'),
+      description: t('projects.items.baserah.desc'),
+      image: '/baserah.png',
+      tags: ['FastAPI', 'Python', 'MongoDB', 'AI', 'Gemini'],
+      features: t('projects.items.baserah.features', { returnObjects: true }),
+      github: '#',
+      live: '#',
+      category: 'Full Stack',
+    },
+    {
+      slug: 'sf_portal',
+      title: t('projects.items.sf_portal.title'),
+      description: t('projects.items.sf_portal.desc'),
+      image: '/smartfast.png',
+      tags: ['React', 'TypeScript', 'Vite', 'Radix UI', 'Tailwind', 'Django', 'Recharts'],
+      features: t('projects.items.sf_portal.features', { returnObjects: true }),
+      github: '#',
+      live: '#',
+      category: 'Full Stack',
+    },
+    {
+      slug: 'journal',
+      title: t('projects.items.journal.title'),
+      description: t('projects.items.journal.desc'),
+      image: '/journal.png',
+      tags: ['React', 'NestJS', 'TypeORM', 'PostgreSQL', 'TypeScript', 'Nx Monorepo'],
+      features: t('projects.items.journal.features', { returnObjects: true }),
+      github: '#',
+      live: 'https://upafa-edu.net/',
+      category: 'Full Stack',
+    },
+    {
+      slug: 'profleet',
+      title: t('projects.items.profleet.title'),
+      description: t('projects.items.profleet.desc'),
+      image: '/profleet.png',
+      tags: ['Next.js', 'TypeScript', 'Prisma', 'Socket.io', 'PostgreSQL', 'Leaflet'],
+      features: t('projects.items.profleet.features', { returnObjects: true }),
+      github: '#',
+      live: 'https://pro-fleet.vercel.app/',
+      category: 'Full Stack',
+    },
+    {
+      slug: 'clinic',
+      title: t('projects.items.clinic.title'),
+      description: t('projects.items.clinic.desc'),
+      image: '/clinic.png',
+      tags: ['React', 'Django', 'PostgreSQL', 'Tailwind', 'AI'],
+      features: t('projects.items.clinic.features', { returnObjects: true }),
+      github: '#',
+      live: 'https://clinic-project-2.vercel.app/',
+      category: 'Full Stack',
+    },
+    {
+      slug: 'manqla',
+      title: t('projects.items.manqla.title'),
+      description: t('projects.items.manqla.desc'),
+      image: '/manqla.png',
+      tags: ['React', 'Tailwind', 'TypeScript'],
+      features: t('projects.items.manqla.features', { returnObjects: true }),
+      github: '#',
+      live: 'https://www.manqla.com/',
+      category: 'Frontend',
+    },
+    {
+      slug: 'orca',
+      title: t('projects.items.orca.title'),
+      description: t('projects.items.orca.desc'),
+      image: '/orca.png',
+      tags: ['Next.js', 'Tailwind', 'Node.js', 'Express.js', 'MongoDB'],
+      features: t('projects.items.orca.features', { returnObjects: true }),
+      github: '#',
+      live: '#',
+      category: 'Full Stack',
+    },
+    {
+      slug: 'amarna',
+      title: t('projects.items.amarna.title'),
+      description: t('projects.items.amarna.desc'),
+      image: '/amarna.png',
+      tags: ['CMS', 'RTL', 'Customization'],
+      features: t('projects.items.amarna.features', { returnObjects: true }),
+      github: '#',
+      live: 'https://amarna-travel.trekksoft.com/ar',
+      category: 'Frontend',
+    },
+    {
+      slug: 'inventory',
+      title: t('projects.items.inventory.title'),
+      description: t('projects.items.inventory.desc'),
+      image: '/inventory.png',
+      tags: ['Django', 'PostgreSQL', 'Bootstrap', 'JavaScript'],
+      features: t('projects.items.inventory.features', { returnObjects: true }),
+      github: 'https://github.com/ChaoticMaximoff/Inventory-Management-System-ITI-Django-Project',
+      live: '#',
+      category: 'Full Stack',
+    },
+    {
+      slug: 'cinemascore',
+      title: t('projects.items.cinemascore.title'),
+      description: t('projects.items.cinemascore.desc'),
+      image: '/cinemascore.png',
+      tags: ['React', 'Bootstrap', 'TMDB API'],
+      features: t('projects.items.cinemascore.features', { returnObjects: true }),
+      github: 'https://github.com/HamsEldakrory/Movies-App-react-project',
+      live: 'https://movies-app-react-project-mocha.vercel.app/',
+      category: 'Frontend',
+    },
+    {
+      slug: 'movieweb',
+      title: t('projects.items.movieweb.title'),
+      description: t('projects.items.movieweb.desc'),
+      image: '/movies.png',
+      tags: ['HTML', 'CSS', 'JavaScript', 'jQuery', 'Tailwind'],
+      features: t('projects.items.movieweb.features', { returnObjects: true }),
+      github: 'https://github.com/Belalnajy/movieswebsiteproject',
+      live: 'https://movieswebsiteproject.vercel.app/',
+      category: 'Frontend',
+    },
+    {
+      slug: 'hms_odoo',
+      title: t('projects.items.hms_odoo.title'),
+      description: t('projects.items.hms_odoo.desc'),
+      image: '/HMS.png',
+      tags: ['Odoo', 'Python', 'PostgreSQL'],
+      features: t('projects.items.hms_odoo.features', { returnObjects: true }),
+      github: '#',
+      live: '#',
+      category: 'Backend',
+    },
+    {
+      slug: 'bookstore',
+      title: t('projects.items.bookstore.title'),
+      description: t('projects.items.bookstore.desc'),
+      image: '/book.png',
+      tags: ['HTML', 'CSS', 'JavaScript', 'jQuery', 'Bootstrap'],
+      features: t('projects.items.bookstore.features', { returnObjects: true }),
+      github: 'https://github.com/Sara-Elagder/Front-end-ITI',
+      live: 'https://bookstoredeploytest.vercel.app/',
+      category: 'Frontend',
+    },
+    {
+      slug: 'library',
+      title: t('projects.items.library.title'),
+      description: t('projects.items.library.desc'),
+      image: '/library.png',
+      tags: ['Django', 'PostgreSQL', 'Python'],
+      features: t('projects.items.library.features', { returnObjects: true }),
+      github: 'https://github.com/Belalnajy/LMSProject',
+      live: '#',
+      category: 'Full Stack',
+    },
+    {
+      slug: 'alva_ai',
+      title: t('projects.items.alva_ai.title'),
+      description: t('projects.items.alva_ai.desc'),
+      image: '/alva.png',
+      tags: ['React', 'Node.js', 'Express.js', 'Knex.js', 'OpenAI', 'Tailwind', 'Vite'],
+      features: t('projects.items.alva_ai.features', { returnObjects: true }),
+      github: '#',
+      live: '#',
+      category: 'Full Stack',
+    },
+  ], [t]);
+
+  const filteredProjects = projectsData.filter((project) => {
     const matchesFilter = filter === 'All' || project.category === filter;
     const matchesSearch =
       project.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -602,79 +423,96 @@ const Projects = () => {
   });
 
   return (
-    <section id="projects" className="py-20 relative">
+    <section id="projects" className="py-20 relative min-h-screen">
       <div className="container mx-auto px-4 relative z-10">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
           transition={{ duration: 0.5 }}
-          className="text-center mb-12">
-          <h2 className="text-5xl font-bold mb-4 text-[rgb(var(--foreground))]">
-            Featured Projects
+          className="text-center mb-16">
+          <h2 className="text-4xl md:text-5xl font-bold mb-4 text-[rgb(var(--foreground))]">
+            {t('projects.title')}
           </h2>
           <p className="text-[rgb(var(--muted-foreground))] max-w-2xl mx-auto text-lg">
-            Here are some of my notable projects that showcase my skills and
-            experience
+            {t('projects.subtitle')}
           </p>
         </motion.div>
 
-        {/* Filter & Search */}
+        {/* Filter & Search - Premium Segmented Control */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
           transition={{ duration: 0.5, delay: 0.2 }}
-          className="mb-12 flex flex-col md:flex-row gap-4 items-center justify-between max-w-4xl mx-auto">
-          {/* Category Filter */}
-          <div className="flex gap-2 flex-wrap justify-center">
+          className="mb-12 flex flex-col md:flex-row gap-6 items-center justify-between max-w-5xl mx-auto">
+          {/* iOS-Style Segmented Control */}
+          <div className="flex p-1 bg-[rgb(var(--muted))]/30 backdrop-blur-md rounded-full border border-[rgb(var(--border))]/50 relative overflow-x-auto w-full md:w-auto">
             {categories.map((category) => (
-              <motion.button
-                key={category}
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                onClick={() => setFilter(category)}
-                className={`px-6 py-2 rounded-full font-medium transition-all ${
-                  filter === category
-                    ? 'bg-gradient-to-r from-blue-600 to-purple-600 text-white shadow-lg'
-                    : 'glass-card text-[rgb(var(--foreground))] hover:bg-[rgb(var(--muted))]'
+              <button
+                key={category.id}
+                onClick={() => setFilter(category.id)}
+                className={`relative px-6 py-2 rounded-full text-sm font-medium transition-colors z-10 whitespace-nowrap ${
+                  filter === category.id
+                    ? 'text-white'
+                    : 'text-[rgb(var(--muted-foreground))] hover:text-[rgb(var(--foreground))]'
                 }`}>
-                {category}
-              </motion.button>
+                {filter === category.id && (
+                  <motion.div
+                    layoutId="activeFilter"
+                    className="absolute inset-0 bg-[rgb(var(--primary))] shadow-lg rounded-full -z-10"
+                    transition={{ type: 'spring', stiffness: 400, damping: 30 }}
+                  />
+                )}
+                <span className="relative z-10">{category.label}</span>
+              </button>
             ))}
           </div>
 
           {/* Search */}
-          <div className="relative w-full md:w-auto">
+          <div className="relative w-full md:w-auto shrink-0">
             <input
               type="text"
-              placeholder="Search projects..."
+              placeholder={t('projects.search_placeholder')}
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full md:w-64 px-4 py-2 rounded-lg glass-card border border-[rgb(var(--border))] focus:border-[rgb(var(--primary))] focus:outline-none transition-colors"
+              className="w-full md:w-72 px-5 py-2.5 rounded-full bg-[rgb(var(--background))] border border-[rgb(var(--border))] focus:border-[rgb(var(--primary))] focus:ring-1 focus:ring-[rgb(var(--primary))]/50 outline-none transition-all shadow-sm text-sm text-[rgb(var(--foreground))]"
             />
           </div>
         </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8">
           {loading ? (
             Array.from({ length: 6 }).map((_, index) => (
               <ProjectSkeleton key={index} index={index} />
             ))
           ) : filteredProjects.length > 0 ? (
             filteredProjects.map((project, index) => (
-              <ProjectCard key={index} project={project} index={index} />
+              <ProjectCard
+                key={index}
+                project={project}
+                index={index}
+                onClick={setSelectedProject}
+              />
             ))
           ) : (
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              className="col-span-full text-center py-20">
-              <p className="text-2xl text-[rgb(var(--muted-foreground))]">
-                No projects found matching your criteria
+              className="col-span-full flex flex-col items-center justify-center py-20 text-[rgb(var(--muted-foreground))]">
+              <p className="text-xl">
+                {t('projects.no_results')}
               </p>
             </motion.div>
           )}
         </div>
       </div>
+
+      <ProjectModal
+        project={selectedProject}
+        isOpen={!!selectedProject}
+        onClose={() => setSelectedProject(null)}
+      />
     </section>
   );
 };
