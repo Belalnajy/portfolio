@@ -4,7 +4,7 @@ import { Float, ContactShadows, Environment, useTexture, Html } from '@react-thr
 import * as THREE from 'three';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
-import { Smartphone, Zap, Layers, Globe } from 'lucide-react';
+import { Smartphone, Zap, Layers, Globe, ChevronLeft, ChevronRight } from 'lucide-react';
 
 // ─── Featured Projects for the 3D Showcase ────────────────
 const SHOWCASE_PROJECTS = [
@@ -26,6 +26,15 @@ const SHOWCASE_PROJECTS = [
   { image: '/book.png', key: 'bookstore' },
   { image: '/library.png', key: 'library' },
   { image: '/alva.png', key: 'alva_ai' },
+  { image: '/sonomedix.png', key: 'sonomedix' },
+  { image: '/nextstop.png', key: 'nextstop' },
+  { image: '/kmbc.png', key: 'kmbc' },
+  { image: '/rabzan.png', key: 'rabzan' },
+  { image: '/sems.png', key: 'sems' },
+  { image: '/quotemate.png', key: 'quotemate' },
+  { image: '/dmagni.png', key: 'dmagni' },
+  { image: '/cme.png', key: 'cme' },
+  { image: '/dpms.png', key: 'dpms' },
 ];
 
 const TEXTURE_PATHS = SHOWCASE_PROJECTS.map((p) => p.image);
@@ -142,7 +151,7 @@ function LaptopModel({ currentProjectIndex, mousePosition }) {
   const HINGE_R = 0.035;
 
   const metalMat = {
-    color: '#16162a',
+    color: '#0a0a0c',
     metalness: 0.92,
     roughness: 0.12,
     envMapIntensity: 1.2,
@@ -197,7 +206,7 @@ function LaptopModel({ currentProjectIndex, mousePosition }) {
       {/* ═══ SCREEN ASSEMBLY ═══ */}
       <group
         position={[0, BASE_H / 2 + HINGE_R * 0.6, -BASE_D / 2 + 0.015]}
-        rotation={[-0.18, 0, 0]}>
+        rotation={[-0.08, 0, 0]}>
         {/* Screen lid (back shell) */}
         <mesh position={[0, SCREEN_H / 2, 0]} castShadow>
           <boxGeometry args={[SCREEN_W, SCREEN_H, SCREEN_D]} />
@@ -273,9 +282,31 @@ const LaptopShowcase3D = () => {
     if (!isVisible) return;
     const interval = setInterval(() => {
       setCurrentIndex((prev) => (prev + 1) % SHOWCASE_PROJECTS.length);
-    }, 4500);
+    }, 5500);
     return () => clearInterval(interval);
   }, [isVisible]);
+
+  // Progress animation value (0 to 100)
+  const [progress, setProgress] = useState(0);
+  useEffect(() => {
+    if (!isVisible) return;
+    setProgress(0);
+    const step = 100 / (5500 / 50); // duration / interval
+    const timer = setInterval(() => {
+      setProgress((p) => Math.min(100, p + step));
+    }, 50);
+    return () => clearInterval(timer);
+  }, [currentIndex, isVisible]);
+
+  const nextProject = useCallback(() => {
+    setCurrentIndex((prev) => (prev + 1) % SHOWCASE_PROJECTS.length);
+  }, []);
+
+  const prevProject = useCallback(() => {
+    setCurrentIndex((prev) =>
+      prev === 0 ? SHOWCASE_PROJECTS.length - 1 : prev - 1
+    );
+  }, []);
 
   // IntersectionObserver — only render Canvas when in viewport
   useEffect(() => {
@@ -375,36 +406,52 @@ const LaptopShowcase3D = () => {
               ))}
             </div>
 
-            {/* Project navigation dots + title */}
-            <div className="flex items-center justify-center lg:justify-start gap-3 flex-wrap">
-              <div className="flex items-center gap-1.5 flex-wrap justify-center lg:justify-start">
-                {SHOWCASE_PROJECTS.map((_, i) => (
+            {/* Project navigation with Progress bar & Arrows */}
+            <div className="mt-12 flex flex-col gap-6 w-full lg:w-[450px] mx-auto lg:mx-0">
+              {/* Project Title + Arrows */}
+              <div className="flex items-center justify-between gap-4">
+                <AnimatePresence mode="wait">
+                  <motion.div
+                    key={currentIndex}
+                    initial={{ opacity: 0, x: isArabic ? -20 : 20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    exit={{ opacity: 0, x: isArabic ? 20 : -20 }}
+                    transition={{ duration: 0.3 }}
+                    className="flex flex-col text-start">
+                    <span className="text-[rgb(var(--primary))] text-xs font-bold uppercase tracking-wider mb-1">
+                      {String(currentIndex + 1).padStart(2, '0')} / {SHOWCASE_PROJECTS.length}
+                    </span>
+                    <span className="text-xl text-[rgb(var(--foreground))] font-bold leading-none line-clamp-1">
+                      {t(`projects.items.${SHOWCASE_PROJECTS[currentIndex].key}.title`)}
+                    </span>
+                  </motion.div>
+                </AnimatePresence>
+
+                <div className="flex items-center gap-2">
                   <button
-                    key={i}
-                    onClick={() => setCurrentIndex(i)}
-                    aria-label={`View project ${i + 1}`}
-                    className={`rounded-full transition-all duration-500 ${
-                      i === currentIndex
-                        ? 'w-6 h-2 bg-[rgb(var(--primary))] shadow-lg shadow-[rgb(var(--primary))]/40'
-                        : 'w-2 h-2 bg-[rgb(var(--muted-foreground))]/25 hover:bg-[rgb(var(--muted-foreground))]/50'
-                    }`}
-                  />
-                ))}
+                    onClick={prevProject}
+                    className="p-2.5 rounded-full glass-card hover:bg-[rgb(var(--primary))]/20 text-[rgb(var(--foreground))] transition-all active:scale-90 border-[rgb(var(--border))]/50"
+                    aria-label="Previous project">
+                    <ChevronLeft className={`w-5 h-5 ${isArabic ? 'rotate-180' : ''}`} />
+                  </button>
+                  <button
+                    onClick={nextProject}
+                    className="p-2.5 rounded-full glass-card hover:bg-[rgb(var(--primary))]/20 text-[rgb(var(--foreground))] transition-all active:scale-90 border-[rgb(var(--border))]/50"
+                    aria-label="Next project">
+                    <ChevronRight className={`w-5 h-5 ${isArabic ? 'rotate-180' : ''}`} />
+                  </button>
+                </div>
               </div>
 
-              <AnimatePresence mode="wait">
-                <motion.span
-                  key={currentIndex}
-                  initial={{ opacity: 0, x: isArabic ? -10 : 10 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  exit={{ opacity: 0, x: isArabic ? 10 : -10 }}
-                  transition={{ duration: 0.25 }}
-                  className="text-sm text-[rgb(var(--muted-foreground))] font-medium">
-                  {t(
-                    `projects.items.${SHOWCASE_PROJECTS[currentIndex].key}.title`
-                  )}
-                </motion.span>
-              </AnimatePresence>
+              {/* Seamless Progress Bar */}
+              <div className="h-1.5 w-full bg-[rgb(var(--muted))]/30 rounded-full overflow-hidden relative">
+                <motion.div
+                  initial={{ width: 0 }}
+                  animate={{ width: `${progress}%` }}
+                  transition={{ duration: 0.05, ease: 'linear' }}
+                  className="absolute inset-y-0 left-0 bg-[rgb(var(--primary))] shadow-[0_0_12px_rgba(var(--primary),0.5)]"
+                />
+              </div>
             </div>
           </motion.div>
 
@@ -422,7 +469,7 @@ const LaptopShowcase3D = () => {
 
             {isVisible ? (
               <Canvas
-                camera={{ position: [0, 1.2, 4.8], fov: 42 }}
+                camera={{ position: [0, 0.6, 4.4], fov: 40 }}
                 gl={{
                   antialias: true,
                   alpha: true,
@@ -456,11 +503,13 @@ const LaptopShowcase3D = () => {
                     speed={1.5}
                     rotationIntensity={0}
                     floatIntensity={0.4}
-                    floatingRange={[-0.12, 0.12]}>
-                    <LaptopModel
-                      currentProjectIndex={currentIndex}
-                      mousePosition={mousePos}
-                    />
+                    floatingRange={[-0.1, 0.1]}>
+                    <group position={[0, -0.6, 0]}>
+                      <LaptopModel
+                        currentProjectIndex={currentIndex}
+                        mousePosition={mousePos}
+                      />
+                    </group>
                   </Float>
 
                   {/* Ground contact shadow */}

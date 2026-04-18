@@ -82,24 +82,24 @@
 
 :root {
   --radius: 0.625rem;
-  /* Dark Mode Colors (Default) */
-  --background: 15 23 42;
+  /* Dark Mode Colors (Default) - Premium Near-Black */
+  --background: 8 8 10;
   --foreground: 248 250 252;
-  --card: 30 41 59;
+  --card: 18 18 22;
   --card-foreground: 248 250 252;
-  --popover: 30 41 59;
+  --popover: 18 18 22;
   --popover-foreground: 248 250 252;
   --primary: 96 165 250;
-  --primary-foreground: 15 23 42;
-  --secondary: 51 65 85;
+  --primary-foreground: 8 8 10;
+  --secondary: 28 28 32;
   --secondary-foreground: 248 250 252;
-  --muted: 51 65 85;
+  --muted: 28 28 32;
   --muted-foreground: 148 163 184;
-  --accent: 51 65 85;
+  --accent: 28 28 32;
   --accent-foreground: 248 250 252;
   --destructive: 239 68 68;
-  --border: 51 65 85;
-  --input: 51 65 85;
+  --border: 28 28 32;
+  --input: 28 28 32;
   --ring: 96 165 250;
   --chart-1: oklch(0.488 0.243 264.376);
   --chart-2: oklch(0.696 0.17 162.48);

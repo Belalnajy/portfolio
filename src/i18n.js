@@ -271,6 +271,96 @@ const resources = {
               'Real-time hashtag enrichment via SerpAPI integration',
               'Layered backend with subscription-based entitlements and throttling'
             ]
+          },
+          sonomedix: {
+            title: 'Sonomedix News – Medical Media Portal',
+            desc: 'A professional medical news platform focusing on healthcare, beauty, and pediatric updates with dynamic content management.',
+            features: [
+              'Exclusive medical articles and clinical highlights',
+              'Advanced healthcare categories and semantic tagging',
+              'High-performance news engine with real-time updates',
+              'Clean, modern medical UI for professional practitioners'
+            ]
+          },
+          nextstop: {
+            title: 'NextStop Visa – Travel & Visa Services',
+            desc: 'A visa assistance platform focusing on UK ETA and international travel documents with automated eligibility checking.',
+            features: [
+              'Intelligent UK ETA eligibility checker tool',
+              'Streamlined online application forms and document handling',
+              'Multi-visa support for global international travels',
+              'Real-time application status tracking and notifications'
+            ]
+          },
+          kmbc: {
+            title: 'KMBC – Kuwait Modern Building Company',
+            desc: 'A corporate engineering and construction website for leading building projects in Kuwait.',
+            features: [
+              'Comprehensive construction project portfolio showcase',
+              'Industrial service listings and technical capabilities',
+              'Professional architectural design and 3D visual highlights',
+              'Modern corporate identity for major engineering firms'
+            ]
+          },
+          rabzan: {
+            title: 'Rabzan Trading – Global Logistics Solutions',
+            desc: 'A premium logistics platform specializing in global trade and sourcing services from China with quality assurance.',
+            features: [
+              'Global sourcing, verification, and international shipping',
+              'Rigorous quality control inspection and vendor audits',
+              'End-to-end supply chain optimization and management',
+              'Premium Dark UI experience for industrial procurement'
+            ]
+          },
+          sems: {
+            title: 'Tahsili Platform – Saudi Educational Portal',
+            desc: 'An educational platform designed for Saudi students to excel in Tahsili exams through structured learning and tracking.',
+            features: [
+              'Student performance dashboard and analytics',
+              'Comprehensive study materials and interactive lectures',
+              'Automated exam simulation and results analysis',
+              'Personalized learning paths and progress tracking'
+            ]
+          },
+          quotemate: {
+            title: 'QuoteMate – AI-Powered RFQ Solutions',
+            desc: 'An intelligent platform that leverages AI to transform unstructured RFQ requests into professional quote documents.',
+            features: [
+              'AI-driven data extraction from PDF and image RFQs',
+              'Automated professional quote generation in seconds',
+              'Seamless document structuring and database archiving',
+              'Optimized workflow for industrial sales teams'
+            ]
+          },
+          dmagni: {
+            title: 'Dmagni – AI Virtual Try-on Fashion',
+            desc: 'A cutting-edge AI fashion platform allowing users to virtually try on clothes in seconds for a revolutionary e-commerce experience.',
+            features: [
+              'Realistic AI-powered virtual clothes fitting simulation',
+              '15-second simulation speed for high-volume retailers',
+              'Compatibility with various outfit styles and body types',
+              'SaaS model for modular integration into e-commerce sites'
+            ]
+          },
+          cme: {
+            title: 'Itimad Tibbi – Accredited CME Hours Platform',
+            desc: 'A professional medical education system for tracking SCFHS-accredited hours and certifications in Saudi Arabia.',
+            features: [
+              'SCFHS-accredited medical training courses and exams',
+              'Instant certificate generation and verification system',
+              'Personalized hours tracking dashboard for clinicians',
+              'Automated synchronization with licensing databases'
+            ]
+          },
+          dpms: {
+            title: 'DiaMonitor – Advanced Diabetes SaaS',
+            desc: 'A data-driven SaaS platform for diabetes management with real-time glucose monitoring and professional healthcare insights.',
+            features: [
+              'Real-time data synchronization with CGM and IoT devices',
+              'Dedicated Doctor and Patient interactive health portals',
+              'Predictive analytics for glucose trends and health alerts',
+              'Modern, intuitive healthcare dashboard and reporting'
+            ]
           }
         }
       },
@@ -831,6 +921,96 @@ const resources = {
               'هندسة أوامر (Prompting) متخصصة للهجة السعودية العامية',
               'إثراء الهاشتاجات لحظياً عبر التكامل مع SerpAPI',
               'نظام خلفي متطور يدعم الاشتراكات وتحديد سعة الاستخدام'
+            ]
+          },
+          sonomedix: {
+            title: 'سونو NEWS – بوابة الإعلام الطبي',
+            desc: 'منصة إخبارية طبية احترافية تركز على الرعاية الصحية، الجمال، وتحديثات طب الأطفال مع إدارة محتوى ديناميكية.',
+            features: [
+              'مقالات طبية حصرية وأهم التطورات السريرية',
+              'تصنيفات طبية متقدمة ونظام وسوم ذكي',
+              'محرك إخباري عالي الأداء مع تحديثات لحظية',
+              'واجهة طبية عصرية مصممة للممارسين المحترفين'
+            ]
+          },
+          nextstop: {
+            title: 'NextStop Visa – خدمات السفر والتأشيرات',
+            desc: 'منصة مساعدة في استخراج التأشيرات تركز على الـ UK ETA ووثائق السفر الدولية مع فحص الأهلية المؤتمت.',
+            features: [
+              'أداة فحص أهلية ذكية لـ UK ETA',
+              'نماذج تقديم إلكترونية مبسطة ومعالجة آمنة للمستندات',
+              'دعم لعدة تأشيرات للرحلات الدولية حول العالم',
+              'تتبع حالة الطلب لحظياً مع نظام إشعارات بريدي'
+            ]
+          },
+          kmbc: {
+            title: 'KMBC – الشركة الحديثة لبناء وتشييد المدن',
+            desc: 'موقع مؤسسي هندسي لشركة مقاولات وإنشاءات رائدة في الكويت.',
+            features: [
+              'معرض شامل لمشاريع التشييد والإنشاء والمقاولات',
+              'قوائم الخدمات الصناعية والقدرات التقنية للشركة',
+              'تصميم معماري احترافي مع إبراز التفاصيل الهندسية',
+              'هوية مؤسسية عصرية تليق بكبرى شركات الهندسة'
+            ]
+          },
+          rabzan: {
+            title: 'ربزان للتجارة – حلول اللوجستيات العالمية',
+            desc: 'منصة لوجستية رائدة متخصصة في التجارة العالمية وخدمات التوريد من الصين مع ضمان الجودة.',
+            features: [
+              'توريد عالمي، تحقق من الموردين، وشحن دولي',
+              'فحص صارم للجودة ومراجعة للموردين في الصين',
+              'تحسين وإدارة سلاسل الإمداد من البداية للنهاية',
+              'تجربة واجهة داكنة فاخرة للمشتريات الصناعية'
+            ]
+          },
+          sems: {
+            title: 'Tahsili Platform – منصة التحصيلي التعليمية',
+            desc: 'منصة تعليمية مصممة للطلاب السعوديين للتفوق في اختبارات التحصيلي من خلال تعلم وتتبع منظم.',
+            features: [
+              'لوحة تحكم وتحليلات لأداء الطالب التعليمي',
+              'مواد دراسية شاملة ومحاضرات تفاعلية مكثفة',
+              'محاكاة مؤتمتة للاختبارات وتحليل دقيق للنتائج',
+              'مسارات تعلم مخصصة وتتبع دقيق للتقدم'
+            ]
+          },
+          quotemate: {
+            title: 'QuoteMate – حلول التسعير بالذكاء الاصطناعي',
+            desc: 'منصة ذكية تعتمد على الذكاء الاصطناعي لتحويل طلبات الـ RFQ غير المنظمة إلى وثائق تسعير احترافية.',
+            features: [
+              'استخراج بيانات مدعوم بالذكاء الاصطناعي من الـ PDF والصور',
+              'توليد عروض أسعار احترافية مؤتمتة في ثوانٍ معدودة',
+              'هيكلة المستندات بشكل سلس وأرشفتها في قاعدة البيانات',
+              'تحسين دورة المبيعات لفرق البيع الصناعية'
+            ]
+          },
+          dmagni: {
+            title: 'DMAGNI – قياس الملابس الافتراضي بالذكاء الاصطناعي',
+            desc: 'منصة متطورة تتيح للمستخدمين قياس الملابس افتراضياً في ثوانٍ لتجربة تجارة إلكترونية ثورية.',
+            features: [
+              'محاكاة واقعية لقياس الملابس مدعومة بالذكاء الاصطناعي',
+              'سرعة محاكاة تصل لـ 15 ثانية لتناسب كبار تجار التجزئة',
+              'توافق مع مختلف أنماط الملابس وأنواع الأجسام',
+              'نموذج SaaS للتكامل السلس مع مواقع التجارة الإلكترونية'
+            ]
+          },
+          cme: {
+            title: 'اعتماد طبي – منصة ساعات الـ CME المعتمدة',
+            desc: 'نظام تعليم طبي احترافي لتتبع ساعات الـ CME المعتمدة من الهيئة السعودية للتخصصات الصحية (SCFHS).',
+            features: [
+              'دورات واختبارات تدريب طبي معتمدة من SCFHS',
+              'نظام توليد وتحقق فوري من الشهادات الطبية',
+              'لوحة تحكم مخصصة للأطباء لتتبع الساعات المكتسبة',
+              'تزامن مؤتمت مع قواعد بيانات التراخيص المهنية'
+            ]
+          },
+          dpms: {
+            title: 'DiaMonitor – منصة إدارة السكري المتقدمة',
+            desc: 'منصة SaaS قائمة على البيانات لإدارة مرض السكري مع مراقبة لحظية للسكر ورؤى صحية احترافية.',
+            features: [
+              'مزامنة بيانات لحظية مع أجهزة الـ CGM وإنترنت الأشياء',
+              'بوابات تفاعلية مخصصة لكل من الطبيب والمريض',
+              'تحليلات تنبؤية لاتجاهات السكر وتنبيهات صحية ذكية',
+              'لوحة تحكم صحية حديثة وبديهية مع نظام تقارير'
             ]
           }
         }
