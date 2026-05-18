@@ -1404,7 +1404,12 @@ i18n
   .use(initReactI18next)
   .init({
     resources,
+    lng: typeof window !== 'undefined' ? undefined : 'en',
     fallbackLng: 'en',
+    detection: {
+      order: ['localStorage', 'navigator'],
+      caches: ['localStorage'],
+    },
     interpolation: {
       escapeValue: false
     }
