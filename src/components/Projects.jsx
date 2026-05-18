@@ -21,6 +21,9 @@ import {
   SiVite,
   SiFastapi,
   SiOpenlayers,
+  SiCelery,
+  SiRedis,
+  SiFramer,
 } from 'react-icons/si';
 import {
   FaGithub,
@@ -38,6 +41,11 @@ import {
   FaEnvelope,
   FaChartLine,
   FaRobot,
+  FaCar,
+  FaGraduationCap,
+  FaHospital,
+  FaFileExcel,
+  FaCertificate,
 } from 'react-icons/fa';
 import ProjectSkeleton from './skeletons/ProjectSkeleton';
 import ProjectModal from './ProjectModal';
@@ -83,6 +91,14 @@ export const getTechIcon = (tech) => {
     Nodemailer: <FaEnvelope className="text-[#339933]" />,
     FastAPI: <SiFastapi className="text-[#05998B]" />,
     Gemini: <FaRobot className="text-[#4285F4]" />,
+    Celery: <SiCelery className="text-[#37814A]" />,
+    Redis: <SiRedis className="text-[#DC382D]" />,
+    'Framer Motion': <SiFramer className="text-[#0055FF]" />,
+    MyFatoorah: <FaCode className="text-[#00B67A]" />,
+    NELC: <FaGraduationCap className="text-[#1B5E20]" />,
+    SCFHS: <FaHospital className="text-[#0D47A1]" />,
+    Multer: <FaCode className="text-[#CF6900]" />,
+    'Excel Processing': <FaFileExcel className="text-[#217346]" />,
   };
   return (
     iconMap[tech] || <FaCode className="text-[rgb(var(--muted-foreground))]" />
@@ -215,6 +231,84 @@ const Projects = () => {
 
   const projectsData = useMemo(
     () => [
+      {
+        slug: 'toyo228',
+        title: t('projects.items.toyo228.title'),
+        description: t('projects.items.toyo228.desc'),
+        image: '/toyo228.png',
+        tags: [
+          'Next.js',
+          'NestJS',
+          'TypeORM',
+          'PostgreSQL',
+          'TypeScript',
+          'Turborepo',
+          'Multer',
+          'Excel Processing',
+        ],
+        features: t('projects.items.toyo228.features', { returnObjects: true }),
+        github: '#',
+        live: 'http://toyo228.com/en',
+        category: 'Full Stack',
+      },
+      {
+        slug: 'motors',
+        title: t('projects.items.motors.title'),
+        description: t('projects.items.motors.desc'),
+        image: '/motors.png',
+        tags: [
+          'Next.js',
+          'NestJS',
+          'TypeORM',
+          'PostgreSQL',
+          'TypeScript',
+          'Multer',
+        ],
+        features: t('projects.items.motors.features', { returnObjects: true }),
+        github: '#',
+        live: 'https://motorksa.org/',
+        category: 'Full Stack',
+      },
+      {
+        slug: 'injaz',
+        title: t('projects.items.injaz.title'),
+        description: t('projects.items.injaz.desc'),
+        image: '/injaz.png',
+        tags: [
+          'Django',
+          'PostgreSQL',
+          'Python',
+          'Celery',
+          'Redis',
+          'MyFatoorah',
+          'NELC',
+          'SCFHS',
+        ],
+        features: t('projects.items.injaz.features', { returnObjects: true }),
+        github: '#',
+        live: 'https://lms-injaz.com/',
+        category: 'Full Stack',
+      },
+      {
+        slug: 'hcholding',
+        title: t('projects.items.hcholding.title'),
+        description: t('projects.items.hcholding.desc'),
+        image: '/hcholding.png',
+        tags: [
+          'Django',
+          'PostgreSQL',
+          'Python',
+          'Celery',
+          'Redis',
+          'MyFatoorah',
+          'NELC',
+          'SCFHS',
+        ],
+        features: t('projects.items.hcholding.features', { returnObjects: true }),
+        github: '#',
+        live: 'https://lms-hcholding.org/',
+        category: 'Full Stack',
+      },
       {
         slug: 'indstrz',
         title: t('projects.items.indstrz.title'),

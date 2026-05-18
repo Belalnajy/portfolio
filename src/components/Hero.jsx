@@ -5,6 +5,8 @@ import { FaGithub, FaLinkedin, FaDownload } from 'react-icons/fa';
 import MagneticButton from './MagneticButton';
 import PlatformLinks from './PlatformLinks';
 import { useTranslation } from 'react-i18next';
+import { SplineScene } from './ui/splite';
+import { Spotlight } from './ui/spotlight';
 
 const Hero = ({ onDownloadCV }) => {
   const { t, i18n } = useTranslation();
@@ -180,13 +182,60 @@ const Hero = ({ onDownloadCV }) => {
             </motion.div>
           </motion.div>
 
-          {/* Image Container */}
+          {/* 3D Spline Scene + Photo */}
           <motion.div
             initial={{ opacity: 0, x: 50 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8 }}
-            className="relative">
-            <div className="relative w-full max-w-md mx-auto lg:max-w-full">
+            className="relative hidden lg:block">
+            <div className="relative w-full h-[600px] rounded-3xl overflow-hidden bg-black/[0.96] border border-white/10 shadow-2xl shadow-blue-500/10">
+              <Spotlight
+                className="-top-40 left-0 md:left-60 md:-top-20"
+                fill="white"
+              />
+              
+              {/* Spline 3D Background */}
+              <div className="absolute inset-0 z-0">
+                <SplineScene 
+                  scene="https://prod.spline.design/kZDDjO5HuC9GJUM2/scene.splinecode"
+                  className="w-full h-full"
+                />
+              </div>
+
+              {/* Photo Overlay - Centered */}
+              <div className="absolute inset-0 z-10 flex items-center justify-center pointer-events-none">
+                <motion.div
+                  initial={{ scale: 0.8, opacity: 0 }}
+                  animate={{ scale: 1, opacity: 1 }}
+                  transition={{ duration: 1, delay: 0.5, ease: 'easeOut' }}
+                  className="relative">
+                  {/* Glow Ring */}
+                  <div className="absolute -inset-3 bg-gradient-to-r from-blue-500 via-purple-500 to-blue-500 rounded-full blur-xl opacity-40 animate-pulse" />
+                  <div className="absolute -inset-1 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full opacity-60" />
+                  
+                  {/* Photo */}
+                  <div className="relative w-56 h-56 xl:w-64 xl:h-64 rounded-full border-4 border-white/20 overflow-hidden shadow-2xl">
+                    <img
+                      src="/hero.png"
+                      alt="Belal Nagy"
+                      className="w-full h-full object-cover object-center"
+                    />
+                  </div>
+                </motion.div>
+              </div>
+
+              {/* Bottom Gradient Fade */}
+              <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-black/80 to-transparent z-20 pointer-events-none" />
+            </div>
+          </motion.div>
+
+          {/* Mobile Fallback - Original Photo Circle */}
+          <motion.div
+            initial={{ opacity: 0, x: 50 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.8 }}
+            className="relative lg:hidden">
+            <div className="relative w-full max-w-md mx-auto">
               {/* Decorative Elements */}
               <div className="absolute -inset-4 bg-blue-500/20 rounded-full blur-2xl animate-pulse" />
               <div className="absolute -inset-4 bg-purple-500/20 rounded-full blur-2xl animate-pulse animation-delay-2000" />

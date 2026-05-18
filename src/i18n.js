@@ -85,6 +85,52 @@ const resources = {
           source_code: 'View Source Code'
         },
         items: {
+          toyo228: {
+            title: 'Toyo228 – B2B Auto Parts Platform',
+            desc: 'A B2B e-commerce platform connecting Toyota spare parts wholesalers with retail shops, featuring bulk search via Excel uploads, multi-panel dashboards, and a Turborepo monorepo architecture.',
+            features: [
+              'Multi-role panels: Admin, Wholesaler, and Retail Shop dashboards',
+              'Bulk part search via Excel file upload with template downloads',
+              'Shared TypeScript interfaces across frontend and backend via monorepo',
+              'JWT authentication with httpOnly cookies and ownership guards',
+              'Image gallery with drag-and-drop upload and server-side optimization'
+            ]
+          },
+          motors: {
+            title: 'Motors – Premium Car Marketplace',
+            desc: 'A full-stack Arabic car marketplace platform for buying and selling new, used, and damaged vehicles with advanced search filters, user dashboards, and WhatsApp seller integration.',
+            features: [
+              'Advanced vehicle filtering by brand, price, fuel type, and condition',
+              'User dashboard for managing car listings with full CRUD operations',
+              'Image gallery with multi-photo upload and primary image selection',
+              'RTL-first dark theme design optimized for the Saudi market',
+              'WhatsApp integration for direct buyer-to-seller communication'
+            ]
+          },
+          injaz: {
+            title: 'Injaz – Medical Education LMS',
+            desc: 'A comprehensive Learning Management System for SCFHS-accredited medical training courses with video-based learning, MCQ assessments, certificate generation, and NELC integration for the Saudi healthcare sector.',
+            features: [
+              'SCFHS-accredited video courses with progress tracking and quizzes',
+              'Automated certificate generation with unique IDs and verification system',
+              'MyFatoorah payment gateway integration with shopping cart and coupons',
+              'NELC (National E-Learning Center) integration for course accreditation',
+              'Celery + Redis async task processing for email notifications and reports',
+              'Bilingual Arabic/English interface with full RTL support'
+            ]
+          },
+          hcholding: {
+            title: 'HC Holding – Health Cluster Training Center',
+            desc: 'A specialized LMS platform for the Health Cluster Holding Company in Makkah, providing SCFHS-accredited CPR, BLS, First Aid, and nursing training courses with automated certification.',
+            features: [
+              'SCFHS-accredited healthcare training (CPR, BLS, First Aid, TOT)',
+              'Video-based learning with per-video quiz assessments and progress tracking',
+              'Automated certificate issuance with QR code verification',
+              'MyFatoorah payment integration with bank transfer receipt upload',
+              'NELC integration for national e-learning compliance and reporting',
+              'Multi-role system: Admin, Instructor, and Trainee dashboards'
+            ]
+          },
           indstrz: {
             title: 'Indstrz – B2B Industrial Marketplace',
             desc: 'A scalable full-stack B2B procurement platform with end-to-end digital RFQ workflows, real-time negotiations, and automated conversation management.',
@@ -736,6 +782,52 @@ const resources = {
           source_code: 'عرض الكود المصدري'
         },
         items: {
+          toyo228: {
+            title: 'Toyo228 – منصة قطع غيار تويوتا B2B',
+            desc: 'منصة تجارة إلكترونية B2B تربط تجار الجملة لقطع غيار تويوتا الأصلية بمحلات التجزئة، مع خاصية البحث بالجملة عبر ملفات Excel ولوحات تحكم متعددة الأدوار وبنية Turborepo.',
+            features: [
+              'لوحات تحكم متعددة الأدوار: لوحة المدير، لوحة تاجر الجملة، ولوحة المتجر',
+              'بحث بالجملة عن القطع عبر رفع ملفات Excel مع قوالب جاهزة للتحميل',
+              'واجهات TypeScript مشتركة بين الـ Frontend والـ Backend عبر Monorepo',
+              'مصادقة JWT آمنة مع httpOnly Cookies ونظام حماية الملكية',
+              'معرض صور متطور مع رفع Drag & Drop وتحسين تلقائي من السيرفر'
+            ]
+          },
+          motors: {
+            title: 'Motors – سوق السيارات الفاخرة',
+            desc: 'منصة عربية متكاملة لبيع وشراء السيارات الجديدة والمستعملة والمصدومة مع فلاتر بحث متقدمة، لوحات تحكم للمستخدمين، وتكامل WhatsApp للتواصل المباشر.',
+            features: [
+              'فلاتر بحث متقدمة حسب الماركة، السعر، نوع الوقود، والحالة',
+              'لوحة تحكم كاملة لإدارة إعلانات السيارات (إنشاء، تعديل، حذف)',
+              'معرض صور مع رفع صور متعددة واختيار الصورة الرئيسية',
+              'تصميم داكن احترافي RTL مُحسّن للسوق السعودي',
+              'تكامل WhatsApp للتواصل المباشر بين المشتري والبائع'
+            ]
+          },
+          injaz: {
+            title: 'الإنجاز – منصة التعليم الطبي المستمر',
+            desc: 'نظام إدارة تعلم متكامل (LMS) لدورات التدريب الطبي المعتمدة من الهيئة السعودية للتخصصات الصحية (SCFHS) مع تعلم بالفيديو، اختبارات MCQ، شهادات مؤتمتة، وتكامل مع المركز الوطني للتعلم الإلكتروني (NELC).',
+            features: [
+              'دورات فيديو معتمدة من SCFHS مع تتبع التقدم واختبارات تفاعلية',
+              'توليد شهادات مؤتمت بأرقام فريدة ونظام تحقق إلكتروني',
+              'تكامل بوابة دفع MyFatoorah مع سلة تسوق ونظام كوبونات خصم',
+              'تكامل مع المركز الوطني للتعلم الإلكتروني (NELC) لاعتماد الدورات',
+              'معالجة مهام غير متزامنة باستخدام Celery + Redis للإشعارات والتقارير',
+              'واجهة ثنائية اللغة (عربي/إنجليزي) مع دعم كامل للـ RTL'
+            ]
+          },
+          hcholding: {
+            title: 'التجمع الصحي القابضة – مركز التدريب الصحي',
+            desc: 'منصة تعلم إلكتروني متخصصة لشركة التجمع الصحي القابضة في مكة المكرمة، تقدم دورات تدريبية معتمدة من SCFHS في الإنعاش القلبي (CPR)، دعم الحياة (BLS)، الإسعافات الأولية، ومهارات التمريض.',
+            features: [
+              'تدريب صحي معتمد من SCFHS (إنعاش قلبي، دعم حياة، إسعافات أولية، TOT)',
+              'تعلم بالفيديو مع اختبارات لكل فيديو وتتبع تقدم المتدرب',
+              'إصدار شهادات مؤتمت مع رمز QR للتحقق الإلكتروني',
+              'تكامل دفع MyFatoorah مع رفع إيصالات التحويل البنكي',
+              'تكامل NELC للامتثال الوطني للتعلم الإلكتروني وإعداد التقارير',
+              'نظام متعدد الأدوار: لوحات تحكم للمدير والمدرب والمتدرب'
+            ]
+          },
           indstrz: {
             title: 'Indstrz – منصة تجارة صناعية B2B',
             desc: 'منصة مشتريات B2B متكاملة وقابلة للتوسع تدعم دورات عمل RFQ الرقمية، المفاوضات اللحظية، وإدارة المحادثات المؤتمتة.',

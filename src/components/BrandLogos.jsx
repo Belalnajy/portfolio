@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
 
 const logos = [
+  'toyo228-logo.png', 'motors-logo.png', 'injaz-logo.png', 'hcholding-logo.png',
   '21-secondary-logo.png', 'CME-logo.png', 'DiaMonitor-logo.png',
   'KMBC-logo.png', 'amarna-logo.png', 'baserah-logo.png',
   'dmagni-logo.png', 'indstrz-logo.png', 'manqla-logo.png',
@@ -11,8 +12,8 @@ const logos = [
   'uduipa-logo.png', 'upafa-edu-logo.png', 'waferlee.png'
 ];
 
-const row1 = logos.slice(0, 9);
-const row2 = logos.slice(9, 18);
+const row1 = logos.slice(0, 11);
+const row2 = logos.slice(11, 22);
 
 const MarqueeRow = ({ items, direction }) => {
   // Duplicate the array to create the infinite looping effect

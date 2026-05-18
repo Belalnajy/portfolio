@@ -16,6 +16,8 @@
     "@radix-ui/react-slot": "^1.2.0",
     "@react-three/drei": "^10.7.7",
     "@react-three/fiber": "^9.6.0",
+    "@splinetool/react-spline": "^4.1.0",
+    "@splinetool/runtime": "^1.12.94",
     "@tailwindcss/vite": "^4.1.4",
     "aos": "^2.3.4",
     "i18next": "^26.0.5",
