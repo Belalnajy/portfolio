@@ -1,3 +1,4 @@
+"use client";
 import { useState, useEffect, useRef, useMemo } from 'react';
 import { motion, useInView } from 'framer-motion';
 import { FaProjectDiagram, FaCode, FaClock, FaAward } from 'react-icons/fa';

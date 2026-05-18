@@ -1,5 +1,6 @@
+"use client";
 import { motion } from "framer-motion";
-import { Link } from "react-scroll";
+import Link from "next/link";
 import { FaHome, FaRocket, FaExclamationTriangle } from "react-icons/fa";
 
 const NotFound = () => {
@@ -108,7 +109,7 @@ const NotFound = () => {
             animate={{ y: 0, opacity: 1 }}
             transition={{ delay: 0.9 }}
             className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-            <Link to="home" spy={true} smooth={true} duration={300}>
+            <Link href="/">
               <motion.button
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
@@ -118,7 +119,7 @@ const NotFound = () => {
               </motion.button>
             </Link>
 
-            <Link to="contact" spy={true} smooth={true} duration={300}>
+            <Link href="/#contact">
               <motion.button
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
@@ -148,17 +149,16 @@ const NotFound = () => {
         <motion.div
           key={i}
           className="absolute w-2 h-2 bg-gradient-to-r from-red-400 to-yellow-400 rounded-full"
+          style={{
+            left: `${Math.random() * 100}%`,
+            top: `${Math.random() * 100}%`,
+          }}
           initial={{
-            x: Math.random() * window.innerWidth,
-            y: Math.random() * window.innerHeight,
             opacity: 0,
           }}
           animate={{
-            y: [null, Math.random() * window.innerHeight],
-            x: [
-              null,
-              Math.random() * window.innerWidth,
-            ],
+            y: [0, Math.random() * 200 - 100],
+            x: [0, Math.random() * 200 - 100],
             opacity: [0, 1, 0],
           }}
           transition={{

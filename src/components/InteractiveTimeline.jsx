@@ -1,3 +1,4 @@
+"use client";
 import { useState, useMemo } from 'react';
 import { motion } from 'framer-motion';
 import { FaLaptopCode, FaGraduationCap, FaBriefcase, FaCalendarAlt, FaMapMarkerAlt, FaChevronRight } from 'react-icons/fa';

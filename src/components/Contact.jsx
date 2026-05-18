@@ -1,3 +1,4 @@
+"use client";
 import { useState, useRef, useMemo } from 'react';
 import { motion } from 'framer-motion';
 import emailjs from '@emailjs/browser';
@@ -33,11 +34,11 @@ const Contact = ({ showNotification }) => {
 
     try {
       const serviceId =
-        import.meta.env.VITE_EMAILJS_SERVICE_ID || 'service_xxxxxxx';
+        process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID || 'service_xxxxxxx';
       const templateId =
-        import.meta.env.VITE_EMAILJS_TEMPLATE_ID || 'template_xxxxxxx';
+        process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID || 'template_xxxxxxx';
       const publicKey =
-        import.meta.env.VITE_EMAILJS_PUBLIC_KEY || 'your_public_key';
+        process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY || 'your_public_key';
 
       await emailjs.sendForm(serviceId, templateId, formRef.current, publicKey);
 

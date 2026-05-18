@@ -1,3 +1,4 @@
+"use client";
 import { motion } from "framer-motion";
 import { FaCalendarAlt, FaMapMarkerAlt, FaBuilding, FaChevronRight } from "react-icons/fa";
 

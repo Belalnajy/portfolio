@@ -1,3 +1,4 @@
+"use client";
 import { motion, AnimatePresence } from 'framer-motion';
 import { FaGithub, FaExternalLinkAlt, FaTimes, FaCode } from 'react-icons/fa';
 import { getTechIcon } from './Projects';
