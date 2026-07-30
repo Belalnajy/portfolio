@@ -176,7 +176,6 @@ const ProjectCard = ({ project, index, onClick }) => {
 
   return (
     <motion.div
-      layoutId={`project-card-${project.slug}`}
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
@@ -297,6 +296,7 @@ const Projects = () => {
         }),
         github: '#',
         live: 'https://bilqalaminstitute.net/',
+        caseStudy: '/case-study/bilqalam',
         category: 'Full Stack',
       },
       {
@@ -825,7 +825,7 @@ const Projects = () => {
           viewport={{ once: true }}
           transition={{ duration: 0.5 }}
           className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl font-bold mb-4 text-[rgb(var(--foreground))]">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 text-[rgb(var(--foreground))]">
             {t('projects.title')}
           </h2>
           <p className="text-[rgb(var(--muted-foreground))] max-w-2xl mx-auto text-lg">
@@ -840,13 +840,14 @@ const Projects = () => {
           viewport={{ once: true }}
           transition={{ duration: 0.5, delay: 0.2 }}
           className="mb-12 flex flex-col md:flex-row gap-6 items-center justify-between max-w-5xl mx-auto">
-          {/* iOS-Style Segmented Control */}
-          <div className="flex p-1 bg-[rgb(var(--muted))]/30 backdrop-blur-md rounded-full border border-[rgb(var(--border))]/50 relative overflow-x-auto w-full md:w-auto">
+          {/* Segmented control — wraps into rows on phones instead of scrolling
+              off-screen, so every category stays reachable. */}
+          <div className="flex flex-wrap justify-center gap-1 p-1 bg-[rgb(var(--muted))]/30 backdrop-blur-md rounded-2xl md:rounded-full border border-[rgb(var(--border))]/50 relative w-full md:w-auto">
             {categories.map((category) => (
               <button
                 key={category.id}
                 onClick={() => setFilter(category.id)}
-                className={`relative px-6 py-2 rounded-full text-sm font-medium transition-colors z-10 whitespace-nowrap ${
+                className={`relative px-4 sm:px-6 min-h-[44px] rounded-full text-sm font-medium transition-colors z-10 whitespace-nowrap ${
                   filter === category.id
                     ? 'text-white'
                     : 'text-[rgb(var(--muted-foreground))] hover:text-[rgb(var(--foreground))]'

@@ -83,6 +83,8 @@ const resources = {
           features: 'Key Features & Highlights',
           live_link: 'Visit Live Project',
           source_code: 'View Source Code',
+          case_study: 'Read the Case Study',
+          close: 'Close',
           suite_title: 'Same Engine, Different Brands',
           suite_desc: 'This platform is one deployment of a shared LMS engine I built and maintain. Each client runs its own branded instance — distinct visual identity, accreditation and content — on top of the same accredited training, payment and certification core.'
         },
@@ -671,6 +673,164 @@ const resources = {
           }
         ]
       },
+      process: {
+        label: 'How I Work',
+        title: 'From First Call to Live Product',
+        subtitle: 'A predictable process with a clear deliverable at every step, so you always know what is happening and what comes next.',
+        steps: {
+          discovery: {
+            title: '1. Discovery Call',
+            desc: 'We talk through the goal, the users and the constraints. I ask the awkward questions early — budget, deadlines, integrations — so nothing surprises us later.',
+            deliverable: 'Deliverable: written scope summary'
+          },
+          blueprint: {
+            title: '2. Scope & Blueprint',
+            desc: 'I turn the conversation into a concrete plan: features broken into phases, the data model, the stack, and a realistic timeline with milestones.',
+            deliverable: 'Deliverable: proposal + timeline'
+          },
+          build: {
+            title: '3. Build in Milestones',
+            desc: 'Development happens in reviewable chunks, not one big reveal. You get a staging link from the first milestone and can follow progress the whole way.',
+            deliverable: 'Deliverable: staging link per milestone'
+          },
+          review: {
+            title: '4. Review & Hardening',
+            desc: 'Your feedback on each milestone gets folded in, then I test the flows end to end — validation, permissions, edge cases, mobile, and RTL.',
+            deliverable: 'Deliverable: tested, fixed build'
+          },
+          launch: {
+            title: '5. Launch',
+            desc: 'Deployment, domain and SSL, environment configuration, SEO basics and analytics. I hand over the repository, credentials and a short walkthrough.',
+            deliverable: 'Deliverable: live site + handover'
+          },
+          support: {
+            title: '6. Post-Launch Support',
+            desc: 'A warranty window after launch for any defect in what was delivered, plus an optional retainer for ongoing features and maintenance.',
+            deliverable: 'Deliverable: warranty + optional retainer'
+          }
+        }
+      },
+      packages: {
+        label: 'Packages',
+        title: 'Ways We Can Work Together',
+        subtitle: 'Three common shapes for a project. Every engagement is scoped to what you actually need — these are starting points, not boxes.',
+        most_popular: 'Most Popular',
+        on_request: 'Quote on request',
+        cta: 'Request a Quote',
+        footnote: 'Not sure which fits? Send me a short description of your project and I will reply with a recommended scope, timeline and price — no obligation.',
+        tiers: {
+          landing: {
+            name: 'Website & Landing Page',
+            tagline: 'A fast, polished marketing presence that converts visitors and looks right on every screen.',
+            price: '',
+            timeline: 'Typically 1–2 weeks',
+            features: [
+              'Custom design — no recycled templates',
+              'Fully responsive, mobile-first build',
+              'Bilingual Arabic/English with full RTL',
+              'SEO fundamentals and performance tuning',
+              'Contact form and WhatsApp integration',
+              'Deployment, domain and SSL setup'
+            ]
+          },
+          platform: {
+            name: 'Full-Stack Platform',
+            tagline: 'A complete product with accounts, dashboards, payments and an admin panel — built to grow.',
+            price: '',
+            timeline: 'Typically 4–10 weeks',
+            features: [
+              'Everything in the website package',
+              'Custom backend, database design and REST APIs',
+              'Authentication with role-based dashboards',
+              'Payment gateway and invoicing integration',
+              'Admin panel with reports and exports',
+              'Optional AI features and real-time updates',
+              'Staging environment and milestone reviews'
+            ]
+          },
+          retainer: {
+            name: 'Ongoing Partner',
+            tagline: 'A monthly arrangement for teams that need continuous development, not a one-off delivery.',
+            price: '',
+            timeline: 'Monthly, cancel anytime',
+            features: [
+              'Reserved development hours each month',
+              'New features and iterative improvements',
+              'Bug fixing and performance monitoring',
+              'Dependency and security updates',
+              'Priority response times',
+              'Technical consultation and code review'
+            ]
+          }
+        }
+      },
+      case_studies: {
+        label: 'Case Study',
+        back: 'Back to Projects',
+        visit: 'Visit Live Site',
+        cta_title: 'Have a project like this in mind?',
+        cta_subtitle: 'Tell me what you are building and I will come back with a recommended scope, timeline and price.',
+        cta_button: 'Start a Conversation',
+        facts: {
+          role: 'My Role',
+          scope: 'Scope',
+          audience: 'Audience'
+        },
+        sections: {
+          challenge: 'The Challenge',
+          approach: 'The Approach',
+          delivered: 'What I Built',
+          outcome: 'The Outcome',
+          stack: 'Technology Stack'
+        },
+        bilqalam: {
+          title: 'Bilqalam Institute — Building an Online Academy End to End',
+          summary: 'A complete learning platform for an institute teaching Qur’an, Arabic and Islamic studies online — from the database schema to the last pixel of the student dashboard.',
+          facts: {
+            role: 'Sole developer — frontend, backend and infrastructure',
+            scope: 'Full platform: public site, dashboards, scheduling, subscriptions',
+            audience: 'Arabic and non-Arabic speaking students worldwide'
+          },
+          challenge: {
+            body: 'Teaching Qur’an and Arabic online is not the same problem as selling recorded courses. Lessons are live and one-to-one, tutors have their own availability, students progress at their own pace, and the whole experience has to feel natural in Arabic while staying usable for students who do not read it. Off-the-shelf course platforms assume pre-recorded video and a single language, so none of them fit.',
+            points: [
+              'Live one-to-one lessons rather than pre-recorded content',
+              'Tutor availability that changes week to week',
+              'Progress tracked per student, not per course',
+              'Arabic-first experience that still works in English'
+            ]
+          },
+          approach: {
+            body: 'I designed the platform around scheduling and people rather than around a video catalogue. Tutors, students and administrators each got their own dashboard with only what they need. Availability, bookings and progress were modelled as first-class data from the start, so the schedule stays the single source of truth and nothing has to be reconciled by hand.',
+            points: [
+              'Role-based architecture: student, tutor and admin',
+              'Availability and bookings as core domain models',
+              'RTL-first design system, mirrored cleanly for English',
+              'Background jobs for reminders and notifications'
+            ]
+          },
+          delivered: {
+            body: 'The result is a platform an institute can actually run its day-to-day operations on: enrolling students, assigning tutors, scheduling and rescheduling lessons, tracking attendance and progress, and managing subscriptions — without leaving the system.',
+            points: [
+              'Course catalogue for Qur’an, Tajweed, Arabic and Islamic studies',
+              'Live class scheduling with tutor availability management',
+              'Student, tutor and admin dashboards with access control',
+              'Subscription and enrolment plans for children and adults',
+              'Attendance, lesson history and per-student progress tracking',
+              'Bilingual Arabic/English interface with full RTL support'
+            ]
+          },
+          outcome: {
+            body: 'The institute runs on a single system instead of a patchwork of spreadsheets, chat messages and manual scheduling. Adding a tutor, opening a new course or onboarding a student is now a form rather than a coordination exercise, and the codebase is structured so new programmes can be added without touching the scheduling core.',
+            points: [
+              'Operations consolidated into one platform',
+              'Scheduling and enrolment handled without manual coordination',
+              'New courses and tutors added without code changes',
+              'Architecture ready for further programmes and growth'
+            ]
+          }
+        }
+      },
       testimonials: {
         title: 'What People Say',
         subtitle: "Feedback from clients, students, and colleagues I've worked with",
@@ -765,8 +925,11 @@ const resources = {
         about: 'About',
         timeline: 'Timeline',
         projects: 'Projects',
+        suite: 'Product Suite',
         skills: 'Skills',
         services: 'Services',
+        process: 'Process',
+        packages: 'Packages',
         testimonials: 'Testimonials',
         contact: 'Contact',
         download_cv: 'Download CV'
@@ -864,6 +1027,8 @@ const resources = {
           features: 'أهم المميزات والخصائص',
           live_link: 'زيارة المشروع',
           source_code: 'عرض الكود المصدري',
+          case_study: 'اقرأ دراسة الحالة',
+          close: 'إغلاق',
           suite_title: 'نفس المحرك… هويات بصرية مختلفة',
           suite_desc: 'هذه المنصة واحدة من عدة نسخ تعمل على محرك LMS واحد قمت ببنائه وتطويره. كل عميل لديه نسخته الخاصة بهوية بصرية ومحتوى واعتمادات مستقلة، فوق نفس النواة الموحّدة للتدريب المعتمد والدفع وإصدار الشهادات.'
         },
@@ -1452,6 +1617,164 @@ const resources = {
           }
         ]
       },
+      process: {
+        label: 'طريقة عملي',
+        title: 'من أول مكالمة لحد إطلاق المنتج',
+        subtitle: 'خطوات واضحة ومخرَج محدد لكل مرحلة، فتعرف في أي وقت إحنا فين وإيه الخطوة الجاية.',
+        steps: {
+          discovery: {
+            title: '١. مكالمة تعريفية',
+            desc: 'نتكلم عن الهدف والمستخدمين والقيود. أسأل الأسئلة الصعبة من البداية — الميزانية، المواعيد، التكاملات — فمفيش مفاجآت بعد كده.',
+            deliverable: 'المخرَج: ملخص مكتوب للنطاق'
+          },
+          blueprint: {
+            title: '٢. تحديد النطاق والمخطط',
+            desc: 'أحوّل الكلام لخطة ملموسة: المميزات مقسّمة لمراحل، تصميم قاعدة البيانات، التقنيات المستخدمة، وجدول زمني واقعي بمراحل تسليم.',
+            deliverable: 'المخرَج: عرض فني + جدول زمني'
+          },
+          build: {
+            title: '٣. التنفيذ على مراحل',
+            desc: 'التطوير بيحصل على دفعات تقدر تراجعها، مش تسليم واحد في الآخر. بتاخد رابط تجريبي من أول مرحلة وتتابع الشغل خطوة بخطوة.',
+            deliverable: 'المخرَج: رابط تجريبي لكل مرحلة'
+          },
+          review: {
+            title: '٤. المراجعة والتجهيز',
+            desc: 'ملاحظاتك على كل مرحلة بتتنفذ، وبعدها أختبر المسارات من البداية للنهاية — التحقق، الصلاحيات، الحالات الاستثنائية، الموبايل، والـ RTL.',
+            deliverable: 'المخرَج: نسخة مختبَرة ومظبوطة'
+          },
+          launch: {
+            title: '٥. الإطلاق',
+            desc: 'النشر، الدومين والـ SSL، إعداد البيئة، أساسيات الـ SEO والتحليلات. وأسلّمك الريبو وبيانات الدخول وشرح سريع للنظام.',
+            deliverable: 'المخرَج: موقع شغّال + تسليم كامل'
+          },
+          support: {
+            title: '٦. الدعم بعد الإطلاق',
+            desc: 'فترة ضمان بعد الإطلاق لأي خطأ في اللي تم تسليمه، مع إمكانية عقد شهري للتطوير المستمر والصيانة.',
+            deliverable: 'المخرَج: ضمان + عقد شهري اختياري'
+          }
+        }
+      },
+      packages: {
+        label: 'الباكدجات',
+        title: 'طرق نشتغل بيها مع بعض',
+        subtitle: 'ثلاث صيغ شائعة للمشاريع. كل مشروع بيتحدد نطاقه حسب احتياجك الفعلي — دي نقط بداية مش قوالب جاهزة.',
+        most_popular: 'الأكثر طلباً',
+        on_request: 'السعر حسب النطاق',
+        cta: 'اطلب عرض سعر',
+        footnote: 'مش متأكد إيه المناسب؟ ابعتلي وصف سريع لمشروعك وهرد عليك بنطاق مقترح وجدول زمني وسعر — بدون أي التزام.',
+        tiers: {
+          landing: {
+            name: 'موقع وصفحة هبوط',
+            tagline: 'حضور تسويقي سريع ومتقن يحوّل الزائر لعميل ويظهر صح على كل الشاشات.',
+            price: '',
+            timeline: 'عادةً ١–٢ أسبوع',
+            features: [
+              'تصميم مخصص — بدون قوالب مُعاد استخدامها',
+              'تصميم متجاوب بالكامل ومبني للموبايل أولاً',
+              'ثنائي اللغة عربي/إنجليزي بدعم RTL كامل',
+              'أساسيات تحسين محركات البحث وتحسين الأداء',
+              'استمارة تواصل وتكامل مع WhatsApp',
+              'النشر وإعداد الدومين والـ SSL'
+            ]
+          },
+          platform: {
+            name: 'منصة متكاملة (Full-Stack)',
+            tagline: 'منتج كامل بحسابات ولوحات تحكم ومدفوعات ولوحة إدارة — مبني ليكبر معاك.',
+            price: '',
+            timeline: 'عادةً ٤–١٠ أسابيع',
+            features: [
+              'كل اللي في باكدج الموقع',
+              'Backend مخصص وتصميم قاعدة بيانات و REST APIs',
+              'نظام مصادقة ولوحات تحكم حسب الأدوار',
+              'تكامل بوابة دفع ونظام فواتير',
+              'لوحة إدارة مع تقارير وتصدير بيانات',
+              'مميزات ذكاء اصطناعي وتحديثات لحظية (اختياري)',
+              'بيئة تجريبية ومراجعة لكل مرحلة'
+            ]
+          },
+          retainer: {
+            name: 'شريك تطوير مستمر',
+            tagline: 'اتفاق شهري للفرق اللي محتاجة تطوير متواصل، مش تسليم لمرة واحدة.',
+            price: '',
+            timeline: 'شهرياً، وتقدر توقف في أي وقت',
+            features: [
+              'ساعات تطوير محجوزة لك كل شهر',
+              'مميزات جديدة وتحسينات مستمرة',
+              'إصلاح الأخطاء ومراقبة الأداء',
+              'تحديثات المكتبات والثغرات الأمنية',
+              'أولوية في سرعة الاستجابة',
+              'استشارات تقنية ومراجعة كود'
+            ]
+          }
+        }
+      },
+      case_studies: {
+        label: 'دراسة حالة',
+        back: 'رجوع للمشاريع',
+        visit: 'زيارة الموقع',
+        cta_title: 'عندك مشروع شبه ده؟',
+        cta_subtitle: 'قوللي إنت بتبني إيه وهرجع لك بنطاق مقترح وجدول زمني وسعر.',
+        cta_button: 'ابدأ الحديث',
+        facts: {
+          role: 'دوري في المشروع',
+          scope: 'نطاق العمل',
+          audience: 'الجمهور المستهدف'
+        },
+        sections: {
+          challenge: 'التحدي',
+          approach: 'المنهجية',
+          delivered: 'اللي تم بناؤه',
+          outcome: 'النتيجة',
+          stack: 'التقنيات المستخدمة'
+        },
+        bilqalam: {
+          title: 'معهد بالقلم — بناء أكاديمية أونلاين من الصفر للنهاية',
+          summary: 'منصة تعليمية متكاملة لمعهد متخصص في تعليم القرآن الكريم واللغة العربية والعلوم الشرعية أونلاين — من تصميم قاعدة البيانات لآخر تفصيلة في لوحة الطالب.',
+          facts: {
+            role: 'المطور الوحيد — الواجهة والخلفية والبنية التحتية',
+            scope: 'منصة كاملة: الموقع، لوحات التحكم، الجدولة، الاشتراكات',
+            audience: 'طلاب ناطقين وغير ناطقين بالعربية حول العالم'
+          },
+          challenge: {
+            body: 'تعليم القرآن والعربية أونلاين مش نفس مشكلة بيع دورات مسجلة. الحصص مباشرة وفردية، كل معلم له أوقات توفر خاصة، كل طالب بيتقدم بسرعته، والتجربة كلها لازم تكون طبيعية بالعربي وفي نفس الوقت مفهومة لطالب مش بيقرأ عربي. منصات الدورات الجاهزة مبنية على فيديو مسجل ولغة واحدة، فمفيش واحدة فيهم كانت مناسبة.',
+            points: [
+              'حصص مباشرة فردية بدلاً من محتوى مسجل',
+              'أوقات توفر المعلمين بتتغير من أسبوع للتاني',
+              'تتبع التقدم لكل طالب على حدة مش لكل دورة',
+              'تجربة عربية أولاً وبتشتغل بالإنجليزي كذلك'
+            ]
+          },
+          approach: {
+            body: 'صمّمت المنصة حول الجدولة والأشخاص بدلاً من كتالوج فيديوهات. المعلم والطالب والإدارة كل واحد له لوحة تحكم فيها اللي يحتاجه بس. أوقات التوفر والحجوزات والتقدم اتصمّموا كبيانات أساسية من البداية، فالجدول بقى المصدر الوحيد للحقيقة ومفيش حاجة بتتظبط يدوي.',
+            points: [
+              'معمارية قائمة على الأدوار: طالب، معلم، إدارة',
+              'أوقات التوفر والحجوزات كنماذج بيانات أساسية',
+              'نظام تصميم RTL أولاً بينعكس بنظافة للإنجليزي',
+              'مهام خلفية للتذكيرات والإشعارات'
+            ]
+          },
+          delivered: {
+            body: 'النتيجة منصة المعهد يقدر يدير بيها شغله اليومي فعلياً: تسجيل الطلاب، توزيع المعلمين، جدولة وتعديل الحصص، متابعة الحضور والتقدم، وإدارة الاشتراكات — كل ده من داخل النظام.',
+            points: [
+              'كتالوج دورات للقرآن والتجويد واللغة العربية والعلوم الشرعية',
+              'جدولة حصص مباشرة مع إدارة أوقات توفر المعلمين',
+              'لوحات تحكم للطالب والمعلم والإدارة مع نظام صلاحيات',
+              'خطط اشتراك وتسجيل للأطفال والكبار',
+              'متابعة الحضور وسجل الحصص وتقدم كل طالب',
+              'واجهة ثنائية اللغة عربي/إنجليزي بدعم RTL كامل'
+            ]
+          },
+          outcome: {
+            body: 'المعهد بقى يشتغل على نظام واحد بدل خليط من ملفات الإكسل ورسايل الواتس والجدولة اليدوية. إضافة معلم أو فتح دورة جديدة أو تسجيل طالب بقت مجرد استمارة مش عملية تنسيق، والكود مبني بشكل يسمح بإضافة برامج جديدة بدون المساس بنواة الجدولة.',
+            points: [
+              'توحيد كل العمليات في منصة واحدة',
+              'الجدولة والتسجيل بدون تنسيق يدوي',
+              'إضافة دورات ومعلمين بدون تعديل في الكود',
+              'معمارية جاهزة لبرامج إضافية وللتوسع'
+            ]
+          }
+        }
+      },
       testimonials: {
         title: 'ماذا يقول الناس',
         subtitle: 'آراء العملاء والطلاب والزملاء الذين عملت معهم ولهم كل التقدير',
@@ -1546,8 +1869,11 @@ const resources = {
         about: 'عني',
         timeline: 'المسار',
         projects: 'أعمالي',
+        suite: 'حزمة المنتجات',
         skills: 'مهاراتي',
         services: 'خدماتي',
+        process: 'طريقة عملي',
+        packages: 'الباكدجات',
         testimonials: 'قالوا عني',
         contact: 'تواصل معي',
         download_cv: 'تحميل السيرة الذاتية'

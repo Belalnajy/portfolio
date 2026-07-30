@@ -27,8 +27,11 @@ const Footer = () => {
       { name: t('nav.about'), to: 'about' },
       { name: t('nav.timeline'), to: 'experience' },
       { name: t('nav.projects'), to: 'projects' },
+      { name: t('nav.suite'), to: 'platform-suite' },
       { name: t('nav.skills'), to: 'skills' },
       { name: t('nav.services'), to: 'services' },
+      { name: t('nav.process'), to: 'process' },
+      { name: t('nav.packages'), to: 'packages' },
       { name: t('nav.testimonials'), to: 'testimonials' },
       { name: t('nav.contact'), to: 'contact' },
     ],
@@ -133,7 +136,7 @@ const Footer = () => {
                     smooth={true}
                     duration={300}
                     offset={-70}
-                    className={`text-[rgb(var(--muted-foreground))] hover:text-[rgb(var(--primary))] transition-all cursor-pointer flex items-center gap-2.5 group`}>
+                    className={`text-[rgb(var(--muted-foreground))] hover:text-[rgb(var(--primary))] transition-all cursor-pointer flex items-center gap-2.5 group min-h-[40px] -my-1`}>
                     <div className="transition-transform duration-300 group-hover:scale-125">
                       {isArabic ? (
                         <FaChevronLeft className="text-[10px]" />

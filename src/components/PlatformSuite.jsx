@@ -26,7 +26,7 @@ const PlatformSuite = () => {
   const { t } = useTranslation();
 
   return (
-    <section id="platform-suite" className="py-24 relative overflow-hidden">
+    <section id="platform-suite" className="py-16 md:py-24 relative overflow-hidden">
       {/* Background ambiance */}
       <div className="absolute top-1/3 left-1/2 -translate-x-1/2 w-full max-w-4xl h-96 bg-[rgb(var(--primary))]/5 blur-[120px] rounded-full pointer-events-none z-0" />
 
@@ -42,7 +42,7 @@ const PlatformSuite = () => {
             <FaLayerGroup />
             {t('platform_suite.label')}
           </span>
-          <h2 className="text-4xl md:text-5xl font-bold mb-4 text-[rgb(var(--foreground))] tracking-tight">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 text-[rgb(var(--foreground))] tracking-tight">
             {t('platform_suite.title')}
           </h2>
           <p className="text-[rgb(var(--muted-foreground))] max-w-3xl mx-auto text-lg leading-relaxed">

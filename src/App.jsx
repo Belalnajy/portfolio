@@ -9,6 +9,8 @@ import About from './components/About';
 import InteractiveTimeline from './components/InteractiveTimeline';
 import Projects from './components/Projects';
 import PlatformSuite from './components/PlatformSuite';
+import HowIWork from './components/HowIWork';
+import Packages from './components/Packages';
 import BrandLogos from './components/BrandLogos';
 import Skills from './components/Skills';
 import Contact from './components/Contact';
@@ -102,7 +104,10 @@ function App() {
   return (
     <>
       {isLoading && <LoadingScreen onLoadingComplete={handleLoadingComplete} />}
-      <div className="min-h-screen bg-[rgb(var(--background))] text-[rgb(var(--foreground))] transition-colors duration-300 relative">
+      {/* overflow-x-clip contains the decorative entrance offsets and blurred
+          blobs, which otherwise let the page pan sideways on phones in RTL.
+          `clip` rather than `hidden` so no scroll container is created. */}
+      <div className="min-h-screen bg-[rgb(var(--background))] text-[rgb(var(--foreground))] transition-colors duration-300 relative overflow-x-clip">
         <CustomCursor />
         <ParticlesBackground />
         <DarkModeToggle />
@@ -129,6 +134,8 @@ function App() {
           <AnimatedStats />
           <Certifications />
           <Services />
+          <HowIWork />
+          <Packages />
           <Testimonials />
           <Contact showNotification={showNotification} />
           <AIAssistant />

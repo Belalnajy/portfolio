@@ -277,7 +277,7 @@ const Skills = () => {
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               onClick={() => setSelectedCategory(tab.id)}
-              className={`px-6 py-2 rounded-full font-semibold transition-all duration-300 ${
+              className={`px-4 sm:px-6 min-h-[44px] rounded-full font-semibold transition-all duration-300 ${
                 selectedCategory === tab.id
                   ? 'bg-[rgb(var(--primary))] text-white shadow-lg shadow-[rgb(var(--primary))]/30'
                   : 'bg-[rgb(var(--card))] text-[rgb(var(--foreground))] border border-[rgb(var(--border))] hover:border-[rgb(var(--primary))]'
