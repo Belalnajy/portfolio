@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useState } from 'react';
-import './i18n';
+import { resolvePreferredLanguage } from './i18n';
 import { useTranslation } from 'react-i18next';
 import { motion, AnimatePresence } from 'framer-motion';
 import Navbar from './components/Navbar';
@@ -46,6 +46,15 @@ function App() {
   }, []);
 
   const { i18n } = useTranslation();
+
+  // Apply the stored/browser language only after hydration, so the first render
+  // matches the prerendered English markup. Runs behind the loading screen.
+  useEffect(() => {
+    const preferred = resolvePreferredLanguage();
+    if (preferred !== i18n.language) {
+      i18n.changeLanguage(preferred);
+    }
+  }, [i18n]);
 
   useEffect(() => {
     document.dir = i18n.dir();

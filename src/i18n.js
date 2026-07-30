@@ -1,6 +1,5 @@
 import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
-import LanguageDetector from 'i18next-browser-languagedetector';
 
 const resources = {
   en: {
@@ -1567,20 +1566,52 @@ const resources = {
   }
 };
 
-i18n
-  .use(LanguageDetector)
-  .use(initReactI18next)
-  .init({
-    resources,
-    lng: typeof window !== 'undefined' ? undefined : 'en',
-    fallbackLng: 'en',
-    detection: {
-      order: ['localStorage', 'navigator'],
-      caches: ['localStorage'],
-    },
-    interpolation: {
-      escapeValue: false
+export const SUPPORTED_LANGUAGES = ['en', 'ar'];
+export const DEFAULT_LANGUAGE = 'en';
+// Same key the browser language-detector used, so returning visitors keep their choice.
+export const LANGUAGE_STORAGE_KEY = 'i18nextLng';
+
+/**
+ * The page is statically prerendered, so detection can't run before the first
+ * render — the server would emit English markup while the client rendered
+ * Arabic, and every translated string would fail hydration. Instead i18next
+ * always initialises in English (matching the prerendered HTML) and the stored
+ * or browser language is applied after mount, behind the loading screen.
+ */
+export const resolvePreferredLanguage = () => {
+  if (typeof window === 'undefined') return DEFAULT_LANGUAGE;
+
+  try {
+    const stored = window.localStorage.getItem(LANGUAGE_STORAGE_KEY);
+    if (stored && SUPPORTED_LANGUAGES.includes(stored)) return stored;
+  } catch {
+    // localStorage can throw in private mode — fall through to the browser language.
+  }
+
+  const navigatorLanguage = window.navigator?.language || '';
+  const base = navigatorLanguage.split('-')[0];
+  return SUPPORTED_LANGUAGES.includes(base) ? base : DEFAULT_LANGUAGE;
+};
+
+i18n.use(initReactI18next).init({
+  resources,
+  lng: DEFAULT_LANGUAGE,
+  fallbackLng: DEFAULT_LANGUAGE,
+  supportedLngs: SUPPORTED_LANGUAGES,
+  interpolation: {
+    escapeValue: false
+  }
+});
+
+// The detector plugin used to persist this; keep the behaviour without it.
+if (typeof window !== 'undefined') {
+  i18n.on('languageChanged', (language) => {
+    try {
+      window.localStorage.setItem(LANGUAGE_STORAGE_KEY, language);
+    } catch {
+      // Ignore write failures — the language still applies for this session.
     }
   });
+}
 
 export default i18n;
