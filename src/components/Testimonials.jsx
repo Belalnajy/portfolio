@@ -129,7 +129,7 @@ const Testimonials = () => {
           viewport={{ once: true }}
           transition={{ duration: 0.5 }}
           className="text-center mb-16">
-          <h2 className="text-5xl font-bold mb-4 text-[rgb(var(--foreground))]">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 text-[rgb(var(--foreground))]">
             {t('testimonials.title')}
           </h2>
           <p className="text-[rgb(var(--muted-foreground))] max-w-2xl mx-auto text-lg mb-4 leading-relaxed">
@@ -171,7 +171,7 @@ const Testimonials = () => {
                 animate={{ opacity: 1, x: 0 }}
                 exit={{ opacity: 0, x: isArabic ? 100 : -100 }}
                 transition={{ duration: 0.3 }}
-                className="glass-card p-8 md:p-12 rounded-2xl relative overflow-hidden">
+                className="glass-card p-5 sm:p-8 md:p-12 rounded-2xl relative overflow-hidden">
                 <div className={`absolute top-6 ${isArabic ? 'right-6 rotate-180' : 'left-6'} text-[rgb(var(--primary))]/10`}>
                   <FaQuoteLeft className="text-7xl lg:text-9xl" />
                 </div>
@@ -181,7 +181,7 @@ const Testimonials = () => {
                     {renderStars(testimonials[activeIndex].rating)}
                   </div>
 
-                  <p className={`text-lg md:text-xl lg:text-2xl text-[rgb(var(--foreground))] leading-relaxed mb-8 italic font-medium text-center md:text-start`}>
+                  <p className={`text-base sm:text-lg md:text-xl lg:text-2xl text-[rgb(var(--foreground))] leading-relaxed mb-6 sm:mb-8 italic font-medium text-center md:text-start`}>
                     "{testimonials[activeIndex].text}"
                   </p>
 
@@ -258,11 +258,15 @@ const Testimonials = () => {
                   <button
                     key={index}
                     onClick={() => setActiveIndex(index)}
-                    className={`h-2 rounded-full transition-all duration-300 ${index === activeIndex
-                      ? "bg-[rgb(var(--primary))] w-10 shadow-lg shadow-[rgb(var(--primary))]/40"
-                      : "bg-[rgb(var(--muted))] w-2 hover:bg-[rgb(var(--muted-foreground))]"}`}
+                    className="group/dot h-11 px-1 flex items-center justify-center"
                     aria-label={`Go to testimonial ${index + 1}`}
-                  />
+                  >
+                    <span
+                      className={`block h-2 rounded-full transition-all duration-300 ${index === activeIndex
+                        ? "bg-[rgb(var(--primary))] w-10 shadow-lg shadow-[rgb(var(--primary))]/40"
+                        : "bg-[rgb(var(--muted))] w-2 group-hover/dot:bg-[rgb(var(--muted-foreground))]"}`}
+                    />
+                  </button>
                 )}
               </div>
 

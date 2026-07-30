@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useState } from 'react';
-import './i18n';
+import { resolvePreferredLanguage } from './i18n';
 import { useTranslation } from 'react-i18next';
 import { motion, AnimatePresence } from 'framer-motion';
 import Navbar from './components/Navbar';
@@ -9,6 +9,8 @@ import About from './components/About';
 import InteractiveTimeline from './components/InteractiveTimeline';
 import Projects from './components/Projects';
 import PlatformSuite from './components/PlatformSuite';
+import HowIWork from './components/HowIWork';
+import Packages from './components/Packages';
 import BrandLogos from './components/BrandLogos';
 import Skills from './components/Skills';
 import Contact from './components/Contact';
@@ -46,6 +48,15 @@ function App() {
   }, []);
 
   const { i18n } = useTranslation();
+
+  // Apply the stored/browser language only after hydration, so the first render
+  // matches the prerendered English markup. Runs behind the loading screen.
+  useEffect(() => {
+    const preferred = resolvePreferredLanguage();
+    if (preferred !== i18n.language) {
+      i18n.changeLanguage(preferred);
+    }
+  }, [i18n]);
 
   useEffect(() => {
     document.dir = i18n.dir();
@@ -93,7 +104,10 @@ function App() {
   return (
     <>
       {isLoading && <LoadingScreen onLoadingComplete={handleLoadingComplete} />}
-      <div className="min-h-screen bg-[rgb(var(--background))] text-[rgb(var(--foreground))] transition-colors duration-300 relative">
+      {/* overflow-x-clip contains the decorative entrance offsets and blurred
+          blobs, which otherwise let the page pan sideways on phones in RTL.
+          `clip` rather than `hidden` so no scroll container is created. */}
+      <div className="min-h-screen bg-[rgb(var(--background))] text-[rgb(var(--foreground))] transition-colors duration-300 relative overflow-x-clip">
         <CustomCursor />
         <ParticlesBackground />
         <DarkModeToggle />
@@ -120,6 +134,8 @@ function App() {
           <AnimatedStats />
           <Certifications />
           <Services />
+          <HowIWork />
+          <Packages />
           <Testimonials />
           <Contact showNotification={showNotification} />
           <AIAssistant />

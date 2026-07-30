@@ -37,7 +37,7 @@ const ThemeSwitcher = () => {
   };
 
   return (
-    <div className="fixed left-6 bottom-24 z-50">
+    <div className="fixed left-4 md:left-6 bottom-[calc(max(1rem,env(safe-area-inset-bottom))+3.75rem)] md:bottom-24 z-50">
       <AnimatePresence>
         {isOpen && (
           <motion.div
