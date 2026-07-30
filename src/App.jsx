@@ -8,6 +8,7 @@ import Hero from './components/Hero';
 import About from './components/About';
 import InteractiveTimeline from './components/InteractiveTimeline';
 import Projects from './components/Projects';
+import PlatformSuite from './components/PlatformSuite';
 import BrandLogos from './components/BrandLogos';
 import Skills from './components/Skills';
 import Contact from './components/Contact';
@@ -111,6 +112,7 @@ function App() {
           <Hero onDownloadCV={handleDownloadCV} />
           <About />
           <Projects />
+          <PlatformSuite />
           <LaptopShowcase3D />
           <BrandLogos />
           <Skills />

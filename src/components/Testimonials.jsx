@@ -1,5 +1,5 @@
 "use client";
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   FaQuoteLeft,
@@ -11,30 +11,93 @@ import {
 import PlatformLinks from "./PlatformLinks";
 import { useTranslation } from 'react-i18next';
 
+const SERVICE_TITLE = "تصميم وتطوير موقع ويب كامل واحترافي | Full Stack Web";
+const KHAMSAT_CATEGORIES = ["جودة الخدمة", "التواصل والمتابعة", "التسليم بالموعد"];
+const KHAMSAT_PROFILE = "https://khamsat.com/user/belalnajy/reviews";
+
+/**
+ * `key` maps each entry to its `testimonials.items.<key>` translation, so the
+ * order here is free to change without silently re-pairing names and quotes.
+ * `date` is an ISO day — the relative label is derived at render time so it
+ * never goes stale.
+ */
+const TESTIMONIALS_CONFIG = [
+  { key: 'salman_a', name: "Salman A.", date: '2026-07-14', platform: "Khamsat", link: KHAMSAT_PROFILE },
+  { key: 'amsb_a', name: "Amsb A.", date: '2026-06-27', platform: "Khamsat", link: KHAMSAT_PROFILE },
+  { key: 'abu_w', name: "Abu W.", date: '2026-05-05', platform: "Khamsat", link: KHAMSAT_PROFILE },
+  { key: 'abo_m', name: "Abo M.", date: '2026-04-21', platform: "Khamsat", link: "https://khamsat.com/user/belalnajy/reviews/1095137" },
+  { key: 'ahmed_y', name: "Ahmed Y.", date: '2026-04-18', platform: "Khamsat", link: "https://khamsat.com/user/belalnajy/reviews/1094120" },
+  {
+    key: 'aseel_a',
+    name: "أصيل ا.",
+    date: '2026-04-18',
+    platform: "Mostaql",
+    link: "https://mostaql.com/u/Belalnagy/reviews/9112354",
+    categories: ["الاحترافية بالتعامل", "التواصل والمتابعة", "جودة العمل المسلّم", "الخبرة بمجال المشروع", "التسليم في الموعد", "التعامل معه مرّة أخرى"],
+  },
+  { key: 'amal_a', name: "أمل ا.", date: '2026-03-18', platform: "Khamsat", link: "https://khamsat.com/user/belalnajy/reviews/1087342" },
+  { key: 'ahmed_a', name: "احمد ا.", date: '2026-03-18', platform: "Khamsat", link: "https://khamsat.com/user/belalnajy/reviews/1118973" },
+  { key: 'royal_eagles', name: "Royal Eagles L", date: '2026-03-16', platform: "Khamsat", link: "https://khamsat.com/user/belalnajy/reviews/1125347" },
+  { key: 'nouf_a', name: "نوف ع.", date: '2026-02-28', platform: "Khamsat", link: "https://khamsat.com/user/belalnajy/reviews/1122834" },
+  { key: 'ahmed_e', name: "Ahmed E.", date: '2026-01-18', platform: "Khamsat", link: "https://khamsat.com/user/belalnajy/reviews/1072456" },
+];
+
 const Testimonials = () => {
   const { t, i18n } = useTranslation();
   const isArabic = i18n.language === 'ar';
   const [activeIndex, setActiveIndex] = useState(0);
+  // The page is statically prerendered, so "x days ago" can only be resolved on
+  // the client. Until then we show the absolute month, which is identical in
+  // both renders and never wrong.
+  const [now, setNow] = useState(null);
+
+  useEffect(() => {
+    setNow(Date.now());
+  }, []);
 
   const testimonials = useMemo(() => {
-    const items = t('testimonials.items', { returnObjects: true });
-    const config = [
-      { id: 1, name: "Ahmed E.", company: "تصميم وتطوير موقع ويب كامل واحترافي | Full Stack Web", platform: "Khamsat", rating: 5, link: "https://khamsat.com/user/belalnajy/reviews/1072456", categories: ["جودة الخدمة", "التواصل والمتابعة", "التسليم بالموعد"] },
-      { id: 2, name: "أمل ا.", company: "تصميم وتطوير موقع ويب كامل واحترافي | Full Stack Web", platform: "Khamsat", rating: 5, link: "https://khamsat.com/user/belalnajy/reviews/1087342", categories: ["جودة الخدمة", "التواصل والمتابعة", "التسليم بالموعد"] },
-      { id: 3, name: "Ahmed Y.", company: "تصميم وتطوير موقع ويب كامل واحترافي | Full Stack Web", platform: "Khamsat", rating: 5, link: "https://khamsat.com/user/belalnajy/reviews/1094120", categories: ["جودة الخدمة", "التواصل والمتابعة", "التسليم بالموعد"] },
-      { id: 4, name: "أصيل ا.", company: "تصميم وتطوير موقع ويب كامل واحترافي | Full Stack Web", platform: "Mostaql", rating: 5, link: "https://mostaql.com/u/Belalnagy/reviews/9112354", categories: ["الاحترافية بالتعامل", "التواصل والمتابعة", "جودة العمل المسلّم", "الخبرة بمجال المشروع", "التسليم في الموعد", "التعامل معه مرّة أخرى"] },
-      { id: 5, name: "Abo M.", company: "تصميم وتطوير موقع ويب كامل واحترافي | Full Stack Web", platform: "Khamsat", rating: 5, link: "https://khamsat.com/user/belalnajy/reviews/1095137", categories: ["جودة الخدمة", "التواصل والمتابعة", "التسليم بالموعد"] },
-      { id: 6, name: "Royal Eagles L", company: "تصميم وتطوير موقع ويب كامل واحترافي | Full Stack Web", platform: "Khamsat", rating: 5, link: "https://khamsat.com/user/belalnajy/reviews/1125347", categories: ["جودة الخدمة", "التواصل والمتابعة", "التسليم بالموعد"] },
-      { id: 7, name: "نوف ع.", company: "تصميم وتطوير موقع ويب كامل واحترافي | Full Stack Web", platform: "Khamsat", rating: 5, link: "https://khamsat.com/user/belalnajy/reviews/1122834", categories: ["جودة الخدمة", "التواصل والمتابعة", "التسليم بالموعد"] },
-      { id: 8, name: "احمد ا.", company: "تصميم وتطوير موقع ويب كامل واحترافي | Full Stack Web", platform: "Khamsat", rating: 5, link: "https://khamsat.com/user/belalnajy/reviews/1118973", categories: ["جودة الخدمة", "التواصل والمتابعة", "التسليم بالموعد"] },
-    ];
+    const formatAbsolute = (isoDate) =>
+      new Date(`${isoDate}T00:00:00Z`).toLocaleDateString(
+        isArabic ? 'ar-EG' : 'en-US',
+        { month: 'short', year: 'numeric', timeZone: 'UTC' },
+      );
 
-    const keys = Object.keys(items);
-    return config.map((conf, index) => ({
+    const formatRelative = (isoDate) => {
+      if (now === null) return formatAbsolute(isoDate);
+
+      const days = Math.max(
+        1,
+        Math.floor((now - new Date(`${isoDate}T00:00:00Z`).getTime()) / 86_400_000),
+      );
+      if (days < 30) return t('testimonials.time.days', { count: days });
+
+      const months = Math.floor(days / 30);
+      if (months < 12) {
+        if (months === 1) return t('testimonials.time.month_one');
+        // Arabic switches from "أشهر" to "شهراً" at 11.
+        return months >= 11
+          ? t('testimonials.time.months_many', { count: months })
+          : t('testimonials.time.months', { count: months });
+      }
+
+      const years = Math.floor(months / 12);
+      return years === 1
+        ? t('testimonials.time.year_one')
+        : t('testimonials.time.years', { count: years });
+    };
+
+    const items = t('testimonials.items', { returnObjects: true });
+
+    return TESTIMONIALS_CONFIG.map((conf, index) => ({
+      id: index + 1,
+      rating: 5,
+      company: SERVICE_TITLE,
+      categories: KHAMSAT_CATEGORIES,
       ...conf,
-      ...items[keys[index]]
+      ...(items[conf.key] || {}),
+      date: formatRelative(conf.date),
     }));
-  }, [t]);
+  }, [t, now, isArabic]);
 
   const nextTestimonial = () => {
     setActiveIndex(prev => (prev + 1) % testimonials.length);
@@ -214,7 +277,7 @@ const Testimonials = () => {
             </div>
           </div>
 
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-8 gap-4 mt-16">
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4 mt-16">
             {testimonials.map((testimonial, index) =>
               <motion.button
                 key={testimonial.id}

@@ -47,6 +47,11 @@ import {
   FaHospital,
   FaFileExcel,
   FaCertificate,
+  FaAndroid,
+  FaGooglePlay,
+  FaMobileAlt,
+  FaQuran,
+  FaBug,
 } from 'react-icons/fa';
 import ProjectSkeleton from './skeletons/ProjectSkeleton';
 import ProjectModal from './ProjectModal';
@@ -100,10 +105,49 @@ export const getTechIcon = (tech) => {
     SCFHS: <FaHospital className="text-[#0D47A1]" />,
     Multer: <FaCode className="text-[#CF6900]" />,
     'Excel Processing': <FaFileExcel className="text-[#217346]" />,
+    'React Native': <FaReact className="text-[#61DAFB]" />,
+    Android: <FaAndroid className="text-[#3DDC84]" />,
+    'Google Play': <FaGooglePlay className="text-[#01875F]" />,
+    'REST API': <FaCode className="text-[#0EA5E9]" />,
+    'Bug Fixing': <FaBug className="text-[#EF4444]" />,
+    'UI/UX Redesign': <FaMobileAlt className="text-[#A855F7]" />,
+    Tajweed: <FaQuran className="text-[#0E8A5F]" />,
   };
   return (
     iconMap[tech] || <FaCode className="text-[rgb(var(--muted-foreground))]" />
   );
+};
+
+/**
+ * One Django LMS engine deployed under several brands — each client gets its own
+ * visual identity while sharing accreditation, payments and certification logic.
+ * Single source of truth: consumed by ProjectModal and the PlatformSuite section.
+ */
+export const LMS_SUITE = {
+  key: 'lms_suite',
+  members: [
+    {
+      slug: 'injaz',
+      name: 'Injaz',
+      url: 'https://lms-injaz.com/',
+      image: '/injaz.png',
+      accent: '#0EA5E9',
+    },
+    {
+      slug: 'hcholding',
+      name: 'HC Holding',
+      url: 'https://lms-hcholding.org/',
+      image: '/hcholding.png',
+      accent: '#22C55E',
+    },
+    {
+      slug: 'mada',
+      name: 'Mada Education',
+      url: 'https://mada-education.com/',
+      image: '/mada.png',
+      accent: '#06B6D4',
+    },
+  ],
 };
 
 const ProjectCard = ({ project, index, onClick }) => {
@@ -228,10 +272,51 @@ const Projects = () => {
     { id: 'Full Stack', label: t('projects.categories.fullstack') },
     { id: 'Frontend', label: t('projects.categories.frontend') },
     { id: 'Backend', label: t('projects.categories.backend') },
+    { id: 'Mobile', label: t('projects.categories.mobile') },
   ];
 
   const projectsData = useMemo(
     () => [
+      {
+        slug: 'bilqalam',
+        title: t('projects.items.bilqalam.title'),
+        description: t('projects.items.bilqalam.desc'),
+        image: '/bilqalam.png',
+        tags: [
+          'Next.js',
+          'React',
+          'TypeScript',
+          'Django',
+          'PostgreSQL',
+          'Tailwind',
+          'Celery',
+          'Redis',
+        ],
+        features: t('projects.items.bilqalam.features', {
+          returnObjects: true,
+        }),
+        github: '#',
+        live: 'https://bilqalaminstitute.net/',
+        category: 'Full Stack',
+      },
+      {
+        slug: 'medicta',
+        title: t('projects.items.medicta.title'),
+        description: t('projects.items.medicta.desc'),
+        image: '/medicta.png',
+        tags: [
+          'React Native',
+          'Android',
+          'REST API',
+          'UI/UX Redesign',
+          'Bug Fixing',
+          'Google Play',
+        ],
+        features: t('projects.items.medicta.features', { returnObjects: true }),
+        github: '#',
+        live: 'https://play.google.com/store/apps/details?id=com.medicta',
+        category: 'Mobile',
+      },
       {
         slug: 'toyo228',
         title: t('projects.items.toyo228.title'),
@@ -289,6 +374,7 @@ const Projects = () => {
         github: '#',
         live: 'https://lms-injaz.com/',
         category: 'Full Stack',
+        suite: LMS_SUITE,
       },
       {
         slug: 'hcholding',
@@ -309,6 +395,38 @@ const Projects = () => {
         github: '#',
         live: 'https://lms-hcholding.org/',
         category: 'Full Stack',
+        suite: LMS_SUITE,
+      },
+      {
+        slug: 'mada',
+        title: t('projects.items.mada.title'),
+        description: t('projects.items.mada.desc'),
+        image: '/mada.png',
+        tags: [
+          'Django',
+          'PostgreSQL',
+          'Python',
+          'Celery',
+          'Redis',
+          'MyFatoorah',
+          'Tailwind',
+        ],
+        features: t('projects.items.mada.features', { returnObjects: true }),
+        github: '#',
+        live: 'https://mada-education.com/',
+        category: 'Full Stack',
+        suite: LMS_SUITE,
+      },
+      {
+        slug: 'mutlq',
+        title: t('projects.items.mutlq.title'),
+        description: t('projects.items.mutlq.desc'),
+        image: '/mutlq.png',
+        tags: ['Django', 'PostgreSQL', 'Tailwind', 'JavaScript'],
+        features: t('projects.items.mutlq.features', { returnObjects: true }),
+        github: '#',
+        live: 'https://mutlq.org/',
+        category: 'Frontend',
       },
       {
         slug: 'indstrz',
@@ -765,7 +883,7 @@ const Projects = () => {
           ) : filteredProjects.length > 0 ? (
             filteredProjects.map((project, index) => (
               <ProjectCard
-                key={index}
+                key={project.slug}
                 project={project}
                 index={index}
                 onClick={setSelectedProject}

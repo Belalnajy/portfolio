@@ -1,6 +1,12 @@
 "use client";
 import { motion, AnimatePresence } from 'framer-motion';
-import { FaGithub, FaExternalLinkAlt, FaTimes, FaCode } from 'react-icons/fa';
+import {
+  FaGithub,
+  FaExternalLinkAlt,
+  FaTimes,
+  FaCode,
+  FaLayerGroup,
+} from 'react-icons/fa';
 import { getTechIcon } from './Projects';
 import { useTranslation } from 'react-i18next';
 
@@ -24,7 +30,7 @@ const ProjectModal = ({ project, isOpen, onClose }) => {
           {/* Modal */}
           <div className="fixed inset-0 z-[9999] flex items-center justify-center p-4 md:p-6 pointer-events-none">
             <motion.div
-              layoutId={`project-card-${project.title}`}
+              layoutId={`project-card-${project.slug}`}
               initial={{ opacity: 0, scale: 0.95, y: 20 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.95, y: 20 }}
@@ -93,6 +99,49 @@ const ProjectModal = ({ project, isOpen, onClose }) => {
                         ))}
                       </ul>
                     </div>
+
+                    {/* Sibling deployments — same engine, different brand identity */}
+                    {project.suite && (
+                      <div className="space-y-4 text-start">
+                        <h3 className="flex items-center gap-2 text-xl font-semibold text-[rgb(var(--foreground))] border-b border-[rgb(var(--border))]/50 pb-2">
+                          <FaLayerGroup className="text-[rgb(var(--primary))]" />
+                          {t('projects.modal.suite_title')}
+                        </h3>
+                        <p className="text-sm text-[rgb(var(--muted-foreground))] leading-relaxed">
+                          {t('projects.modal.suite_desc')}
+                        </p>
+                        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                          {project.suite.members.map((member) => {
+                            const isCurrent = member.slug === project.slug;
+                            return (
+                              <a
+                                key={member.slug}
+                                href={member.url}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                aria-current={isCurrent ? 'true' : undefined}
+                                className={`group flex flex-col gap-2 p-3 rounded-xl border transition-all hover:-translate-y-0.5 ${
+                                  isCurrent
+                                    ? 'border-[rgb(var(--primary))] bg-[rgb(var(--primary))]/10'
+                                    : 'border-[rgb(var(--border))]/60 bg-[rgb(var(--muted))]/10 hover:border-[rgb(var(--primary))]/50'
+                                }`}
+                              >
+                                <span
+                                  className="h-1.5 w-8 rounded-full"
+                                  style={{ backgroundColor: member.accent }}
+                                />
+                                <span className="text-sm font-semibold text-[rgb(var(--foreground))]">
+                                  {member.name}
+                                </span>
+                                <span className="text-[11px] text-[rgb(var(--muted-foreground))] break-all">
+                                  {member.url.replace(/^https?:\/\/|\/$/g, '')}
+                                </span>
+                              </a>
+                            );
+                          })}
+                        </div>
+                      </div>
+                    )}
                   </div>
 
                   {/* Sidebar (Tech & Links) */}
