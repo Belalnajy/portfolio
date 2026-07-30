@@ -9,6 +9,10 @@ import { Smartphone, Zap, Layers, Globe, ChevronLeft, ChevronRight } from 'lucid
 
 // ─── Featured Projects for the 3D Showcase ────────────────
 const SHOWCASE_PROJECTS = [
+  { image: '/bilqalam.png', key: 'bilqalam' },
+  { image: '/mada.png', key: 'mada' },
+  { image: '/mutlq.png', key: 'mutlq' },
+  { image: '/medicta.png', key: 'medicta' },
   { image: '/indstrz.png', key: 'indstrz' },
   { image: '/uduipa.png', key: 'uduipa' },
   { image: '/waferlee.png', key: 'waferlee' },

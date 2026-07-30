@@ -42,7 +42,7 @@ const Experience = () => {
       icon: <FaLaptopCode />,
       logo: '/logos/iti-logo.png',
       description: [
-        'Taught Front-End Development (HTML, CSS, JavaScript) to more than 200 students',
+        'Taught Front-End Development (HTML, CSS, JavaScript) to more than 240 students',
         'Designed and delivered practical coding sessions and real-world project guidance'
       ]
     },

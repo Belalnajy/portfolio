@@ -49,7 +49,7 @@ const resources = {
           location: 'Alexandria, Egypt'
         },
         summary_p1: 'Full Stack Developer experienced in building <1>scalable, multilingual web applications</1> using React.js, Next.js, Django, NestJS, and PostgreSQL. Currently working at <3>S&F (Saudi Arabia)</3> developing full-stack applications and backend services for web and mobile platforms.',
-        summary_p2: 'Completed the ITI Full Stack program and served as an <1>External Instructor at ITI</1>, teaching Front-End Development to <3>200+ students</3>. Delivered AI-integrated, RTL-ready platforms for Saudi startups and universities, focused on modern UI/UX and real-time systems.',
+        summary_p2: 'Completed the ITI Full Stack program and served as an <1>External Instructor at ITI</1>, teaching Front-End Development to <3>240+ students</3>. Delivered AI-integrated, RTL-ready platforms for Saudi startups and universities, focused on modern UI/UX and real-time systems.',
         summary_p3: 'Passionate about creating efficient, scalable solutions with expertise in multilingual platforms, real-time features, and modern development practices. Always eager to learn new technologies and deliver production-ready applications.',
         highlights: {
           fast_learner: {
@@ -76,15 +76,65 @@ const resources = {
           all: 'All',
           fullstack: 'Full Stack',
           frontend: 'Frontend',
-          backend: 'Backend'
+          backend: 'Backend',
+          mobile: 'Mobile'
         },
         modal: {
           technologies: 'Technologies',
           features: 'Key Features & Highlights',
           live_link: 'Visit Live Project',
-          source_code: 'View Source Code'
+          source_code: 'View Source Code',
+          suite_title: 'Same Engine, Different Brands',
+          suite_desc: 'This platform is one deployment of a shared LMS engine I built and maintain. Each client runs its own branded instance — distinct visual identity, accreditation and content — on top of the same accredited training, payment and certification core.'
         },
         items: {
+          bilqalam: {
+            title: 'Bilqalam Institute – Online Qur’an & Arabic Academy',
+            desc: 'A complete online learning platform for an institute teaching Qur’an, Arabic and Islamic studies — built end to end (frontend, backend, infrastructure). Covers course delivery, live class scheduling, tutor management, subscriptions and student progress tracking.',
+            features: [
+              'Full course catalogue for Qur’an recitation & memorisation (Tajweed), Arabic and Islamic studies',
+              'Separate student, tutor and admin dashboards with role-based access control',
+              'Live class scheduling and booking with tutor availability management',
+              'Subscription and enrolment plans for children and adults, beginner to advanced',
+              'Student progress tracking, attendance and lesson history per learner',
+              'Bilingual Arabic/English interface with full RTL support and SEO optimisation'
+            ]
+          },
+          medicta: {
+            title: 'Medicta – Healthcare Booking App (Code Redesign)',
+            desc: 'An Android app for booking doctor appointments and browsing clinic services, published on Google Play. I re-architected the existing codebase and worked through its functional defects — refactoring the app structure while fixing broken flows across booking, authentication and data handling.',
+            features: [
+              'Full code redesign: restructured the app into clear, maintainable layers',
+              'Systematic fixing of functional bugs across booking, auth and data flows',
+              'Refactored API integration layer with consistent error and loading states',
+              'Improved state management to remove stale-data and race-condition bugs',
+              'UI/UX cleanup for smoother navigation and faster perceived performance',
+              'Live on Google Play under the package com.medicta'
+            ]
+          },
+          mada: {
+            title: 'Mada Education – Accredited Training Platform',
+            desc: 'An accredited e-learning and training platform running on the same LMS engine as Injaz and HC Holding, with its own visual identity and course catalogue. Video-based lessons, assessments, payments and automated certificates.',
+            features: [
+              'Course catalogue with video lessons, progress tracking and per-lesson quizzes',
+              'Automated certificate issuance with unique IDs and online verification',
+              'Payment gateway integration with shopping cart and discount coupons',
+              'Multi-role dashboards for administrators, instructors and trainees',
+              'Celery + Redis async processing for notifications, exports and reports',
+              'Independent brand theme layered over the shared, accredited LMS core'
+            ]
+          },
+          mutlq: {
+            title: 'Mutlq – Corporate Showcase Website',
+            desc: 'A corporate showcase and digital-identity website presenting the organisation’s services and delivered work, built as a fast, fully RTL Arabic experience with a distinct visual identity.',
+            features: [
+              'Brand-led landing experience with services and project gallery sections',
+              'Fully RTL Arabic layout with responsive design across all breakpoints',
+              'Content-managed sections so pages can be updated without code changes',
+              'SEO and performance optimisation for fast first paint',
+              'Integrated contact and enquiry flow'
+            ]
+          },
           toyo228: {
             title: 'Toyo228 – B2B Auto Parts Platform',
             desc: 'A B2B e-commerce platform connecting Toyota spare parts wholesalers with retail shops, featuring bulk search via Excel uploads, multi-panel dashboards, and a Turborepo monorepo architecture.',
@@ -421,6 +471,26 @@ const resources = {
           rtl: 'Full RTL Support'
         }
       },
+      platform_suite: {
+        label: 'Product Suite',
+        title: 'One Engine, Many Brands',
+        subtitle: 'Instead of rebuilding an LMS for every client, I built one accredited training engine and deploy it as separate branded platforms — each with its own visual identity, content and accreditation, sharing a single hardened core.',
+        shared_title: 'What Every Deployment Inherits',
+        capabilities: {
+          engine: 'Shared Django + PostgreSQL Core',
+          accreditation: 'Accreditation & Certificates',
+          payments: 'Payments & Coupons',
+          rtl: 'Bilingual AR/EN with RTL',
+          roles: 'Multi-Role Dashboards',
+          branding: 'Per-Client Theming'
+        },
+        members: {
+          injaz: 'Continuing medical education for the Saudi healthcare sector, SCFHS-accredited with NELC integration.',
+          hcholding: 'Health Cluster Holding training centre in Makkah — CPR, BLS, First Aid and nursing programmes.',
+          mada: 'Accredited general training and e-learning platform with its own catalogue and brand identity.'
+        },
+        footnote: 'One codebase, one deployment pipeline, one security model — three products. New clients launch in days instead of months, and every fix or feature lands across the whole suite at once.'
+      },
       brands: {
         label: 'Partners in Growth',
         title: 'Trusted By Innovators',
@@ -486,7 +556,7 @@ const resources = {
             location: 'Remote, Egypt',
             period: '07/2025 - 10/2025',
             description: [
-              'Taught Front-End Development (HTML, CSS, JavaScript) to more than 200 students',
+              'Taught Front-End Development (HTML, CSS, JavaScript) to more than 240 students',
               'Designed and delivered practical coding sessions and real-world project guidance'
             ]
           },
@@ -536,7 +606,9 @@ const resources = {
         projects: 'Projects Completed',
         technologies: 'Technologies Mastered',
         years: 'Years of Experience',
-        students: 'Students Taught'
+        students: 'Students Taught',
+        clients: 'Clients Served',
+        hours: 'Hours of Coding'
       },
       certifications: {
         title: 'Courses & Certifications',
@@ -607,46 +679,58 @@ const resources = {
         reviews_count: 'Reviews',
         view_review: 'View Full Review on {{platform}}',
         follow_me: 'Follow me on platforms',
+        time: {
+          days: '{{count}} days ago',
+          month_one: '1 month ago',
+          months: '{{count}} months ago',
+          months_many: '{{count}} months ago',
+          year_one: '1 year ago',
+          years: '{{count}} years ago'
+        },
         items: {
+          salman_a: {
+            text: 'Creative and respectful — it was a pleasure working together.',
+            role: 'Client - Khamsat'
+          },
+          amsb_a: {
+            text: 'A highly experienced person, excellent manners, fast delivery, and an honest advisor. Thank you so much, Engineer Belal.',
+            role: 'Client - Khamsat'
+          },
+          abu_w: {
+            text: 'I want to express my complete satisfaction with the delivered work. Belal has high competence and clear expertise, executing exactly what was required with precision and professionalism. The service quality was excellent and exceeded expectations, with great attention to the finest details. Communication was fast and clear throughout the project, with continuous follow-up and care to explain every step. He also met the delivery deadline — in fact he finished in record time without compromising quality. A professional developer you can rely on, delivering outstanding results with full confidence.',
+            role: 'Client - Khamsat'
+          },
           ahmed_e: {
             text: 'The work was exactly as I wanted in a reasonable time, not the last interaction with Engineer Belal, God willing.',
-            role: 'Client - Khamsat',
-            date: '4 months ago'
+            role: 'Client - Khamsat'
           },
           amal_a: {
             text: 'Masha Allah on the speed and quick response, you did what was required and more. Thank you!',
-            role: 'Client - Khamsat',
-            date: '2 months ago'
+            role: 'Client - Khamsat'
           },
           ahmed_y: {
             text: 'Excellent',
-            role: 'Client - Khamsat',
-            date: '1 month ago'
+            role: 'Client - Khamsat'
           },
           aseel_a: {
             text: 'Brother Belal, thank you for your effort. I am honored to work with you in other future projects for your good treatment and I advise everyone to deal with you. His work is perfect and excellent.',
-            role: 'Project Owner - Mostaql',
-            date: '1 month ago'
+            role: 'Project Owner - Mostaql'
           },
           abo_m: {
             text: 'Thank you for your efforts.',
-            role: 'Client - Khamsat',
-            date: '27 days ago'
+            role: 'Client - Khamsat'
           },
           royal_eagles: {
             text: 'High-end service and a very respectable person.',
-            role: 'Client - Khamsat',
-            date: '1 month ago'
+            role: 'Client - Khamsat'
           },
           nouf_a: {
             text: "I thank the engineer for his honesty, work, and speed of response. I will be with him in all my future work, God willing.",
-            role: 'Client - Khamsat',
-            date: '1 month ago'
+            role: 'Client - Khamsat'
           },
           ahmed_a: {
             text: 'Excellent experience with Engineer Belal, professional in dealing, cooperative, and responds to changes with flexibility. He completed the work with high quality and communication was smooth throughout.',
-            role: 'Client - Khamsat',
-            date: '2 months ago'
+            role: 'Client - Khamsat'
           }
         }
       },
@@ -746,7 +830,7 @@ const resources = {
           location: 'الإسكندرية، مصر'
         },
         summary_p1: 'مطور Full Stack محترف في بناء <1>تطبيقات ويب قابلة للتوسع ومتعددة اللغات</1> باستخدام React.js، Next.js، Django، NestJS، و PostgreSQL. أعمل حالياً في <3>شركة S&F (السعودية)</3> على تطوير تطبيقات شاملة وخدمات خلفية للمواقع ومنصات الجوال.',
-        summary_p2: 'خريج برنامج الـ ITI المكثف، وعملت كـ <1>محاضر خارجي (External Instructor)</1> في معهد تكنولوجيا المعلومات (ITI)، حيث قمت بتدريس تطوير الواجهات الأمامية لأكثر من <3>200 طالب</3>. قمت بتسليم منصات متكاملة مع الذكاء الاصطناعي وتدعم الـ RTL للشركات الناشئة والجامعات السعودية.',
+        summary_p2: 'خريج برنامج الـ ITI المكثف، وعملت كـ <1>محاضر خارجي (External Instructor)</1> في معهد تكنولوجيا المعلومات (ITI)، حيث قمت بتدريس تطوير الواجهات الأمامية لأكثر من <3>240 طالب</3>. قمت بتسليم منصات متكاملة مع الذكاء الاصطناعي وتدعم الـ RTL للشركات الناشئة والجامعات السعودية.',
         summary_p3: 'شغوف بابتكار حلول فعالة وقابلة للتطوير، مع خبرة خاصة في المنصات متعددة اللغات، الأنظمة اللحظية (Real-time)، وأحدث ممارسات التطوير. دائماً ما أسعى لتعلم تكنولوجيات جديدة وتقديم تطبيقات جاهزة للإنتاج.',
         highlights: {
           fast_learner: {
@@ -773,15 +857,65 @@ const resources = {
           all: 'الكل',
           fullstack: 'Full Stack',
           frontend: 'Frontend',
-          backend: 'Backend'
+          backend: 'Backend',
+          mobile: 'تطبيقات الموبايل'
         },
         modal: {
           technologies: 'التقنيات المستخدمة',
           features: 'أهم المميزات والخصائص',
           live_link: 'زيارة المشروع',
-          source_code: 'عرض الكود المصدري'
+          source_code: 'عرض الكود المصدري',
+          suite_title: 'نفس المحرك… هويات بصرية مختلفة',
+          suite_desc: 'هذه المنصة واحدة من عدة نسخ تعمل على محرك LMS واحد قمت ببنائه وتطويره. كل عميل لديه نسخته الخاصة بهوية بصرية ومحتوى واعتمادات مستقلة، فوق نفس النواة الموحّدة للتدريب المعتمد والدفع وإصدار الشهادات.'
         },
         items: {
+          bilqalam: {
+            title: 'معهد بالقلم – أكاديمية القرآن واللغة العربية أونلاين',
+            desc: 'منصة تعليمية إلكترونية متكاملة لمعهد متخصص في تعليم القرآن الكريم واللغة العربية والعلوم الشرعية، تم بناؤها بالكامل (الواجهة الأمامية والخلفية والبنية التحتية). تشمل إدارة الدورات، جدولة الحصص المباشرة، إدارة المعلمين، الاشتراكات، وتتبع تقدم الطلاب.',
+            features: [
+              'كتالوج دورات كامل لتلاوة وحفظ القرآن بالتجويد، واللغة العربية، والعلوم الشرعية',
+              'لوحات تحكم منفصلة للطالب والمعلم والإدارة مع نظام صلاحيات كامل',
+              'جدولة وحجز الحصص المباشرة مع إدارة أوقات توفر المعلمين',
+              'خطط اشتراك وتسجيل للأطفال والكبار من المستوى المبتدئ للمتقدم',
+              'تتبع تقدم الطالب والحضور وسجل الحصص لكل متعلم',
+              'واجهة ثنائية اللغة (عربي/إنجليزي) بدعم RTL كامل وتحسين محركات البحث'
+            ]
+          },
+          medicta: {
+            title: 'Medicta – تطبيق حجز المواعيد الطبية (إعادة هيكلة الكود)',
+            desc: 'تطبيق أندرويد لحجز مواعيد الأطباء واستعراض الخدمات الطبية، منشور على Google Play. قمت بإعادة تصميم وهيكلة الكود القائم ومعالجة الأخطاء الوظيفية فيه — إعادة تنظيم بنية التطبيق مع إصلاح المسارات المعطلة في الحجز والمصادقة والتعامل مع البيانات.',
+            features: [
+              'إعادة تصميم كامل للكود: تنظيم التطبيق في طبقات واضحة وقابلة للصيانة',
+              'إصلاح منهجي للأخطاء الوظيفية في مسارات الحجز والمصادقة والبيانات',
+              'إعادة هيكلة طبقة التكامل مع الـ API مع توحيد حالات الخطأ والتحميل',
+              'تحسين إدارة الحالة (State) للتخلص من مشاكل البيانات القديمة والتعارضات',
+              'تحسين واجهة وتجربة المستخدم لتنقل أسلس وأداء أسرع',
+              'متاح فعلياً على Google Play باسم الحزمة com.medicta'
+            ]
+          },
+          mada: {
+            title: 'مدى التعليمية – منصة تدريب معتمدة',
+            desc: 'منصة تعلم إلكتروني وتدريب معتمد تعمل على نفس محرك الـ LMS المستخدم في الإنجاز والتجمع الصحي، مع هوية بصرية وكتالوج دورات خاص بها. تعلم بالفيديو، اختبارات، مدفوعات، وشهادات مؤتمتة.',
+            features: [
+              'كتالوج دورات مع دروس فيديو وتتبع للتقدم واختبارات لكل درس',
+              'إصدار شهادات مؤتمت بأرقام فريدة ونظام تحقق إلكتروني',
+              'تكامل بوابة دفع مع سلة تسوق ونظام كوبونات خصم',
+              'لوحات تحكم متعددة الأدوار للإدارة والمدربين والمتدربين',
+              'معالجة غير متزامنة باستخدام Celery + Redis للإشعارات والتقارير',
+              'ثيم وهوية مستقلة فوق نفس النواة المعتمدة للمنصة'
+            ]
+          },
+          mutlq: {
+            title: 'مطلق – الموقع التعريفي والهوية الرقمية',
+            desc: 'موقع تعريفي يستعرض خدمات الجهة وأعمالها المنجزة، مبني كتجربة عربية سريعة تدعم الـ RTL بالكامل مع هوية بصرية مميزة.',
+            features: [
+              'تجربة هبوط قائمة على الهوية مع أقسام للخدمات ومعرض الأعمال',
+              'تصميم عربي RTL بالكامل ومتجاوب مع جميع المقاسات',
+              'أقسام قابلة للإدارة من لوحة التحكم بدون تعديل الكود',
+              'تحسين محركات البحث والأداء لسرعة تحميل عالية',
+              'نظام تواصل وطلب استفسار متكامل'
+            ]
+          },
           toyo228: {
             title: 'Toyo228 – منصة قطع غيار تويوتا B2B',
             desc: 'منصة تجارة إلكترونية B2B تربط تجار الجملة لقطع غيار تويوتا الأصلية بمحلات التجزئة، مع خاصية البحث بالجملة عبر ملفات Excel ولوحات تحكم متعددة الأدوار وبنية Turborepo.',
@@ -1118,6 +1252,26 @@ const resources = {
           rtl: 'دعم كامل للعربية'
         }
       },
+      platform_suite: {
+        label: 'حزمة منتجات',
+        title: 'محرك واحد… علامات تجارية متعددة',
+        subtitle: 'بدلاً من إعادة بناء نظام LMS لكل عميل، بنيت محرك تدريب معتمد واحد وأطلقه كمنصات مستقلة — كل واحدة بهويتها البصرية ومحتواها واعتماداتها، فوق نواة واحدة مجرّبة ومستقرة.',
+        shared_title: 'ما ترثه كل نسخة من المحرك',
+        capabilities: {
+          engine: 'نواة موحّدة Django + PostgreSQL',
+          accreditation: 'الاعتمادات وإصدار الشهادات',
+          payments: 'المدفوعات وكوبونات الخصم',
+          rtl: 'ثنائية اللغة ودعم RTL',
+          roles: 'لوحات تحكم متعددة الأدوار',
+          branding: 'ثيم وهوية لكل عميل'
+        },
+        members: {
+          injaz: 'التعليم الطبي المستمر لقطاع الرعاية الصحية السعودي، معتمدة من SCFHS ومتكاملة مع NELC.',
+          hcholding: 'مركز تدريب التجمع الصحي القابضة في مكة — إنعاش قلبي، دعم حياة، إسعافات أولية وتمريض.',
+          mada: 'منصة تدريب وتعلم إلكتروني معتمدة بكتالوج دورات وهوية بصرية خاصة بها.'
+        },
+        footnote: 'كود واحد، خط نشر واحد، ونموذج أمان واحد — وثلاثة منتجات. العميل الجديد ينطلق في أيام بدلاً من شهور، وأي إصلاح أو ميزة جديدة تصل لكل المنصات في نفس الوقت.'
+      },
       brands: {
         label: 'شركاء النجاح',
         title: 'بثقة المبتكرين',
@@ -1183,7 +1337,7 @@ const resources = {
             location: 'عن بُعد، مصر',
             period: '07/2025 - 10/2025',
             description: [
-              'تدريس تطوير واجهات المواقع (HTML, CSS, JavaScript) لأكثر من 200 طالباً',
+              'تدريس تطوير واجهات المواقع (HTML, CSS, JavaScript) لأكثر من 240 طالباً',
               'تصميم وتقديم جلسات برمجية عملية وإرشاد الطلاب في مشاريع حقيقية'
             ]
           },
@@ -1233,7 +1387,9 @@ const resources = {
         projects: 'مشروع تم إنجازه',
         technologies: 'تقنية تم إتقانها',
         years: 'سنوات الخبرة',
-        students: 'طالباً تم تدريسهم'
+        students: 'طالباً تم تدريسهم',
+        clients: 'عميل تم خدمتهم',
+        hours: 'ساعة برمجة'
       },
       certifications: {
         title: 'الدورات والشهادات',
@@ -1304,46 +1460,58 @@ const resources = {
         reviews_count: 'تقييماً',
         view_review: 'عرض التقييم الكامل على {{platform}}',
         follow_me: 'تابعني على المنصات الرقمية',
+        time: {
+          days: 'منذ {{count}} يوم',
+          month_one: 'منذ شهر',
+          months: 'منذ {{count}} أشهر',
+          months_many: 'منذ {{count}} شهراً',
+          year_one: 'منذ سنة',
+          years: 'منذ {{count}} سنوات'
+        },
         items: {
+          salman_a: {
+            text: 'مبدع و محترم، سعدنا بهذا التعاون',
+            role: 'عميل - خمسات'
+          },
+          amsb_a: {
+            text: 'شخص ذو خبرة عالية، أخلاق راقية، سريع في التنفيذ.. وناصح أمين.. شكراً جزيلاً لك باشمهندس بلال.',
+            role: 'عميل - خمسات'
+          },
+          abu_w: {
+            text: 'أود أن أعبّر عن مدى رضاي الكامل عن العمل المقدم، حيث يتمتع الأخ بلال بكفاءة عالية وخبرة واضحة في تنفيذ المطلوب بدقة واحترافية. جودة الخدمة ممتازة جدًا وتفوقت على التوقعات مع اهتمام كبير بأدق التفاصيل، كما كان التواصل سريعًا وواضحًا طوال فترة المشروع مع متابعة مستمرة وحرص على توضيح كل خطوة. بالإضافة إلى ذلك، تم الالتزام بوقت التسليم بل وإنجاز العمل في وقت قياسي دون التأثير على الجودة، مبرمج محترف يمكن الاعتماد عليه ويقدم نتائج مميزة بكل ثقة',
+            role: 'عميل - خمسات'
+          },
           ahmed_e: {
             text: 'الشغل زي ما كنت عايزة بالظبط في وقت مناسب مع آخر تعامل مش بالمهندس بلال إن شاء الله',
-            role: 'عميل - خمسات',
-            date: 'منذ 4 أشهر'
+            role: 'عميل - خمسات'
           },
           amal_a: {
             text: 'ما شاء الله على السرعة والاستجابة السريعة وسويت المطلوب وأكثر شكراً لك',
-            role: 'عميلة - خمسات',
-            date: 'منذ شهرين'
+            role: 'عميلة - خمسات'
           },
           ahmed_y: {
             text: 'ممتاز',
-            role: 'عميل - خمسات',
-            date: 'منذ شهر'
+            role: 'عميل - خمسات'
           },
           aseel_a: {
             text: 'أخي بلال على مجهودك المبذول، أتشرف بالعمل معك خلال مشاريع مستقبلية أخرى لحسن تعاملك وأنصح كل شخص بالتعامل معك. عمله متقن وممتاز وأشكرك.',
-            role: 'صاحب مشروع - مستقل',
-            date: 'منذ شهر'
+            role: 'صاحب مشروع - مستقل'
           },
           abo_m: {
             text: 'شكرا لكم على جهودكم',
-            role: 'عميل - خمسات',
-            date: 'منذ 27 يوم'
+            role: 'عميل - خمسات'
           },
           royal_eagles: {
             text: 'خدمة راقية وشخص محترم جدااااا',
-            role: 'عميل - خمسات',
-            date: 'منذ شهر'
+            role: 'عميل - خمسات'
           },
           nouf_a: {
             text: "اشكر المهندس على امانته وشغله وسرعه الاستجابه. بكون معاه في كل شغلي القادم بإذن الله",
-            role: 'عميلة - خمسات',
-            date: 'منذ شهر'
+            role: 'عميلة - خمسات'
           },
           ahmed_a: {
             text: 'تجربة ممتازة مع المهندس بلال احترافي في التعامل ومتعاون ويستجيب للتغييرات بكل مرونة. أنجز العمل بجودة عالية والتواصل كان سلس طوال فترة التنفيذ',
-            role: 'عميل - خمسات',
-            date: 'منذ شهرين'
+            role: 'عميل - خمسات'
           }
         }
       },
