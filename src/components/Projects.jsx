@@ -326,24 +326,6 @@ const Projects = () => {
         category: 'Full Stack',
       },
       {
-        slug: 'motors',
-        title: t('projects.items.motors.title'),
-        description: t('projects.items.motors.desc'),
-        image: '/motors.png',
-        tags: [
-          'Next.js',
-          'NestJS',
-          'TypeORM',
-          'PostgreSQL',
-          'TypeScript',
-          'Multer',
-        ],
-        features: t('projects.items.motors.features', { returnObjects: true }),
-        github: '#',
-        live: 'https://motorksa.org/',
-        category: 'Full Stack',
-      },
-      {
         slug: 'injaz',
         title: t('projects.items.injaz.title'),
         description: t('projects.items.injaz.desc'),
@@ -549,6 +531,24 @@ const Projects = () => {
         features: t('projects.items.dpms.features', { returnObjects: true }),
         github: '#',
         live: 'https://dpms-rust.vercel.app/',
+        category: 'Full Stack',
+      },
+      {
+        slug: 'motors',
+        title: t('projects.items.motors.title'),
+        description: t('projects.items.motors.desc'),
+        image: '/motors.png',
+        tags: [
+          'Next.js',
+          'NestJS',
+          'TypeORM',
+          'PostgreSQL',
+          'TypeScript',
+          'Multer',
+        ],
+        features: t('projects.items.motors.features', { returnObjects: true }),
+        github: '#',
+        live: 'https://motorksa.org/',
         category: 'Full Stack',
       },
       {
@@ -835,11 +835,10 @@ const Projects = () => {
               <button
                 key={category.id}
                 onClick={() => setFilter(category.id)}
-                className={`relative px-4 sm:px-6 min-h-[44px] rounded-full text-sm font-medium transition-colors z-10 whitespace-nowrap ${
-                  filter === category.id
+                className={`relative px-4 sm:px-6 min-h-[44px] rounded-full text-sm font-medium transition-colors z-10 whitespace-nowrap ${filter === category.id
                     ? 'text-white'
                     : 'text-[rgb(var(--muted-foreground))] hover:text-[rgb(var(--foreground))]'
-                }`}>
+                  }`}>
                 {filter === category.id && (
                   <motion.div
                     layoutId="activeFilter"
