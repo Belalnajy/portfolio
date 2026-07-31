@@ -4,6 +4,6 @@ export default function robots() {
       userAgent: '*',
       allow: '/',
     },
-    sitemap: 'https://belalnajy.com/sitemap.xml',
+    sitemap: 'https://belalnagy.com/sitemap.xml',
   };
 }

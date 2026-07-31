@@ -1,6 +1,7 @@
 "use client";
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { REVEAL_VIEWPORT } from '../lib/motion';
 import {
   FaQuoteLeft,
   FaStar,
@@ -11,30 +12,93 @@ import {
 import PlatformLinks from "./PlatformLinks";
 import { useTranslation } from 'react-i18next';
 
+const SERVICE_TITLE = "تصميم وتطوير موقع ويب كامل واحترافي | Full Stack Web";
+const KHAMSAT_CATEGORIES = ["جودة الخدمة", "التواصل والمتابعة", "التسليم بالموعد"];
+const KHAMSAT_PROFILE = "https://khamsat.com/user/belalnajy/reviews";
+
+/**
+ * `key` maps each entry to its `testimonials.items.<key>` translation, so the
+ * order here is free to change without silently re-pairing names and quotes.
+ * `date` is an ISO day — the relative label is derived at render time so it
+ * never goes stale.
+ */
+const TESTIMONIALS_CONFIG = [
+  { key: 'salman_a', name: "Salman A.", date: '2026-07-14', platform: "Khamsat", link: KHAMSAT_PROFILE },
+  { key: 'amsb_a', name: "Amsb A.", date: '2026-06-27', platform: "Khamsat", link: KHAMSAT_PROFILE },
+  { key: 'abu_w', name: "Abu W.", date: '2026-05-05', platform: "Khamsat", link: KHAMSAT_PROFILE },
+  { key: 'abo_m', name: "Abo M.", date: '2026-04-21', platform: "Khamsat", link: "https://khamsat.com/user/belalnajy/reviews/1095137" },
+  { key: 'ahmed_y', name: "Ahmed Y.", date: '2026-04-18', platform: "Khamsat", link: "https://khamsat.com/user/belalnajy/reviews/1094120" },
+  {
+    key: 'aseel_a',
+    name: "أصيل ا.",
+    date: '2026-04-18',
+    platform: "Mostaql",
+    link: "https://mostaql.com/u/Belalnagy/reviews/9112354",
+    categories: ["الاحترافية بالتعامل", "التواصل والمتابعة", "جودة العمل المسلّم", "الخبرة بمجال المشروع", "التسليم في الموعد", "التعامل معه مرّة أخرى"],
+  },
+  { key: 'amal_a', name: "أمل ا.", date: '2026-03-18', platform: "Khamsat", link: "https://khamsat.com/user/belalnajy/reviews/1087342" },
+  { key: 'ahmed_a', name: "احمد ا.", date: '2026-03-18', platform: "Khamsat", link: "https://khamsat.com/user/belalnajy/reviews/1118973" },
+  { key: 'royal_eagles', name: "Royal Eagles L", date: '2026-03-16', platform: "Khamsat", link: "https://khamsat.com/user/belalnajy/reviews/1125347" },
+  { key: 'nouf_a', name: "نوف ع.", date: '2026-02-28', platform: "Khamsat", link: "https://khamsat.com/user/belalnajy/reviews/1122834" },
+  { key: 'ahmed_e', name: "Ahmed E.", date: '2026-01-18', platform: "Khamsat", link: "https://khamsat.com/user/belalnajy/reviews/1072456" },
+];
+
 const Testimonials = () => {
   const { t, i18n } = useTranslation();
   const isArabic = i18n.language === 'ar';
   const [activeIndex, setActiveIndex] = useState(0);
+  // The page is statically prerendered, so "x days ago" can only be resolved on
+  // the client. Until then we show the absolute month, which is identical in
+  // both renders and never wrong.
+  const [now, setNow] = useState(null);
+
+  useEffect(() => {
+    setNow(Date.now());
+  }, []);
 
   const testimonials = useMemo(() => {
-    const items = t('testimonials.items', { returnObjects: true });
-    const config = [
-      { id: 1, name: "Ahmed E.", company: "تصميم وتطوير موقع ويب كامل واحترافي | Full Stack Web", platform: "Khamsat", rating: 5, link: "https://khamsat.com/user/belalnajy/reviews/1072456", categories: ["جودة الخدمة", "التواصل والمتابعة", "التسليم بالموعد"] },
-      { id: 2, name: "أمل ا.", company: "تصميم وتطوير موقع ويب كامل واحترافي | Full Stack Web", platform: "Khamsat", rating: 5, link: "https://khamsat.com/user/belalnajy/reviews/1087342", categories: ["جودة الخدمة", "التواصل والمتابعة", "التسليم بالموعد"] },
-      { id: 3, name: "Ahmed Y.", company: "تصميم وتطوير موقع ويب كامل واحترافي | Full Stack Web", platform: "Khamsat", rating: 5, link: "https://khamsat.com/user/belalnajy/reviews/1094120", categories: ["جودة الخدمة", "التواصل والمتابعة", "التسليم بالموعد"] },
-      { id: 4, name: "أصيل ا.", company: "تصميم وتطوير موقع ويب كامل واحترافي | Full Stack Web", platform: "Mostaql", rating: 5, link: "https://mostaql.com/u/Belalnagy/reviews/9112354", categories: ["الاحترافية بالتعامل", "التواصل والمتابعة", "جودة العمل المسلّم", "الخبرة بمجال المشروع", "التسليم في الموعد", "التعامل معه مرّة أخرى"] },
-      { id: 5, name: "Abo M.", company: "تصميم وتطوير موقع ويب كامل واحترافي | Full Stack Web", platform: "Khamsat", rating: 5, link: "https://khamsat.com/user/belalnajy/reviews/1095137", categories: ["جودة الخدمة", "التواصل والمتابعة", "التسليم بالموعد"] },
-      { id: 6, name: "Royal Eagles L", company: "تصميم وتطوير موقع ويب كامل واحترافي | Full Stack Web", platform: "Khamsat", rating: 5, link: "https://khamsat.com/user/belalnajy/reviews/1125347", categories: ["جودة الخدمة", "التواصل والمتابعة", "التسليم بالموعد"] },
-      { id: 7, name: "نوف ع.", company: "تصميم وتطوير موقع ويب كامل واحترافي | Full Stack Web", platform: "Khamsat", rating: 5, link: "https://khamsat.com/user/belalnajy/reviews/1122834", categories: ["جودة الخدمة", "التواصل والمتابعة", "التسليم بالموعد"] },
-      { id: 8, name: "احمد ا.", company: "تصميم وتطوير موقع ويب كامل واحترافي | Full Stack Web", platform: "Khamsat", rating: 5, link: "https://khamsat.com/user/belalnajy/reviews/1118973", categories: ["جودة الخدمة", "التواصل والمتابعة", "التسليم بالموعد"] },
-    ];
+    const formatAbsolute = (isoDate) =>
+      new Date(`${isoDate}T00:00:00Z`).toLocaleDateString(
+        isArabic ? 'ar-EG' : 'en-US',
+        { month: 'short', year: 'numeric', timeZone: 'UTC' },
+      );
 
-    const keys = Object.keys(items);
-    return config.map((conf, index) => ({
+    const formatRelative = (isoDate) => {
+      if (now === null) return formatAbsolute(isoDate);
+
+      const days = Math.max(
+        1,
+        Math.floor((now - new Date(`${isoDate}T00:00:00Z`).getTime()) / 86_400_000),
+      );
+      if (days < 30) return t('testimonials.time.days', { count: days });
+
+      const months = Math.floor(days / 30);
+      if (months < 12) {
+        if (months === 1) return t('testimonials.time.month_one');
+        // Arabic switches from "أشهر" to "شهراً" at 11.
+        return months >= 11
+          ? t('testimonials.time.months_many', { count: months })
+          : t('testimonials.time.months', { count: months });
+      }
+
+      const years = Math.floor(months / 12);
+      return years === 1
+        ? t('testimonials.time.year_one')
+        : t('testimonials.time.years', { count: years });
+    };
+
+    const items = t('testimonials.items', { returnObjects: true });
+
+    return TESTIMONIALS_CONFIG.map((conf, index) => ({
+      id: index + 1,
+      rating: 5,
+      company: SERVICE_TITLE,
+      categories: KHAMSAT_CATEGORIES,
       ...conf,
-      ...items[keys[index]]
+      ...(items[conf.key] || {}),
+      date: formatRelative(conf.date),
     }));
-  }, [t]);
+  }, [t, now, isArabic]);
 
   const nextTestimonial = () => {
     setActiveIndex(prev => (prev + 1) % testimonials.length);
@@ -63,10 +127,10 @@ const Testimonials = () => {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
+          viewport={REVEAL_VIEWPORT}
           transition={{ duration: 0.5 }}
           className="text-center mb-16">
-          <h2 className="text-5xl font-bold mb-4 text-[rgb(var(--foreground))]">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 text-[rgb(var(--foreground))]">
             {t('testimonials.title')}
           </h2>
           <p className="text-[rgb(var(--muted-foreground))] max-w-2xl mx-auto text-lg mb-4 leading-relaxed">
@@ -97,7 +161,7 @@ const Testimonials = () => {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
+          viewport={REVEAL_VIEWPORT}
           transition={{ duration: 0.5, delay: 0.3 }}
           className="mt-16">
           <div className="relative">
@@ -108,7 +172,7 @@ const Testimonials = () => {
                 animate={{ opacity: 1, x: 0 }}
                 exit={{ opacity: 0, x: isArabic ? 100 : -100 }}
                 transition={{ duration: 0.3 }}
-                className="glass-card p-8 md:p-12 rounded-2xl relative overflow-hidden">
+                className="glass-card p-5 sm:p-8 md:p-12 rounded-2xl relative overflow-hidden">
                 <div className={`absolute top-6 ${isArabic ? 'right-6 rotate-180' : 'left-6'} text-[rgb(var(--primary))]/10`}>
                   <FaQuoteLeft className="text-7xl lg:text-9xl" />
                 </div>
@@ -118,7 +182,7 @@ const Testimonials = () => {
                     {renderStars(testimonials[activeIndex].rating)}
                   </div>
 
-                  <p className={`text-lg md:text-xl lg:text-2xl text-[rgb(var(--foreground))] leading-relaxed mb-8 italic font-medium text-center md:text-start`}>
+                  <p className={`text-base sm:text-lg md:text-xl lg:text-2xl text-[rgb(var(--foreground))] leading-relaxed mb-6 sm:mb-8 italic font-medium text-center md:text-start`}>
                     "{testimonials[activeIndex].text}"
                   </p>
 
@@ -195,11 +259,15 @@ const Testimonials = () => {
                   <button
                     key={index}
                     onClick={() => setActiveIndex(index)}
-                    className={`h-2 rounded-full transition-all duration-300 ${index === activeIndex
-                      ? "bg-[rgb(var(--primary))] w-10 shadow-lg shadow-[rgb(var(--primary))]/40"
-                      : "bg-[rgb(var(--muted))] w-2 hover:bg-[rgb(var(--muted-foreground))]"}`}
+                    className="group/dot h-11 px-1 flex items-center justify-center"
                     aria-label={`Go to testimonial ${index + 1}`}
-                  />
+                  >
+                    <span
+                      className={`block h-2 rounded-full transition-all duration-300 ${index === activeIndex
+                        ? "bg-[rgb(var(--primary))] w-10 shadow-lg shadow-[rgb(var(--primary))]/40"
+                        : "bg-[rgb(var(--muted))] w-2 group-hover/dot:bg-[rgb(var(--muted-foreground))]"}`}
+                    />
+                  </button>
                 )}
               </div>
 
@@ -214,7 +282,7 @@ const Testimonials = () => {
             </div>
           </div>
 
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-8 gap-4 mt-16">
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4 mt-16">
             {testimonials.map((testimonial, index) =>
               <motion.button
                 key={testimonial.id}
@@ -242,7 +310,7 @@ const Testimonials = () => {
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
+            viewport={REVEAL_VIEWPORT}
             transition={{ duration: 0.5, delay: 0.3 }}
             className="mt-24 text-center">
             <h3 className="text-3xl font-bold mb-8 text-[rgb(var(--foreground))] tracking-tight">

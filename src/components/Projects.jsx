@@ -1,6 +1,7 @@
 "use client";
 import { useState, useEffect, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { REVEAL_VIEWPORT, LONG_LIST_VIEWPORT, revealDelay, REVEAL_DURATION } from '../lib/motion';
 import {
   SiDjango,
   SiPostgresql,
@@ -25,6 +26,8 @@ import {
   SiCelery,
   SiRedis,
   SiFramer,
+  SiLaravel,
+  SiPhp,
 } from 'react-icons/si';
 import {
   FaGithub,
@@ -47,6 +50,11 @@ import {
   FaHospital,
   FaFileExcel,
   FaCertificate,
+  FaAndroid,
+  FaGooglePlay,
+  FaMobileAlt,
+  FaQuran,
+  FaBug,
 } from 'react-icons/fa';
 import ProjectSkeleton from './skeletons/ProjectSkeleton';
 import ProjectModal from './ProjectModal';
@@ -100,10 +108,51 @@ export const getTechIcon = (tech) => {
     SCFHS: <FaHospital className="text-[#0D47A1]" />,
     Multer: <FaCode className="text-[#CF6900]" />,
     'Excel Processing': <FaFileExcel className="text-[#217346]" />,
+    'React Native': <FaReact className="text-[#61DAFB]" />,
+    Android: <FaAndroid className="text-[#3DDC84]" />,
+    'Google Play': <FaGooglePlay className="text-[#01875F]" />,
+    'REST API': <FaCode className="text-[#0EA5E9]" />,
+    'Bug Fixing': <FaBug className="text-[#EF4444]" />,
+    'UI/UX Redesign': <FaMobileAlt className="text-[#A855F7]" />,
+    Tajweed: <FaQuran className="text-[#0E8A5F]" />,
+    Laravel: <SiLaravel className="text-[#FF2D20]" />,
+    PHP: <SiPhp className="text-[#777BB4]" />,
   };
   return (
     iconMap[tech] || <FaCode className="text-[rgb(var(--muted-foreground))]" />
   );
+};
+
+/**
+ * One Django LMS engine deployed under several brands — each client gets its own
+ * visual identity while sharing accreditation, payments and certification logic.
+ * Single source of truth: consumed by ProjectModal and the PlatformSuite section.
+ */
+export const LMS_SUITE = {
+  key: 'lms_suite',
+  members: [
+    {
+      slug: 'injaz',
+      name: 'Injaz',
+      url: 'https://lms-injaz.com/',
+      image: '/injaz.png',
+      accent: '#0EA5E9',
+    },
+    {
+      slug: 'hcholding',
+      name: 'HC Holding',
+      url: 'https://lms-hcholding.org/',
+      image: '/hcholding.png',
+      accent: '#22C55E',
+    },
+    {
+      slug: 'mada',
+      name: 'Mada Education',
+      url: 'https://mada-education.com/',
+      image: '/mada.png',
+      accent: '#06B6D4',
+    },
+  ],
 };
 
 const ProjectCard = ({ project, index, onClick }) => {
@@ -132,11 +181,10 @@ const ProjectCard = ({ project, index, onClick }) => {
 
   return (
     <motion.div
-      layoutId={`project-card-${project.slug}`}
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      transition={{ duration: 0.5, delay: index * 0.1 }}
+      viewport={LONG_LIST_VIEWPORT}
+      transition={{ duration: REVEAL_DURATION, delay: revealDelay(index) }}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
       onClick={() => onClick(project)}
@@ -200,19 +248,11 @@ const ProjectCard = ({ project, index, onClick }) => {
 const Projects = () => {
   const { t, i18n } = useTranslation();
   const isArabic = i18n.language === 'ar';
-  const [loading, setLoading] = useState(true);
+  // Content comes from the local i18n bundle, so there is nothing to wait for.
+  const [loading] = useState(false);
   const [filter, setFilter] = useState('All');
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedProject, setSelectedProject] = useState(null);
-
-  useEffect(() => {
-    // Simulate loading delay
-    const timer = setTimeout(() => {
-      setLoading(false);
-    }, 1500);
-
-    return () => clearTimeout(timer);
-  }, []);
 
   // Lock scroll when modal is open
   useEffect(() => {
@@ -228,10 +268,43 @@ const Projects = () => {
     { id: 'Full Stack', label: t('projects.categories.fullstack') },
     { id: 'Frontend', label: t('projects.categories.frontend') },
     { id: 'Backend', label: t('projects.categories.backend') },
+    { id: 'Mobile', label: t('projects.categories.mobile') },
   ];
 
   const projectsData = useMemo(
     () => [
+      {
+        slug: 'bilqalam',
+        title: t('projects.items.bilqalam.title'),
+        description: t('projects.items.bilqalam.desc'),
+        image: '/bilqalam.png',
+        tags: ['Next.js', 'React', 'Laravel', 'PHP', 'Tailwind'],
+        features: t('projects.items.bilqalam.features', {
+          returnObjects: true,
+        }),
+        github: '#',
+        live: 'https://bilqalaminstitute.net/',
+        caseStudy: '/case-study/bilqalam',
+        category: 'Full Stack',
+      },
+      {
+        slug: 'medicta',
+        title: t('projects.items.medicta.title'),
+        description: t('projects.items.medicta.desc'),
+        image: '/medicta.png',
+        tags: [
+          'React Native',
+          'Android',
+          'REST API',
+          'UI/UX Redesign',
+          'Bug Fixing',
+          'Google Play',
+        ],
+        features: t('projects.items.medicta.features', { returnObjects: true }),
+        github: '#',
+        live: 'https://play.google.com/store/apps/details?id=com.medicta',
+        category: 'Mobile',
+      },
       {
         slug: 'toyo228',
         title: t('projects.items.toyo228.title'),
@@ -289,6 +362,7 @@ const Projects = () => {
         github: '#',
         live: 'https://lms-injaz.com/',
         category: 'Full Stack',
+        suite: LMS_SUITE,
       },
       {
         slug: 'hcholding',
@@ -309,6 +383,38 @@ const Projects = () => {
         github: '#',
         live: 'https://lms-hcholding.org/',
         category: 'Full Stack',
+        suite: LMS_SUITE,
+      },
+      {
+        slug: 'mada',
+        title: t('projects.items.mada.title'),
+        description: t('projects.items.mada.desc'),
+        image: '/mada.png',
+        tags: [
+          'Django',
+          'PostgreSQL',
+          'Python',
+          'Celery',
+          'Redis',
+          'MyFatoorah',
+          'Tailwind',
+        ],
+        features: t('projects.items.mada.features', { returnObjects: true }),
+        github: '#',
+        live: 'https://mada-education.com/',
+        category: 'Full Stack',
+        suite: LMS_SUITE,
+      },
+      {
+        slug: 'mutlq',
+        title: t('projects.items.mutlq.title'),
+        description: t('projects.items.mutlq.desc'),
+        image: '/mutlq.png',
+        tags: ['Django', 'PostgreSQL', 'Tailwind', 'JavaScript'],
+        features: t('projects.items.mutlq.features', { returnObjects: true }),
+        github: '#',
+        live: 'https://mutlq.org/',
+        category: 'Frontend',
       },
       {
         slug: 'indstrz',
@@ -704,10 +810,10 @@ const Projects = () => {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
+          viewport={REVEAL_VIEWPORT}
           transition={{ duration: 0.5 }}
           className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl font-bold mb-4 text-[rgb(var(--foreground))]">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 text-[rgb(var(--foreground))]">
             {t('projects.title')}
           </h2>
           <p className="text-[rgb(var(--muted-foreground))] max-w-2xl mx-auto text-lg">
@@ -719,16 +825,17 @@ const Projects = () => {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
+          viewport={REVEAL_VIEWPORT}
           transition={{ duration: 0.5, delay: 0.2 }}
           className="mb-12 flex flex-col md:flex-row gap-6 items-center justify-between max-w-5xl mx-auto">
-          {/* iOS-Style Segmented Control */}
-          <div className="flex p-1 bg-[rgb(var(--muted))]/30 backdrop-blur-md rounded-full border border-[rgb(var(--border))]/50 relative overflow-x-auto w-full md:w-auto">
+          {/* Segmented control — wraps into rows on phones instead of scrolling
+              off-screen, so every category stays reachable. */}
+          <div className="flex flex-wrap justify-center gap-1 p-1 bg-[rgb(var(--muted))]/30 backdrop-blur-md rounded-2xl md:rounded-full border border-[rgb(var(--border))]/50 relative w-full md:w-auto">
             {categories.map((category) => (
               <button
                 key={category.id}
                 onClick={() => setFilter(category.id)}
-                className={`relative px-6 py-2 rounded-full text-sm font-medium transition-colors z-10 whitespace-nowrap ${
+                className={`relative px-4 sm:px-6 min-h-[44px] rounded-full text-sm font-medium transition-colors z-10 whitespace-nowrap ${
                   filter === category.id
                     ? 'text-white'
                     : 'text-[rgb(var(--muted-foreground))] hover:text-[rgb(var(--foreground))]'
@@ -765,7 +872,7 @@ const Projects = () => {
           ) : filteredProjects.length > 0 ? (
             filteredProjects.map((project, index) => (
               <ProjectCard
-                key={index}
+                key={project.slug}
                 project={project}
                 index={index}
                 onClick={setSelectedProject}

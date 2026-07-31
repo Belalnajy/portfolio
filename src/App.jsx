@@ -1,13 +1,17 @@
 "use client";
 import { useEffect, useState } from 'react';
-import './i18n';
+import { resolvePreferredLanguage } from './i18n';
 import { useTranslation } from 'react-i18next';
-import { motion, AnimatePresence } from 'framer-motion';
+import { MotionConfig } from 'framer-motion';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import About from './components/About';
 import InteractiveTimeline from './components/InteractiveTimeline';
 import Projects from './components/Projects';
+import PlatformSuite from './components/PlatformSuite';
+import SectionErrorBoundary from './components/SectionErrorBoundary';
+import HowIWork from './components/HowIWork';
+import Packages from './components/Packages';
 import BrandLogos from './components/BrandLogos';
 import Skills from './components/Skills';
 import Contact from './components/Contact';
@@ -25,8 +29,6 @@ import LoadingScreen from './components/LoadingScreen';
 import DarkModeToggle from './components/DarkModeToggle';
 import Testimonials from './components/Testimonials';
 import AIAssistant from './components/AIAssistant';
-import AOS from 'aos';
-import 'aos/dist/aos.css';
 
 function App() {
   const [notification, setNotification] = useState({
@@ -36,15 +38,16 @@ function App() {
   });
   const [isLoading, setIsLoading] = useState(true);
 
-  useEffect(() => {
-    AOS.init({
-      duration: 1000,
-      easing: 'ease-in-out',
-      once: true,
-    });
-  }, []);
-
   const { i18n } = useTranslation();
+
+  // Apply the stored/browser language only after hydration, so the first render
+  // matches the prerendered English markup. Runs behind the loading screen.
+  useEffect(() => {
+    const preferred = resolvePreferredLanguage();
+    if (preferred !== i18n.language) {
+      i18n.changeLanguage(preferred);
+    }
+  }, [i18n]);
 
   useEffect(() => {
     document.dir = i18n.dir();
@@ -90,9 +93,14 @@ function App() {
   };
 
   return (
-    <>
+    // reducedMotion="user" drops transform and layout animations for anyone who
+    // has asked their OS to reduce motion, without touching opacity fades.
+    <MotionConfig reducedMotion="user">
       {isLoading && <LoadingScreen onLoadingComplete={handleLoadingComplete} />}
-      <div className="min-h-screen bg-[rgb(var(--background))] text-[rgb(var(--foreground))] transition-colors duration-300 relative">
+      {/* overflow-x-clip contains the decorative entrance offsets and blurred
+          blobs, which otherwise let the page pan sideways on phones in RTL.
+          `clip` rather than `hidden` so no scroll container is created. */}
+      <div className="min-h-screen bg-[rgb(var(--background))] text-[rgb(var(--foreground))] transition-colors duration-300 relative overflow-x-clip">
         <CustomCursor />
         <ParticlesBackground />
         <DarkModeToggle />
@@ -110,21 +118,30 @@ function App() {
         <main className="relative z-10">
           <Hero onDownloadCV={handleDownloadCV} />
           <About />
+          {/* The suite is the strongest proof on the page, so it sits above the
+              31-card project grid rather than below it. */}
+          <PlatformSuite />
           <Projects />
-          <LaptopShowcase3D />
+          {/* Pulls an HDR map from an external CDN; contained so a failed fetch
+              cannot tear down the rest of the page. */}
+          <SectionErrorBoundary>
+            <LaptopShowcase3D />
+          </SectionErrorBoundary>
           <BrandLogos />
           <Skills />
           <InteractiveTimeline />
           <AnimatedStats />
           <Certifications />
           <Services />
+          <HowIWork />
+          <Packages />
           <Testimonials />
           <Contact showNotification={showNotification} />
           <AIAssistant />
         </main>
         <Footer />
       </div>
-    </>
+    </MotionConfig>
   );
 }
 

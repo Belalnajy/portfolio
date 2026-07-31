@@ -1,6 +1,5 @@
 import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
-import LanguageDetector from 'i18next-browser-languagedetector';
 
 const resources = {
   en: {
@@ -20,12 +19,11 @@ const resources = {
         greeting_start: 'Hi, I\'m ',
         name: 'Belal Nagy',
         i_am_a: 'I\'m a ',
-        description_1: 'Passionate about building ',
-        description_2: 'scalable, high-performance web applications',
-        description_3: ' and transforming complex ideas into ',
-        description_4: 'intuitive, elegant user experiences',
-        description_5: '. Currently crafting impactful digital solutions at ',
-        company: 'S&F',
+        description_1: 'I build web platforms from zero, and take over existing codebases that need fixing. ',
+        description_2: '31 projects',
+        description_3: ' for ',
+        description_4: '27 clients',
+        description_5: ' across Egypt and the Gulf.',
         view_projects: 'View Projects',
         contact_me: 'Contact Me',
         download_cv: 'Download CV',
@@ -33,7 +31,7 @@ const resources = {
       },
       about: {
         title: 'About Me',
-        subtitle: 'Full Stack Developer experienced in building scalable, multilingual web applications',
+        subtitle: 'Full-stack developer in Alexandria, Egypt. Next.js, Laravel, NestJS, Node.js, Django, PostgreSQL.',
         personal_info: 'Personal Information',
         professional_summary: 'Professional Summary',
         labels: {
@@ -48,21 +46,21 @@ const resources = {
           education: 'Bachelor of Business (MIS)',
           location: 'Alexandria, Egypt'
         },
-        summary_p1: 'Full Stack Developer experienced in building <1>scalable, multilingual web applications</1> using React.js, Next.js, Django, NestJS, and PostgreSQL. Currently working at <3>S&F (Saudi Arabia)</3> developing full-stack applications and backend services for web and mobile platforms.',
-        summary_p2: 'Completed the ITI Full Stack program and served as an <1>External Instructor at ITI</1>, teaching Front-End Development to <3>200+ students</3>. Delivered AI-integrated, RTL-ready platforms for Saudi startups and universities, focused on modern UI/UX and real-time systems.',
-        summary_p3: 'Passionate about creating efficient, scalable solutions with expertise in multilingual platforms, real-time features, and modern development practices. Always eager to learn new technologies and deliver production-ready applications.',
+        summary_p1: 'Full-stack developer based in <1>Alexandria, Egypt</1>. I work in Next.js, Laravel, NestJS, Node.js, Django and PostgreSQL. I am currently a full-stack developer at <3>S&F in Saudi Arabia</3>.',
+        summary_p2: 'I am the sole developer on <1>Bilqalam Institute</1>, a production learning platform serving thousands of enrolled students. It handles student enrollment and management, billing and invoicing, and the admin reporting dashboards the institute runs on. I built it and I maintain it alone, in <3>Next.js and Laravel</3>.',
+        summary_p3: 'I also built a multi-tenant LMS engine that runs as <1>three separately branded accredited platforms</1>, Injaz, HC Holding and Mada Education, on one hardened Django and PostgreSQL core. I co-founded Indstrz, a B2B industrial platform, and taught front-end development to <3>240+ students</3> as an external instructor at ITI. Arabic and RTL work goes into every project I ship, including the financial and data-heavy interfaces.',
         highlights: {
-          fast_learner: {
-            title: 'Fast Learner',
-            desc: 'Quick to adapt to new technologies and frameworks'
+          sole_developer: {
+            title: 'Sole developer on production systems',
+            desc: 'Bilqalam serves thousands of students on a platform I built and maintain alone.'
           },
-          passionate: {
-            title: 'Passionate',
-            desc: 'Love building elegant solutions to complex problems'
+          multi_tenant: {
+            title: 'Multi-tenant architecture',
+            desc: 'One LMS engine, three accredited client platforms, one deployment pipeline.'
           },
-          creative: {
-            title: 'Creative',
-            desc: 'Always thinking of innovative ways to improve UX'
+          arabic_first: {
+            title: 'Arabic-first',
+            desc: 'Full RTL across dashboards, invoices and reports, not just landing pages.'
           }
         }
       },
@@ -76,15 +74,68 @@ const resources = {
           all: 'All',
           fullstack: 'Full Stack',
           frontend: 'Frontend',
-          backend: 'Backend'
+          backend: 'Backend',
+          mobile: 'Mobile'
         },
         modal: {
           technologies: 'Technologies',
           features: 'Key Features & Highlights',
           live_link: 'Visit Live Project',
-          source_code: 'View Source Code'
+          source_code: 'View Source Code',
+          case_study: 'Read the Case Study',
+          close: 'Close',
+          suite_title: 'Same Engine, Different Brands',
+          suite_desc: 'This platform is one deployment of a shared LMS engine I built and maintain. Each client runs its own branded instance — distinct visual identity, accreditation and content — on top of the same accredited training, payment and certification core.'
         },
         items: {
+          bilqalam: {
+            title: 'Bilqalam Institute, Online Qur’an & Arabic Academy',
+            desc: 'A production learning platform for an institute teaching Qur’an, Arabic and Islamic studies online, serving thousands of enrolled students. I am the sole developer. I built the student enrollment and management system, the billing and invoicing, and the admin reporting dashboards the institute runs on, and I maintain the platform alone.',
+            features: [
+              'Sole developer, built and maintained alone',
+              'In production, serving thousands of enrolled students',
+              'Student enrollment and management system',
+              'Billing and invoicing',
+              'Admin reporting dashboards the institute runs on',
+              'Fully Arabic and RTL, including the financial and data-heavy views',
+              'Built in Next.js and Laravel'
+            ]
+          },
+          medicta: {
+            title: 'Medicta – Healthcare Booking App (Code Redesign)',
+            desc: 'An Android app for booking doctor appointments and browsing clinic services, published on Google Play. I re-architected the existing codebase and worked through its functional defects — refactoring the app structure while fixing broken flows across booking, authentication and data handling.',
+            features: [
+              'Full code redesign: restructured the app into clear, maintainable layers',
+              'Systematic fixing of functional bugs across booking, auth and data flows',
+              'Refactored API integration layer with consistent error and loading states',
+              'Improved state management to remove stale-data and race-condition bugs',
+              'UI/UX cleanup for smoother navigation and faster perceived performance',
+              'Live on Google Play under the package com.medicta'
+            ]
+          },
+          mada: {
+            title: 'Mada Education – Accredited Training Platform',
+            desc: 'An accredited e-learning and training platform running on the same LMS engine as Injaz and HC Holding, with its own visual identity and course catalogue. Video-based lessons, assessments, payments and automated certificates.',
+            features: [
+              'Course catalogue with video lessons, progress tracking and per-lesson quizzes',
+              'Automated certificate issuance with unique IDs and online verification',
+              'Payment gateway integration with shopping cart and discount coupons',
+              'Multi-role dashboards for administrators, instructors and trainees',
+              'Celery + Redis async processing for notifications, exports and reports',
+              'Independent brand theme layered over the shared, accredited LMS core'
+            ]
+          },
+          mutlq: {
+            title: 'Mutlq – Corporate Showcase Website',
+            desc: 'A corporate showcase and digital-identity website presenting the organisation’s services and delivered work, built as a fast, fully RTL Arabic experience with a distinct visual identity.',
+            features: [
+              'Brand-led landing experience with services and project gallery sections',
+              'Fully RTL Arabic layout with responsive design across all breakpoints',
+              'Content-managed sections so pages can be updated without code changes',
+              'SEO and performance optimisation for fast first paint',
+              'Integrated contact and enquiry flow'
+            ]
+          },
           toyo228: {
             title: 'Toyo228 – B2B Auto Parts Platform',
             desc: 'A B2B e-commerce platform connecting Toyota spare parts wholesalers with retail shops, featuring bulk search via Excel uploads, multi-panel dashboards, and a Turborepo monorepo architecture.',
@@ -132,13 +183,15 @@ const resources = {
             ]
           },
           indstrz: {
-            title: 'Indstrz – B2B Industrial Marketplace',
-            desc: 'A scalable full-stack B2B procurement platform with end-to-end digital RFQ workflows, real-time negotiations, and automated conversation management.',
+            title: 'Indstrz, B2B Industrial Platform',
+            desc: 'A B2B procurement platform with digital RFQ workflows, real-time negotiation and automated conversation management. Selected for the Venture Ready Program, implemented by Plug and Play with support from GIZ Egypt and ITIDA, hosted at Creativa Innovation Hubs in Alexandria.',
             features: [
-              'End-to-end digital RFQ workflows between buyers and verified vendors',
+              'Selected for the Venture Ready Program by Plug and Play, with GIZ Egypt and ITIDA support',
+              'Hosted at Creativa Innovation Hubs in Alexandria',
+              'Digital RFQ workflows between buyers and verified vendors',
               'Real-time messaging and notifications using Socket.io',
-              'Secure RBAC with JWT token revocation and multi-role management',
-              'Modular Application Factory Pattern with layered architecture'
+              'Role-based access control with JWT token revocation',
+              'Layered architecture using a modular application factory pattern'
             ]
           },
           uduipa: {
@@ -421,6 +474,26 @@ const resources = {
           rtl: 'Full RTL Support'
         }
       },
+      platform_suite: {
+        label: 'Product Suite',
+        title: 'One Engine, Many Brands',
+        subtitle: 'Instead of rebuilding an LMS for every client, I built one accredited training engine and deploy it as separate branded platforms — each with its own visual identity, content and accreditation, sharing a single hardened core.',
+        shared_title: 'What Every Deployment Inherits',
+        capabilities: {
+          engine: 'Shared Django + PostgreSQL Core',
+          accreditation: 'Accreditation & Certificates',
+          payments: 'Payments & Coupons',
+          rtl: 'Bilingual AR/EN with RTL',
+          roles: 'Multi-Role Dashboards',
+          branding: 'Per-Client Theming'
+        },
+        members: {
+          injaz: 'Continuing medical education for the Saudi healthcare sector, SCFHS-accredited with NELC integration.',
+          hcholding: 'Health Cluster Holding training centre in Makkah — CPR, BLS, First Aid and nursing programmes.',
+          mada: 'Accredited general training and e-learning platform with its own catalogue and brand identity.'
+        },
+        footnote: 'One codebase, one deployment pipeline, one security model — three products. New clients launch in days instead of months, and every fix or feature lands across the whole suite at once.'
+      },
       brands: {
         label: 'Partners in Growth',
         title: 'Trusted By Innovators',
@@ -464,9 +537,10 @@ const resources = {
             location: 'Remote, Egypt',
             period: '01/2024 - Present',
             description: [
-              'Co-founded a B2B Industrial Marketplace focused on streamlining industrial procurement',
-              'Architected the digital RFQ workflow and real-time negotiation engine',
-              'Led the technical development of the platform using Next.js, Flask, and PostgreSQL'
+              'Co-founded a B2B industrial platform for industrial procurement',
+              'Selected for the Venture Ready Program, implemented by Plug and Play with support from GIZ Egypt and ITIDA, hosted at Creativa Innovation Hubs in Alexandria',
+              'Built the digital RFQ workflow and the real-time negotiation engine',
+              'Led technical development using Next.js, Flask and PostgreSQL'
             ]
           },
           {
@@ -486,7 +560,7 @@ const resources = {
             location: 'Remote, Egypt',
             period: '07/2025 - 10/2025',
             description: [
-              'Taught Front-End Development (HTML, CSS, JavaScript) to more than 200 students',
+              'Taught Front-End Development (HTML, CSS, JavaScript) to more than 240 students',
               'Designed and delivered practical coding sessions and real-world project guidance'
             ]
           },
@@ -536,7 +610,8 @@ const resources = {
         projects: 'Projects Completed',
         technologies: 'Technologies Mastered',
         years: 'Years of Experience',
-        students: 'Students Taught'
+        students: 'Students Taught',
+        clients: 'Clients Served'
       },
       certifications: {
         title: 'Courses & Certifications',
@@ -597,8 +672,174 @@ const resources = {
               'Load Balancing & Scaling',
               'Technical Consultation'
             ]
+          },
+          {
+            title: 'Legacy Code Takeover & Technical Audit',
+            desc: 'I take over inherited and abandoned codebases. The audit comes first, so you know what is wrong and what it costs before any work starts.',
+            features: [
+              'Full audit of an inherited codebase with a written report',
+              'A clear estimate of what it costs to fix, before any work starts',
+              'Bug fixing, refactoring and performance work on live systems',
+              'Taking over projects abandoned by a previous developer'
+            ]
           }
         ]
+      },
+      process: {
+        label: 'How I Work',
+        title: 'From First Call to Live Product',
+        subtitle: 'A predictable process with a clear deliverable at every step, so you always know what is happening and what comes next.',
+        steps: {
+          discovery: {
+            title: '1. Discovery Call',
+            desc: 'We talk through the goal, the users and the constraints. I ask the awkward questions early — budget, deadlines, integrations — so nothing surprises us later.',
+            deliverable: 'Deliverable: written scope summary'
+          },
+          blueprint: {
+            title: '2. Scope & Blueprint',
+            desc: 'I turn the conversation into a concrete plan: features broken into phases, the data model, the stack, and a realistic timeline with milestones.',
+            deliverable: 'Deliverable: proposal + timeline'
+          },
+          build: {
+            title: '3. Build in Milestones',
+            desc: 'Development happens in reviewable chunks, not one big reveal. You get a staging link from the first milestone and can follow progress the whole way.',
+            deliverable: 'Deliverable: staging link per milestone'
+          },
+          review: {
+            title: '4. Review & Hardening',
+            desc: 'Your feedback on each milestone gets folded in, then I test the flows end to end — validation, permissions, edge cases, mobile, and RTL.',
+            deliverable: 'Deliverable: tested, fixed build'
+          },
+          launch: {
+            title: '5. Launch',
+            desc: 'Deployment, domain and SSL, environment configuration, SEO basics and analytics. I hand over the repository, credentials and a short walkthrough.',
+            deliverable: 'Deliverable: live site + handover'
+          },
+          support: {
+            title: '6. Post-Launch Support',
+            desc: 'A warranty window after launch for any defect in what was delivered, plus an optional retainer for ongoing features and maintenance.',
+            deliverable: 'Deliverable: warranty + optional retainer'
+          }
+        }
+      },
+      packages: {
+        label: 'Packages',
+        title: 'Ways We Can Work Together',
+        subtitle: 'Three common shapes for a project. Every engagement is scoped to what you actually need — these are starting points, not boxes.',
+        most_popular: 'Most Popular',
+        on_request: 'Quote on request',
+        cta: 'Request a Quote',
+        footnote: 'Not sure which fits? Send me a short description of your project and I will reply with a recommended scope, timeline and price — no obligation.',
+        tiers: {
+          landing: {
+            name: 'Website & Landing Page',
+            tagline: 'A fast, polished marketing presence that converts visitors and looks right on every screen.',
+            price: '',
+            timeline: 'Typically 1–2 weeks',
+            features: [
+              'Custom design — no recycled templates',
+              'Fully responsive, mobile-first build',
+              'Bilingual Arabic/English with full RTL',
+              'SEO fundamentals and performance tuning',
+              'Contact form and WhatsApp integration',
+              'Deployment, domain and SSL setup'
+            ]
+          },
+          platform: {
+            name: 'Full-Stack Platform',
+            tagline: 'A complete product with accounts, dashboards, payments and an admin panel — built to grow.',
+            price: '',
+            timeline: 'Typically 4–10 weeks',
+            features: [
+              'Everything in the website package',
+              'Custom backend, database design and REST APIs',
+              'Authentication with role-based dashboards',
+              'Payment gateway and invoicing integration',
+              'Admin panel with reports and exports',
+              'Optional AI features and real-time updates',
+              'Staging environment and milestone reviews'
+            ]
+          },
+          retainer: {
+            name: 'Ongoing Partner',
+            tagline: 'A monthly arrangement for teams that need continuous development, not a one-off delivery.',
+            price: '',
+            timeline: 'Monthly, cancel anytime',
+            features: [
+              'Reserved development hours each month',
+              'New features and iterative improvements',
+              'Bug fixing and performance monitoring',
+              'Dependency and security updates',
+              'Priority response times',
+              'Technical consultation and code review'
+            ]
+          }
+        }
+      },
+      case_studies: {
+        label: 'Case Study',
+        back: 'Back to Projects',
+        visit: 'Visit Live Site',
+        cta_title: 'Have a project like this in mind?',
+        cta_subtitle: 'Tell me what you are building and I will come back with a recommended scope, timeline and price.',
+        cta_button: 'Start a Conversation',
+        facts: {
+          role: 'My Role',
+          scope: 'Scope',
+          audience: 'Audience'
+        },
+        sections: {
+          challenge: 'The Challenge',
+          approach: 'The Approach',
+          delivered: 'What I Built',
+          outcome: 'The Outcome',
+          stack: 'Technology Stack'
+        },
+        bilqalam: {
+          title: 'Bilqalam Institute, an Online Academy Built and Run by One Developer',
+          summary: 'A production learning platform for an institute teaching Qur’an, Arabic and Islamic studies online, serving thousands of enrolled students. I am the sole developer on it.',
+          facts: {
+            role: 'Sole developer, built and maintained alone',
+            scope: 'Enrollment and student management, billing and invoicing, admin reporting',
+            audience: 'Thousands of enrolled students'
+          },
+          challenge: {
+            body: 'An institute at this size cannot run on spreadsheets and chat messages. It needs to enroll students, track who is in which programme, bill them, issue invoices and give administrators numbers they can act on. All of it has to work in Arabic, including the financial and data-heavy views that most templates handle badly.',
+            points: [
+              'Thousands of enrolled students to track',
+              'Billing and invoicing tied to enrollment',
+              'Administrators need reporting they can act on',
+              'Arabic and RTL in financial and data-heavy views'
+            ]
+          },
+          approach: {
+            body: 'I built it as one system rather than separate tools bolted together, so enrollment, billing and reporting read from the same data. The frontend is Next.js and the backend is Laravel. RTL was designed in from the start rather than retrofitted, because the tables, invoices and report views are where right-to-left layouts usually break.',
+            points: [
+              'Enrollment, billing and reporting on shared data',
+              'Next.js frontend, Laravel backend',
+              'RTL designed in from the start, not retrofitted',
+              'One developer, so the architecture stays consistent'
+            ]
+          },
+          delivered: {
+            body: 'The institute runs its day-to-day operations on the platform. I built every part of it and I maintain it alone.',
+            points: [
+              'Student enrollment and management system',
+              'Billing and invoicing',
+              'Admin reporting dashboards the institute runs on',
+              'Fully Arabic and RTL, including the financial and data-heavy views',
+              'In production, serving thousands of enrolled students'
+            ]
+          },
+          outcome: {
+            body: 'The platform is in production and the institute operates on it. It is the project I point to when a client asks whether I can build and carry a real system on my own, because that is exactly what it is.',
+            points: [
+              'In production and in daily use',
+              'Built and maintained by one developer',
+              'Operations consolidated into a single system'
+            ]
+          }
+        }
       },
       testimonials: {
         title: 'What People Say',
@@ -607,46 +848,58 @@ const resources = {
         reviews_count: 'Reviews',
         view_review: 'View Full Review on {{platform}}',
         follow_me: 'Follow me on platforms',
+        time: {
+          days: '{{count}} days ago',
+          month_one: '1 month ago',
+          months: '{{count}} months ago',
+          months_many: '{{count}} months ago',
+          year_one: '1 year ago',
+          years: '{{count}} years ago'
+        },
         items: {
+          salman_a: {
+            text: 'Creative and respectful — it was a pleasure working together.',
+            role: 'Client - Khamsat'
+          },
+          amsb_a: {
+            text: 'A highly experienced person, excellent manners, fast delivery, and an honest advisor. Thank you so much, Engineer Belal.',
+            role: 'Client - Khamsat'
+          },
+          abu_w: {
+            text: 'I want to express my complete satisfaction with the delivered work. Belal has high competence and clear expertise, executing exactly what was required with precision and professionalism. The service quality was excellent and exceeded expectations, with great attention to the finest details. Communication was fast and clear throughout the project, with continuous follow-up and care to explain every step. He also met the delivery deadline — in fact he finished in record time without compromising quality. A professional developer you can rely on, delivering outstanding results with full confidence.',
+            role: 'Client - Khamsat'
+          },
           ahmed_e: {
             text: 'The work was exactly as I wanted in a reasonable time, not the last interaction with Engineer Belal, God willing.',
-            role: 'Client - Khamsat',
-            date: '4 months ago'
+            role: 'Client - Khamsat'
           },
           amal_a: {
             text: 'Masha Allah on the speed and quick response, you did what was required and more. Thank you!',
-            role: 'Client - Khamsat',
-            date: '2 months ago'
+            role: 'Client - Khamsat'
           },
           ahmed_y: {
             text: 'Excellent',
-            role: 'Client - Khamsat',
-            date: '1 month ago'
+            role: 'Client - Khamsat'
           },
           aseel_a: {
             text: 'Brother Belal, thank you for your effort. I am honored to work with you in other future projects for your good treatment and I advise everyone to deal with you. His work is perfect and excellent.',
-            role: 'Project Owner - Mostaql',
-            date: '1 month ago'
+            role: 'Project Owner - Mostaql'
           },
           abo_m: {
             text: 'Thank you for your efforts.',
-            role: 'Client - Khamsat',
-            date: '27 days ago'
+            role: 'Client - Khamsat'
           },
           royal_eagles: {
             text: 'High-end service and a very respectable person.',
-            role: 'Client - Khamsat',
-            date: '1 month ago'
+            role: 'Client - Khamsat'
           },
           nouf_a: {
             text: "I thank the engineer for his honesty, work, and speed of response. I will be with him in all my future work, God willing.",
-            role: 'Client - Khamsat',
-            date: '1 month ago'
+            role: 'Client - Khamsat'
           },
           ahmed_a: {
             text: 'Excellent experience with Engineer Belal, professional in dealing, cooperative, and responds to changes with flexibility. He completed the work with high quality and communication was smooth throughout.',
-            role: 'Client - Khamsat',
-            date: '2 months ago'
+            role: 'Client - Khamsat'
           }
         }
       },
@@ -658,7 +911,8 @@ const resources = {
           phone: 'Phone',
           location: 'Location',
           linkedin: 'LinkedIn',
-          alexandria: 'Alexandria, Egypt'
+          alexandria: 'Alexandria, Egypt',
+          show_phone: 'Show phone number'
         },
         form: {
           name: 'Name',
@@ -682,15 +936,18 @@ const resources = {
         about: 'About',
         timeline: 'Timeline',
         projects: 'Projects',
+        suite: 'Product Suite',
         skills: 'Skills',
         services: 'Services',
+        process: 'Process',
+        packages: 'Packages',
         testimonials: 'Testimonials',
         contact: 'Contact',
         download_cv: 'Download CV'
       },
       footer: {
         about_title: 'Belal Nagy',
-        about_text: 'Full Stack Developer passionate about building scalable, high-performance web applications and transforming complex ideas into elegant user experiences.',
+        about_text: 'I build web platforms from zero, and take over existing codebases that need fixing. 31 projects for 27 clients across Egypt and the Gulf.',
         quick_links: 'Quick Links',
         services: 'Services',
         get_in_touch: 'Get in Touch',
@@ -717,12 +974,11 @@ const resources = {
         greeting_start: 'أهلاً، أنا ',
         name: 'بلال ناجي',
         i_am_a: 'أنا ',
-        description_1: 'شغوف ببناء ',
-        description_2: 'تطبيقات ويب عالية الأداء وقابلة للتوسع',
-        description_3: ' وتحويل الأفكار المعقدة إلى ',
-        description_4: 'تجارب مستخدم بديهية وأنيقة',
-        description_5: '. أقوم حالياً بابتكار حلول رقمية مؤثرة في ',
-        company: 'S&F',
+        description_1: 'أبني منصات ويب من الصفر، وأستلم الأكواد القائمة اللي محتاجة إصلاح. ',
+        description_2: '٣١ مشروعاً',
+        description_3: ' لـ ',
+        description_4: '٢٧ عميلاً',
+        description_5: ' في مصر والخليج.',
         view_projects: 'عرض المشاريع',
         contact_me: 'تواصل معي',
         download_cv: 'تحميل CV',
@@ -730,7 +986,7 @@ const resources = {
       },
       about: {
         title: 'عني',
-        subtitle: 'مطور Full Stack ذو خبرة في بناء تطبيقات ويب قابلة للتوسع ومتعددة اللغات',
+        subtitle: 'مطور Full-Stack من الإسكندرية، مصر. Next.js و Laravel و NestJS و Node.js و Django و PostgreSQL.',
         personal_info: 'المعلومات الشخصية',
         professional_summary: 'الملخص المهني',
         labels: {
@@ -745,21 +1001,21 @@ const resources = {
           education: 'بكالوريوس أعمال (نظم معلومات)',
           location: 'الإسكندرية، مصر'
         },
-        summary_p1: 'مطور Full Stack محترف في بناء <1>تطبيقات ويب قابلة للتوسع ومتعددة اللغات</1> باستخدام React.js، Next.js، Django، NestJS، و PostgreSQL. أعمل حالياً في <3>شركة S&F (السعودية)</3> على تطوير تطبيقات شاملة وخدمات خلفية للمواقع ومنصات الجوال.',
-        summary_p2: 'خريج برنامج الـ ITI المكثف، وعملت كـ <1>محاضر خارجي (External Instructor)</1> في معهد تكنولوجيا المعلومات (ITI)، حيث قمت بتدريس تطوير الواجهات الأمامية لأكثر من <3>200 طالب</3>. قمت بتسليم منصات متكاملة مع الذكاء الاصطناعي وتدعم الـ RTL للشركات الناشئة والجامعات السعودية.',
-        summary_p3: 'شغوف بابتكار حلول فعالة وقابلة للتطوير، مع خبرة خاصة في المنصات متعددة اللغات، الأنظمة اللحظية (Real-time)، وأحدث ممارسات التطوير. دائماً ما أسعى لتعلم تكنولوجيات جديدة وتقديم تطبيقات جاهزة للإنتاج.',
+        summary_p1: 'مطور Full-Stack مقيم في <1>الإسكندرية، مصر</1>. أشتغل بـ Next.js و Laravel و NestJS و Node.js و Django و PostgreSQL. حالياً مطور Full-Stack في <3>شركة S&F بالسعودية</3>.',
+        summary_p2: 'أنا المطور الوحيد على <1>معهد بالقلم</1>، منصة تعليمية تعمل فعلياً وتخدم آلاف الطلاب المسجلين. المنصة بتدير تسجيل الطلاب وإدارتهم، والفوترة وإصدار الفواتير، ولوحات التقارير الإدارية اللي المعهد بيشتغل عليها. أنا بنيتها وبصيانتها لوحدي، بـ <3>Next.js و Laravel</3>.',
+        summary_p3: 'كمان بنيت محرك LMS متعدد المستأجرين بيشتغل كـ <1>ثلاث منصات معتمدة بهويات منفصلة</1>، الإنجاز والتجمع الصحي القابضة ومدى التعليمية، فوق نواة واحدة من Django و PostgreSQL. شاركت في تأسيس Indstrz، منصة صناعية B2B، ودرّست تطوير الواجهات الأمامية لـ <3>أكثر من ٢٤٠ طالباً</3> كمحاضر خارجي في ITI. شغل العربية والـ RTL موجود في كل مشروع بسلّمه، بما فيه الواجهات المالية والمليانة بيانات.',
         highlights: {
-          fast_learner: {
-            title: 'سرعة التعلم',
-            desc: 'القدرة على التكيف السريع مع التقنيات وإطارات العمل الجديدة'
+          sole_developer: {
+            title: 'مطور وحيد على أنظمة في الإنتاج',
+            desc: 'بالقلم بيخدم آلاف الطلاب على منصة بنيتها وبصيانتها لوحدي.'
           },
-          passionate: {
-            title: 'الشغف',
-            desc: 'حب بناء حلول أنيقة للمشكلات البرمجية المعقدة'
+          multi_tenant: {
+            title: 'معمارية متعددة المستأجرين',
+            desc: 'محرك LMS واحد، ثلاث منصات معتمدة لعملاء مختلفين، وخط نشر واحد.'
           },
-          creative: {
-            title: 'الإبداع',
-            desc: 'التفكير الدائم في طرق ابتكارية لتحسين تجربة المستخدم'
+          arabic_first: {
+            title: 'العربية أولاً',
+            desc: 'دعم RTL كامل في لوحات التحكم والفواتير والتقارير، مش في صفحات الهبوط بس.'
           }
         }
       },
@@ -773,15 +1029,68 @@ const resources = {
           all: 'الكل',
           fullstack: 'Full Stack',
           frontend: 'Frontend',
-          backend: 'Backend'
+          backend: 'Backend',
+          mobile: 'تطبيقات الموبايل'
         },
         modal: {
           technologies: 'التقنيات المستخدمة',
           features: 'أهم المميزات والخصائص',
           live_link: 'زيارة المشروع',
-          source_code: 'عرض الكود المصدري'
+          source_code: 'عرض الكود المصدري',
+          case_study: 'اقرأ دراسة الحالة',
+          close: 'إغلاق',
+          suite_title: 'نفس المحرك… هويات بصرية مختلفة',
+          suite_desc: 'هذه المنصة واحدة من عدة نسخ تعمل على محرك LMS واحد قمت ببنائه وتطويره. كل عميل لديه نسخته الخاصة بهوية بصرية ومحتوى واعتمادات مستقلة، فوق نفس النواة الموحّدة للتدريب المعتمد والدفع وإصدار الشهادات.'
         },
         items: {
+          bilqalam: {
+            title: 'معهد بالقلم، أكاديمية القرآن واللغة العربية أونلاين',
+            desc: 'منصة تعليمية تعمل فعلياً لمعهد متخصص في تعليم القرآن الكريم واللغة العربية والعلوم الشرعية أونلاين، وبتخدم آلاف الطلاب المسجلين. أنا المطور الوحيد عليها. بنيت نظام تسجيل الطلاب وإدارتهم، والفوترة وإصدار الفواتير، ولوحات التقارير الإدارية اللي المعهد بيشتغل عليها، وبصيانة المنصة لوحدي.',
+            features: [
+              'مطور وحيد، بنيتها وبصيانتها لوحدي',
+              'تعمل فعلياً وتخدم آلاف الطلاب المسجلين',
+              'نظام تسجيل الطلاب وإدارتهم',
+              'الفوترة وإصدار الفواتير',
+              'لوحات التقارير الإدارية اللي المعهد بيشتغل عليها',
+              'عربية و RTL بالكامل، بما فيها الواجهات المالية والمليانة بيانات',
+              'مبنية بـ Next.js و Laravel'
+            ]
+          },
+          medicta: {
+            title: 'Medicta – تطبيق حجز المواعيد الطبية (إعادة هيكلة الكود)',
+            desc: 'تطبيق أندرويد لحجز مواعيد الأطباء واستعراض الخدمات الطبية، منشور على Google Play. قمت بإعادة تصميم وهيكلة الكود القائم ومعالجة الأخطاء الوظيفية فيه — إعادة تنظيم بنية التطبيق مع إصلاح المسارات المعطلة في الحجز والمصادقة والتعامل مع البيانات.',
+            features: [
+              'إعادة تصميم كامل للكود: تنظيم التطبيق في طبقات واضحة وقابلة للصيانة',
+              'إصلاح منهجي للأخطاء الوظيفية في مسارات الحجز والمصادقة والبيانات',
+              'إعادة هيكلة طبقة التكامل مع الـ API مع توحيد حالات الخطأ والتحميل',
+              'تحسين إدارة الحالة (State) للتخلص من مشاكل البيانات القديمة والتعارضات',
+              'تحسين واجهة وتجربة المستخدم لتنقل أسلس وأداء أسرع',
+              'متاح فعلياً على Google Play باسم الحزمة com.medicta'
+            ]
+          },
+          mada: {
+            title: 'مدى التعليمية – منصة تدريب معتمدة',
+            desc: 'منصة تعلم إلكتروني وتدريب معتمد تعمل على نفس محرك الـ LMS المستخدم في الإنجاز والتجمع الصحي، مع هوية بصرية وكتالوج دورات خاص بها. تعلم بالفيديو، اختبارات، مدفوعات، وشهادات مؤتمتة.',
+            features: [
+              'كتالوج دورات مع دروس فيديو وتتبع للتقدم واختبارات لكل درس',
+              'إصدار شهادات مؤتمت بأرقام فريدة ونظام تحقق إلكتروني',
+              'تكامل بوابة دفع مع سلة تسوق ونظام كوبونات خصم',
+              'لوحات تحكم متعددة الأدوار للإدارة والمدربين والمتدربين',
+              'معالجة غير متزامنة باستخدام Celery + Redis للإشعارات والتقارير',
+              'ثيم وهوية مستقلة فوق نفس النواة المعتمدة للمنصة'
+            ]
+          },
+          mutlq: {
+            title: 'مطلق – الموقع التعريفي والهوية الرقمية',
+            desc: 'موقع تعريفي يستعرض خدمات الجهة وأعمالها المنجزة، مبني كتجربة عربية سريعة تدعم الـ RTL بالكامل مع هوية بصرية مميزة.',
+            features: [
+              'تجربة هبوط قائمة على الهوية مع أقسام للخدمات ومعرض الأعمال',
+              'تصميم عربي RTL بالكامل ومتجاوب مع جميع المقاسات',
+              'أقسام قابلة للإدارة من لوحة التحكم بدون تعديل الكود',
+              'تحسين محركات البحث والأداء لسرعة تحميل عالية',
+              'نظام تواصل وطلب استفسار متكامل'
+            ]
+          },
           toyo228: {
             title: 'Toyo228 – منصة قطع غيار تويوتا B2B',
             desc: 'منصة تجارة إلكترونية B2B تربط تجار الجملة لقطع غيار تويوتا الأصلية بمحلات التجزئة، مع خاصية البحث بالجملة عبر ملفات Excel ولوحات تحكم متعددة الأدوار وبنية Turborepo.',
@@ -829,13 +1138,15 @@ const resources = {
             ]
           },
           indstrz: {
-            title: 'Indstrz – منصة تجارة صناعية B2B',
-            desc: 'منصة مشتريات B2B متكاملة وقابلة للتوسع تدعم دورات عمل RFQ الرقمية، المفاوضات اللحظية، وإدارة المحادثات المؤتمتة.',
+            title: 'Indstrz، منصة صناعية B2B',
+            desc: 'منصة مشتريات B2B بدورات عمل RFQ رقمية ومفاوضات لحظية وإدارة محادثات مؤتمتة. تم اختيارها ضمن برنامج Venture Ready، المنفَّذ بواسطة Plug and Play بدعم من GIZ Egypt و ITIDA، ومستضاف في مراكز Creativa للابتكار بالإسكندرية.',
             features: [
-              'دورات عمل RFQ رقمية متكاملة بين المشترين والموردين المعتمدين',
+              'مختارة ضمن برنامج Venture Ready من Plug and Play بدعم GIZ Egypt و ITIDA',
+              'مستضافة في مراكز Creativa للابتكار بالإسكندرية',
+              'دورات عمل RFQ رقمية بين المشترين والموردين المعتمدين',
               'نظام مراسلة وإشعارات لحظي باستخدام Socket.io',
-              'نظام صلاحيات RBAC آمن مع إدارة الجلسات وتعدد الأدوار',
-              'هندسة برمجية قائمة على Modular Application Factory Pattern'
+              'نظام صلاحيات قائم على الأدوار مع إبطال توكن JWT',
+              'معمارية طبقية بنمط Modular Application Factory'
             ]
           },
           uduipa: {
@@ -1118,6 +1429,26 @@ const resources = {
           rtl: 'دعم كامل للعربية'
         }
       },
+      platform_suite: {
+        label: 'حزمة منتجات',
+        title: 'محرك واحد… علامات تجارية متعددة',
+        subtitle: 'بدلاً من إعادة بناء نظام LMS لكل عميل، بنيت محرك تدريب معتمد واحد وأطلقه كمنصات مستقلة — كل واحدة بهويتها البصرية ومحتواها واعتماداتها، فوق نواة واحدة مجرّبة ومستقرة.',
+        shared_title: 'ما ترثه كل نسخة من المحرك',
+        capabilities: {
+          engine: 'نواة موحّدة Django + PostgreSQL',
+          accreditation: 'الاعتمادات وإصدار الشهادات',
+          payments: 'المدفوعات وكوبونات الخصم',
+          rtl: 'ثنائية اللغة ودعم RTL',
+          roles: 'لوحات تحكم متعددة الأدوار',
+          branding: 'ثيم وهوية لكل عميل'
+        },
+        members: {
+          injaz: 'التعليم الطبي المستمر لقطاع الرعاية الصحية السعودي، معتمدة من SCFHS ومتكاملة مع NELC.',
+          hcholding: 'مركز تدريب التجمع الصحي القابضة في مكة — إنعاش قلبي، دعم حياة، إسعافات أولية وتمريض.',
+          mada: 'منصة تدريب وتعلم إلكتروني معتمدة بكتالوج دورات وهوية بصرية خاصة بها.'
+        },
+        footnote: 'كود واحد، خط نشر واحد، ونموذج أمان واحد — وثلاثة منتجات. العميل الجديد ينطلق في أيام بدلاً من شهور، وأي إصلاح أو ميزة جديدة تصل لكل المنصات في نفس الوقت.'
+      },
       brands: {
         label: 'شركاء النجاح',
         title: 'بثقة المبتكرين',
@@ -1161,9 +1492,10 @@ const resources = {
             location: 'عن بُعد، مصر',
             period: '01/2024 - الحالي',
             description: [
-              'شريك مؤسس لمنصة Indstrz، وهي سوق صناعي B2B يهدف لتسهيل عمليات التوريد الصناعي',
-              'تصميم وبرمجة دورة عمل طلبات العروض (RFQ) الرقمية ومحرك المفاوضات اللحظية',
-              'قيادة التطوير التقني للمنصة باستخدام Next.js و Flask و PostgreSQL'
+              'شريك مؤسس لمنصة Indstrz، منصة صناعية B2B للتوريد الصناعي',
+              'تم اختيار المنصة ضمن برنامج Venture Ready، المنفَّذ بواسطة Plug and Play بدعم من GIZ Egypt و ITIDA، ومستضاف في مراكز Creativa للابتكار بالإسكندرية',
+              'بناء دورة عمل طلبات العروض (RFQ) الرقمية ومحرك المفاوضات اللحظية',
+              'قيادة التطوير التقني باستخدام Next.js و Flask و PostgreSQL'
             ]
           },
           {
@@ -1183,7 +1515,7 @@ const resources = {
             location: 'عن بُعد، مصر',
             period: '07/2025 - 10/2025',
             description: [
-              'تدريس تطوير واجهات المواقع (HTML, CSS, JavaScript) لأكثر من 200 طالباً',
+              'تدريس تطوير واجهات المواقع (HTML, CSS, JavaScript) لأكثر من 240 طالباً',
               'تصميم وتقديم جلسات برمجية عملية وإرشاد الطلاب في مشاريع حقيقية'
             ]
           },
@@ -1233,7 +1565,8 @@ const resources = {
         projects: 'مشروع تم إنجازه',
         technologies: 'تقنية تم إتقانها',
         years: 'سنوات الخبرة',
-        students: 'طالباً تم تدريسهم'
+        students: 'طالباً تم تدريسهم',
+        clients: 'عميل تم خدمتهم'
       },
       certifications: {
         title: 'الدورات والشهادات',
@@ -1294,8 +1627,174 @@ const resources = {
               'موازنة الأحمال والتوسع',
               'استشارات تقنية متخصصة'
             ]
+          },
+          {
+            title: 'استلام الأكواد القديمة والتدقيق التقني',
+            desc: 'أستلم المشاريع الموروثة والمتوقفة. التدقيق بيجي الأول، عشان تعرف إيه الغلط وإيه تكلفته قبل ما يبدأ أي شغل.',
+            features: [
+              'تدقيق كامل للكود الموروث مع تقرير مكتوب',
+              'تقدير واضح لتكلفة الإصلاح قبل بدء أي عمل',
+              'إصلاح الأخطاء وإعادة الهيكلة وتحسين الأداء على أنظمة تعمل فعلياً',
+              'استلام المشاريع اللي سابها مطور سابق'
+            ]
           }
         ]
+      },
+      process: {
+        label: 'طريقة عملي',
+        title: 'من أول مكالمة لحد إطلاق المنتج',
+        subtitle: 'خطوات واضحة ومخرَج محدد لكل مرحلة، فتعرف في أي وقت إحنا فين وإيه الخطوة الجاية.',
+        steps: {
+          discovery: {
+            title: '١. مكالمة تعريفية',
+            desc: 'نتكلم عن الهدف والمستخدمين والقيود. أسأل الأسئلة الصعبة من البداية — الميزانية، المواعيد، التكاملات — فمفيش مفاجآت بعد كده.',
+            deliverable: 'المخرَج: ملخص مكتوب للنطاق'
+          },
+          blueprint: {
+            title: '٢. تحديد النطاق والمخطط',
+            desc: 'أحوّل الكلام لخطة ملموسة: المميزات مقسّمة لمراحل، تصميم قاعدة البيانات، التقنيات المستخدمة، وجدول زمني واقعي بمراحل تسليم.',
+            deliverable: 'المخرَج: عرض فني + جدول زمني'
+          },
+          build: {
+            title: '٣. التنفيذ على مراحل',
+            desc: 'التطوير بيحصل على دفعات تقدر تراجعها، مش تسليم واحد في الآخر. بتاخد رابط تجريبي من أول مرحلة وتتابع الشغل خطوة بخطوة.',
+            deliverable: 'المخرَج: رابط تجريبي لكل مرحلة'
+          },
+          review: {
+            title: '٤. المراجعة والتجهيز',
+            desc: 'ملاحظاتك على كل مرحلة بتتنفذ، وبعدها أختبر المسارات من البداية للنهاية — التحقق، الصلاحيات، الحالات الاستثنائية، الموبايل، والـ RTL.',
+            deliverable: 'المخرَج: نسخة مختبَرة ومظبوطة'
+          },
+          launch: {
+            title: '٥. الإطلاق',
+            desc: 'النشر، الدومين والـ SSL، إعداد البيئة، أساسيات الـ SEO والتحليلات. وأسلّمك الريبو وبيانات الدخول وشرح سريع للنظام.',
+            deliverable: 'المخرَج: موقع شغّال + تسليم كامل'
+          },
+          support: {
+            title: '٦. الدعم بعد الإطلاق',
+            desc: 'فترة ضمان بعد الإطلاق لأي خطأ في اللي تم تسليمه، مع إمكانية عقد شهري للتطوير المستمر والصيانة.',
+            deliverable: 'المخرَج: ضمان + عقد شهري اختياري'
+          }
+        }
+      },
+      packages: {
+        label: 'الباكدجات',
+        title: 'طرق نشتغل بيها مع بعض',
+        subtitle: 'ثلاث صيغ شائعة للمشاريع. كل مشروع بيتحدد نطاقه حسب احتياجك الفعلي — دي نقط بداية مش قوالب جاهزة.',
+        most_popular: 'الأكثر طلباً',
+        on_request: 'السعر حسب النطاق',
+        cta: 'اطلب عرض سعر',
+        footnote: 'مش متأكد إيه المناسب؟ ابعتلي وصف سريع لمشروعك وهرد عليك بنطاق مقترح وجدول زمني وسعر — بدون أي التزام.',
+        tiers: {
+          landing: {
+            name: 'موقع وصفحة هبوط',
+            tagline: 'حضور تسويقي سريع ومتقن يحوّل الزائر لعميل ويظهر صح على كل الشاشات.',
+            price: '',
+            timeline: 'عادةً ١–٢ أسبوع',
+            features: [
+              'تصميم مخصص — بدون قوالب مُعاد استخدامها',
+              'تصميم متجاوب بالكامل ومبني للموبايل أولاً',
+              'ثنائي اللغة عربي/إنجليزي بدعم RTL كامل',
+              'أساسيات تحسين محركات البحث وتحسين الأداء',
+              'استمارة تواصل وتكامل مع WhatsApp',
+              'النشر وإعداد الدومين والـ SSL'
+            ]
+          },
+          platform: {
+            name: 'منصة متكاملة (Full-Stack)',
+            tagline: 'منتج كامل بحسابات ولوحات تحكم ومدفوعات ولوحة إدارة — مبني ليكبر معاك.',
+            price: '',
+            timeline: 'عادةً ٤–١٠ أسابيع',
+            features: [
+              'كل اللي في باكدج الموقع',
+              'Backend مخصص وتصميم قاعدة بيانات و REST APIs',
+              'نظام مصادقة ولوحات تحكم حسب الأدوار',
+              'تكامل بوابة دفع ونظام فواتير',
+              'لوحة إدارة مع تقارير وتصدير بيانات',
+              'مميزات ذكاء اصطناعي وتحديثات لحظية (اختياري)',
+              'بيئة تجريبية ومراجعة لكل مرحلة'
+            ]
+          },
+          retainer: {
+            name: 'شريك تطوير مستمر',
+            tagline: 'اتفاق شهري للفرق اللي محتاجة تطوير متواصل، مش تسليم لمرة واحدة.',
+            price: '',
+            timeline: 'شهرياً، وتقدر توقف في أي وقت',
+            features: [
+              'ساعات تطوير محجوزة لك كل شهر',
+              'مميزات جديدة وتحسينات مستمرة',
+              'إصلاح الأخطاء ومراقبة الأداء',
+              'تحديثات المكتبات والثغرات الأمنية',
+              'أولوية في سرعة الاستجابة',
+              'استشارات تقنية ومراجعة كود'
+            ]
+          }
+        }
+      },
+      case_studies: {
+        label: 'دراسة حالة',
+        back: 'رجوع للمشاريع',
+        visit: 'زيارة الموقع',
+        cta_title: 'عندك مشروع شبه ده؟',
+        cta_subtitle: 'قوللي إنت بتبني إيه وهرجع لك بنطاق مقترح وجدول زمني وسعر.',
+        cta_button: 'ابدأ الحديث',
+        facts: {
+          role: 'دوري في المشروع',
+          scope: 'نطاق العمل',
+          audience: 'الجمهور المستهدف'
+        },
+        sections: {
+          challenge: 'التحدي',
+          approach: 'المنهجية',
+          delivered: 'اللي تم بناؤه',
+          outcome: 'النتيجة',
+          stack: 'التقنيات المستخدمة'
+        },
+        bilqalam: {
+          title: 'معهد بالقلم، أكاديمية أونلاين بناها ويديرها مطور واحد',
+          summary: 'منصة تعليمية تعمل فعلياً لمعهد متخصص في تعليم القرآن الكريم واللغة العربية والعلوم الشرعية أونلاين، وبتخدم آلاف الطلاب المسجلين. أنا المطور الوحيد عليها.',
+          facts: {
+            role: 'المطور الوحيد، بنيتها وبصيانتها لوحدي',
+            scope: 'تسجيل الطلاب وإدارتهم، الفوترة والفواتير، التقارير الإدارية',
+            audience: 'آلاف الطلاب المسجلين'
+          },
+          challenge: {
+            body: 'معهد بحجم ده مش ممكن يشتغل على ملفات إكسل ورسايل واتساب. محتاج يسجّل الطلاب، ويعرف مين في أي برنامج، ويحصّل منهم، ويصدر فواتير، ويدي الإدارة أرقام تقدر تتصرف على أساسها. وكل ده لازم يشتغل بالعربي، بما فيه الواجهات المالية والمليانة بيانات اللي أغلب القوالب بتفشل فيها.',
+            points: [
+              'آلاف الطلاب المسجلين محتاجين متابعة',
+              'فوترة وفواتير مربوطة بالتسجيل',
+              'الإدارة محتاجة تقارير تقدر تتصرف عليها',
+              'عربية و RTL في الواجهات المالية والمليانة بيانات'
+            ]
+          },
+          approach: {
+            body: 'بنيتها كنظام واحد مش أدوات متلزقة ببعض، فالتسجيل والفوترة والتقارير بيقروا من نفس البيانات. الواجهة بـ Next.js والخلفية بـ Laravel. الـ RTL اتصمم من البداية مش اتضاف بعدين، لأن الجداول والفواتير وشاشات التقارير هي بالظبط المكان اللي بيتكسر فيه التخطيط من اليمين لليسار.',
+            points: [
+              'التسجيل والفوترة والتقارير على نفس البيانات',
+              'واجهة Next.js وخلفية Laravel',
+              'RTL مصمم من البداية مش مضاف لاحقاً',
+              'مطور واحد، فالمعمارية فضلت متسقة'
+            ]
+          },
+          delivered: {
+            body: 'المعهد بيدير شغله اليومي على المنصة. بنيت كل جزء فيها وبصيانتها لوحدي.',
+            points: [
+              'نظام تسجيل الطلاب وإدارتهم',
+              'الفوترة وإصدار الفواتير',
+              'لوحات التقارير الإدارية اللي المعهد بيشتغل عليها',
+              'عربية و RTL بالكامل، بما فيها الواجهات المالية والمليانة بيانات',
+              'تعمل فعلياً وتخدم آلاف الطلاب المسجلين'
+            ]
+          },
+          outcome: {
+            body: 'المنصة شغالة فعلياً والمعهد بيشتغل عليها. دي المشروع اللي بشاور عليه لما عميل يسألني أقدر أبني نظام حقيقي وأشيله لوحدي ولا لأ، لأن ده بالظبط اللي هو.',
+            points: [
+              'تعمل فعلياً وفي استخدام يومي',
+              'مبنية ومُصانة بواسطة مطور واحد',
+              'توحيد العمليات في نظام واحد'
+            ]
+          }
+        }
       },
       testimonials: {
         title: 'ماذا يقول الناس',
@@ -1304,46 +1803,58 @@ const resources = {
         reviews_count: 'تقييماً',
         view_review: 'عرض التقييم الكامل على {{platform}}',
         follow_me: 'تابعني على المنصات الرقمية',
+        time: {
+          days: 'منذ {{count}} يوم',
+          month_one: 'منذ شهر',
+          months: 'منذ {{count}} أشهر',
+          months_many: 'منذ {{count}} شهراً',
+          year_one: 'منذ سنة',
+          years: 'منذ {{count}} سنوات'
+        },
         items: {
+          salman_a: {
+            text: 'مبدع و محترم، سعدنا بهذا التعاون',
+            role: 'عميل - خمسات'
+          },
+          amsb_a: {
+            text: 'شخص ذو خبرة عالية، أخلاق راقية، سريع في التنفيذ.. وناصح أمين.. شكراً جزيلاً لك باشمهندس بلال.',
+            role: 'عميل - خمسات'
+          },
+          abu_w: {
+            text: 'أود أن أعبّر عن مدى رضاي الكامل عن العمل المقدم، حيث يتمتع الأخ بلال بكفاءة عالية وخبرة واضحة في تنفيذ المطلوب بدقة واحترافية. جودة الخدمة ممتازة جدًا وتفوقت على التوقعات مع اهتمام كبير بأدق التفاصيل، كما كان التواصل سريعًا وواضحًا طوال فترة المشروع مع متابعة مستمرة وحرص على توضيح كل خطوة. بالإضافة إلى ذلك، تم الالتزام بوقت التسليم بل وإنجاز العمل في وقت قياسي دون التأثير على الجودة، مبرمج محترف يمكن الاعتماد عليه ويقدم نتائج مميزة بكل ثقة',
+            role: 'عميل - خمسات'
+          },
           ahmed_e: {
             text: 'الشغل زي ما كنت عايزة بالظبط في وقت مناسب مع آخر تعامل مش بالمهندس بلال إن شاء الله',
-            role: 'عميل - خمسات',
-            date: 'منذ 4 أشهر'
+            role: 'عميل - خمسات'
           },
           amal_a: {
             text: 'ما شاء الله على السرعة والاستجابة السريعة وسويت المطلوب وأكثر شكراً لك',
-            role: 'عميلة - خمسات',
-            date: 'منذ شهرين'
+            role: 'عميلة - خمسات'
           },
           ahmed_y: {
             text: 'ممتاز',
-            role: 'عميل - خمسات',
-            date: 'منذ شهر'
+            role: 'عميل - خمسات'
           },
           aseel_a: {
             text: 'أخي بلال على مجهودك المبذول، أتشرف بالعمل معك خلال مشاريع مستقبلية أخرى لحسن تعاملك وأنصح كل شخص بالتعامل معك. عمله متقن وممتاز وأشكرك.',
-            role: 'صاحب مشروع - مستقل',
-            date: 'منذ شهر'
+            role: 'صاحب مشروع - مستقل'
           },
           abo_m: {
             text: 'شكرا لكم على جهودكم',
-            role: 'عميل - خمسات',
-            date: 'منذ 27 يوم'
+            role: 'عميل - خمسات'
           },
           royal_eagles: {
             text: 'خدمة راقية وشخص محترم جدااااا',
-            role: 'عميل - خمسات',
-            date: 'منذ شهر'
+            role: 'عميل - خمسات'
           },
           nouf_a: {
             text: "اشكر المهندس على امانته وشغله وسرعه الاستجابه. بكون معاه في كل شغلي القادم بإذن الله",
-            role: 'عميلة - خمسات',
-            date: 'منذ شهر'
+            role: 'عميلة - خمسات'
           },
           ahmed_a: {
             text: 'تجربة ممتازة مع المهندس بلال احترافي في التعامل ومتعاون ويستجيب للتغييرات بكل مرونة. أنجز العمل بجودة عالية والتواصل كان سلس طوال فترة التنفيذ',
-            role: 'عميل - خمسات',
-            date: 'منذ شهرين'
+            role: 'عميل - خمسات'
           }
         }
       },
@@ -1355,7 +1866,8 @@ const resources = {
           phone: 'رقم الهاتف',
           location: 'الموقع',
           linkedin: 'لينكد إن',
-          alexandria: 'الإسكندرية، مصر'
+          alexandria: 'الإسكندرية، مصر',
+          show_phone: 'إظهار رقم الهاتف'
         },
         form: {
           name: 'الاسم',
@@ -1379,15 +1891,18 @@ const resources = {
         about: 'عني',
         timeline: 'المسار',
         projects: 'أعمالي',
+        suite: 'حزمة المنتجات',
         skills: 'مهاراتي',
         services: 'خدماتي',
+        process: 'طريقة عملي',
+        packages: 'الباكدجات',
         testimonials: 'قالوا عني',
         contact: 'تواصل معي',
         download_cv: 'تحميل السيرة الذاتية'
       },
       footer: {
         about_title: 'بلال ناجي',
-        about_text: 'مطور ويب متكامل (Full Stack) شغوف ببناء تطبيقات ويب متكاملة، عالية الأداء، وتحويل الأفكار المعقدة إلى تجارب مستخدم أنيقة وسلسة.',
+        about_text: 'أبني منصات ويب من الصفر، وأستلم الأكواد القائمة اللي محتاجة إصلاح. ٣١ مشروعاً لـ ٢٧ عميلاً في مصر والخليج.',
         quick_links: 'روابط سريعة',
         services: 'الخدمات',
         get_in_touch: 'تواصل معي',
@@ -1399,25 +1914,52 @@ const resources = {
   }
 };
 
-i18n
-  .use(initReactI18next)
-  .init({
-    resources,
-    lng: 'en',
-    fallbackLng: 'en',
-    interpolation: {
-      escapeValue: false
+export const SUPPORTED_LANGUAGES = ['en', 'ar'];
+export const DEFAULT_LANGUAGE = 'en';
+// Same key the browser language-detector used, so returning visitors keep their choice.
+export const LANGUAGE_STORAGE_KEY = 'i18nextLng';
+
+/**
+ * The page is statically prerendered, so detection can't run before the first
+ * render — the server would emit English markup while the client rendered
+ * Arabic, and every translated string would fail hydration. Instead i18next
+ * always initialises in English (matching the prerendered HTML) and the stored
+ * or browser language is applied after mount, behind the loading screen.
+ */
+export const resolvePreferredLanguage = () => {
+  if (typeof window === 'undefined') return DEFAULT_LANGUAGE;
+
+  try {
+    const stored = window.localStorage.getItem(LANGUAGE_STORAGE_KEY);
+    if (stored && SUPPORTED_LANGUAGES.includes(stored)) return stored;
+  } catch {
+    // localStorage can throw in private mode — fall through to the browser language.
+  }
+
+  const navigatorLanguage = window.navigator?.language || '';
+  const base = navigatorLanguage.split('-')[0];
+  return SUPPORTED_LANGUAGES.includes(base) ? base : DEFAULT_LANGUAGE;
+};
+
+i18n.use(initReactI18next).init({
+  resources,
+  lng: DEFAULT_LANGUAGE,
+  fallbackLng: DEFAULT_LANGUAGE,
+  supportedLngs: SUPPORTED_LANGUAGES,
+  interpolation: {
+    escapeValue: false
+  }
+});
+
+// The detector plugin used to persist this; keep the behaviour without it.
+if (typeof window !== 'undefined') {
+  i18n.on('languageChanged', (language) => {
+    try {
+      window.localStorage.setItem(LANGUAGE_STORAGE_KEY, language);
+    } catch {
+      // Ignore write failures — the language still applies for this session.
     }
   });
-
-// Detect saved language AFTER init to avoid SSR/client hydration mismatch.
-// This runs synchronously on the client before React renders,
-// but only reads from localStorage (not navigator) so it's deterministic.
-if (typeof window !== 'undefined') {
-  const savedLng = localStorage.getItem('i18nextLng');
-  if (savedLng && savedLng !== 'en') {
-    i18n.changeLanguage(savedLng);
-  }
 }
 
 export default i18n;

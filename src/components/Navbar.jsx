@@ -2,6 +2,7 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-scroll';
 import { motion, AnimatePresence } from 'framer-motion';
+import { revealDelay } from '../lib/motion';
 import { FaDownload, FaGlobe } from 'react-icons/fa';
 import { FiMenu, FiX } from 'react-icons/fi';
 import { HiSparkles } from 'react-icons/hi';
@@ -56,10 +57,13 @@ const Navbar = ({ onDownloadCV }) => {
     const sections = [
       'home',
       'about',
-      'experience',
       'projects',
+      'platform-suite',
       'skills',
+      'experience',
       'services',
+      'process',
+      'packages',
       'testimonials',
       'contact',
     ];
@@ -80,16 +84,22 @@ const Navbar = ({ onDownloadCV }) => {
     };
   }, []);
 
+  // Desktop keeps the compact set; the mobile drawer has room for everything.
   const navItems = [
     { label: t('nav.home'), to: 'home' },
     { label: t('nav.about'), to: 'about' },
-    { label: t('nav.timeline'), to: 'experience' },
     { label: t('nav.projects'), to: 'projects' },
+    { label: t('nav.suite'), to: 'platform-suite', mobileOnly: true },
     { label: t('nav.skills'), to: 'skills' },
+    { label: t('nav.timeline'), to: 'experience' },
     { label: t('nav.services'), to: 'services' },
-    { label: t('nav.testimonials'), to: 'testimonials' },
+    { label: t('nav.process'), to: 'process', mobileOnly: true },
+    { label: t('nav.packages'), to: 'packages' },
+    { label: t('nav.testimonials'), to: 'testimonials', mobileOnly: true },
     { label: t('nav.contact'), to: 'contact' },
   ];
+
+  const desktopNavItems = navItems.filter((item) => !item.mobileOnly);
 
   return (
     <motion.nav
@@ -170,7 +180,7 @@ const Navbar = ({ onDownloadCV }) => {
               className="relative flex items-center gap-1 px-3 py-2 rounded-full bg-[rgb(var(--card))]/80 backdrop-blur-xl border border-[rgb(var(--border))] shadow-lg"
               whileHover={{ scale: 1.02 }}
               transition={{ duration: 0.2 }}>
-              {navItems.map((item, index) => (
+              {desktopNavItems.map((item, index) => (
                 <Link
                   key={item.to}
                   to={item.to}
@@ -230,7 +240,7 @@ const Navbar = ({ onDownloadCV }) => {
             <motion.button
               whileTap={{ scale: 0.9 }}
               onClick={() => setIsOpen(!isOpen)}
-              className="relative p-2.5 rounded-xl bg-[rgb(var(--card))]/80 border border-[rgb(var(--border))] hover:bg-[rgb(var(--muted))] transition-all duration-200 overflow-hidden group"
+              className="relative w-11 h-11 flex items-center justify-center rounded-xl bg-[rgb(var(--card))]/80 border border-[rgb(var(--border))] hover:bg-[rgb(var(--muted))] transition-all duration-200 overflow-hidden group"
               aria-label="Toggle menu">
               {/* Glow effect on hover */}
               <motion.div
@@ -295,7 +305,7 @@ const Navbar = ({ onDownloadCV }) => {
                   <motion.div
                     initial={{ opacity: 0, x: isArabic ? 20 : -20 }}
                     animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: index * 0.05, duration: 0.3 }}
+                    transition={{ delay: revealDelay(index), duration: 0.3 }}
                     whileTap={{ scale: 0.95 }}
                     className={`group relative block px-5 py-3 rounded-xl text-[rgb(var(--muted-foreground))] hover:text-[rgb(var(--foreground))] transition-all duration-200 cursor-pointer font-medium overflow-hidden ${isArabic ? 'text-right' : 'text-left'}`}>
                     {/* Hover gradient background */}

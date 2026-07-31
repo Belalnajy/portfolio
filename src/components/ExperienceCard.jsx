@@ -1,5 +1,6 @@
 "use client";
 import { motion } from "framer-motion";
+import { REVEAL_VIEWPORT, revealDelay, REVEAL_DURATION } from '../lib/motion';
 import { FaCalendarAlt, FaMapMarkerAlt, FaBuilding, FaChevronRight } from "react-icons/fa";
 
 const ExperienceCard = ({ experience, index }) => {
@@ -7,8 +8,8 @@ const ExperienceCard = ({ experience, index }) => {
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-      transition={{ duration: 0.5, delay: index * 0.1 }}
+          viewport={REVEAL_VIEWPORT}
+      transition={{ duration: REVEAL_DURATION, delay: revealDelay(index) }}
       className="relative flex items-start gap-6 p-6 bg-[rgb(var(--card))] rounded-xl border border-[rgb(var(--border))] hover:border-[rgb(var(--primary))] transition-colors duration-300">
       <div className="flex-shrink-0 w-14 h-14 bg-white rounded-xl flex items-center justify-center overflow-hidden border border-[rgb(var(--border))]/50 shadow-sm p-2 transition-transform duration-300 group-hover:scale-110">
         {experience.logo ? (

@@ -1,5 +1,6 @@
 "use client";
 import { motion, AnimatePresence } from 'framer-motion';
+import { REVEAL_VIEWPORT, revealDelay, REVEAL_DURATION } from '../lib/motion';
 import { useState, useMemo } from 'react';
 import {
   FaCode,
@@ -122,7 +123,7 @@ const Certifications = () => {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
+          viewport={REVEAL_VIEWPORT}
           transition={{ duration: 0.5 }}
           className="text-center mb-16">
           <h2 className="text-5xl font-bold mb-4 text-[rgb(var(--foreground))]">
@@ -139,8 +140,8 @@ const Certifications = () => {
               key={cert.id}
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.3, delay: index * 0.1 }}
+              viewport={REVEAL_VIEWPORT}
+              transition={{ duration: REVEAL_DURATION, delay: revealDelay(index) }}
               whileHover={{ y: -10, scale: 1.02 }}
               onClick={() => cert.image && setSelectedCert(cert)}
               className="group relative glass-card glass-hover rounded-xl p-6 cursor-pointer">
