@@ -1,5 +1,6 @@
 "use client";
 import { motion } from 'framer-motion';
+import { REVEAL_VIEWPORT, revealDelay, REVEAL_DURATION } from '../lib/motion';
 import { useTranslation } from 'react-i18next';
 import {
   FaComments,
@@ -30,7 +31,7 @@ const HowIWork = () => {
         <motion.div
           initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
+          viewport={REVEAL_VIEWPORT}
           transition={{ duration: 0.6 }}
           className="text-center mb-12 md:mb-16"
         >
@@ -51,8 +52,8 @@ const HowIWork = () => {
               key={step.key}
               initial={{ opacity: 0, y: 24 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: index * 0.08 }}
+              viewport={REVEAL_VIEWPORT}
+              transition={{ duration: REVEAL_DURATION, delay: revealDelay(index) }}
               className="group relative glass-card rounded-2xl border border-[rgb(var(--border))]/50 p-6 hover:border-[rgb(var(--primary))]/40 transition-colors text-start overflow-hidden"
             >
               {/* Step number watermark */}

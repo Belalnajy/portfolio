@@ -1,6 +1,7 @@
 "use client";
 import React from 'react';
 import { motion } from 'framer-motion';
+import { REVEAL_VIEWPORT } from '../lib/motion';
 import { useTranslation } from 'react-i18next';
 
 const logos = [
@@ -82,7 +83,7 @@ const BrandLogos = () => {
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
+          viewport={REVEAL_VIEWPORT}
           transition={{ duration: 0.7, ease: "easeOut" }}
           className="text-center mb-16 md:mb-20 px-4">
           <span className="text-[rgb(var(--primary))] font-bold tracking-widest uppercase text-sm mb-4 block">

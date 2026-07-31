@@ -1,5 +1,6 @@
 "use client";
 import { motion } from 'framer-motion';
+import { REVEAL_VIEWPORT, revealDelay, REVEAL_DURATION } from '../lib/motion';
 import { useTranslation } from 'react-i18next';
 import {
   FaLayerGroup,
@@ -34,7 +35,7 @@ const PlatformSuite = () => {
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
+          viewport={REVEAL_VIEWPORT}
           transition={{ duration: 0.6 }}
           className="text-center mb-16"
         >
@@ -54,7 +55,7 @@ const PlatformSuite = () => {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
+          viewport={REVEAL_VIEWPORT}
           transition={{ duration: 0.5, delay: 0.1 }}
           className="glass-card rounded-2xl border border-[rgb(var(--border))]/50 p-6 md:p-8 mb-12"
         >
@@ -67,8 +68,8 @@ const PlatformSuite = () => {
                 key={cap.key}
                 initial={{ opacity: 0, scale: 0.95 }}
                 whileInView={{ opacity: 1, scale: 1 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.4, delay: index * 0.05 }}
+                viewport={REVEAL_VIEWPORT}
+                transition={{ duration: REVEAL_DURATION, delay: revealDelay(index) }}
                 className="flex flex-col items-center text-center gap-3 p-4 rounded-xl bg-[rgb(var(--muted))]/10 border border-[rgb(var(--border))]/40"
               >
                 <span className="w-10 h-10 rounded-lg flex items-center justify-center bg-[rgb(var(--primary))]/10 text-[rgb(var(--primary))] border border-[rgb(var(--primary))]/20">
@@ -92,8 +93,8 @@ const PlatformSuite = () => {
               rel="noopener noreferrer"
               initial={{ opacity: 0, y: 24 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: index * 0.1 }}
+              viewport={REVEAL_VIEWPORT}
+              transition={{ duration: REVEAL_DURATION, delay: revealDelay(index) }}
               whileHover={{ y: -6 }}
               className="group glass-card rounded-2xl overflow-hidden border border-[rgb(var(--border))]/50 hover:border-[rgb(var(--primary))]/40 transition-colors flex flex-col"
             >
@@ -131,7 +132,7 @@ const PlatformSuite = () => {
         <motion.p
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
+          viewport={REVEAL_VIEWPORT}
           transition={{ duration: 0.5, delay: 0.3 }}
           className="text-center text-sm text-[rgb(var(--muted-foreground))] mt-10 max-w-2xl mx-auto leading-relaxed"
         >

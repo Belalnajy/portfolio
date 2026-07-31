@@ -1,6 +1,7 @@
 "use client";
 import { useState, useEffect, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { REVEAL_VIEWPORT, LONG_LIST_VIEWPORT, revealDelay, REVEAL_DURATION } from '../lib/motion';
 import {
   SiDjango,
   SiPostgresql,
@@ -182,8 +183,8 @@ const ProjectCard = ({ project, index, onClick }) => {
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      transition={{ duration: 0.5, delay: index * 0.1 }}
+      viewport={LONG_LIST_VIEWPORT}
+      transition={{ duration: REVEAL_DURATION, delay: revealDelay(index) }}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
       onClick={() => onClick(project)}
@@ -247,19 +248,11 @@ const ProjectCard = ({ project, index, onClick }) => {
 const Projects = () => {
   const { t, i18n } = useTranslation();
   const isArabic = i18n.language === 'ar';
-  const [loading, setLoading] = useState(true);
+  // Content comes from the local i18n bundle, so there is nothing to wait for.
+  const [loading] = useState(false);
   const [filter, setFilter] = useState('All');
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedProject, setSelectedProject] = useState(null);
-
-  useEffect(() => {
-    // Simulate loading delay
-    const timer = setTimeout(() => {
-      setLoading(false);
-    }, 1500);
-
-    return () => clearTimeout(timer);
-  }, []);
 
   // Lock scroll when modal is open
   useEffect(() => {
@@ -817,7 +810,7 @@ const Projects = () => {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
+          viewport={REVEAL_VIEWPORT}
           transition={{ duration: 0.5 }}
           className="text-center mb-16">
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 text-[rgb(var(--foreground))]">
@@ -832,7 +825,7 @@ const Projects = () => {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
+          viewport={REVEAL_VIEWPORT}
           transition={{ duration: 0.5, delay: 0.2 }}
           className="mb-12 flex flex-col md:flex-row gap-6 items-center justify-between max-w-5xl mx-auto">
           {/* Segmented control — wraps into rows on phones instead of scrolling

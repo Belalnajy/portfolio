@@ -2,6 +2,7 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-scroll';
 import { motion, AnimatePresence } from 'framer-motion';
+import { revealDelay } from '../lib/motion';
 import { FaDownload, FaGlobe } from 'react-icons/fa';
 import { FiMenu, FiX } from 'react-icons/fi';
 import { HiSparkles } from 'react-icons/hi';
@@ -302,7 +303,7 @@ const Navbar = ({ onDownloadCV }) => {
                   <motion.div
                     initial={{ opacity: 0, x: isArabic ? 20 : -20 }}
                     animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: index * 0.05, duration: 0.3 }}
+                    transition={{ delay: revealDelay(index), duration: 0.3 }}
                     whileTap={{ scale: 0.95 }}
                     className={`group relative block px-5 py-3 rounded-xl text-[rgb(var(--muted-foreground))] hover:text-[rgb(var(--foreground))] transition-all duration-200 cursor-pointer font-medium overflow-hidden ${isArabic ? 'text-right' : 'text-left'}`}>
                     {/* Hover gradient background */}

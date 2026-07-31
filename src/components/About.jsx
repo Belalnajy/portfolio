@@ -1,5 +1,6 @@
 "use client";
 import { motion } from 'framer-motion';
+import { REVEAL_VIEWPORT, revealDelay, REVEAL_DURATION } from '../lib/motion';
 import {
   FaUser,
   FaCode,
@@ -67,7 +68,7 @@ const About = () => {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
+          viewport={REVEAL_VIEWPORT}
           transition={{ duration: 0.5 }}
           className="text-center mb-16">
           <h2 className="text-5xl font-bold mb-4 text-[rgb(var(--foreground))]">
@@ -83,7 +84,7 @@ const About = () => {
           <motion.div
             initial={{ opacity: 0, x: isArabic ? 20 : -20 }}
             whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
+            viewport={REVEAL_VIEWPORT}
             transition={{ duration: 0.5 }}
             className="space-y-6">
             <h3 className="text-3xl font-bold mb-8 bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
@@ -95,8 +96,8 @@ const About = () => {
                   key={index}
                   initial={{ opacity: 0, x: isArabic ? 20 : -20 }}
                   whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.5, delay: index * 0.1 }}
+                  viewport={REVEAL_VIEWPORT}
+                  transition={{ duration: REVEAL_DURATION, delay: revealDelay(index) }}
                   whileHover={{ x: isArabic ? -10 : 10, scale: 1.02 }}
                   className="flex items-center gap-6 glass-card glass-hover p-4 rounded-xl cursor-pointer">
                   <div
@@ -120,7 +121,7 @@ const About = () => {
           <motion.div
             initial={{ opacity: 0, x: isArabic ? -20 : 20 }}
             whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
+            viewport={REVEAL_VIEWPORT}
             transition={{ duration: 0.5 }}
             className="space-y-6">
             <h3 className="text-3xl font-bold mb-8 bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
@@ -144,7 +145,7 @@ const About = () => {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
+          viewport={REVEAL_VIEWPORT}
           transition={{ duration: 0.5, delay: 0.3 }}
           className="mt-16 grid grid-cols-1 md:grid-cols-3 gap-6 max-w-6xl mx-auto">
           {highlights.map((item, index) => (
@@ -152,8 +153,8 @@ const About = () => {
               key={index}
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: index * 0.1 }}
+              viewport={REVEAL_VIEWPORT}
+              transition={{ duration: REVEAL_DURATION, delay: revealDelay(index) }}
               whileHover={{ y: -10, scale: 1.05 }}
               className="glass-card glass-hover p-6 rounded-xl text-center cursor-pointer">
               <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-gradient-to-r from-blue-500 to-purple-500 text-white text-2xl mb-4">

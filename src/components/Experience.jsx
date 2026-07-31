@@ -1,21 +1,14 @@
 "use client";
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
+import { REVEAL_VIEWPORT } from '../lib/motion';
 import { FaLaptopCode, FaGraduationCap } from 'react-icons/fa';
 import ExperienceCard from './ExperienceCard';
 import ExperienceSkeleton from './skeletons/ExperienceSkeleton';
 
 const Experience = () => {
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    // Simulate loading delay
-    const timer = setTimeout(() => {
-      setLoading(false);
-    }, 1200);
-
-    return () => clearTimeout(timer);
-  }, []);
+  // Content comes from the local i18n bundle, so there is nothing to wait for.
+  const [loading] = useState(false);
 
   const experiences = [
     {
@@ -107,7 +100,7 @@ const Experience = () => {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
+          viewport={REVEAL_VIEWPORT}
           transition={{ duration: 0.5 }}
           className="text-center mb-12">
           <h2 className="text-3xl font-bold mb-4">Experience & Education</h2>

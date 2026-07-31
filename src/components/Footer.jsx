@@ -1,6 +1,7 @@
 "use client";
 import { Link } from 'react-scroll';
 import { motion } from 'framer-motion';
+import { REVEAL_VIEWPORT } from '../lib/motion';
 import {
   FaGithub,
   FaLinkedin,
@@ -92,7 +93,7 @@ const Footer = () => {
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
+            viewport={REVEAL_VIEWPORT}
             transition={{ duration: 0.5 }}>
             <h3 className="text-3xl font-bold mb-6 bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
               {t('footer.about_title')}
@@ -122,7 +123,7 @@ const Footer = () => {
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
+            viewport={REVEAL_VIEWPORT}
             transition={{ duration: 0.5, delay: 0.1 }}>
             <h3 className={`text-xl font-bold mb-8 text-[rgb(var(--foreground))] uppercase tracking-wider relative inline-block after:content-[''] after:absolute after:-bottom-2 ${isArabic ? 'after:right-0' : 'after:left-0'} after:w-12 after:h-1 after:bg-[rgb(var(--primary))] after:rounded-full`}>
               {t('footer.quick_links')}
@@ -155,7 +156,7 @@ const Footer = () => {
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
+            viewport={REVEAL_VIEWPORT}
             transition={{ duration: 0.5, delay: 0.2 }}>
             <h3 className={`text-xl font-bold mb-8 text-[rgb(var(--foreground))] uppercase tracking-wider relative inline-block after:content-[''] after:absolute after:-bottom-2 ${isArabic ? 'after:right-0' : 'after:left-0'} after:w-12 after:h-1 after:bg-[rgb(var(--primary))] after:rounded-full`}>
               {t('footer.get_in_touch')}
@@ -205,7 +206,7 @@ const Footer = () => {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
+          viewport={REVEAL_VIEWPORT}
           transition={{ duration: 0.5, delay: 0.3 }}
           className="py-12 border-t border-[rgb(var(--border))]/30">
           <div className="text-center mb-10">
@@ -225,7 +226,7 @@ const Footer = () => {
             <motion.div
               initial={{ opacity: 0 }}
               whileInView={{ opacity: 1 }}
-              viewport={{ once: true }}
+              viewport={REVEAL_VIEWPORT}
               transition={{ duration: 0.5, delay: 0.4 }}
               className="text-[rgb(var(--muted-foreground))] text-sm font-medium">
               <p>{t('footer.freelance_notice')}</p>
