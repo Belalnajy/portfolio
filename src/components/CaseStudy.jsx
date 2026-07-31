@@ -1,6 +1,7 @@
 "use client";
 import { useEffect } from 'react';
 import { motion } from 'framer-motion';
+import { REVEAL_VIEWPORT, revealDelay, REVEAL_DURATION } from '../lib/motion';
 import { useTranslation } from 'react-i18next';
 import {
   FaArrowLeft,
@@ -158,8 +159,8 @@ const CaseStudy = ({ slug, image, liveUrl, stack }) => {
               key={block.key}
               initial={{ opacity: 0, y: 24 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: '-80px' }}
-              transition={{ duration: 0.5, delay: index * 0.05 }}
+              viewport={REVEAL_VIEWPORT}
+              transition={{ duration: REVEAL_DURATION, delay: revealDelay(index) }}
               className="text-start"
             >
               <div className="flex items-center gap-3 mb-4">
@@ -199,7 +200,7 @@ const CaseStudy = ({ slug, image, liveUrl, stack }) => {
           <motion.article
             initial={{ opacity: 0, y: 24 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: '-80px' }}
+            viewport={REVEAL_VIEWPORT}
             transition={{ duration: 0.5 }}
             className="text-start"
           >
@@ -226,7 +227,7 @@ const CaseStudy = ({ slug, image, liveUrl, stack }) => {
         <motion.div
           initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
+          viewport={REVEAL_VIEWPORT}
           transition={{ duration: 0.5 }}
           className="glass-card rounded-2xl border border-[rgb(var(--border))]/50 p-6 sm:p-10 text-center"
         >

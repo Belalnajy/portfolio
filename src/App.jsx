@@ -2,7 +2,7 @@
 import { useEffect, useState } from 'react';
 import { resolvePreferredLanguage } from './i18n';
 import { useTranslation } from 'react-i18next';
-import { motion, AnimatePresence } from 'framer-motion';
+import { MotionConfig } from 'framer-motion';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import About from './components/About';
@@ -29,8 +29,6 @@ import LoadingScreen from './components/LoadingScreen';
 import DarkModeToggle from './components/DarkModeToggle';
 import Testimonials from './components/Testimonials';
 import AIAssistant from './components/AIAssistant';
-import AOS from 'aos';
-import 'aos/dist/aos.css';
 
 function App() {
   const [notification, setNotification] = useState({
@@ -39,14 +37,6 @@ function App() {
     isVisible: false,
   });
   const [isLoading, setIsLoading] = useState(true);
-
-  useEffect(() => {
-    AOS.init({
-      duration: 1000,
-      easing: 'ease-in-out',
-      once: true,
-    });
-  }, []);
 
   const { i18n } = useTranslation();
 
@@ -103,7 +93,9 @@ function App() {
   };
 
   return (
-    <>
+    // reducedMotion="user" drops transform and layout animations for anyone who
+    // has asked their OS to reduce motion, without touching opacity fades.
+    <MotionConfig reducedMotion="user">
       {isLoading && <LoadingScreen onLoadingComplete={handleLoadingComplete} />}
       {/* overflow-x-clip contains the decorative entrance offsets and blurred
           blobs, which otherwise let the page pan sideways on phones in RTL.
@@ -149,7 +141,7 @@ function App() {
         </main>
         <Footer />
       </div>
-    </>
+    </MotionConfig>
   );
 }
 

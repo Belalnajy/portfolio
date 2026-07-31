@@ -1,6 +1,7 @@
 "use client";
 import { useState, useRef, useMemo } from 'react';
 import { motion } from 'framer-motion';
+import { REVEAL_VIEWPORT, revealDelay, REVEAL_DURATION } from '../lib/motion';
 import emailjs from '@emailjs/browser';
 import {
   FaEnvelope,
@@ -103,7 +104,7 @@ const Contact = ({ showNotification }) => {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
+          viewport={REVEAL_VIEWPORT}
           transition={{ duration: 0.5 }}
           className="text-center mb-16">
           <h2 className="text-5xl font-bold mb-4 text-[rgb(var(--foreground))]">
@@ -119,7 +120,7 @@ const Contact = ({ showNotification }) => {
           <motion.div
             initial={{ opacity: 0, x: isArabic ? 20 : -20 }}
             whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
+            viewport={REVEAL_VIEWPORT}
             transition={{ duration: 0.5 }}
             className="space-y-6">
             {contactInfo.map((item, index) => (
@@ -127,8 +128,8 @@ const Contact = ({ showNotification }) => {
                 key={index}
                 initial={{ opacity: 0, x: isArabic ? 20 : -20 }}
                 whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
+                viewport={REVEAL_VIEWPORT}
+                transition={{ duration: REVEAL_DURATION, delay: revealDelay(index) }}
                 whileHover={{ y: -5, scale: 1.02 }}
                 className="flex items-start gap-6 glass-card glass-hover p-6 rounded-xl cursor-pointer shadow-lg hover:shadow-xl transition-all duration-300 border border-[rgb(var(--border))]/50">
                 <div
@@ -174,7 +175,7 @@ const Contact = ({ showNotification }) => {
           <motion.div
             initial={{ opacity: 0, x: isArabic ? -20 : 20 }}
             whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
+            viewport={REVEAL_VIEWPORT}
             transition={{ duration: 0.5 }}
             className="glass-card p-8 rounded-xl">
             <form ref={formRef} onSubmit={handleSubmit} className="space-y-6">

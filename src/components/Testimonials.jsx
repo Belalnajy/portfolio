@@ -1,6 +1,7 @@
 "use client";
 import { useState, useMemo, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { REVEAL_VIEWPORT } from '../lib/motion';
 import {
   FaQuoteLeft,
   FaStar,
@@ -126,7 +127,7 @@ const Testimonials = () => {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
+          viewport={REVEAL_VIEWPORT}
           transition={{ duration: 0.5 }}
           className="text-center mb-16">
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 text-[rgb(var(--foreground))]">
@@ -160,7 +161,7 @@ const Testimonials = () => {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
+          viewport={REVEAL_VIEWPORT}
           transition={{ duration: 0.5, delay: 0.3 }}
           className="mt-16">
           <div className="relative">
@@ -309,7 +310,7 @@ const Testimonials = () => {
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
+            viewport={REVEAL_VIEWPORT}
             transition={{ duration: 0.5, delay: 0.3 }}
             className="mt-24 text-center">
             <h3 className="text-3xl font-bold mb-8 text-[rgb(var(--foreground))] tracking-tight">

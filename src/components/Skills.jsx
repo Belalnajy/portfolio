@@ -1,6 +1,7 @@
 "use client";
 import { useState, useEffect, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { REVEAL_VIEWPORT, revealDelay, REVEAL_DURATION } from '../lib/motion';
 import {
   FaCode,
   FaDatabase,
@@ -50,8 +51,8 @@ const SkillCard = ({ category, index }) => {
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-      transition={{ duration: 0.5, delay: index * 0.1 }}
+          viewport={REVEAL_VIEWPORT}
+      transition={{ duration: REVEAL_DURATION, delay: revealDelay(index) }}
       className="bg-[rgb(var(--card))] p-6 rounded-xl border border-[rgb(var(--border))] hover:border-[rgb(var(--primary))] transition-all duration-300 hover:shadow-lg hover:shadow-[rgb(var(--primary))]/10">
       <div className={`flex items-center mb-6 ${isArabic ? 'space-x-reverse' : ''}`}>
         <div className="bg-[rgb(var(--primary))]/10 p-3 rounded-lg">
@@ -67,8 +68,8 @@ const SkillCard = ({ category, index }) => {
             key={i}
             initial={{ opacity: 0, x: -20 }}
             whileInView={{ opacity: 1, x: 0 }}
-          viewport={{ once: true }}
-            transition={{ duration: 0.5, delay: i * 0.1 }}
+          viewport={REVEAL_VIEWPORT}
+            transition={{ duration: REVEAL_DURATION, delay: revealDelay(i) }}
             className={`flex items-center gap-2 p-3 rounded-lg hover:bg-[rgb(var(--muted))] transition-colors duration-200 group ${isArabic ? 'flex-row-reverse text-right' : 'flex-row text-left'}`}>
             <div className="bg-[rgb(var(--background))] p-2 rounded-lg group-hover:scale-110 transition-transform duration-200">
               {skill.icon}
@@ -86,18 +87,10 @@ const SkillCard = ({ category, index }) => {
 const Skills = () => {
   const { t, i18n } = useTranslation();
   const isArabic = i18n.language === 'ar';
-  const [loading, setLoading] = useState(true);
+  // Content comes from the local i18n bundle, so there is nothing to wait for.
+  const [loading] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState('All');
   const [searchQuery, setSearchQuery] = useState('');
-
-  useEffect(() => {
-    // Simulate loading delay
-    const timer = setTimeout(() => {
-      setLoading(false);
-    }, 1000);
-
-    return () => clearTimeout(timer);
-  }, []);
 
   const skillCategories = useMemo(() => [
     {
@@ -225,7 +218,7 @@ const Skills = () => {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
+          viewport={REVEAL_VIEWPORT}
           transition={{ duration: 0.5 }}
           className="text-center mb-12">
           <h2 className="text-5xl font-bold mb-4 text-[rgb(var(--foreground))]">{t('skills.title')}</h2>
@@ -238,7 +231,7 @@ const Skills = () => {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
+          viewport={REVEAL_VIEWPORT}
           transition={{ duration: 0.5, delay: 0.1 }}
           className="max-w-md mx-auto mb-8">
           <div className="relative">
@@ -264,7 +257,7 @@ const Skills = () => {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
+          viewport={REVEAL_VIEWPORT}
           transition={{ duration: 0.5, delay: 0.2 }}
           className="flex flex-wrap justify-center gap-3 mb-12">
           {filterTabs.map((tab, index) => (
@@ -272,8 +265,8 @@ const Skills = () => {
               key={tab.id}
               initial={{ opacity: 0, scale: 0.9 }}
               whileInView={{ opacity: 1, scale: 1 }}
-          viewport={{ once: true }}
-              transition={{ duration: 0.3, delay: index * 0.05 }}
+          viewport={REVEAL_VIEWPORT}
+              transition={{ duration: REVEAL_DURATION, delay: revealDelay(index) }}
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               onClick={() => setSelectedCategory(tab.id)}

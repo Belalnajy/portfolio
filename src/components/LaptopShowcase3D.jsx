@@ -4,6 +4,7 @@ import { Canvas, useFrame } from '@react-three/fiber';
 import { Float, ContactShadows, Environment, Lightformer, useTexture, Html } from '@react-three/drei';
 import * as THREE from 'three';
 import { motion, AnimatePresence } from 'framer-motion';
+import { REVEAL_VIEWPORT } from '../lib/motion';
 import { useTranslation } from 'react-i18next';
 import { Smartphone, Zap, Layers, Globe, ChevronLeft, ChevronRight } from 'lucide-react';
 
@@ -381,14 +382,14 @@ const LaptopShowcase3D = () => {
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
+            viewport={REVEAL_VIEWPORT}
             transition={{ duration: 0.6 }}
             className="order-2 lg:order-1 text-center lg:text-start">
             {/* Section label */}
             <motion.span
               initial={{ opacity: 0, scale: 0.9 }}
               whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }}
+              viewport={REVEAL_VIEWPORT}
               transition={{ delay: 0.15 }}
               className="inline-block px-4 py-1.5 rounded-full bg-[rgb(var(--primary))]/10 border border-[rgb(var(--primary))]/30 text-[rgb(var(--primary))] text-sm font-medium mb-6">
               ✦ {t('laptop_showcase.label')}
@@ -411,7 +412,7 @@ const LaptopShowcase3D = () => {
                   key={i}
                   initial={{ opacity: 0, y: 15 }}
                   whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
+                  viewport={REVEAL_VIEWPORT}
                   transition={{ delay: 0.25 + i * 0.08 }}
                   className="glass-card rounded-xl px-4 py-3 flex items-center gap-3 hover:border-[rgb(var(--primary))]/30 transition-colors duration-300 cursor-default">
                   <span className="text-[rgb(var(--primary))]">
@@ -477,7 +478,7 @@ const LaptopShowcase3D = () => {
           <motion.div
             initial={{ opacity: 0, scale: 0.92 }}
             whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true }}
+            viewport={REVEAL_VIEWPORT}
             transition={{ duration: 0.7, delay: 0.1 }}
             className="order-1 lg:order-2 relative aspect-[4/3] lg:aspect-auto lg:h-[550px] max-h-[480px] lg:max-h-none"
             onMouseMove={handleMouseMove}

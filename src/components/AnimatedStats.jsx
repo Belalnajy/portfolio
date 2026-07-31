@@ -1,6 +1,7 @@
 "use client";
 import { useState, useEffect, useRef, useMemo } from 'react';
 import { motion, useInView, useReducedMotion } from 'framer-motion';
+import { REVEAL_VIEWPORT, revealDelay, REVEAL_DURATION } from '../lib/motion';
 import {
   FaProjectDiagram,
   FaCode,
@@ -107,8 +108,8 @@ const AnimatedStats = () => {
               key={index}
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: index * 0.1 }}
+              viewport={REVEAL_VIEWPORT}
+              transition={{ duration: REVEAL_DURATION, delay: revealDelay(index) }}
               className="glass-card glass-hover p-8 rounded-xl text-center">
               <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-[rgb(var(--primary))]/10 text-[rgb(var(--primary))] border border-[rgb(var(--primary))]/20 mb-4">
                 {stat.icon}

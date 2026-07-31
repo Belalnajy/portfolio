@@ -1,5 +1,6 @@
 "use client";
 import { motion } from 'framer-motion';
+import { REVEAL_VIEWPORT, revealDelay, REVEAL_DURATION } from '../lib/motion';
 import { Link } from 'react-scroll';
 import { useTranslation } from 'react-i18next';
 import { FaCheck, FaClock, FaStar, FaArrowRight, FaArrowLeft } from 'react-icons/fa';
@@ -28,7 +29,7 @@ const Packages = () => {
         <motion.div
           initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
+          viewport={REVEAL_VIEWPORT}
           transition={{ duration: 0.6 }}
           className="text-center mb-12 md:mb-16"
         >
@@ -57,8 +58,8 @@ const Packages = () => {
                 key={tier.key}
                 initial={{ opacity: 0, y: 26 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
+                viewport={REVEAL_VIEWPORT}
+                transition={{ duration: REVEAL_DURATION, delay: revealDelay(index) }}
                 className={`relative glass-card rounded-2xl p-6 sm:p-8 flex flex-col h-full text-start transition-colors ${
                   tier.featured
                     ? 'border-2 border-[rgb(var(--primary))] shadow-2xl shadow-[rgb(var(--primary))]/10 lg:-translate-y-3'
@@ -121,7 +122,7 @@ const Packages = () => {
         <motion.p
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
+          viewport={REVEAL_VIEWPORT}
           transition={{ duration: 0.5, delay: 0.3 }}
           className="text-center text-sm text-[rgb(var(--muted-foreground))] mt-10 max-w-2xl mx-auto leading-relaxed"
         >

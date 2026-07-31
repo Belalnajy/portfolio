@@ -1,5 +1,6 @@
 "use client";
 import { motion } from "framer-motion";
+import { REVEAL_VIEWPORT, revealDelay, REVEAL_DURATION } from '../lib/motion';
 import { useMemo } from "react";
 import {
   FaLaptopCode,
@@ -36,7 +37,7 @@ const Services = () => {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
+          viewport={REVEAL_VIEWPORT}
           transition={{ duration: 0.5 }}
           className="text-center mb-16">
           <h2 className="text-5xl font-bold mb-4 text-[rgb(var(--foreground))]">
@@ -53,8 +54,8 @@ const Services = () => {
               key={index}
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: index * 0.1 }}
+              viewport={REVEAL_VIEWPORT}
+              transition={{ duration: REVEAL_DURATION, delay: revealDelay(index) }}
               whileHover={{ y: -10, scale: 1.02 }}
               className="glass-card glass-hover p-6 rounded-xl cursor-pointer group">
               {/* Icon */}
@@ -101,7 +102,7 @@ const Services = () => {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
+          viewport={REVEAL_VIEWPORT}
           transition={{ duration: 0.5, delay: 0.5 }}
           className="mt-16 text-center">
           <p className="text-[rgb(var(--muted-foreground))] text-lg mb-6">

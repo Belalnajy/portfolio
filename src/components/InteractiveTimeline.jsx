@@ -1,6 +1,7 @@
 "use client";
 import { useState, useMemo } from 'react';
 import { motion } from 'framer-motion';
+import { REVEAL_VIEWPORT, revealDelay, REVEAL_DURATION } from '../lib/motion';
 import { FaLaptopCode, FaGraduationCap, FaBriefcase, FaCalendarAlt, FaMapMarkerAlt, FaChevronRight } from 'react-icons/fa';
 import { useTranslation } from 'react-i18next';
 
@@ -33,7 +34,7 @@ const InteractiveTimeline = () => {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
+          viewport={REVEAL_VIEWPORT}
           transition={{ duration: 0.5 }}
           className="text-center mb-16">
           <h2 className="text-5xl font-bold mb-4 text-[rgb(var(--foreground))]">
@@ -55,8 +56,8 @@ const InteractiveTimeline = () => {
                 key={index}
                 initial={{ opacity: 0, y: 50 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
+                viewport={REVEAL_VIEWPORT}
+                transition={{ duration: REVEAL_DURATION, delay: revealDelay(index) }}
                 className={`relative flex items-center ${
                   index % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse'
                 } flex-col`}
@@ -133,8 +134,8 @@ const InteractiveTimeline = () => {
                           key={i}
                           initial={{ opacity: 0, x: isArabic ? 10 : -10 }}
                           whileInView={{ opacity: 1, x: 0 }}
-                          viewport={{ once: true }}
-                          transition={{ delay: i * 0.1 }}
+                          viewport={REVEAL_VIEWPORT}
+                          transition={{ duration: REVEAL_DURATION, delay: revealDelay(i) }}
                           className="text-sm flex items-start text-[rgb(var(--foreground))] leading-relaxed text-start">
                           <FaChevronRight className={`text-[rgb(var(--primary))] ${isArabic ? 'ml-2 rotate-180' : 'mr-2'} mt-1 text-[10px] shrink-0`} />
                           <span>{desc}</span>
