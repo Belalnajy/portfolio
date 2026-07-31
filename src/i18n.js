@@ -19,12 +19,11 @@ const resources = {
         greeting_start: 'Hi, I\'m ',
         name: 'Belal Nagy',
         i_am_a: 'I\'m a ',
-        description_1: 'Passionate about building ',
-        description_2: 'scalable, high-performance web applications',
-        description_3: ' and transforming complex ideas into ',
-        description_4: 'intuitive, elegant user experiences',
-        description_5: '. Currently crafting impactful digital solutions at ',
-        company: 'S&F',
+        description_1: 'I build web platforms from zero, and take over existing codebases that need fixing. ',
+        description_2: '31 projects',
+        description_3: ' for ',
+        description_4: '27 clients',
+        description_5: ' across Egypt and the Gulf.',
         view_projects: 'View Projects',
         contact_me: 'Contact Me',
         download_cv: 'Download CV',
@@ -32,7 +31,7 @@ const resources = {
       },
       about: {
         title: 'About Me',
-        subtitle: 'Full Stack Developer experienced in building scalable, multilingual web applications',
+        subtitle: 'Full-stack developer in Alexandria, Egypt. Next.js, Laravel, NestJS, Node.js, Django, PostgreSQL.',
         personal_info: 'Personal Information',
         professional_summary: 'Professional Summary',
         labels: {
@@ -47,21 +46,21 @@ const resources = {
           education: 'Bachelor of Business (MIS)',
           location: 'Alexandria, Egypt'
         },
-        summary_p1: 'Full Stack Developer experienced in building <1>scalable, multilingual web applications</1> using React.js, Next.js, Django, NestJS, and PostgreSQL. Currently working at <3>S&F (Saudi Arabia)</3> developing full-stack applications and backend services for web and mobile platforms.',
-        summary_p2: 'Completed the ITI Full Stack program and served as an <1>External Instructor at ITI</1>, teaching Front-End Development to <3>240+ students</3>. Delivered AI-integrated, RTL-ready platforms for Saudi startups and universities, focused on modern UI/UX and real-time systems.',
-        summary_p3: 'Passionate about creating efficient, scalable solutions with expertise in multilingual platforms, real-time features, and modern development practices. Always eager to learn new technologies and deliver production-ready applications.',
+        summary_p1: 'Full-stack developer based in <1>Alexandria, Egypt</1>. I work in Next.js, Laravel, NestJS, Node.js, Django and PostgreSQL. I am currently a full-stack developer at <3>S&F in Saudi Arabia</3>.',
+        summary_p2: 'I am the sole developer on <1>Bilqalam Institute</1>, a production learning platform serving thousands of enrolled students. It handles student enrollment and management, billing and invoicing, and the admin reporting dashboards the institute runs on. I built it and I maintain it alone, in <3>Next.js and Laravel</3>.',
+        summary_p3: 'I also built a multi-tenant LMS engine that runs as <1>three separately branded accredited platforms</1>, Injaz, HC Holding and Mada Education, on one hardened Django and PostgreSQL core. I co-founded Indstrz, a B2B industrial platform, and taught front-end development to <3>240+ students</3> as an external instructor at ITI. Arabic and RTL work goes into every project I ship, including the financial and data-heavy interfaces.',
         highlights: {
-          fast_learner: {
-            title: 'Fast Learner',
-            desc: 'Quick to adapt to new technologies and frameworks'
+          sole_developer: {
+            title: 'Sole developer on production systems',
+            desc: 'Bilqalam serves thousands of students on a platform I built and maintain alone.'
           },
-          passionate: {
-            title: 'Passionate',
-            desc: 'Love building elegant solutions to complex problems'
+          multi_tenant: {
+            title: 'Multi-tenant architecture',
+            desc: 'One LMS engine, three accredited client platforms, one deployment pipeline.'
           },
-          creative: {
-            title: 'Creative',
-            desc: 'Always thinking of innovative ways to improve UX'
+          arabic_first: {
+            title: 'Arabic-first',
+            desc: 'Full RTL across dashboards, invoices and reports, not just landing pages.'
           }
         }
       },
@@ -90,15 +89,16 @@ const resources = {
         },
         items: {
           bilqalam: {
-            title: 'Bilqalam Institute – Online Qur’an & Arabic Academy',
-            desc: 'A complete online learning platform for an institute teaching Qur’an, Arabic and Islamic studies — built end to end (frontend, backend, infrastructure). Covers course delivery, live class scheduling, tutor management, subscriptions and student progress tracking.',
+            title: 'Bilqalam Institute, Online Qur’an & Arabic Academy',
+            desc: 'A production learning platform for an institute teaching Qur’an, Arabic and Islamic studies online, serving thousands of enrolled students. I am the sole developer. I built the student enrollment and management system, the billing and invoicing, and the admin reporting dashboards the institute runs on, and I maintain the platform alone.',
             features: [
-              'Full course catalogue for Qur’an recitation & memorisation (Tajweed), Arabic and Islamic studies',
-              'Separate student, tutor and admin dashboards with role-based access control',
-              'Live class scheduling and booking with tutor availability management',
-              'Subscription and enrolment plans for children and adults, beginner to advanced',
-              'Student progress tracking, attendance and lesson history per learner',
-              'Bilingual Arabic/English interface with full RTL support and SEO optimisation'
+              'Sole developer, built and maintained alone',
+              'In production, serving thousands of enrolled students',
+              'Student enrollment and management system',
+              'Billing and invoicing',
+              'Admin reporting dashboards the institute runs on',
+              'Fully Arabic and RTL, including the financial and data-heavy views',
+              'Built in Next.js and Laravel'
             ]
           },
           medicta: {
@@ -183,13 +183,15 @@ const resources = {
             ]
           },
           indstrz: {
-            title: 'Indstrz – B2B Industrial Marketplace',
-            desc: 'A scalable full-stack B2B procurement platform with end-to-end digital RFQ workflows, real-time negotiations, and automated conversation management.',
+            title: 'Indstrz, B2B Industrial Platform',
+            desc: 'A B2B procurement platform with digital RFQ workflows, real-time negotiation and automated conversation management. Selected for the Venture Ready Program, implemented by Plug and Play with support from GIZ Egypt and ITIDA, hosted at Creativa Innovation Hubs in Alexandria.',
             features: [
-              'End-to-end digital RFQ workflows between buyers and verified vendors',
+              'Selected for the Venture Ready Program by Plug and Play, with GIZ Egypt and ITIDA support',
+              'Hosted at Creativa Innovation Hubs in Alexandria',
+              'Digital RFQ workflows between buyers and verified vendors',
               'Real-time messaging and notifications using Socket.io',
-              'Secure RBAC with JWT token revocation and multi-role management',
-              'Modular Application Factory Pattern with layered architecture'
+              'Role-based access control with JWT token revocation',
+              'Layered architecture using a modular application factory pattern'
             ]
           },
           uduipa: {
@@ -535,9 +537,10 @@ const resources = {
             location: 'Remote, Egypt',
             period: '01/2024 - Present',
             description: [
-              'Co-founded a B2B Industrial Marketplace focused on streamlining industrial procurement',
-              'Architected the digital RFQ workflow and real-time negotiation engine',
-              'Led the technical development of the platform using Next.js, Flask, and PostgreSQL'
+              'Co-founded a B2B industrial platform for industrial procurement',
+              'Selected for the Venture Ready Program, implemented by Plug and Play with support from GIZ Egypt and ITIDA, hosted at Creativa Innovation Hubs in Alexandria',
+              'Built the digital RFQ workflow and the real-time negotiation engine',
+              'Led technical development using Next.js, Flask and PostgreSQL'
             ]
           },
           {
@@ -608,8 +611,7 @@ const resources = {
         technologies: 'Technologies Mastered',
         years: 'Years of Experience',
         students: 'Students Taught',
-        clients: 'Clients Served',
-        hours: 'Hours of Coding'
+        clients: 'Clients Served'
       },
       certifications: {
         title: 'Courses & Certifications',
@@ -669,6 +671,16 @@ const resources = {
               'CI/CD & Docker Workflows',
               'Load Balancing & Scaling',
               'Technical Consultation'
+            ]
+          },
+          {
+            title: 'Legacy Code Takeover & Technical Audit',
+            desc: 'I take over inherited and abandoned codebases. The audit comes first, so you know what is wrong and what it costs before any work starts.',
+            features: [
+              'Full audit of an inherited codebase with a written report',
+              'A clear estimate of what it costs to fix, before any work starts',
+              'Bug fixing, refactoring and performance work on live systems',
+              'Taking over projects abandoned by a previous developer'
             ]
           }
         ]
@@ -784,49 +796,47 @@ const resources = {
           stack: 'Technology Stack'
         },
         bilqalam: {
-          title: 'Bilqalam Institute — Building an Online Academy End to End',
-          summary: 'A complete learning platform for an institute teaching Qur’an, Arabic and Islamic studies online — from the database schema to the last pixel of the student dashboard.',
+          title: 'Bilqalam Institute, an Online Academy Built and Run by One Developer',
+          summary: 'A production learning platform for an institute teaching Qur’an, Arabic and Islamic studies online, serving thousands of enrolled students. I am the sole developer on it.',
           facts: {
-            role: 'Sole developer — frontend, backend and infrastructure',
-            scope: 'Full platform: public site, dashboards, scheduling, subscriptions',
-            audience: 'Arabic and non-Arabic speaking students worldwide'
+            role: 'Sole developer, built and maintained alone',
+            scope: 'Enrollment and student management, billing and invoicing, admin reporting',
+            audience: 'Thousands of enrolled students'
           },
           challenge: {
-            body: 'Teaching Qur’an and Arabic online is not the same problem as selling recorded courses. Lessons are live and one-to-one, tutors have their own availability, students progress at their own pace, and the whole experience has to feel natural in Arabic while staying usable for students who do not read it. Off-the-shelf course platforms assume pre-recorded video and a single language, so none of them fit.',
+            body: 'An institute at this size cannot run on spreadsheets and chat messages. It needs to enroll students, track who is in which programme, bill them, issue invoices and give administrators numbers they can act on. All of it has to work in Arabic, including the financial and data-heavy views that most templates handle badly.',
             points: [
-              'Live one-to-one lessons rather than pre-recorded content',
-              'Tutor availability that changes week to week',
-              'Progress tracked per student, not per course',
-              'Arabic-first experience that still works in English'
+              'Thousands of enrolled students to track',
+              'Billing and invoicing tied to enrollment',
+              'Administrators need reporting they can act on',
+              'Arabic and RTL in financial and data-heavy views'
             ]
           },
           approach: {
-            body: 'I designed the platform around scheduling and people rather than around a video catalogue. Tutors, students and administrators each got their own dashboard with only what they need. Availability, bookings and progress were modelled as first-class data from the start, so the schedule stays the single source of truth and nothing has to be reconciled by hand.',
+            body: 'I built it as one system rather than separate tools bolted together, so enrollment, billing and reporting read from the same data. The frontend is Next.js and the backend is Laravel. RTL was designed in from the start rather than retrofitted, because the tables, invoices and report views are where right-to-left layouts usually break.',
             points: [
-              'Role-based architecture: student, tutor and admin',
-              'Availability and bookings as core domain models',
-              'RTL-first design system, mirrored cleanly for English',
-              'Background jobs for reminders and notifications'
+              'Enrollment, billing and reporting on shared data',
+              'Next.js frontend, Laravel backend',
+              'RTL designed in from the start, not retrofitted',
+              'One developer, so the architecture stays consistent'
             ]
           },
           delivered: {
-            body: 'The result is a platform an institute can actually run its day-to-day operations on: enrolling students, assigning tutors, scheduling and rescheduling lessons, tracking attendance and progress, and managing subscriptions — without leaving the system.',
+            body: 'The institute runs its day-to-day operations on the platform. I built every part of it and I maintain it alone.',
             points: [
-              'Course catalogue for Qur’an, Tajweed, Arabic and Islamic studies',
-              'Live class scheduling with tutor availability management',
-              'Student, tutor and admin dashboards with access control',
-              'Subscription and enrolment plans for children and adults',
-              'Attendance, lesson history and per-student progress tracking',
-              'Bilingual Arabic/English interface with full RTL support'
+              'Student enrollment and management system',
+              'Billing and invoicing',
+              'Admin reporting dashboards the institute runs on',
+              'Fully Arabic and RTL, including the financial and data-heavy views',
+              'In production, serving thousands of enrolled students'
             ]
           },
           outcome: {
-            body: 'The institute runs on a single system instead of a patchwork of spreadsheets, chat messages and manual scheduling. Adding a tutor, opening a new course or onboarding a student is now a form rather than a coordination exercise, and the codebase is structured so new programmes can be added without touching the scheduling core.',
+            body: 'The platform is in production and the institute operates on it. It is the project I point to when a client asks whether I can build and carry a real system on my own, because that is exactly what it is.',
             points: [
-              'Operations consolidated into one platform',
-              'Scheduling and enrolment handled without manual coordination',
-              'New courses and tutors added without code changes',
-              'Architecture ready for further programmes and growth'
+              'In production and in daily use',
+              'Built and maintained by one developer',
+              'Operations consolidated into a single system'
             ]
           }
         }
@@ -901,7 +911,8 @@ const resources = {
           phone: 'Phone',
           location: 'Location',
           linkedin: 'LinkedIn',
-          alexandria: 'Alexandria, Egypt'
+          alexandria: 'Alexandria, Egypt',
+          show_phone: 'Show phone number'
         },
         form: {
           name: 'Name',
@@ -936,7 +947,7 @@ const resources = {
       },
       footer: {
         about_title: 'Belal Nagy',
-        about_text: 'Full Stack Developer passionate about building scalable, high-performance web applications and transforming complex ideas into elegant user experiences.',
+        about_text: 'I build web platforms from zero, and take over existing codebases that need fixing. 31 projects for 27 clients across Egypt and the Gulf.',
         quick_links: 'Quick Links',
         services: 'Services',
         get_in_touch: 'Get in Touch',
@@ -963,12 +974,11 @@ const resources = {
         greeting_start: 'أهلاً، أنا ',
         name: 'بلال ناجي',
         i_am_a: 'أنا ',
-        description_1: 'شغوف ببناء ',
-        description_2: 'تطبيقات ويب عالية الأداء وقابلة للتوسع',
-        description_3: ' وتحويل الأفكار المعقدة إلى ',
-        description_4: 'تجارب مستخدم بديهية وأنيقة',
-        description_5: '. أقوم حالياً بابتكار حلول رقمية مؤثرة في ',
-        company: 'S&F',
+        description_1: 'أبني منصات ويب من الصفر، وأستلم الأكواد القائمة اللي محتاجة إصلاح. ',
+        description_2: '٣١ مشروعاً',
+        description_3: ' لـ ',
+        description_4: '٢٧ عميلاً',
+        description_5: ' في مصر والخليج.',
         view_projects: 'عرض المشاريع',
         contact_me: 'تواصل معي',
         download_cv: 'تحميل CV',
@@ -976,7 +986,7 @@ const resources = {
       },
       about: {
         title: 'عني',
-        subtitle: 'مطور Full Stack ذو خبرة في بناء تطبيقات ويب قابلة للتوسع ومتعددة اللغات',
+        subtitle: 'مطور Full-Stack من الإسكندرية، مصر. Next.js و Laravel و NestJS و Node.js و Django و PostgreSQL.',
         personal_info: 'المعلومات الشخصية',
         professional_summary: 'الملخص المهني',
         labels: {
@@ -991,21 +1001,21 @@ const resources = {
           education: 'بكالوريوس أعمال (نظم معلومات)',
           location: 'الإسكندرية، مصر'
         },
-        summary_p1: 'مطور Full Stack محترف في بناء <1>تطبيقات ويب قابلة للتوسع ومتعددة اللغات</1> باستخدام React.js، Next.js، Django، NestJS، و PostgreSQL. أعمل حالياً في <3>شركة S&F (السعودية)</3> على تطوير تطبيقات شاملة وخدمات خلفية للمواقع ومنصات الجوال.',
-        summary_p2: 'خريج برنامج الـ ITI المكثف، وعملت كـ <1>محاضر خارجي (External Instructor)</1> في معهد تكنولوجيا المعلومات (ITI)، حيث قمت بتدريس تطوير الواجهات الأمامية لأكثر من <3>240 طالب</3>. قمت بتسليم منصات متكاملة مع الذكاء الاصطناعي وتدعم الـ RTL للشركات الناشئة والجامعات السعودية.',
-        summary_p3: 'شغوف بابتكار حلول فعالة وقابلة للتطوير، مع خبرة خاصة في المنصات متعددة اللغات، الأنظمة اللحظية (Real-time)، وأحدث ممارسات التطوير. دائماً ما أسعى لتعلم تكنولوجيات جديدة وتقديم تطبيقات جاهزة للإنتاج.',
+        summary_p1: 'مطور Full-Stack مقيم في <1>الإسكندرية، مصر</1>. أشتغل بـ Next.js و Laravel و NestJS و Node.js و Django و PostgreSQL. حالياً مطور Full-Stack في <3>شركة S&F بالسعودية</3>.',
+        summary_p2: 'أنا المطور الوحيد على <1>معهد بالقلم</1>، منصة تعليمية تعمل فعلياً وتخدم آلاف الطلاب المسجلين. المنصة بتدير تسجيل الطلاب وإدارتهم، والفوترة وإصدار الفواتير، ولوحات التقارير الإدارية اللي المعهد بيشتغل عليها. أنا بنيتها وبصيانتها لوحدي، بـ <3>Next.js و Laravel</3>.',
+        summary_p3: 'كمان بنيت محرك LMS متعدد المستأجرين بيشتغل كـ <1>ثلاث منصات معتمدة بهويات منفصلة</1>، الإنجاز والتجمع الصحي القابضة ومدى التعليمية، فوق نواة واحدة من Django و PostgreSQL. شاركت في تأسيس Indstrz، منصة صناعية B2B، ودرّست تطوير الواجهات الأمامية لـ <3>أكثر من ٢٤٠ طالباً</3> كمحاضر خارجي في ITI. شغل العربية والـ RTL موجود في كل مشروع بسلّمه، بما فيه الواجهات المالية والمليانة بيانات.',
         highlights: {
-          fast_learner: {
-            title: 'سرعة التعلم',
-            desc: 'القدرة على التكيف السريع مع التقنيات وإطارات العمل الجديدة'
+          sole_developer: {
+            title: 'مطور وحيد على أنظمة في الإنتاج',
+            desc: 'بالقلم بيخدم آلاف الطلاب على منصة بنيتها وبصيانتها لوحدي.'
           },
-          passionate: {
-            title: 'الشغف',
-            desc: 'حب بناء حلول أنيقة للمشكلات البرمجية المعقدة'
+          multi_tenant: {
+            title: 'معمارية متعددة المستأجرين',
+            desc: 'محرك LMS واحد، ثلاث منصات معتمدة لعملاء مختلفين، وخط نشر واحد.'
           },
-          creative: {
-            title: 'الإبداع',
-            desc: 'التفكير الدائم في طرق ابتكارية لتحسين تجربة المستخدم'
+          arabic_first: {
+            title: 'العربية أولاً',
+            desc: 'دعم RTL كامل في لوحات التحكم والفواتير والتقارير، مش في صفحات الهبوط بس.'
           }
         }
       },
@@ -1034,15 +1044,16 @@ const resources = {
         },
         items: {
           bilqalam: {
-            title: 'معهد بالقلم – أكاديمية القرآن واللغة العربية أونلاين',
-            desc: 'منصة تعليمية إلكترونية متكاملة لمعهد متخصص في تعليم القرآن الكريم واللغة العربية والعلوم الشرعية، تم بناؤها بالكامل (الواجهة الأمامية والخلفية والبنية التحتية). تشمل إدارة الدورات، جدولة الحصص المباشرة، إدارة المعلمين، الاشتراكات، وتتبع تقدم الطلاب.',
+            title: 'معهد بالقلم، أكاديمية القرآن واللغة العربية أونلاين',
+            desc: 'منصة تعليمية تعمل فعلياً لمعهد متخصص في تعليم القرآن الكريم واللغة العربية والعلوم الشرعية أونلاين، وبتخدم آلاف الطلاب المسجلين. أنا المطور الوحيد عليها. بنيت نظام تسجيل الطلاب وإدارتهم، والفوترة وإصدار الفواتير، ولوحات التقارير الإدارية اللي المعهد بيشتغل عليها، وبصيانة المنصة لوحدي.',
             features: [
-              'كتالوج دورات كامل لتلاوة وحفظ القرآن بالتجويد، واللغة العربية، والعلوم الشرعية',
-              'لوحات تحكم منفصلة للطالب والمعلم والإدارة مع نظام صلاحيات كامل',
-              'جدولة وحجز الحصص المباشرة مع إدارة أوقات توفر المعلمين',
-              'خطط اشتراك وتسجيل للأطفال والكبار من المستوى المبتدئ للمتقدم',
-              'تتبع تقدم الطالب والحضور وسجل الحصص لكل متعلم',
-              'واجهة ثنائية اللغة (عربي/إنجليزي) بدعم RTL كامل وتحسين محركات البحث'
+              'مطور وحيد، بنيتها وبصيانتها لوحدي',
+              'تعمل فعلياً وتخدم آلاف الطلاب المسجلين',
+              'نظام تسجيل الطلاب وإدارتهم',
+              'الفوترة وإصدار الفواتير',
+              'لوحات التقارير الإدارية اللي المعهد بيشتغل عليها',
+              'عربية و RTL بالكامل، بما فيها الواجهات المالية والمليانة بيانات',
+              'مبنية بـ Next.js و Laravel'
             ]
           },
           medicta: {
@@ -1127,13 +1138,15 @@ const resources = {
             ]
           },
           indstrz: {
-            title: 'Indstrz – منصة تجارة صناعية B2B',
-            desc: 'منصة مشتريات B2B متكاملة وقابلة للتوسع تدعم دورات عمل RFQ الرقمية، المفاوضات اللحظية، وإدارة المحادثات المؤتمتة.',
+            title: 'Indstrz، منصة صناعية B2B',
+            desc: 'منصة مشتريات B2B بدورات عمل RFQ رقمية ومفاوضات لحظية وإدارة محادثات مؤتمتة. تم اختيارها ضمن برنامج Venture Ready، المنفَّذ بواسطة Plug and Play بدعم من GIZ Egypt و ITIDA، ومستضاف في مراكز Creativa للابتكار بالإسكندرية.',
             features: [
-              'دورات عمل RFQ رقمية متكاملة بين المشترين والموردين المعتمدين',
+              'مختارة ضمن برنامج Venture Ready من Plug and Play بدعم GIZ Egypt و ITIDA',
+              'مستضافة في مراكز Creativa للابتكار بالإسكندرية',
+              'دورات عمل RFQ رقمية بين المشترين والموردين المعتمدين',
               'نظام مراسلة وإشعارات لحظي باستخدام Socket.io',
-              'نظام صلاحيات RBAC آمن مع إدارة الجلسات وتعدد الأدوار',
-              'هندسة برمجية قائمة على Modular Application Factory Pattern'
+              'نظام صلاحيات قائم على الأدوار مع إبطال توكن JWT',
+              'معمارية طبقية بنمط Modular Application Factory'
             ]
           },
           uduipa: {
@@ -1479,9 +1492,10 @@ const resources = {
             location: 'عن بُعد، مصر',
             period: '01/2024 - الحالي',
             description: [
-              'شريك مؤسس لمنصة Indstrz، وهي سوق صناعي B2B يهدف لتسهيل عمليات التوريد الصناعي',
-              'تصميم وبرمجة دورة عمل طلبات العروض (RFQ) الرقمية ومحرك المفاوضات اللحظية',
-              'قيادة التطوير التقني للمنصة باستخدام Next.js و Flask و PostgreSQL'
+              'شريك مؤسس لمنصة Indstrz، منصة صناعية B2B للتوريد الصناعي',
+              'تم اختيار المنصة ضمن برنامج Venture Ready، المنفَّذ بواسطة Plug and Play بدعم من GIZ Egypt و ITIDA، ومستضاف في مراكز Creativa للابتكار بالإسكندرية',
+              'بناء دورة عمل طلبات العروض (RFQ) الرقمية ومحرك المفاوضات اللحظية',
+              'قيادة التطوير التقني باستخدام Next.js و Flask و PostgreSQL'
             ]
           },
           {
@@ -1552,8 +1566,7 @@ const resources = {
         technologies: 'تقنية تم إتقانها',
         years: 'سنوات الخبرة',
         students: 'طالباً تم تدريسهم',
-        clients: 'عميل تم خدمتهم',
-        hours: 'ساعة برمجة'
+        clients: 'عميل تم خدمتهم'
       },
       certifications: {
         title: 'الدورات والشهادات',
@@ -1613,6 +1626,16 @@ const resources = {
               'تدفقات عمل CI/CD و Docker',
               'موازنة الأحمال والتوسع',
               'استشارات تقنية متخصصة'
+            ]
+          },
+          {
+            title: 'استلام الأكواد القديمة والتدقيق التقني',
+            desc: 'أستلم المشاريع الموروثة والمتوقفة. التدقيق بيجي الأول، عشان تعرف إيه الغلط وإيه تكلفته قبل ما يبدأ أي شغل.',
+            features: [
+              'تدقيق كامل للكود الموروث مع تقرير مكتوب',
+              'تقدير واضح لتكلفة الإصلاح قبل بدء أي عمل',
+              'إصلاح الأخطاء وإعادة الهيكلة وتحسين الأداء على أنظمة تعمل فعلياً',
+              'استلام المشاريع اللي سابها مطور سابق'
             ]
           }
         ]
@@ -1728,49 +1751,47 @@ const resources = {
           stack: 'التقنيات المستخدمة'
         },
         bilqalam: {
-          title: 'معهد بالقلم — بناء أكاديمية أونلاين من الصفر للنهاية',
-          summary: 'منصة تعليمية متكاملة لمعهد متخصص في تعليم القرآن الكريم واللغة العربية والعلوم الشرعية أونلاين — من تصميم قاعدة البيانات لآخر تفصيلة في لوحة الطالب.',
+          title: 'معهد بالقلم، أكاديمية أونلاين بناها ويديرها مطور واحد',
+          summary: 'منصة تعليمية تعمل فعلياً لمعهد متخصص في تعليم القرآن الكريم واللغة العربية والعلوم الشرعية أونلاين، وبتخدم آلاف الطلاب المسجلين. أنا المطور الوحيد عليها.',
           facts: {
-            role: 'المطور الوحيد — الواجهة والخلفية والبنية التحتية',
-            scope: 'منصة كاملة: الموقع، لوحات التحكم، الجدولة، الاشتراكات',
-            audience: 'طلاب ناطقين وغير ناطقين بالعربية حول العالم'
+            role: 'المطور الوحيد، بنيتها وبصيانتها لوحدي',
+            scope: 'تسجيل الطلاب وإدارتهم، الفوترة والفواتير، التقارير الإدارية',
+            audience: 'آلاف الطلاب المسجلين'
           },
           challenge: {
-            body: 'تعليم القرآن والعربية أونلاين مش نفس مشكلة بيع دورات مسجلة. الحصص مباشرة وفردية، كل معلم له أوقات توفر خاصة، كل طالب بيتقدم بسرعته، والتجربة كلها لازم تكون طبيعية بالعربي وفي نفس الوقت مفهومة لطالب مش بيقرأ عربي. منصات الدورات الجاهزة مبنية على فيديو مسجل ولغة واحدة، فمفيش واحدة فيهم كانت مناسبة.',
+            body: 'معهد بحجم ده مش ممكن يشتغل على ملفات إكسل ورسايل واتساب. محتاج يسجّل الطلاب، ويعرف مين في أي برنامج، ويحصّل منهم، ويصدر فواتير، ويدي الإدارة أرقام تقدر تتصرف على أساسها. وكل ده لازم يشتغل بالعربي، بما فيه الواجهات المالية والمليانة بيانات اللي أغلب القوالب بتفشل فيها.',
             points: [
-              'حصص مباشرة فردية بدلاً من محتوى مسجل',
-              'أوقات توفر المعلمين بتتغير من أسبوع للتاني',
-              'تتبع التقدم لكل طالب على حدة مش لكل دورة',
-              'تجربة عربية أولاً وبتشتغل بالإنجليزي كذلك'
+              'آلاف الطلاب المسجلين محتاجين متابعة',
+              'فوترة وفواتير مربوطة بالتسجيل',
+              'الإدارة محتاجة تقارير تقدر تتصرف عليها',
+              'عربية و RTL في الواجهات المالية والمليانة بيانات'
             ]
           },
           approach: {
-            body: 'صمّمت المنصة حول الجدولة والأشخاص بدلاً من كتالوج فيديوهات. المعلم والطالب والإدارة كل واحد له لوحة تحكم فيها اللي يحتاجه بس. أوقات التوفر والحجوزات والتقدم اتصمّموا كبيانات أساسية من البداية، فالجدول بقى المصدر الوحيد للحقيقة ومفيش حاجة بتتظبط يدوي.',
+            body: 'بنيتها كنظام واحد مش أدوات متلزقة ببعض، فالتسجيل والفوترة والتقارير بيقروا من نفس البيانات. الواجهة بـ Next.js والخلفية بـ Laravel. الـ RTL اتصمم من البداية مش اتضاف بعدين، لأن الجداول والفواتير وشاشات التقارير هي بالظبط المكان اللي بيتكسر فيه التخطيط من اليمين لليسار.',
             points: [
-              'معمارية قائمة على الأدوار: طالب، معلم، إدارة',
-              'أوقات التوفر والحجوزات كنماذج بيانات أساسية',
-              'نظام تصميم RTL أولاً بينعكس بنظافة للإنجليزي',
-              'مهام خلفية للتذكيرات والإشعارات'
+              'التسجيل والفوترة والتقارير على نفس البيانات',
+              'واجهة Next.js وخلفية Laravel',
+              'RTL مصمم من البداية مش مضاف لاحقاً',
+              'مطور واحد، فالمعمارية فضلت متسقة'
             ]
           },
           delivered: {
-            body: 'النتيجة منصة المعهد يقدر يدير بيها شغله اليومي فعلياً: تسجيل الطلاب، توزيع المعلمين، جدولة وتعديل الحصص، متابعة الحضور والتقدم، وإدارة الاشتراكات — كل ده من داخل النظام.',
+            body: 'المعهد بيدير شغله اليومي على المنصة. بنيت كل جزء فيها وبصيانتها لوحدي.',
             points: [
-              'كتالوج دورات للقرآن والتجويد واللغة العربية والعلوم الشرعية',
-              'جدولة حصص مباشرة مع إدارة أوقات توفر المعلمين',
-              'لوحات تحكم للطالب والمعلم والإدارة مع نظام صلاحيات',
-              'خطط اشتراك وتسجيل للأطفال والكبار',
-              'متابعة الحضور وسجل الحصص وتقدم كل طالب',
-              'واجهة ثنائية اللغة عربي/إنجليزي بدعم RTL كامل'
+              'نظام تسجيل الطلاب وإدارتهم',
+              'الفوترة وإصدار الفواتير',
+              'لوحات التقارير الإدارية اللي المعهد بيشتغل عليها',
+              'عربية و RTL بالكامل، بما فيها الواجهات المالية والمليانة بيانات',
+              'تعمل فعلياً وتخدم آلاف الطلاب المسجلين'
             ]
           },
           outcome: {
-            body: 'المعهد بقى يشتغل على نظام واحد بدل خليط من ملفات الإكسل ورسايل الواتس والجدولة اليدوية. إضافة معلم أو فتح دورة جديدة أو تسجيل طالب بقت مجرد استمارة مش عملية تنسيق، والكود مبني بشكل يسمح بإضافة برامج جديدة بدون المساس بنواة الجدولة.',
+            body: 'المنصة شغالة فعلياً والمعهد بيشتغل عليها. دي المشروع اللي بشاور عليه لما عميل يسألني أقدر أبني نظام حقيقي وأشيله لوحدي ولا لأ، لأن ده بالظبط اللي هو.',
             points: [
-              'توحيد كل العمليات في منصة واحدة',
-              'الجدولة والتسجيل بدون تنسيق يدوي',
-              'إضافة دورات ومعلمين بدون تعديل في الكود',
-              'معمارية جاهزة لبرامج إضافية وللتوسع'
+              'تعمل فعلياً وفي استخدام يومي',
+              'مبنية ومُصانة بواسطة مطور واحد',
+              'توحيد العمليات في نظام واحد'
             ]
           }
         }
@@ -1845,7 +1866,8 @@ const resources = {
           phone: 'رقم الهاتف',
           location: 'الموقع',
           linkedin: 'لينكد إن',
-          alexandria: 'الإسكندرية، مصر'
+          alexandria: 'الإسكندرية، مصر',
+          show_phone: 'إظهار رقم الهاتف'
         },
         form: {
           name: 'الاسم',
@@ -1880,7 +1902,7 @@ const resources = {
       },
       footer: {
         about_title: 'بلال ناجي',
-        about_text: 'مطور ويب متكامل (Full Stack) شغوف ببناء تطبيقات ويب متكاملة، عالية الأداء، وتحويل الأفكار المعقدة إلى تجارب مستخدم أنيقة وسلسة.',
+        about_text: 'أبني منصات ويب من الصفر، وأستلم الأكواد القائمة اللي محتاجة إصلاح. ٣١ مشروعاً لـ ٢٧ عميلاً في مصر والخليج.',
         quick_links: 'روابط سريعة',
         services: 'الخدمات',
         get_in_touch: 'تواصل معي',

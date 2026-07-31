@@ -6,6 +6,7 @@ import {
   FaServer,
   FaGlobe,
   FaShieldAlt,
+  FaWrench,
 } from "react-icons/fa";
 import { useTranslation } from 'react-i18next';
 
@@ -20,6 +21,7 @@ const Services = () => {
       { icon: <FaServer />, color: "from-emerald-600 to-teal-400" },
       { icon: <FaGlobe />, color: "from-purple-600 to-pink-400" },
       { icon: <FaShieldAlt />, color: "from-orange-600 to-amber-400" },
+      { icon: <FaWrench />, color: "from-rose-600 to-red-400" },
     ];
 
     return list.map((item, index) => ({

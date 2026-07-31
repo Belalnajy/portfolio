@@ -2,16 +2,7 @@
 
 import CaseStudy from '../../../components/CaseStudy';
 
-const STACK = [
-  'Next.js',
-  'React',
-  'TypeScript',
-  'Django',
-  'PostgreSQL',
-  'Tailwind',
-  'Celery',
-  'Redis',
-];
+const STACK = ['Next.js', 'React', 'Laravel', 'PHP', 'Tailwind'];
 
 export default function BilqalamCaseStudyPage() {
   return (
