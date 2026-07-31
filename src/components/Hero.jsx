@@ -100,10 +100,6 @@ const Hero = ({ onDownloadCV }) => {
                 {t('hero.description_4')}
               </span>
               {t('hero.description_5')}
-              <span className="text-[rgb(var(--primary))] font-semibold">
-                {t('hero.company')}
-              </span>
-              .
             </p>
 
             {/* Social Links */}

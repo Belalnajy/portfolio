@@ -25,6 +25,8 @@ import {
   SiCelery,
   SiRedis,
   SiFramer,
+  SiLaravel,
+  SiPhp,
 } from 'react-icons/si';
 import {
   FaGithub,
@@ -112,6 +114,8 @@ export const getTechIcon = (tech) => {
     'Bug Fixing': <FaBug className="text-[#EF4444]" />,
     'UI/UX Redesign': <FaMobileAlt className="text-[#A855F7]" />,
     Tajweed: <FaQuran className="text-[#0E8A5F]" />,
+    Laravel: <SiLaravel className="text-[#FF2D20]" />,
+    PHP: <SiPhp className="text-[#777BB4]" />,
   };
   return (
     iconMap[tech] || <FaCode className="text-[rgb(var(--muted-foreground))]" />
@@ -281,16 +285,7 @@ const Projects = () => {
         title: t('projects.items.bilqalam.title'),
         description: t('projects.items.bilqalam.desc'),
         image: '/bilqalam.png',
-        tags: [
-          'Next.js',
-          'React',
-          'TypeScript',
-          'Django',
-          'PostgreSQL',
-          'Tailwind',
-          'Celery',
-          'Redis',
-        ],
+        tags: ['Next.js', 'React', 'Laravel', 'PHP', 'Tailwind'],
         features: t('projects.items.bilqalam.features', {
           returnObjects: true,
         }),

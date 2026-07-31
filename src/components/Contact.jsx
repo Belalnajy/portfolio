@@ -57,6 +57,10 @@ const Contact = ({ showNotification }) => {
     }
   };
 
+  // The number stays out of the markup until the visitor asks for it, so
+  // scrapers crawling the page never see a tel: link.
+  const [revealedPhone, setRevealedPhone] = useState(false);
+
   const contactInfo = useMemo(
     () => [
       {
@@ -69,8 +73,10 @@ const Contact = ({ showNotification }) => {
       {
         icon: <FaPhone />,
         title: t('contact.info.phone'),
+        // Revealed on click. A plain tel: link on a public page gets scraped.
         value: '01201369949',
         href: 'tel:01201369949',
+        reveal: true,
         color: 'purple',
       },
       {
@@ -133,7 +139,14 @@ const Contact = ({ showNotification }) => {
                   <h3 className="text-xl font-semibold text-[rgb(var(--foreground))] mb-2 text-start">
                     {item.title}
                   </h3>
-                  {item.href ? (
+                  {item.reveal && !revealedPhone ? (
+                    <button
+                      type="button"
+                      onClick={() => setRevealedPhone(true)}
+                      className="text-[rgb(var(--primary))] hover:underline transition-colors text-start block min-h-[32px]">
+                      {t('contact.info.show_phone')}
+                    </button>
+                  ) : item.href ? (
                     <a
                       href={item.href}
                       target={

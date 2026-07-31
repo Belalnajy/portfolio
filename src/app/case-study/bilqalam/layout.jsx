@@ -1,7 +1,7 @@
 export const metadata = {
   title: 'Bilqalam Institute — Case Study',
   description:
-    'How I built Bilqalam Institute end to end: a full-stack online academy for Qur’an, Arabic and Islamic studies with live class scheduling, tutor management, subscriptions and student progress tracking.',
+    'Bilqalam Institute: a production learning platform serving thousands of students, built and maintained by one developer in Next.js and Laravel. Enrollment, billing and invoicing, and admin reporting, fully Arabic and RTL.',
   alternates: {
     canonical: '/case-study/bilqalam',
   },
@@ -9,7 +9,7 @@ export const metadata = {
     type: 'article',
     title: 'Bilqalam Institute — Case Study',
     description:
-      'A full-stack online academy for Qur’an, Arabic and Islamic studies — architecture, delivery and outcome.',
+      'A production learning platform serving thousands of students, built and maintained by one developer.',
   },
 };
 

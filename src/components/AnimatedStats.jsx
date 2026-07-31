@@ -1,63 +1,59 @@
 "use client";
 import { useState, useEffect, useRef, useMemo } from 'react';
-import { motion, useInView } from 'framer-motion';
+import { motion, useInView, useReducedMotion } from 'framer-motion';
 import {
   FaProjectDiagram,
   FaCode,
   FaClock,
   FaAward,
-  FaLaptopCode,
   FaHandshake,
 } from 'react-icons/fa';
 import { useTranslation } from 'react-i18next';
 
 /**
- * Coding hours accrue on their own so the number never goes stale.
- * Baseline is anchored to the last portfolio update; every day after that adds
- * HOURS_PER_DAY. Bump the baseline (and its date) only if the real total shifts.
+ * Renders the final value on the server and counts up only as an enhancement.
+ *
+ * Previously this started at 0 and relied on the client to animate, so the
+ * prerendered HTML shipped `0+` for every stat. Any client-side failure —
+ * a hydration error, a third-party asset that throws — left those zeros on
+ * screen permanently. Now a broken page shows the right number instead.
  */
-const HOURS_BASELINE = 10000;
-const HOURS_BASELINE_DATE = '2026-05-18T00:00:00Z';
-const HOURS_PER_DAY = 17;
-
-const getCodingHours = () => {
-  const elapsedDays = Math.max(
-    0,
-    Math.floor(
-      (Date.now() - new Date(HOURS_BASELINE_DATE).getTime()) / 86_400_000,
-    ),
-  );
-  // Round to the nearest hundred so it reads as an estimate, not a fake precision.
-  return Math.round((HOURS_BASELINE + elapsedDays * HOURS_PER_DAY) / 100) * 100;
-};
-
 const Counter = ({ end, duration = 2 }) => {
-  const [count, setCount] = useState(0);
+  const [count, setCount] = useState(end);
+  const [animating, setAnimating] = useState(false);
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true });
+  const prefersReducedMotion = useReducedMotion();
+
+  // After mount, drop back to zero so the count-up has somewhere to travel
+  // from. The section sits well below the fold, so this is never visible.
+  useEffect(() => {
+    if (prefersReducedMotion) return;
+    setCount(0);
+    setAnimating(true);
+  }, [prefersReducedMotion]);
 
   useEffect(() => {
-    if (!isInView) return;
+    if (!animating || !isInView) return;
 
     let startTime;
     let animationFrame;
 
-    const animate = (timestamp) => {
+    const step = (timestamp) => {
       if (!startTime) startTime = timestamp;
       const progress = (timestamp - startTime) / (duration * 1000);
 
       if (progress < 1) {
         setCount(Math.floor(end * progress));
-        animationFrame = requestAnimationFrame(animate);
+        animationFrame = requestAnimationFrame(step);
       } else {
         setCount(end);
       }
     };
 
-    animationFrame = requestAnimationFrame(animate);
-
+    animationFrame = requestAnimationFrame(step);
     return () => cancelAnimationFrame(animationFrame);
-  }, [end, duration, isInView]);
+  }, [end, duration, isInView, animating]);
 
   // Fixed locale keeps the digits Latin in both languages, matching the design.
   return <span ref={ref}>{count.toLocaleString('en-US')}</span>;
@@ -65,66 +61,47 @@ const Counter = ({ end, duration = 2 }) => {
 
 const AnimatedStats = () => {
   const { t } = useTranslation();
-  // The page is statically prerendered, so the accrued total is resolved after
-  // mount — the baseline keeps server and client markup identical.
-  const [codingHours, setCodingHours] = useState(HOURS_BASELINE);
-
-  useEffect(() => {
-    setCodingHours(getCodingHours());
-  }, []);
 
   const stats = useMemo(
     () => [
       {
         icon: <FaProjectDiagram className="text-4xl" />,
-        value: 35,
+        value: 31,
         suffix: '+',
         label: t('stats.projects'),
-        color: 'from-blue-500 to-cyan-500',
       },
       {
         icon: <FaHandshake className="text-4xl" />,
-        value: 25,
+        value: 27,
         suffix: '+',
         label: t('stats.clients'),
-        color: 'from-amber-500 to-yellow-500',
-      },
-      {
-        icon: <FaLaptopCode className="text-4xl" />,
-        value: codingHours,
-        suffix: '+',
-        label: t('stats.hours'),
-        color: 'from-indigo-500 to-blue-500',
       },
       {
         icon: <FaCode className="text-4xl" />,
-        value: 35,
+        value: 20,
         suffix: '+',
         label: t('stats.technologies'),
-        color: 'from-purple-500 to-pink-500',
       },
       {
         icon: <FaClock className="text-4xl" />,
-        value: 3,
+        value: 2,
         suffix: '+',
         label: t('stats.years'),
-        color: 'from-orange-500 to-red-500',
       },
       {
         icon: <FaAward className="text-4xl" />,
         value: 240,
         suffix: '+',
         label: t('stats.students'),
-        color: 'from-green-500 to-emerald-500',
       },
     ],
-    [t, codingHours],
+    [t],
   );
 
   return (
     <section className="py-20 relative">
       <div className="container mx-auto px-6">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6 lg:gap-8">
           {stats.map((stat, index) => (
             <motion.div
               key={index}

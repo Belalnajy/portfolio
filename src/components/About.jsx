@@ -5,9 +5,9 @@ import {
   FaCode,
   FaGraduationCap,
   FaMapMarkerAlt,
-  FaRocket,
-  FaHeart,
-  FaLightbulb,
+  FaUserCog,
+  FaLayerGroup,
+  FaLanguage,
 } from 'react-icons/fa';
 import { useTranslation, Trans } from 'react-i18next';
 
@@ -15,21 +15,22 @@ const About = () => {
   const { t, i18n } = useTranslation();
   const isArabic = i18n.language === 'ar';
 
+  // Verifiable facts rather than self-description.
   const highlights = [
     {
-      icon: <FaRocket />,
-      title: t('about.highlights.fast_learner.title'),
-      description: t('about.highlights.fast_learner.desc'),
+      icon: <FaUserCog />,
+      title: t('about.highlights.sole_developer.title'),
+      description: t('about.highlights.sole_developer.desc'),
     },
     {
-      icon: <FaHeart />,
-      title: t('about.highlights.passionate.title'),
-      description: t('about.highlights.passionate.desc'),
+      icon: <FaLayerGroup />,
+      title: t('about.highlights.multi_tenant.title'),
+      description: t('about.highlights.multi_tenant.desc'),
     },
     {
-      icon: <FaLightbulb />,
-      title: t('about.highlights.creative.title'),
-      description: t('about.highlights.creative.desc'),
+      icon: <FaLanguage />,
+      title: t('about.highlights.arabic_first.title'),
+      description: t('about.highlights.arabic_first.desc'),
     },
   ];
 

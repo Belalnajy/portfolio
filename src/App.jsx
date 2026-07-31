@@ -9,6 +9,7 @@ import About from './components/About';
 import InteractiveTimeline from './components/InteractiveTimeline';
 import Projects from './components/Projects';
 import PlatformSuite from './components/PlatformSuite';
+import SectionErrorBoundary from './components/SectionErrorBoundary';
 import HowIWork from './components/HowIWork';
 import Packages from './components/Packages';
 import BrandLogos from './components/BrandLogos';
@@ -125,9 +126,15 @@ function App() {
         <main className="relative z-10">
           <Hero onDownloadCV={handleDownloadCV} />
           <About />
-          <Projects />
+          {/* The suite is the strongest proof on the page, so it sits above the
+              31-card project grid rather than below it. */}
           <PlatformSuite />
-          <LaptopShowcase3D />
+          <Projects />
+          {/* Pulls an HDR map from an external CDN; contained so a failed fetch
+              cannot tear down the rest of the page. */}
+          <SectionErrorBoundary>
+            <LaptopShowcase3D />
+          </SectionErrorBoundary>
           <BrandLogos />
           <Skills />
           <InteractiveTimeline />
