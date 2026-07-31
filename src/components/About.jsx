@@ -134,7 +134,7 @@ const About = () => {
                 <Trans i18nKey="about.summary_p2" components={{ 1: <span className="text-[rgb(var(--primary))] font-semibold" />, 3: <span className="text-[rgb(var(--primary))] font-semibold" /> }} />
               </p>
               <p className="text-[rgb(var(--foreground))] leading-relaxed">
-                {t('about.summary_p3')}
+                <Trans i18nKey="about.summary_p3" components={{ 1: <span className="text-[rgb(var(--primary))] font-semibold" />, 3: <span className="text-[rgb(var(--primary))] font-semibold" /> }} />
               </p>
             </div>
           </motion.div>

@@ -1,7 +1,7 @@
 "use client";
 import { useRef, useState, useEffect, Suspense, useCallback } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
-import { Float, ContactShadows, Environment, useTexture, Html } from '@react-three/drei';
+import { Float, ContactShadows, Environment, Lightformer, useTexture, Html } from '@react-three/drei';
 import * as THREE from 'three';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
@@ -280,7 +280,20 @@ const LaptopShowcase3D = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [mousePos, setMousePos] = useState(null);
   const [isVisible, setIsVisible] = useState(false);
+  // WebGL is gated to larger screens. The model preloads every project
+  // screenshot as a texture, which decodes to roughly 190MB on top of the
+  // Three.js runtime: enough to get the renderer killed on a phone. Phones get
+  // the same carousel as plain images instead.
+  const [canRender3D, setCanRender3D] = useState(false);
   const sectionRef = useRef(null);
+
+  useEffect(() => {
+    const query = window.matchMedia('(min-width: 1024px)');
+    const sync = () => setCanRender3D(query.matches);
+    sync();
+    query.addEventListener('change', sync);
+    return () => query.removeEventListener('change', sync);
+  }, []);
 
   // Auto-cycle through projects
   useEffect(() => {
@@ -472,7 +485,7 @@ const LaptopShowcase3D = () => {
             {/* Ambient glow behind canvas */}
             <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_rgba(96,165,250,0.08)_0%,transparent_70%)] rounded-3xl pointer-events-none" />
 
-            {isVisible ? (
+            {isVisible && canRender3D ? (
               <Canvas
                 camera={{ position: [0, 0.6, 4.4], fov: 40 }}
                 gl={{
@@ -528,13 +541,62 @@ const LaptopShowcase3D = () => {
                   />
 
                   {/* Realistic environment reflections */}
-                  <Environment preset="city" />
+                  <Environment resolution={256}>
+                    {/* Dim, tightly-scoped reflections: the shell is nearly
+                        pure metal, so a broad bright source blows it out to
+                        white instead of reading as dark aluminium. */}
+                    <Lightformer
+                      intensity={0.55}
+                      position={[0, 5, -6]}
+                      scale={[6, 3, 1]}
+                      color="#dbe6ff"
+                    />
+                    <Lightformer
+                      intensity={0.7}
+                      position={[-6, 1.5, 2]}
+                      scale={[6, 1.2, 1]}
+                      color="#60A5FA"
+                    />
+                    <Lightformer
+                      intensity={0.5}
+                      position={[6, 0.5, 2]}
+                      scale={[6, 1.2, 1]}
+                      color="#A855F7"
+                    />
+                  </Environment>
                 </Suspense>
               </Canvas>
             ) : (
               /* Pre-visibility placeholder */
-              <div className="absolute inset-0 flex items-center justify-center">
-                <div className="w-12 h-12 border-[3px] border-[rgb(var(--primary))]/20 border-t-[rgb(var(--primary))] rounded-full animate-spin" />
+              <div className="absolute inset-0 flex items-center justify-center p-2">
+                {canRender3D ? (
+                  <div className="w-12 h-12 border-[3px] border-[rgb(var(--primary))]/20 border-t-[rgb(var(--primary))] rounded-full animate-spin" />
+                ) : (
+                  <AnimatePresence mode="wait">
+                    <motion.div
+                      key={currentIndex}
+                      initial={{ opacity: 0, y: 12 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: -12 }}
+                      transition={{ duration: 0.35 }}
+                      className="w-full rounded-2xl overflow-hidden border border-[rgb(var(--border))]/50 bg-[#0B0F19] shadow-2xl">
+                      <div className="flex items-center gap-1.5 px-3 py-2 border-b border-[rgb(var(--border))]/40">
+                        <span className="w-2 h-2 rounded-full bg-red-500/70" />
+                        <span className="w-2 h-2 rounded-full bg-yellow-500/70" />
+                        <span className="w-2 h-2 rounded-full bg-green-500/70" />
+                      </div>
+                      <img
+                        src={SHOWCASE_PROJECTS[currentIndex].image}
+                        alt={t(
+                          `projects.items.${SHOWCASE_PROJECTS[currentIndex].key}.title`,
+                        )}
+                        loading="lazy"
+                        decoding="async"
+                        className="w-full h-auto"
+                      />
+                    </motion.div>
+                  </AnimatePresence>
+                )}
               </div>
             )}
           </motion.div>
