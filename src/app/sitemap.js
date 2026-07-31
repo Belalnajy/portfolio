@@ -1,4 +1,4 @@
-const SITE_URL = 'https://belalnajy.com';
+const SITE_URL = 'https://belalnagy.com';
 
 export default function sitemap() {
   const lastModified = new Date();
