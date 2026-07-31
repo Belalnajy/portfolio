@@ -1400,19 +1400,24 @@ const resources = {
 };
 
 i18n
-  .use(LanguageDetector)
   .use(initReactI18next)
   .init({
     resources,
-    lng: typeof window !== 'undefined' ? undefined : 'en',
+    lng: 'en',
     fallbackLng: 'en',
-    detection: {
-      order: ['localStorage', 'navigator'],
-      caches: ['localStorage'],
-    },
     interpolation: {
       escapeValue: false
     }
   });
+
+// Detect saved language AFTER init to avoid SSR/client hydration mismatch.
+// This runs synchronously on the client before React renders,
+// but only reads from localStorage (not navigator) so it's deterministic.
+if (typeof window !== 'undefined') {
+  const savedLng = localStorage.getItem('i18nextLng');
+  if (savedLng && savedLng !== 'en') {
+    i18n.changeLanguage(savedLng);
+  }
+}
 
 export default i18n;
