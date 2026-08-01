@@ -36,7 +36,11 @@ const readTokens = (selector) => {
   }
   const block = src.slice(open, i);
   const out = {};
-  for (const m of block.matchAll(/--([a-z0-9-]+):\s*(\d+)\s+(\d+)\s+(\d+)\s*;/g)) {
+  // Accent tokens are declared as `var(--override, r g b)` so the in-page
+  // picker can drive them; read the fallback, which is the shipped default.
+  for (const m of block.matchAll(
+    /--([a-z0-9-]+):\s*(?:var\(--[a-z0-9-]+,\s*)?(\d+)\s+(\d+)\s+(\d+)\s*\)?\s*;/g,
+  )) {
     out[m[1]] = [Number(m[2]), Number(m[3]), Number(m[4])];
   }
   return out;
@@ -120,6 +124,43 @@ for (const [themeName, T] of [['LIGHT', light], ['DARK', dark]]) {
     console.log(
       `  ${label.padEnd(44)}${hex(fg).padEnd(9)}${hex(effectiveBg).padEnd(9)}` +
         `${r.toFixed(2).padStart(7)}:1${String(need).padStart(6)}   ${ok ? 'pass' : 'FAIL'}`,
+    );
+  }
+}
+
+/* ---- accent presets from the in-page picker ----
+   Each preset replaces the accent in both themes, so each needs its own check.
+   Values mirror ThemeSwitcher.jsx. */
+const PRESETS = [
+  { name: 'copper', light: { accent: [158, 100, 24], hover: [130, 82, 20], subtle: [249, 246, 241] }, dark: { accent: [200, 127, 30], hover: [210, 150, 70], subtle: [56, 36, 8] } },
+  { name: 'blue', light: { accent: [50, 110, 209], hover: [41, 90, 171], subtle: [243, 246, 252] }, dark: { accent: [59, 130, 246], hover: [94, 152, 248], subtle: [14, 30, 57] } },
+  { name: 'purple', light: { accent: [148, 75, 217], hover: [121, 62, 178], subtle: [249, 244, 253] }, dark: { accent: [168, 85, 247], hover: [184, 116, 248], subtle: [32, 16, 47] } },
+  { name: 'green', light: { accent: [22, 130, 62], hover: [18, 107, 51], subtle: [241, 248, 243] }, dark: { accent: [34, 197, 94], hover: [74, 207, 123], subtle: [13, 73, 35] } },
+  { name: 'orange', light: { accent: [163, 95, 39], hover: [134, 78, 32], subtle: [249, 244, 240] }, dark: { accent: [251, 146, 60], hover: [252, 166, 95], subtle: [95, 55, 23] } },
+  { name: 'pink', light: { accent: [196, 60, 127], hover: [161, 49, 104], subtle: [252, 245, 249] }, dark: { accent: [236, 72, 153], hover: [239, 105, 171], subtle: [61, 19, 40] } },
+  { name: 'cyan', light: { accent: [4, 124, 144], hover: [3, 102, 118], subtle: [240, 247, 248] }, dark: { accent: [6, 182, 212], hover: [51, 195, 220], subtle: [2, 67, 78] } },
+];
+
+console.log(`\n${'='.repeat(86)}\n  ACCENT PRESETS (in-page picker)\n${'='.repeat(86)}`);
+console.log(`  ${'preset'.padEnd(10)}${'theme'.padEnd(7)}${'accent/page'.padStart(12)}${'text/fill'.padStart(11)}${'text/hover'.padStart(12)}${'accent/chip'.padStart(13)}`);
+console.log('  ' + '-'.repeat(72));
+for (const p of PRESETS) {
+  for (const [themeName, T, variant, onFill] of [
+    ['light', light, p.light, [255, 255, 255]],
+    ['dark', dark, p.dark, dark['accent-contrast']],
+  ]) {
+    const checks = [
+      ratio(variant.accent, T.bg),
+      ratio(onFill, variant.accent),
+      ratio(onFill, variant.hover),
+      ratio(variant.accent, variant.subtle),
+    ];
+    const bad = checks.filter((r) => r < 4.5).length;
+    if (bad) failures += bad;
+    console.log(
+      `  ${p.name.padEnd(10)}${themeName.padEnd(7)}` +
+        checks.map((r) => `${r.toFixed(2)}:1`.padStart(12)).join('') +
+        (bad ? '   FAIL' : ''),
     );
   }
 }

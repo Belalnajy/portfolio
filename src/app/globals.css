@@ -162,10 +162,13 @@
   --border-control: 94 101 108;      /* #5E656C  inputs and controls, 3:1 */
   --text: 232 237 242;               /* #E8EDF2 */
   --muted-text: 147 161 176;         /* #93A1B0 */
-  --accent: 224 160 60;              /* #E0A03C copper */
-  --accent-hover: 230 177 95;        /* #E6B15F */
-  --accent-subtle: 36 27 14;         /* #241B0E  chip / badge fill */
-  --accent-contrast: 16 23 31;       /* #10171F  text on an accent fill */
+  /* The in-page accent picker sets --accent-*-dark / --accent-*-light on the
+     root. Each theme reads its own, so one picker choice stays contrast-correct
+     in both. Defaults below are copper, the house accent. */
+  --accent: var(--accent-dark, 200 127 30);              /* #C87F1E copper */
+  --accent-hover: var(--accent-hover-dark, 210 150 70);
+  --accent-subtle: var(--accent-subtle-dark, 56 36 8);
+  --accent-contrast: 16 23 31;       /* #10171F  ink text on an accent fill */
   --success: 69 212 131;             /* #45D483 */
   --danger: 249 112 102;             /* #F97066 */
   --scrim: 11 15 20;                 /* overlay behind text on imagery */
@@ -220,9 +223,9 @@
   --border-control: 139 143 147;     /* #8B8F93  inputs and controls, 3:1 */
   --text: 16 23 31;                  /* #10171F */
   --muted-text: 86 101 117;          /* #566575 */
-  --accent: 143 94 18;               /* #8F5E12 copper, darkened for light bg */
-  --accent-hover: 117 77 15;         /* #754D0F */
-  --accent-subtle: 246 238 225;      /* #F6EEE1 */
+  --accent: var(--accent-light, 158 100 24);             /* #9E6418 copper on a light bg */
+  --accent-hover: var(--accent-hover-light, 130 82 20);
+  --accent-subtle: var(--accent-subtle-light, 249 246 241);
   --accent-contrast: 255 255 255;    /* white text on an accent fill */
   --success: 20 108 67;              /* #146C43 */
   --danger: 180 35 24;               /* #B42318 */
