@@ -14,7 +14,7 @@ const ProjectSkeleton = ({ index }) => {
       </div>
 
       {/* Image Skeleton */}
-      <div className="relative aspect-video w-full overflow-hidden bg-gray-900">
+      <div className="relative aspect-video w-full overflow-hidden bg-[rgb(var(--card))]">
         <div className="w-full h-full bg-[rgb(var(--muted))] animate-pulse" />
       </div>
 

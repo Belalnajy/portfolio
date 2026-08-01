@@ -40,9 +40,9 @@ const Hero = ({ onDownloadCV }) => {
       {/* Animated Background */}
       <div className="absolute inset-0 w-full h-full overflow-hidden">
         {/* Animated Gradient Orbs */}
-        <div className="absolute top-0 -left-4 w-72 h-72 bg-blue-500 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-blob" />
+        <div className="absolute top-0 -left-4 w-72 h-72 bg-[rgb(var(--accent))] rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-blob" />
         <div className="absolute top-0 -right-4 w-72 h-72 bg-blue-400 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-blob animation-delay-2000" />
-        <div className="absolute -bottom-8 left-20 w-72 h-72 bg-blue-600 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-blob animation-delay-4000" />
+        <div className="absolute -bottom-8 left-20 w-72 h-72 bg-[rgb(var(--accent))] rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-blob animation-delay-4000" />
 
         {/* Grid Pattern */}
         <div className="absolute inset-0 w-full h-full bg-[radial-gradient(#1d4ed8_1px,transparent_1px)] bg-[size:20px_20px] opacity-10" />
@@ -60,7 +60,7 @@ const Hero = ({ onDownloadCV }) => {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 0.5, delay: 0.3 }}>
-              <span className="inline-block px-5 py-2 rounded-full bg-blue-500/10 border border-blue-500/30 text-blue-400 text-sm font-medium mb-6">
+              <span className="inline-block px-5 py-2 rounded-full bg-[rgb(var(--accent))]/10 border border-[rgb(var(--accent))]/30 text-[rgb(var(--accent))] text-sm font-medium mb-6">
                 {t('hero.welcome')}
               </span>
             </motion.div>
@@ -114,7 +114,7 @@ const Hero = ({ onDownloadCV }) => {
                 rel="noopener noreferrer"
                 whileHover={{ scale: 1.2, rotate: 5 }}
                 whileTap={{ scale: 0.9 }}
-                className="p-3 rounded-full bg-gradient-to-r from-gray-800 to-gray-700 text-white hover:from-blue-600 hover:to-purple-600 transition-all shadow-lg hover:shadow-blue-500/50">
+                className="p-3 rounded-full bg-gradient-to-r from-gray-800 to-gray-700 text-white hover:from-blue-600 hover:to-purple-600 transition-all shadow-lg hover:shadow-[rgb(var(--accent))]/50">
                 <FaGithub className="w-6 h-6" />
               </motion.a>
               <motion.a
@@ -123,7 +123,7 @@ const Hero = ({ onDownloadCV }) => {
                 rel="noopener noreferrer"
                 whileHover={{ scale: 1.2, rotate: -5 }}
                 whileTap={{ scale: 0.9 }}
-                className="p-3 rounded-full bg-gradient-to-r from-[#0A66C2] to-[#004182] text-white hover:shadow-lg hover:shadow-blue-500/50 transition-all">
+                className="p-3 rounded-full bg-gradient-to-r from-[#0A66C2] to-[#004182] text-white hover:shadow-lg hover:shadow-[rgb(var(--accent))]/50 transition-all">
                 <FaLinkedin className="w-6 h-6" />
               </motion.a>
             </motion.div>
@@ -140,7 +140,7 @@ const Hero = ({ onDownloadCV }) => {
                 smooth={true}
                 duration={300}
                 offset={-70}>
-                <MagneticButton className="bg-[rgb(var(--primary))] text-white px-8 py-3 rounded-lg font-semibold hover:bg-[rgb(var(--primary))]/90 transition-all">
+                <MagneticButton className="bg-[rgb(var(--primary))] text-[rgb(var(--accent-contrast))] px-8 py-3 rounded-lg font-semibold hover:bg-[rgb(var(--primary))]/90 transition-all">
                   {t('hero.view_projects')}
                 </MagneticButton>
               </Link>
@@ -150,7 +150,7 @@ const Hero = ({ onDownloadCV }) => {
                 smooth={true}
                 duration={300}
                 offset={-70}>
-                <MagneticButton className="border-2 border-[rgb(var(--primary))] text-[rgb(var(--primary))] px-8 py-3 rounded-lg font-semibold hover:bg-[rgb(var(--primary))] hover:text-white transition-all">
+                <MagneticButton className="border-2 border-[rgb(var(--primary))] text-[rgb(var(--primary))] px-8 py-3 rounded-lg font-semibold hover:bg-[rgb(var(--primary))] hover:text-[rgb(var(--accent-contrast))] transition-all">
                   {t('hero.contact_me')}
                 </MagneticButton>
               </Link>
@@ -185,15 +185,15 @@ const Hero = ({ onDownloadCV }) => {
             className="relative">
             <div className="relative w-full max-w-md mx-auto lg:max-w-full">
               {/* Decorative Elements */}
-              <div className="absolute -inset-4 bg-blue-500/20 rounded-full blur-2xl animate-pulse" />
-              <div className="absolute -inset-4 bg-purple-500/20 rounded-full blur-2xl animate-pulse animation-delay-2000" />
+              <div className="absolute -inset-4 bg-[rgb(var(--accent))]/20 rounded-full blur-2xl animate-pulse" />
+              <div className="absolute -inset-4 bg-[rgb(var(--accent-hover))]/20 rounded-full blur-2xl animate-pulse animation-delay-2000" />
 
               {/* Main Image */}
               <motion.div
                 whileHover={{ scale: 1.02 }}
                 transition={{ duration: 0.3 }}
                 className="relative">
-                <div className="w-full aspect-square rounded-full border-4 border-blue-500/30 overflow-hidden">
+                <div className="w-full aspect-square rounded-full border-4 border-[rgb(var(--accent))]/30 overflow-hidden">
                   <img
                     src="/hero.png"
                     alt="Belal Nagy"
@@ -211,7 +211,7 @@ const Hero = ({ onDownloadCV }) => {
                     repeat: Infinity,
                     ease: 'easeInOut',
                   }}
-                  className="absolute -top-4 -right-4 bg-blue-600 text-white p-4 rounded-full shadow-lg">
+                  className="absolute -top-4 -right-4 bg-[rgb(var(--accent))] text-[rgb(var(--accent-contrast))] p-4 rounded-full shadow-lg">
                   <svg
                     className="w-6 h-6"
                     fill="none"

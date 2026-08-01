@@ -98,7 +98,7 @@ const PlatformSuite = () => {
               whileHover={{ y: -6 }}
               className="group glass-card rounded-2xl overflow-hidden border border-[rgb(var(--border))]/50 hover:border-[rgb(var(--primary))]/40 transition-colors flex flex-col"
             >
-              <div className="relative aspect-video bg-[#0B0F19] overflow-hidden border-b border-[rgb(var(--border))]/30 flex items-center justify-center p-4">
+              <div className="relative aspect-video bg-[rgb(var(--scrim))] overflow-hidden border-b border-[rgb(var(--border))]/30 flex items-center justify-center p-4">
                 <div
                   className="absolute inset-x-0 top-0 h-1 z-10"
                   style={{ backgroundColor: member.accent }}

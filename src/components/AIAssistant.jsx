@@ -436,21 +436,21 @@ const AIAssistant = () => {
             {/* Header */}
             <div className="p-4 bg-gradient-to-r from-blue-600/20 to-purple-600/20 flex items-center justify-between border-b border-[rgb(var(--border))]">
               <div className="flex items-center space-x-3">
-                <div className="p-2 bg-gradient-to-r from-blue-500 to-purple-500 rounded-lg text-white">
+                <div className="p-2 bg-gradient-to-r from-[rgb(var(--accent))] to-[rgb(var(--accent-hover))] rounded-lg text-[rgb(var(--accent-contrast))]">
                   <FaUserAstronaut />
                 </div>
                 <div>
                   <h3 className="font-bold text-[rgb(var(--foreground))]">
                     Belal Smart Assistant
                   </h3>
-                  <p className="text-xs text-green-400">
+                  <p className="text-xs text-[rgb(var(--success))]">
                     Online | Smart Helper
                   </p>
                 </div>
               </div>
               <button
                 onClick={() => setIsOpen(false)}
-                className="text-[rgb(var(--muted-foreground))] hover:text-red-500 transition-colors">
+                className="text-[rgb(var(--muted-foreground))] hover:text-[rgb(var(--destructive))] transition-colors">
                 <FaTimes size={18} />
               </button>
             </div>
@@ -474,7 +474,7 @@ const AIAssistant = () => {
                     <div
                       className={`max-w-[80%] p-3 rounded-2xl text-sm ${
                         msg.sender === 'user'
-                          ? 'bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-tr-none'
+                          ? 'bg-gradient-to-r from-[rgb(var(--accent))] to-[rgb(var(--accent-hover))] text-[rgb(var(--accent-contrast))] rounded-tr-none'
                           : 'glass-card text-[rgb(var(--foreground))] rounded-tl-none border border-[rgb(var(--border))]'
                       }`}
                       dir={
@@ -490,7 +490,7 @@ const AIAssistant = () => {
                     <div className="flex justify-center space-x-4 mt-2">
                       <button
                         onClick={() => handleLanguageSelect('en')}
-                        className="px-4 py-2 bg-blue-600 rounded-xl text-xs font-bold text-white hover:bg-blue-700 transition-all shadow-lg">
+                        className="px-4 py-2 bg-[rgb(var(--accent))] rounded-xl text-xs font-bold text-[rgb(var(--accent-contrast))] hover:bg-blue-700 transition-all shadow-lg">
                         English 🇺🇸
                       </button>
                       <button
@@ -550,7 +550,7 @@ const AIAssistant = () => {
                         onClick={() => setActiveCategory(cat)}
                         className={`px-3 py-1 text-[10px] uppercase font-bold rounded-full transition-all whitespace-nowrap ${
                           activeCategory === cat
-                            ? 'bg-[rgb(var(--primary))] text-white'
+                            ? 'bg-[rgb(var(--primary))] text-[rgb(var(--accent-contrast))]'
                             : 'glass-card text-[rgb(var(--muted-foreground))] hover:text-[rgb(var(--foreground))]'
                         }`}>
                         {cat === 'HR'
@@ -619,7 +619,7 @@ const AIAssistant = () => {
         whileHover={{ scale: 1.1, rotate: 5 }}
         whileTap={{ scale: 0.9 }}
         onClick={() => setIsOpen(!isOpen)}
-        className="w-14 h-14 bg-gradient-to-r from-blue-600 to-purple-600 rounded-full flex items-center justify-center text-white shadow-lg shadow-blue-500/40 relative group border border-white/20">
+        className="w-14 h-14 bg-gradient-to-r from-[rgb(var(--accent))] to-[rgb(var(--accent-hover))] rounded-full flex items-center justify-center text-[rgb(var(--accent-contrast))] shadow-lg shadow-[rgb(var(--accent))]/40 relative group border border-white/20">
         <AnimatePresence mode="wait">
           {isOpen ? (
             <motion.div
@@ -640,12 +640,12 @@ const AIAssistant = () => {
           )}
         </AnimatePresence>
         {!isOpen && (
-          <span className="absolute -top-1 -right-1 w-4 h-4 bg-green-500 rounded-full border-2 border-[rgb(var(--background))] animate-pulse" />
+          <span className="absolute -top-1 -right-1 w-4 h-4 bg-[rgb(var(--success))] rounded-full border-2 border-[rgb(var(--background))] animate-pulse" />
         )}
 
         {/* Tooltip */}
         {!isOpen && (
-          <div className="absolute right-full mr-4 px-3 py-1 bg-gradient-to-r from-blue-600 to-purple-600 text-white text-xs rounded-lg opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none">
+          <div className="absolute right-full mr-4 px-3 py-1 bg-gradient-to-r from-[rgb(var(--accent))] to-[rgb(var(--accent-hover))] text-[rgb(var(--accent-contrast))] text-xs rounded-lg opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none">
             How can I help you?
           </div>
         )}

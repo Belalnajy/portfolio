@@ -112,7 +112,7 @@ const Services = () => {
             href="#contact"
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
-            className="inline-block bg-gradient-to-r from-blue-600 to-purple-600 text-white px-8 py-4 rounded-lg font-semibold shadow-lg hover:shadow-xl transition-all">
+            className="inline-block bg-gradient-to-r from-[rgb(var(--accent))] to-[rgb(var(--accent-hover))] text-[rgb(var(--accent-contrast))] px-8 py-4 rounded-lg font-semibold shadow-lg hover:shadow-xl transition-all">
             {t('services.get_in_touch')}
           </motion.a>
         </motion.div>

@@ -9,9 +9,9 @@ const NotFound = () => {
       {/* Animated Background */}
       <div className="absolute inset-0 w-full h-full overflow-hidden">
         {/* Animated Gradient Orbs */}
-        <div className="absolute top-0 -left-4 w-96 h-96 bg-red-500 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob" />
+        <div className="absolute top-0 -left-4 w-96 h-96 bg-[rgb(var(--destructive))] rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob" />
         <div className="absolute top-0 -right-4 w-96 h-96 bg-orange-500 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-2000" />
-        <div className="absolute -bottom-8 left-20 w-96 h-96 bg-yellow-500 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-4000" />
+        <div className="absolute -bottom-8 left-20 w-96 h-96 bg-[rgb(var(--accent))] rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-4000" />
 
         {/* Grid Pattern */}
         <div className="absolute inset-0 w-full h-full bg-[radial-gradient(#dc2626_1px,transparent_1px)] bg-[size:30px_30px] opacity-10" />
@@ -53,7 +53,7 @@ const NotFound = () => {
               }}
               transition={{ duration: 2, repeat: Infinity }}
               className="inline-block">
-              <FaExclamationTriangle className="text-6xl text-yellow-400" />
+              <FaExclamationTriangle className="text-6xl text-[rgb(var(--accent))]" />
             </motion.div>
           </motion.div>
 
@@ -83,19 +83,19 @@ const NotFound = () => {
             className="mb-12 max-w-md mx-auto">
             <div className="glass-card p-6 rounded-xl text-left">
               <div className="flex items-center space-x-2 mb-3">
-                <div className="w-3 h-3 rounded-full bg-red-500" />
-                <div className="w-3 h-3 rounded-full bg-yellow-500" />
-                <div className="w-3 h-3 rounded-full bg-green-500" />
+                <div className="w-3 h-3 rounded-full bg-[rgb(var(--destructive))]" />
+                <div className="w-3 h-3 rounded-full bg-[rgb(var(--accent))]" />
+                <div className="w-3 h-3 rounded-full bg-[rgb(var(--success))]" />
               </div>
               <code className="text-sm text-[rgb(var(--foreground))] font-mono">
-                <span className="text-purple-400">if</span>
+                <span className="text-[rgb(var(--accent-hover))]">if</span>
                 <span className="text-white"> (</span>
-                <span className="text-blue-400">pageNotFound</span>
+                <span className="text-[rgb(var(--accent))]">pageNotFound</span>
                 <span className="text-white">) {"{"}</span>
                 <br />
                 <span className="text-white ml-4">
                   return{" "}
-                  <span className="text-green-400">"Go back home!"</span>;
+                  <span className="text-[rgb(var(--success))]">"Go back home!"</span>;
                 </span>
                 <br />
                 <span className="text-white">{"}"}</span>
@@ -113,7 +113,7 @@ const NotFound = () => {
               <motion.button
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                className="flex items-center space-x-2 bg-gradient-to-r from-blue-600 to-purple-600 text-white px-8 py-4 rounded-lg font-semibold shadow-lg hover:shadow-xl transition-all">
+                className="flex items-center space-x-2 bg-gradient-to-r from-[rgb(var(--accent))] to-[rgb(var(--accent-hover))] text-[rgb(var(--accent-contrast))] px-8 py-4 rounded-lg font-semibold shadow-lg hover:shadow-xl transition-all">
                 <FaHome />
                 <span>Go Back Home</span>
               </motion.button>
@@ -123,7 +123,7 @@ const NotFound = () => {
               <motion.button
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                className="flex items-center space-x-2 border-2 border-blue-500 text-blue-400 px-8 py-4 rounded-lg font-semibold hover:bg-blue-600 hover:text-white transition-all">
+                className="flex items-center space-x-2 border-2 border-[rgb(var(--accent))] text-[rgb(var(--accent))] px-8 py-4 rounded-lg font-semibold hover:bg-[rgb(var(--accent))] hover:text-[rgb(var(--accent-contrast))] transition-all">
                 <FaRocket />
                 <span>Contact Support</span>
               </motion.button>

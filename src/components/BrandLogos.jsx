@@ -36,8 +36,7 @@ const MarqueeRow = ({ items, direction }) => {
             <img
               src={`/logos/${logo}`}
               alt={`Brand logo`}
-              className="max-w-full max-h-full object-contain transition-all duration-500 grayscale opacity-70 group-hover:grayscale-0 group-hover:opacity-100 group-hover:scale-110 drop-shadow-sm"
-              style={{ filter: 'drop-shadow(0px 0px 15px rgba(var(--foreground), 0.6))' }}
+              className="logo-mark max-w-full max-h-full object-contain group-hover:scale-110"
               loading="lazy"
             />
           </div>

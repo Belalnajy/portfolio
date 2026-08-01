@@ -4,8 +4,8 @@ import { FaCheckCircle, FaExclamationCircle, FaTimes } from "react-icons/fa";
 
 const Notification = ({ message, type = "success", isVisible, onClose }) => {
   const icons = {
-    success: <FaCheckCircle className="text-green-400 text-xl" />,
-    error: <FaExclamationCircle className="text-red-400 text-xl" />
+    success: <FaCheckCircle className="text-[rgb(var(--success))] text-xl" />,
+    error: <FaExclamationCircle className="text-[rgb(var(--destructive))] text-xl" />
   };
 
   return (
@@ -18,7 +18,7 @@ const Notification = ({ message, type = "success", isVisible, onClose }) => {
           transition={{ type: "spring", stiffness: 300, damping: 30 }}
           className="fixed top-24 left-1/2 z-50">
           <div
-            className={`bg-gray-800 border ${type === "success"
+            className={`bg-[rgb(var(--card))] border ${type === "success"
               ? "border-green-500"
               : "border-red-500"} rounded-lg shadow-lg p-4 flex items-center space-x-3 min-w-[300px] backdrop-blur-sm`}>
             {icons[type]}
@@ -27,7 +27,7 @@ const Notification = ({ message, type = "success", isVisible, onClose }) => {
             </p>
             <button
               onClick={onClose}
-              className="text-gray-400 hover:text-white transition-colors focus:outline-none">
+              className="text-[rgb(var(--muted-foreground))] hover:text-white transition-colors focus:outline-none">
               <FaTimes />
             </button>
           </div>

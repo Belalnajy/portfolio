@@ -81,7 +81,7 @@ const PlatformLinks = ({ variant = 'default' }) => {
           whileHover={{ scale: 1.05, y: -5 }}
           whileTap={{ scale: 0.95 }}
           className="group flex items-center gap-3 px-6 py-3 rounded-xl bg-[rgb(var(--card))] border-2 border-[rgb(var(--border))] hover:border-[rgb(var(--primary))] transition-all shadow-lg hover:shadow-xl">
-          <div className="w-12 h-12 flex items-center justify-center bg-white rounded-lg p-2">
+          <div className="w-12 h-12 flex items-center justify-center bg-[rgb(var(--card))] rounded-lg p-2">
             <img src={platform.logo} alt={platform.name} className="w-full h-full object-contain" />
           </div>
           <div className="text-left">

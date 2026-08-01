@@ -106,11 +106,11 @@ const Certifications = () => {
   const getColorClasses = (color) => {
     const colorMap = {
       rose: 'bg-rose-500/10 text-rose-500 group-hover:bg-rose-500 group-hover:text-white',
-      blue: 'bg-blue-500/10 text-blue-500 group-hover:bg-blue-500 group-hover:text-white',
+      blue: 'bg-[rgb(var(--accent))]/10 text-[rgb(var(--accent))] group-hover:bg-[rgb(var(--accent))] group-hover:text-[rgb(var(--accent-contrast))]',
       cyan: 'bg-cyan-500/10 text-cyan-500 group-hover:bg-cyan-500 group-hover:text-white',
       green:
-        'bg-green-500/10 text-green-500 group-hover:bg-green-500 group-hover:text-white',
-      red: 'bg-red-500/10 text-red-500 group-hover:bg-red-500 group-hover:text-white',
+        'bg-[rgb(var(--success))]/10 text-[rgb(var(--success))] group-hover:bg-[rgb(var(--success))] group-hover:text-white',
+      red: 'bg-[rgb(var(--destructive))]/10 text-[rgb(var(--destructive))] group-hover:bg-[rgb(var(--destructive))] group-hover:text-white',
       emerald:
         'bg-emerald-500/10 text-emerald-500 group-hover:bg-emerald-500 group-hover:text-white',
     };
@@ -203,7 +203,7 @@ const Certifications = () => {
                 className="relative max-w-4xl w-full bg-[rgb(var(--background))] rounded-xl p-2">
                 <button
                   onClick={() => setSelectedCert(null)}
-                  className="absolute -top-12 right-0 text-white hover:text-gray-300 transition-colors">
+                  className="absolute -top-12 right-0 text-white hover:text-[rgb(var(--muted-foreground))] transition-colors">
                   <FaTimes className="w-6 h-6" />
                 </button>
                 <img

@@ -225,7 +225,7 @@ const Navbar = ({ onDownloadCV }) => {
             {/* Resume Button */}
             <MagneticButton
               onClick={onDownloadCV}
-              className="group relative px-6 py-2 rounded-full bg-[rgb(var(--primary))] text-white font-semibold overflow-hidden transition-all duration-300 hover:shadow-xl hover:shadow-[rgb(var(--primary))]/30 flex items-center gap-2">
+              className="group relative px-6 py-2 rounded-full bg-[rgb(var(--primary))] text-[rgb(var(--accent-contrast))] font-semibold overflow-hidden transition-all duration-300 hover:shadow-xl hover:shadow-[rgb(var(--primary))]/30 flex items-center gap-2">
               <span className="relative z-10 flex items-center gap-2">
                 <FaDownload className="text-sm" />
                 {t('nav.download_cv')}
@@ -242,7 +242,7 @@ const Navbar = ({ onDownloadCV }) => {
               aria-label="Toggle menu">
               {/* Glow effect on hover */}
               <motion.div
-                className="absolute inset-0 bg-blue-500/20 blur-md opacity-0 group-hover:opacity-100"
+                className="absolute inset-0 bg-[rgb(var(--accent))]/20 blur-md opacity-0 group-hover:opacity-100"
                 transition={{ duration: 0.3 }}
               />
 
@@ -288,7 +288,7 @@ const Navbar = ({ onDownloadCV }) => {
             transition={{ duration: 0.3, ease: 'easeOut' }}
             className="md:hidden absolute top-full left-0 right-0 mt-2 mx-4 rounded-2xl bg-[rgb(var(--card))]/95 backdrop-blur-2xl border border-[rgb(var(--border))] shadow-2xl overflow-hidden">
             {/* Gradient accent on top */}
-            <div className="h-1 bg-gradient-to-r from-blue-500 via-purple-500 to-blue-500" />
+            <div className="h-1 bg-gradient-to-r from-[rgb(var(--accent))] via-[rgb(var(--accent-hover))] to-[rgb(var(--accent))]" />
 
             <div className="px-4 py-6 space-y-2">
               {navItems.map((item, index) => (
@@ -313,12 +313,12 @@ const Navbar = ({ onDownloadCV }) => {
                     />
 
                     {/* Border glow on hover */}
-                    <div className="absolute inset-0 rounded-xl border border-transparent group-hover:border-blue-500/30 transition-all duration-200" />
+                    <div className="absolute inset-0 rounded-xl border border-transparent group-hover:border-[rgb(var(--accent))]/30 transition-all duration-200" />
 
                     {/* Number indicator */}
                     <span
                       className={`relative z-10 flex items-center gap-3 ${isArabic ? 'flex-row-reverse' : ''}`}>
-                      <span className="text-xs text-blue-500 font-mono opacity-50 group-hover:opacity-100 transition-opacity">
+                      <span className="text-xs text-[rgb(var(--accent))] font-mono opacity-50 group-hover:opacity-100 transition-opacity">
                         0{index + 1}
                       </span>
                       {item.label}
@@ -326,7 +326,7 @@ const Navbar = ({ onDownloadCV }) => {
 
                     {/* Arrow indicator */}
                     <motion.span
-                      className={`absolute ${isArabic ? 'left-4 rotate-180' : 'right-4'} top-1/2 -translate-y-1/2 text-blue-500 opacity-0 group-hover:opacity-100`}
+                      className={`absolute ${isArabic ? 'left-4 rotate-180' : 'right-4'} top-1/2 -translate-y-1/2 text-[rgb(var(--accent))] opacity-0 group-hover:opacity-100`}
                       initial={{ x: isArabic ? 10 : -10 }}
                       whileHover={{ x: 0 }}
                       transition={{ duration: 0.2 }}>
@@ -360,10 +360,10 @@ const Navbar = ({ onDownloadCV }) => {
                     onDownloadCV();
                     setIsOpen(false);
                   }}
-                  className="relative w-full px-5 py-3 rounded-xl bg-[rgb(var(--primary))] text-white font-semibold overflow-hidden transition-all duration-300 flex items-center justify-center gap-2 group">
+                  className="relative w-full px-5 py-3 rounded-xl bg-[rgb(var(--primary))] text-[rgb(var(--accent-contrast))] font-semibold overflow-hidden transition-all duration-300 flex items-center justify-center gap-2 group">
                   {/* Animated gradient on hover */}
                   <motion.div
-                    className="absolute inset-0 bg-gradient-to-r from-blue-500 to-purple-500 opacity-0 group-hover:opacity-100"
+                    className="absolute inset-0 bg-gradient-to-r from-[rgb(var(--accent))] to-[rgb(var(--accent-hover))] opacity-0 group-hover:opacity-100"
                     transition={{ duration: 0.3 }}
                   />
 

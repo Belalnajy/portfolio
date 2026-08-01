@@ -81,7 +81,7 @@ const ProjectModal = ({ project, isOpen, onClose }) => {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={onClose}
-            className="fixed inset-0 z-[9998] bg-black/70 backdrop-blur-sm"
+            className="fixed inset-0 z-[9998] bg-[rgb(var(--scrim))]/75 backdrop-blur-sm"
           />
 
           <div className="fixed inset-0 z-[9999] flex items-end justify-center sm:items-center sm:p-6 pointer-events-none">
@@ -129,11 +129,11 @@ const ProjectModal = ({ project, isOpen, onClose }) => {
               {/* Scrollable body */}
               <div className="flex-1 overflow-y-auto overscroll-contain">
                 {/* Cover image */}
-                <div className="relative w-full bg-[#0a0a0a] border-b border-[rgb(var(--border))]/30">
+                <div className="relative w-full bg-[rgb(var(--scrim))] border-b border-[rgb(var(--border))]/30">
                   {/* Covers are wide (~2.4:1), so a shallow box on phones avoids
                       dead space above the screenshot. */}
                   <div className="w-full aspect-[2/1] sm:aspect-[21/9] relative flex items-center sm:items-end justify-center p-3 sm:p-4 sm:pb-0">
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent z-[1]" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-[rgb(var(--scrim))]/85 via-[rgb(var(--scrim))]/35 to-transparent z-[1]" />
                     <img
                       src={project.image}
                       alt={project.title}
@@ -257,7 +257,7 @@ const ProjectModal = ({ project, isOpen, onClose }) => {
                       href={project.live}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="flex items-center justify-center gap-2 flex-1 min-h-[48px] px-4 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 text-white rounded-xl font-semibold transition-all shadow-lg active:scale-[0.98]"
+                      className="flex items-center justify-center gap-2 flex-1 min-h-[48px] px-4 bg-gradient-to-r from-[rgb(var(--accent))] to-[rgb(var(--accent-hover))] hover:from-[rgb(var(--accent-hover))] hover:to-[rgb(var(--accent))] text-[rgb(var(--accent-contrast))] rounded-xl font-semibold transition-all shadow-lg active:scale-[0.98]"
                     >
                       <FaExternalLinkAlt /> {t('projects.modal.live_link')}
                     </a>

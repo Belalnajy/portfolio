@@ -115,8 +115,8 @@ const Testimonials = () => {
       <FaStar
         key={index}
         className={`${index < rating
-          ? "text-yellow-400"
-          : "text-gray-400"} transition-colors`}
+          ? "text-[rgb(var(--accent))]"
+          : "text-[rgb(var(--muted-foreground))]"} transition-colors`}
       />
     );
   };
@@ -140,7 +140,7 @@ const Testimonials = () => {
             <div className="flex items-center gap-2">
               <div className="flex gap-1">
                 {[...Array(5)].map((_, i) =>
-                  <FaStar key={i} className="text-yellow-400 text-xl" />
+                  <FaStar key={i} className="text-[rgb(var(--accent))] text-xl" />
                 )}
               </div>
               <span className="text-[rgb(var(--foreground))] font-bold text-lg">
@@ -205,7 +205,7 @@ const Testimonials = () => {
                       rel="noopener noreferrer"
                       whileHover={{ scale: 1.02, y: -2 }}
                       whileTap={{ scale: 0.98 }}
-                      className={`flex items-center justify-center gap-2 w-full md:w-auto px-6 py-3 mb-10 rounded-xl bg-[rgb(var(--primary))] text-white font-semibold hover:shadow-xl hover:shadow-[rgb(var(--primary))]/40 transition-all`}>
+                      className={`flex items-center justify-center gap-2 w-full md:w-auto px-6 py-3 mb-10 rounded-xl bg-[rgb(var(--primary))] text-[rgb(var(--accent-contrast))] font-semibold hover:shadow-xl hover:shadow-[rgb(var(--primary))]/40 transition-all`}>
                       <FaExternalLinkAlt />
                       <span>
                         {t('testimonials.view_review', { platform: testimonials[activeIndex].platform })}
@@ -215,7 +215,7 @@ const Testimonials = () => {
 
                   <div className={`flex items-center gap-6 flex-col md:flex-row md:justify-between border-t border-[rgb(var(--border))]/50 pt-8`}>
                     <div className={`flex items-center gap-4 ${isArabic ? 'flex-row-reverse text-right' : 'flex-row text-left'}`}>
-                      <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-[rgb(var(--primary))] to-[rgb(var(--primary))]/60 flex items-center justify-center text-white text-2xl font-bold shadow-lg shadow-[rgb(var(--primary))]/20">
+                      <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-[rgb(var(--primary))] to-[rgb(var(--primary))]/60 flex items-center justify-center text-[rgb(var(--accent-contrast))] text-2xl font-bold shadow-lg shadow-[rgb(var(--primary))]/20">
                         {testimonials[activeIndex].name.charAt(0)}
                       </div>
                       <div>
@@ -232,7 +232,7 @@ const Testimonials = () => {
                     </div>
 
                     <div className={`flex items-center gap-4 ${isArabic ? 'flex-row-reverse' : 'flex-row'}`}>
-                      <span className="px-5 py-2 rounded-xl bg-white/5 text-[rgb(var(--primary))] text-sm font-bold border border-[rgb(var(--primary))]/20 tracking-wide uppercase">
+                      <span className="px-5 py-2 rounded-xl bg-[rgb(var(--card))]/5 text-[rgb(var(--primary))] text-sm font-bold border border-[rgb(var(--primary))]/20 tracking-wide uppercase">
                         {testimonials[activeIndex].platform}
                       </span>
                       <span className="text-[rgb(var(--muted-foreground))] text-sm font-medium whitespace-nowrap">
@@ -249,7 +249,7 @@ const Testimonials = () => {
                 whileHover={{ scale: 1.1, x: isArabic ? 5 : -5 }}
                 whileTap={{ scale: 0.9 }}
                 onClick={prevTestimonial}
-                className="w-14 h-14 rounded-2xl bg-[rgb(var(--card))] border border-[rgb(var(--border))] flex items-center justify-center text-[rgb(var(--foreground))] hover:bg-[rgb(var(--primary))] hover:text-white transition-all shadow-xl"
+                className="w-14 h-14 rounded-2xl bg-[rgb(var(--card))] border border-[rgb(var(--border))] flex items-center justify-center text-[rgb(var(--foreground))] hover:bg-[rgb(var(--primary))] hover:text-[rgb(var(--accent-contrast))] transition-all shadow-xl"
                 aria-label="Previous testimonial">
                 <FaChevronLeft className={isArabic ? 'rotate-180' : ''} />
               </motion.button>
@@ -275,7 +275,7 @@ const Testimonials = () => {
                 whileHover={{ scale: 1.1, x: isArabic ? -5 : 5 }}
                 whileTap={{ scale: 0.9 }}
                 onClick={nextTestimonial}
-                className="w-14 h-14 rounded-2xl bg-[rgb(var(--card))] border border-[rgb(var(--border))] flex items-center justify-center text-[rgb(var(--foreground))] hover:bg-[rgb(var(--primary))] hover:text-white transition-all shadow-xl"
+                className="w-14 h-14 rounded-2xl bg-[rgb(var(--card))] border border-[rgb(var(--border))] flex items-center justify-center text-[rgb(var(--foreground))] hover:bg-[rgb(var(--primary))] hover:text-[rgb(var(--accent-contrast))] transition-all shadow-xl"
                 aria-label="Next testimonial">
                 <FaChevronRight className={isArabic ? 'rotate-180' : ''} />
               </motion.button>
@@ -293,7 +293,7 @@ const Testimonials = () => {
                   ? "bg-[rgb(var(--primary))]/10 border-2 border-[rgb(var(--primary))] shadow-lg shadow-[rgb(var(--primary))]/10"
                   : "glass-card border border-[rgb(var(--border))] hover:border-[rgb(var(--primary))]/30 hover:bg-[rgb(var(--primary))]/5"}`}>
                 <div className={`w-12 h-12 mx-auto rounded-xl flex items-center justify-center text-lg font-bold mb-3 transition-colors ${index === activeIndex 
-                  ? 'bg-[rgb(var(--primary))] text-white' 
+                  ? 'bg-[rgb(var(--primary))] text-[rgb(var(--accent-contrast))]' 
                   : 'bg-[rgb(var(--primary))]/10 text-[rgb(var(--primary))] group-hover:bg-[rgb(var(--primary))]/20'}`}>
                   {testimonial.name.charAt(0)}
                 </div>

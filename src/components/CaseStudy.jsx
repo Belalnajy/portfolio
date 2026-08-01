@@ -46,8 +46,8 @@ const CaseStudy = ({ slug, image, liveUrl, stack }) => {
 
   const blocks = [
     { key: 'challenge', icon: <FaExclamationTriangle />, accent: 'text-amber-400' },
-    { key: 'approach', icon: <FaLightbulb />, accent: 'text-blue-400' },
-    { key: 'delivered', icon: <FaCubes />, accent: 'text-purple-400' },
+    { key: 'approach', icon: <FaLightbulb />, accent: 'text-[rgb(var(--accent))]' },
+    { key: 'delivered', icon: <FaCubes />, accent: 'text-[rgb(var(--accent-hover))]' },
     { key: 'outcome', icon: <FaCheckCircle />, accent: 'text-emerald-400' },
   ];
 
@@ -140,7 +140,7 @@ const CaseStudy = ({ slug, image, liveUrl, stack }) => {
           initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.2 }}
-          className="rounded-2xl overflow-hidden border border-[rgb(var(--border))]/50 bg-[#0B0F19] p-3 sm:p-5"
+          className="rounded-2xl overflow-hidden border border-[rgb(var(--border))]/50 bg-[rgb(var(--scrim))] p-3 sm:p-5"
         >
           <img
             src={image}
@@ -240,7 +240,7 @@ const CaseStudy = ({ slug, image, liveUrl, stack }) => {
           <div className="flex flex-col sm:flex-row gap-3 justify-center">
             <a
               href="/#contact"
-              className="inline-flex items-center justify-center min-h-[48px] px-6 rounded-xl font-semibold bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 text-white shadow-lg transition-all active:scale-[0.98]"
+              className="inline-flex items-center justify-center min-h-[48px] px-6 rounded-xl font-semibold bg-gradient-to-r from-[rgb(var(--accent))] to-[rgb(var(--accent-hover))] hover:from-[rgb(var(--accent-hover))] hover:to-[rgb(var(--accent))] text-[rgb(var(--accent-contrast))] shadow-lg transition-all active:scale-[0.98]"
             >
               {t('case_studies.cta_button')}
             </a>

@@ -87,7 +87,7 @@ const About = () => {
             viewport={REVEAL_VIEWPORT}
             transition={{ duration: 0.5 }}
             className="space-y-6">
-            <h3 className="text-3xl font-bold mb-8 bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
+            <h3 className="text-3xl font-bold mb-8 bg-gradient-to-r from-[rgb(var(--accent))] to-[rgb(var(--accent-hover))] bg-clip-text text-transparent">
               {t('about.personal_info')}
             </h3>
             <div className="space-y-4">
@@ -157,7 +157,7 @@ const About = () => {
               transition={{ duration: REVEAL_DURATION, delay: revealDelay(index) }}
               whileHover={{ y: -10, scale: 1.05 }}
               className="glass-card glass-hover p-6 rounded-xl text-center cursor-pointer">
-              <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-gradient-to-r from-blue-500 to-purple-500 text-white text-2xl mb-4">
+              <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-gradient-to-r from-[rgb(var(--accent))] to-[rgb(var(--accent-hover))] text-[rgb(var(--accent-contrast))] text-2xl mb-4">
                 {item.icon}
               </div>
               <h4 className="text-xl font-bold mb-2 text-[rgb(var(--foreground))]">

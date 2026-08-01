@@ -580,11 +580,11 @@ const LaptopShowcase3D = () => {
                       animate={{ opacity: 1, y: 0 }}
                       exit={{ opacity: 0, y: -12 }}
                       transition={{ duration: 0.35 }}
-                      className="w-full rounded-2xl overflow-hidden border border-[rgb(var(--border))]/50 bg-[#0B0F19] shadow-2xl">
+                      className="w-full rounded-2xl overflow-hidden border border-[rgb(var(--border))]/50 bg-[rgb(var(--scrim))] shadow-2xl">
                       <div className="flex items-center gap-1.5 px-3 py-2 border-b border-[rgb(var(--border))]/40">
-                        <span className="w-2 h-2 rounded-full bg-red-500/70" />
-                        <span className="w-2 h-2 rounded-full bg-yellow-500/70" />
-                        <span className="w-2 h-2 rounded-full bg-green-500/70" />
+                        <span className="w-2 h-2 rounded-full bg-[rgb(var(--destructive))]/70" />
+                        <span className="w-2 h-2 rounded-full bg-[rgb(var(--accent))]/70" />
+                        <span className="w-2 h-2 rounded-full bg-[rgb(var(--success))]/70" />
                       </div>
                       <img
                         src={SHOWCASE_PROJECTS[currentIndex].image}
