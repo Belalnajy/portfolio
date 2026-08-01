@@ -13,13 +13,13 @@ const InteractiveTimeline = () => {
   const experiences = useMemo(() => {
     const items = t('timeline.items', { returnObjects: true });
     const metadata = [
-      { type: 'work', icon: <FaBriefcase />, logo: '/logos/indstrz-logo.png', color: 'from-blue-600 to-purple-600' },
-      { type: 'work', icon: <FaBriefcase />, logo: '/logos/sf-logo.png', color: 'from-blue-500 to-cyan-500' },
-      { type: 'work', icon: <FaLaptopCode />, logo: '/logos/iti-logo.png', color: 'from-purple-500 to-pink-500' },
-      { type: 'work', icon: <FaLaptopCode />, color: 'from-green-500 to-emerald-500' },
-      { type: 'education', icon: <FaGraduationCap />, logo: '/logos/iti-logo.png', color: 'from-orange-500 to-red-500' },
-      { type: 'work', icon: <FaBriefcase />, logo: '/logos/ezzsteel-logo.png', color: 'from-yellow-500 to-amber-500' },
-      { type: 'education', icon: <FaGraduationCap />, logo: '/logos/alex-uni-logo.png', color: 'from-indigo-500 to-purple-500' },
+      { type: 'work', icon: <FaBriefcase />, logo: '/logos/indstrz-logo.png', color: 'from-[rgb(var(--accent))] to-[rgb(var(--accent-hover))]' },
+      { type: 'work', icon: <FaBriefcase />, logo: '/logos/sf-logo.png', color: 'from-[rgb(var(--accent))] to-[rgb(var(--accent-hover))]' },
+      { type: 'work', icon: <FaLaptopCode />, logo: '/logos/iti-logo.png', color: 'from-[rgb(var(--accent))] to-[rgb(var(--accent-hover))]' },
+      { type: 'work', icon: <FaLaptopCode />, color: 'from-[rgb(var(--accent))] to-[rgb(var(--accent-hover))]' },
+      { type: 'education', icon: <FaGraduationCap />, logo: '/logos/iti-logo.png', color: 'from-[rgb(var(--accent))] to-[rgb(var(--accent-hover))]' },
+      { type: 'work', icon: <FaBriefcase />, logo: '/logos/ezzsteel-logo.png', color: 'from-[rgb(var(--accent))] to-[rgb(var(--accent-hover))]' },
+      { type: 'education', icon: <FaGraduationCap />, logo: '/logos/alex-uni-logo.png', color: 'from-[rgb(var(--accent))] to-[rgb(var(--accent-hover))]' },
     ];
 
     return items.map((item, index) => ({
@@ -81,12 +81,12 @@ const InteractiveTimeline = () => {
                     }`}>
                     <div className="flex items-start justify-between mb-4 gap-3">
                       <div className="flex items-start flex-1 min-w-0">
-                        <div className={`w-14 h-14 rounded-xl bg-white flex items-center justify-center ${isArabic ? 'ml-4' : 'mr-4'} border border-[rgb(var(--border))]/50 flex-shrink-0 overflow-hidden p-2 shadow-sm transition-transform duration-300 group-hover:scale-110`}>
+                        <div className={`w-14 h-14 rounded-xl bg-[rgb(var(--card))] flex items-center justify-center ${isArabic ? 'ml-4' : 'mr-4'} border border-[rgb(var(--border))]/50 flex-shrink-0 overflow-hidden p-2 shadow-sm transition-transform duration-300 group-hover:scale-110`}>
                           {exp.logo ? (
                             <img 
                               src={exp.logo} 
                               alt={exp.company} 
-                              className="w-full h-full object-contain"
+                              className="logo-mark w-full h-full object-contain"
                             />
                           ) : (
                             <div className="text-[rgb(var(--primary))] text-xl">

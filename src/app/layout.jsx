@@ -85,14 +85,22 @@ export const metadata = {
     },
   },
   icons: {
-    icon: '/favicon.svg',
+    icon: [
+      { url: '/favicon.svg', type: 'image/svg+xml' },
+      { url: '/favicon.ico', sizes: '32x32' },
+    ],
+    apple: [{ url: '/apple-touch-icon.png', sizes: '180x180' }],
   },
+  manifest: '/site.webmanifest',
 };
 
 export const viewport = {
   width: 'device-width',
   initialScale: 1,
-  themeColor: '#08080a',
+  themeColor: [
+    { media: '(prefers-color-scheme: light)', color: '#F4F6F8' },
+    { media: '(prefers-color-scheme: dark)', color: '#0B0F14' },
+  ],
 };
 
 export default function RootLayout({ children }) {

@@ -78,12 +78,12 @@ const ThemeSwitcher = () => {
         whileHover={{ scale: 1.1 }}
         whileTap={{ scale: 0.9 }}
         onClick={() => setIsOpen(!isOpen)}
-        className="w-14 h-14 rounded-full bg-gradient-to-r from-blue-500 to-purple-500 flex items-center justify-center text-white shadow-lg hover:shadow-xl transition-shadow relative group">
+        className="w-14 h-14 rounded-full glass-card border border-[rgb(var(--border-control))]/40 flex items-center justify-center text-[rgb(var(--accent))] shadow-lg hover:shadow-xl transition-shadow relative group">
         <FaPalette className="text-2xl" />
 
         {/* Tooltip */}
         {!isOpen && (
-          <div className="absolute left-full ml-4 px-3 py-1 bg-gradient-to-r from-blue-600 to-purple-600 text-white text-xs rounded-lg opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none">
+          <div className="absolute left-full ml-4 px-3 py-1 bg-gradient-to-r from-[rgb(var(--accent))] to-[rgb(var(--accent-hover))] text-[rgb(var(--accent-contrast))] text-xs rounded-lg opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none">
             Change Theme
           </div>
         )}

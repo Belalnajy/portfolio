@@ -2,44 +2,96 @@
 
 /* Glassmorphism utilities */
 @layer utilities {
+  /* Surfaces derive from the palette rather than raw white/black alpha, so
+     they follow the identity in both themes. */
   .glass {
-    background: rgba(255, 255, 255, 0.05);
+    background: rgb(var(--surface) / 0.55);
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    border: 1px solid rgb(var(--border-subtle) / 0.8);
   }
 
   .glass-card {
-    background: rgba(255, 255, 255, 0.08);
+    background: rgb(var(--surface) / 0.72);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
-    border: 1px solid rgba(255, 255, 255, 0.15);
-    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.2);
+    border: 1px solid rgb(var(--border-subtle));
+    box-shadow: 0 8px 32px 0 rgb(var(--scrim) / 0.35);
   }
 
   .glass-hover:hover {
-    background: rgba(255, 255, 255, 0.08);
-    border: 1px solid rgba(255, 255, 255, 0.15);
+    background: rgb(var(--surface));
+    border: 1px solid rgb(var(--border-control) / 0.5);
     transform: translateY(-5px);
-    box-shadow: 0 12px 40px 0 rgba(31, 38, 135, 0.25);
+    box-shadow: 0 12px 40px 0 rgb(var(--scrim) / 0.45);
   }
 
-  /* Light Mode Glassmorphism */
   :root[data-theme='light'] .glass {
-    background: rgba(255, 255, 255, 0.7);
-    border: 1px solid rgba(0, 0, 0, 0.1);
+    background: rgb(var(--surface) / 0.7);
+    border: 1px solid rgb(var(--border-subtle));
   }
 
   :root[data-theme='light'] .glass-card {
-    background: rgba(255, 255, 255, 0.8);
-    border: 1px solid rgba(0, 0, 0, 0.08);
-    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.1);
+    background: rgb(var(--surface) / 0.9);
+    border: 1px solid rgb(var(--border-subtle));
+    box-shadow: 0 8px 32px 0 rgb(var(--scrim) / 0.08);
   }
 
   :root[data-theme='light'] .glass-hover:hover {
-    background: rgba(255, 255, 255, 0.95);
-    border: 1px solid rgba(0, 0, 0, 0.15);
-    box-shadow: 0 12px 40px 0 rgba(0, 0, 0, 0.15);
+    background: rgb(var(--surface));
+    border: 1px solid rgb(var(--border-control) / 0.45);
+    box-shadow: 0 12px 40px 0 rgb(var(--scrim) / 0.12);
+  }
+
+  /* Scrim for text sitting over imagery or a gradient. Keeps copy legible
+     regardless of what is behind it. */
+  .scrim-b {
+    background: linear-gradient(
+      to top,
+      rgb(var(--scrim) / 0.88) 0%,
+      rgb(var(--scrim) / 0.55) 45%,
+      rgb(var(--scrim) / 0) 100%
+    );
+  }
+
+  /* Client logos: neutral at rest so they cannot fight the palette, full
+     colour on hover. */
+  .logo-mark {
+    filter: grayscale(1);
+    opacity: 0.6;
+    transition: filter 0.35s ease, opacity 0.35s ease, background-color 0.35s ease;
+  }
+  .logo-mark:hover,
+  .group:hover .logo-mark {
+    filter: grayscale(0);
+    opacity: 1;
+  }
+
+  /* On the ink background a blanket brightness filter destroys colour marks
+     and turns them into grey blocks. Instead every mark sits on a light plate,
+     which keeps dark-on-transparent logos and colour logos equally legible
+     without guessing at each file. */
+  :root:not([data-theme='light']) .logo-mark {
+    background-color: rgb(232 237 242 / 0.92);
+    border-radius: 6px;
+    padding: 6px;
+    box-sizing: border-box;
+  }
+  :root:not([data-theme='light']) .logo-mark:hover,
+  :root:not([data-theme='light']) .group:hover .logo-mark {
+    background-color: rgb(255 255 255);
+  }
+
+  /* Visible focus in both themes. */
+  .focus-ring:focus-visible,
+  a:focus-visible,
+  button:focus-visible,
+  input:focus-visible,
+  textarea:focus-visible,
+  [tabindex]:focus-visible {
+    outline: 2px solid rgb(var(--accent));
+    outline-offset: 2px;
+    border-radius: 4px;
   }
 }
 
@@ -80,67 +132,108 @@
   --color-sidebar-ring: var(--sidebar-ring);
 }
 
+/* ============================================================================
+   IDENTITY TOKENS  ·  deep ink blue base + copper accent
+   ----------------------------------------------------------------------------
+   Every colour in the UI resolves through these. Change a value here and it
+   propagates to every component; nothing outside this block hardcodes a colour
+   except technology brand marks (see --brand-* below), which identify React,
+   Django and so on and are deliberately not part of the identity.
+
+   Channels are stored as space-separated RGB so they compose with Tailwind
+   alpha syntax: rgb(var(--primary) / 0.1).
+
+   Legacy names (--background, --foreground, --primary ...) stay as the wiring
+   because the codebase already routes through them. The identity aliases
+   (--bg, --surface, --text ...) name the same values in the vocabulary of the
+   design, and the two are kept in sync here.
+
+   Contrast is verified in scripts/contrast-report.mjs. Every text pair clears
+   4.5:1 and every control boundary clears 3:1, in both themes.
+   ========================================================================== */
 :root {
   --radius: 0.625rem;
-  /* Dark Mode Colors (Default) - Premium Near-Black */
-  --background: 8 8 10;
-  --foreground: 248 250 252;
-  --card: 18 18 22;
-  --card-foreground: 248 250 252;
-  --popover: 18 18 22;
-  --popover-foreground: 248 250 252;
-  --primary: 96 165 250;
-  --primary-foreground: 8 8 10;
-  --secondary: 28 28 32;
-  --secondary-foreground: 248 250 252;
-  --muted: 28 28 32;
-  --muted-foreground: 148 163 184;
-  --accent: 28 28 32;
-  --accent-foreground: 248 250 252;
-  --destructive: 239 68 68;
-  --border: 28 28 32;
-  --input: 28 28 32;
-  --ring: 96 165 250;
-  --chart-1: oklch(0.488 0.243 264.376);
-  --chart-2: oklch(0.696 0.17 162.48);
-  --chart-3: oklch(0.769 0.188 70.08);
-  --chart-4: oklch(0.627 0.265 303.9);
-  --chart-5: oklch(0.645 0.246 16.439);
-  --sidebar: oklch(0.21 0.034 264.665);
-  --sidebar-foreground: oklch(0.985 0.002 247.839);
-  --sidebar-primary: oklch(0.488 0.243 264.376);
-  --sidebar-primary-foreground: oklch(0.985 0.002 247.839);
-  --sidebar-accent: oklch(0.278 0.033 256.848);
-  --sidebar-accent-foreground: oklch(0.985 0.002 247.839);
-  --sidebar-border: oklch(1 0 0 / 10%);
-  --sidebar-ring: oklch(0.551 0.027 264.364);
+
+  /* --- dark theme (default) --- */
+  --bg: 11 15 20;                    /* #0B0F14 ink */
+  --surface: 18 24 33;               /* #121821 */
+  --surface-raised: 24 32 43;        /* #18202B  modals, popovers */
+  --border-subtle: 31 41 51;         /* #1F2933  dividers, card edges */
+  --border-control: 94 101 108;      /* #5E656C  inputs and controls, 3:1 */
+  --text: 232 237 242;               /* #E8EDF2 */
+  --muted-text: 147 161 176;         /* #93A1B0 */
+  --accent: 224 160 60;              /* #E0A03C copper */
+  --accent-hover: 230 177 95;        /* #E6B15F */
+  --accent-subtle: 36 27 14;         /* #241B0E  chip / badge fill */
+  --accent-contrast: 16 23 31;       /* #10171F  text on an accent fill */
+  --success: 69 212 131;             /* #45D483 */
+  --danger: 249 112 102;             /* #F97066 */
+  --scrim: 11 15 20;                 /* overlay behind text on imagery */
+  --on-scrim: 232 237 242;           /* copy over a scrim: light in BOTH themes */
+  --on-scrim-muted: 190 200 211;
+
+  /* --- legacy wiring, mapped onto the identity --- */
+  --background: var(--bg);
+  --foreground: var(--text);
+  --card: var(--surface);
+  --card-foreground: var(--text);
+  --popover: var(--surface-raised);
+  --popover-foreground: var(--text);
+  --primary: var(--accent);
+  --primary-foreground: var(--accent-contrast);
+  --secondary: var(--surface-raised);
+  --secondary-foreground: var(--text);
+  --muted: var(--surface-raised);
+  --muted-foreground: var(--muted-text);
+  --accent-foreground: var(--text);
+  --destructive: var(--danger);
+  --border: var(--border-subtle);
+  --input: var(--border-control);
+  --ring: var(--accent);
+
+  /* --- technology brand marks --- *
+   * Not identity colours. These identify a specific technology, so they stay
+   * true to each brand rather than following the palette. Centralised here so
+   * no component carries a loose hex literal. */
+  --brand-react: 97 218 251;
+  --brand-node: 51 153 51;
+  --brand-python: 55 118 171;
+  --brand-django: 9 46 32;
+  --brand-postgres: 51 103 145;
+  --brand-typescript: 49 120 198;
+  --brand-tailwind: 6 182 212;
+  --brand-laravel: 255 45 32;
+  --brand-php: 119 123 180;
+  --brand-html: 227 79 38;
+  --brand-css: 21 114 182;
+  --brand-js: 247 223 30;
+  --brand-android: 61 220 132;
+  --brand-neutral: 148 163 184;
 }
 
 /* Light Mode Colors */
 :root[data-theme='light'] {
-  --background: 248 250 252;
-  --foreground: 15 23 42;
-  --card: 255 255 255;
-  --card-foreground: 15 23 42;
-  --popover: 255 255 255;
-  --popover-foreground: 15 23 42;
-  --primary: 59 130 246;
-  --primary-foreground: 255 255 255;
-  --secondary: 226 232 240;
-  --secondary-foreground: 15 23 42;
-  --muted: 241 245 249;
-  --muted-foreground: 100 116 139;
-  --accent: 241 245 249;
-  --accent-foreground: 15 23 42;
-  --destructive: 239 68 68;
-  --border: 226 232 240;
-  --input: 226 232 240;
-  --ring: 59 130 246;
+  --bg: 244 246 248;                 /* #F4F6F8 */
+  --surface: 255 255 255;            /* #FFFFFF */
+  --surface-raised: 255 255 255;
+  --border-subtle: 221 227 233;      /* #DDE3E9 */
+  --border-control: 139 143 147;     /* #8B8F93  inputs and controls, 3:1 */
+  --text: 16 23 31;                  /* #10171F */
+  --muted-text: 86 101 117;          /* #566575 */
+  --accent: 143 94 18;               /* #8F5E12 copper, darkened for light bg */
+  --accent-hover: 117 77 15;         /* #754D0F */
+  --accent-subtle: 246 238 225;      /* #F6EEE1 */
+  --accent-contrast: 255 255 255;    /* white text on an accent fill */
+  --success: 20 108 67;              /* #146C43 */
+  --danger: 180 35 24;               /* #B42318 */
+  --scrim: 16 23 31;
+  --on-scrim: 232 237 242;
+  --on-scrim-muted: 190 200 211;
 }
 
 /* Light Mode Specific Styles */
 :root[data-theme='light'] body {
-  background: linear-gradient(to bottom, #f8fafc, #e2e8f0);
+  background: linear-gradient(to bottom, rgb(var(--bg)), rgb(var(--surface)));
 }
 
 @layer base {

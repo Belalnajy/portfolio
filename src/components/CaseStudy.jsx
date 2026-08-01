@@ -45,10 +45,10 @@ const CaseStudy = ({ slug, image, liveUrl, stack }) => {
   };
 
   const blocks = [
-    { key: 'challenge', icon: <FaExclamationTriangle />, accent: 'text-amber-400' },
-    { key: 'approach', icon: <FaLightbulb />, accent: 'text-blue-400' },
-    { key: 'delivered', icon: <FaCubes />, accent: 'text-purple-400' },
-    { key: 'outcome', icon: <FaCheckCircle />, accent: 'text-emerald-400' },
+    { key: 'challenge', icon: <FaExclamationTriangle />, accent: 'text-[rgb(var(--accent))]' },
+    { key: 'approach', icon: <FaLightbulb />, accent: 'text-[rgb(var(--accent))]' },
+    { key: 'delivered', icon: <FaCubes />, accent: 'text-[rgb(var(--accent-hover))]' },
+    { key: 'outcome', icon: <FaCheckCircle />, accent: 'text-[rgb(var(--success))]' },
   ];
 
   return (
@@ -79,7 +79,7 @@ const CaseStudy = ({ slug, image, liveUrl, stack }) => {
 
       {/* Hero */}
       <section className="relative pt-12 pb-10 md:pt-20 md:pb-14 overflow-hidden">
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-3xl h-72 bg-[rgb(var(--primary))]/10 blur-[120px] rounded-full pointer-events-none" />
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-3xl h-72 bg-[rgb(var(--primary))]/8 blur-[120px] rounded-full pointer-events-none" />
 
         <div className="container mx-auto px-4 sm:px-6 relative z-10 max-w-4xl text-center">
           <motion.span
@@ -140,7 +140,7 @@ const CaseStudy = ({ slug, image, liveUrl, stack }) => {
           initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.2 }}
-          className="rounded-2xl overflow-hidden border border-[rgb(var(--border))]/50 bg-[#0B0F19] p-3 sm:p-5"
+          className="rounded-2xl overflow-hidden border border-[rgb(var(--border))]/50 bg-[rgb(var(--scrim))] p-3 sm:p-5"
         >
           <img
             src={image}
@@ -240,7 +240,7 @@ const CaseStudy = ({ slug, image, liveUrl, stack }) => {
           <div className="flex flex-col sm:flex-row gap-3 justify-center">
             <a
               href="/#contact"
-              className="inline-flex items-center justify-center min-h-[48px] px-6 rounded-xl font-semibold bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 text-white shadow-lg transition-all active:scale-[0.98]"
+              className="inline-flex items-center justify-center min-h-[48px] px-6 rounded-xl font-semibold bg-gradient-to-r from-[rgb(var(--accent))] to-[rgb(var(--accent-hover))] hover:from-[rgb(var(--accent-hover))] hover:to-[rgb(var(--accent))] text-[rgb(var(--accent-contrast))] shadow-lg transition-all active:scale-[0.98]"
             >
               {t('case_studies.cta_button')}
             </a>

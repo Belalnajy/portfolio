@@ -18,11 +18,11 @@ const Services = () => {
   const services = useMemo(() => {
     const list = t('services.list', { returnObjects: true });
     const config = [
-      { icon: <FaLaptopCode />, color: "from-blue-600 to-cyan-400" },
-      { icon: <FaServer />, color: "from-emerald-600 to-teal-400" },
-      { icon: <FaGlobe />, color: "from-purple-600 to-pink-400" },
-      { icon: <FaShieldAlt />, color: "from-orange-600 to-amber-400" },
-      { icon: <FaWrench />, color: "from-rose-600 to-red-400" },
+      { icon: <FaLaptopCode />, color: "from-[rgb(var(--accent))] to-[rgb(var(--accent-hover))]" },
+      { icon: <FaServer />, color: "from-[rgb(var(--accent))] to-[rgb(var(--accent-hover))]" },
+      { icon: <FaGlobe />, color: "from-[rgb(var(--accent))] to-[rgb(var(--accent-hover))]" },
+      { icon: <FaShieldAlt />, color: "from-[rgb(var(--accent))] to-[rgb(var(--accent-hover))]" },
+      { icon: <FaWrench />, color: "from-[rgb(var(--accent))] to-[rgb(var(--accent-hover))]" },
     ];
 
     return list.map((item, index) => ({
@@ -61,7 +61,7 @@ const Services = () => {
               {/* Icon */}
               <div className="mb-6 flex justify-start">
                 <div
-                  className={`inline-flex items-center justify-center w-16 h-16 rounded-xl bg-gradient-to-r ${service.color} text-white text-3xl shadow-lg group-hover:scale-110 transition-transform duration-300`}>
+                  className={`inline-flex items-center justify-center w-16 h-16 rounded-xl bg-gradient-to-r ${service.color} text-[rgb(var(--on-scrim))] text-3xl shadow-lg group-hover:scale-110 transition-transform duration-300`}>
                   {service.icon}
                 </div>
               </div>
@@ -112,7 +112,7 @@ const Services = () => {
             href="#contact"
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
-            className="inline-block bg-gradient-to-r from-blue-600 to-purple-600 text-white px-8 py-4 rounded-lg font-semibold shadow-lg hover:shadow-xl transition-all">
+            className="inline-block bg-gradient-to-r from-[rgb(var(--accent))] to-[rgb(var(--accent-hover))] text-[rgb(var(--accent-contrast))] px-8 py-4 rounded-lg font-semibold shadow-lg hover:shadow-xl transition-all">
             {t('services.get_in_touch')}
           </motion.a>
         </motion.div>

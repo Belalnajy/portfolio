@@ -60,19 +60,19 @@ const Footer = () => {
       icon: <FaGithub />,
       href: 'https://github.com/Belalnajy',
       label: 'GitHub',
-      color: 'hover:text-gray-400',
+      color: 'hover:text-[rgb(var(--muted-foreground))]',
     },
     {
       icon: <FaLinkedin />,
       href: 'https://linkedin.com/in/belalnajy',
       label: 'LinkedIn',
-      color: 'hover:text-blue-400',
+      color: 'hover:text-[rgb(var(--accent))]',
     },
     {
       icon: <FaEnvelope />,
       href: 'mailto:belalnajy9@gmail.com',
       label: 'Email',
-      color: 'hover:text-red-400',
+      color: 'hover:text-[rgb(var(--destructive))]',
     },
   ];
 
@@ -95,7 +95,7 @@ const Footer = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={REVEAL_VIEWPORT}
             transition={{ duration: 0.5 }}>
-            <h3 className="text-3xl font-bold mb-6 bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
+            <h3 className="text-3xl font-bold mb-6 bg-gradient-to-r from-[rgb(var(--accent))] to-[rgb(var(--accent-hover))] bg-clip-text text-transparent">
               {t('footer.about_title')}
             </h3>
             <p className="text-[rgb(var(--muted-foreground))] mb-8 leading-relaxed text-lg">
@@ -111,7 +111,7 @@ const Footer = () => {
                   rel="noopener noreferrer"
                   whileHover={{ scale: 1.1, y: -3 }}
                   whileTap={{ scale: 0.95 }}
-                  className={`p-3.5 rounded-xl bg-[rgb(var(--muted))]/50 text-[rgb(var(--foreground))] ${social.color} transition-all border border-[rgb(var(--border))]/50 shadow-lg hover:shadow-blue-500/10`}
+                  className={`p-3.5 rounded-xl bg-[rgb(var(--muted))]/50 text-[rgb(var(--foreground))] ${social.color} transition-all border border-[rgb(var(--border))]/50 shadow-lg hover:shadow-[rgb(var(--accent))]/10`}
                   aria-label={social.label}>
                   <div className="text-xl">{social.icon}</div>
                 </motion.a>
@@ -166,7 +166,7 @@ const Footer = () => {
                 <li
                   key={index}
                   className="flex items-center gap-4 group">
-                  <div className="flex-shrink-0 w-12 h-12 rounded-xl bg-[rgb(var(--primary))]/10 text-[rgb(var(--primary))] flex items-center justify-center text-xl transition-all group-hover:bg-[rgb(var(--primary))] group-hover:text-white group-hover:scale-110">
+                  <div className="flex-shrink-0 w-12 h-12 rounded-xl bg-[rgb(var(--primary))]/10 text-[rgb(var(--primary))] flex items-center justify-center text-xl transition-all group-hover:bg-[rgb(var(--primary))] group-hover:text-[rgb(var(--accent-contrast))] group-hover:scale-110">
                     {info.icon}
                   </div>
                   {info.href ? (
@@ -194,7 +194,7 @@ const Footer = () => {
                 <motion.button
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
-                  className="w-full bg-gradient-to-r from-blue-600 to-purple-600 text-white px-6 py-4 rounded-xl font-bold transition-all shadow-lg shadow-blue-500/10 hover:shadow-blue-500/20">
+                  className="w-full bg-gradient-to-r from-[rgb(var(--accent))] to-[rgb(var(--accent-hover))] text-[rgb(var(--accent-contrast))] px-6 py-4 rounded-xl font-bold transition-all shadow-lg shadow-[rgb(var(--accent))]/10 hover:shadow-[rgb(var(--accent))]/20">
                   {t('contact.title')}
                 </motion.button>
               </Link>
@@ -252,7 +252,7 @@ const Footer = () => {
       
       {/* Decorative pulse circles */}
       <div className="absolute -bottom-20 -left-20 w-80 h-80 bg-[rgb(var(--primary))]/5 rounded-full blur-[100px]" />
-      <div className="absolute -bottom-20 -right-20 w-80 h-80 bg-purple-500/5 rounded-full blur-[100px]" />
+      <div className="absolute -bottom-20 -right-20 w-80 h-80 bg-[rgb(var(--accent-hover))]/5 rounded-full blur-[100px]" />
     </footer>
   );
 };

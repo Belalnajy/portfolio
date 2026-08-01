@@ -67,7 +67,7 @@ const Packages = () => {
                 }`}
               >
                 {tier.featured && (
-                  <span className="absolute -top-3 start-6 inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] font-bold bg-[rgb(var(--primary))] text-white shadow-lg">
+                  <span className="absolute -top-3 start-6 inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] font-bold bg-[rgb(var(--primary))] text-[rgb(var(--accent-contrast))] shadow-lg">
                     <FaStar className="text-[10px]" />
                     {t('packages.most_popular')}
                   </span>
@@ -106,7 +106,7 @@ const Packages = () => {
                   <button
                     className={`w-full min-h-[48px] rounded-xl font-semibold flex items-center justify-center gap-2 transition-all active:scale-[0.98] ${
                       tier.featured
-                        ? 'bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 text-white shadow-lg'
+                        ? 'bg-gradient-to-r from-[rgb(var(--accent))] to-[rgb(var(--accent-hover))] hover:from-[rgb(var(--accent-hover))] hover:to-[rgb(var(--accent))] text-[rgb(var(--accent-contrast))] shadow-lg'
                         : 'glass-card border border-[rgb(var(--border))] text-[rgb(var(--foreground))] hover:bg-[rgb(var(--muted))]/40'
                     }`}
                   >

@@ -42,6 +42,7 @@ import {
   SiExpress
 } from 'react-icons/si';
 import { useTranslation } from 'react-i18next';
+import { brandColor } from '../lib/brand-colors';
 
 const SkillCard = ({ category, index }) => {
   const { i18n } = useTranslation();
@@ -98,11 +99,11 @@ const Skills = () => {
       title: t('skills.categories.languages'),
       icon: <FaCode className="text-4xl text-primary" />,
       skills: [
-        { name: 'Python', icon: <FaPython className="text-2xl text-[#3776AB]" />, level: 90, years: '3+' },
-        { name: 'JavaScript', icon: <SiJavascript className="text-2xl text-[#F7DF1E]" />, level: 85, years: '2+' },
-        { name: 'TypeScript', icon: <SiJavascript className="text-2xl text-[#3178C6]" />, level: 80, years: '1+' },
-        { name: 'HTML5', icon: <FaHtml5 className="text-2xl text-[#E34F26]" />, level: 95, years: '3+' },
-        { name: 'CSS3', icon: <FaCss3Alt className="text-2xl text-[#1572B6]" />, level: 90, years: '3+' }
+        { name: 'Python', icon: <FaPython className="text-2xl" style={{ color: brandColor('Python') }} />, level: 90, years: '3+' },
+        { name: 'JavaScript', icon: <SiJavascript className="text-2xl" style={{ color: brandColor('JavaScript') }} />, level: 85, years: '2+' },
+        { name: 'TypeScript', icon: <SiJavascript className="text-2xl" style={{ color: brandColor('TypeScript') }} />, level: 80, years: '1+' },
+        { name: 'HTML5', icon: <FaHtml5 className="text-2xl" style={{ color: brandColor('HTML5') }} />, level: 95, years: '3+' },
+        { name: 'CSS3', icon: <FaCss3Alt className="text-2xl" style={{ color: brandColor('CSS3') }} />, level: 90, years: '3+' }
       ]
     },
     {
@@ -110,18 +111,18 @@ const Skills = () => {
       title: t('skills.categories.frameworks'),
       icon: <FaTools className="text-4xl text-primary" />,
       skills: [
-        { name: 'Django', icon: <SiDjango className="text-2xl text-[#092E20]" />, level: 90, years: '3+' },
-        { name: 'Flask', icon: <FaPython className="text-2xl text-[#000000]" />, level: 75, years: '2+' },
-        { name: 'Django REST Framework', icon: <SiDjango className="text-2xl text-[#44B78B]" />, level: 88, years: '2+' },
-        { name: 'Next.js', icon: <SiNextdotjs className="text-2xl text-[#000000]" />, level: 82, years: '1+' },
-        { name: 'React.js', icon: <FaReact className="text-2xl text-[#61DAFB]" />, level: 85, years: '2+' },
-        { name: 'Node.js', icon: <FaServer className="text-2xl text-[#339933]" />, level: 80, years: '2+' },
-        { name: 'Express.js', icon: <SiExpress className="text-2xl text-[#000000]" />, level: 78, years: '1+' },
-        { name: 'NestJS', icon: <SiNestjs className="text-2xl text-[#E0234E]" />, level: 75, years: '1+' },
-        { name: 'Odoo', icon: <FaCode className="text-2xl text-[#814C94]" />, level: 70, years: '1+' },
-        { name: 'jQuery', icon: <FaCode className="text-2xl text-[#0769AD]" />, level: 80, years: '2+' },
-        { name: 'Bootstrap', icon: <FaBootstrap className="text-2xl text-[#7952B3]" />, level: 90, years: '3+' },
-        { name: 'Tailwind CSS', icon: <SiTailwindcss className="text-2xl text-[#06B6D4]" />, level: 92, years: '2+' }
+        { name: 'Django', icon: <SiDjango className="text-2xl" style={{ color: brandColor('Django') }} />, level: 90, years: '3+' },
+        { name: 'Flask', icon: <FaPython className="text-2xl" style={{ color: brandColor('Flask') }} />, level: 75, years: '2+' },
+        { name: 'Django REST Framework', icon: <SiDjango className="text-2xl" style={{ color: brandColor('Django REST Framework') }} />, level: 88, years: '2+' },
+        { name: 'Next.js', icon: <SiNextdotjs className="text-2xl" style={{ color: brandColor('Next.js') }} />, level: 82, years: '1+' },
+        { name: 'React.js', icon: <FaReact className="text-2xl" style={{ color: brandColor('React.js') }} />, level: 85, years: '2+' },
+        { name: 'Node.js', icon: <FaServer className="text-2xl" style={{ color: brandColor('Node.js') }} />, level: 80, years: '2+' },
+        { name: 'Express.js', icon: <SiExpress className="text-2xl" style={{ color: brandColor('Express.js') }} />, level: 78, years: '1+' },
+        { name: 'NestJS', icon: <SiNestjs className="text-2xl" style={{ color: brandColor('NestJS') }} />, level: 75, years: '1+' },
+        { name: 'Odoo', icon: <FaCode className="text-2xl" style={{ color: brandColor('Odoo') }} />, level: 70, years: '1+' },
+        { name: 'jQuery', icon: <FaCode className="text-2xl" style={{ color: brandColor('jQuery') }} />, level: 80, years: '2+' },
+        { name: 'Bootstrap', icon: <FaBootstrap className="text-2xl" style={{ color: brandColor('Bootstrap') }} />, level: 90, years: '3+' },
+        { name: 'Tailwind CSS', icon: <SiTailwindcss className="text-2xl" style={{ color: brandColor('Tailwind CSS') }} />, level: 92, years: '2+' }
       ]
     },
     {
@@ -129,16 +130,16 @@ const Skills = () => {
       title: t('skills.categories.devops'),
       icon: <FaServer className="text-4xl text-primary" />,
       skills: [
-        { name: 'Docker', icon: <FaDocker className="text-2xl text-[#2496ED]" />, level: 85, years: '2+' },
-        { name: 'Git', icon: <FaGitAlt className="text-2xl text-[#F05032]" />, level: 90, years: '3+' },
-        { name: 'GitHub', icon: <FaCode className="text-2xl text-[#181717]" />, level: 88, years: '3+' },
-        { name: 'Linux', icon: <FaLinux className="text-2xl text-[#FCC624]" />, level: 85, years: '3+' },
-        { name: 'Shell Scripting', icon: <FaCode className="text-2xl text-[#89E051]" />, level: 80, years: '2+' },
-        { name: 'Bash', icon: <FaLinux className="text-2xl text-[#4EAA25]" />, level: 82, years: '2+' },
-        { name: 'Apache', icon: <SiApache className="text-2xl text-[#D22128]" />, level: 75, years: '2+' },
-        { name: 'Nginx', icon: <SiNginx className="text-2xl text-[#009639]" />, level: 78, years: '1+' },
-        { name: 'Vercel', icon: <SiVercel className="text-2xl text-[#000000]" />, level: 85, years: '1+' },
-        { name: 'Red Hat', icon: <SiRedhat className="text-2xl text-[#EE0000]" />, level: 70, years: '1+' }
+        { name: 'Docker', icon: <FaDocker className="text-2xl" style={{ color: brandColor('Docker') }} />, level: 85, years: '2+' },
+        { name: 'Git', icon: <FaGitAlt className="text-2xl" style={{ color: brandColor('Git') }} />, level: 90, years: '3+' },
+        { name: 'GitHub', icon: <FaCode className="text-2xl" style={{ color: brandColor('GitHub') }} />, level: 88, years: '3+' },
+        { name: 'Linux', icon: <FaLinux className="text-2xl" style={{ color: brandColor('Linux') }} />, level: 85, years: '3+' },
+        { name: 'Shell Scripting', icon: <FaCode className="text-2xl" style={{ color: brandColor('Shell Scripting') }} />, level: 80, years: '2+' },
+        { name: 'Bash', icon: <FaLinux className="text-2xl" style={{ color: brandColor('Bash') }} />, level: 82, years: '2+' },
+        { name: 'Apache', icon: <SiApache className="text-2xl" style={{ color: brandColor('Apache') }} />, level: 75, years: '2+' },
+        { name: 'Nginx', icon: <SiNginx className="text-2xl" style={{ color: brandColor('Nginx') }} />, level: 78, years: '1+' },
+        { name: 'Vercel', icon: <SiVercel className="text-2xl" style={{ color: brandColor('Vercel') }} />, level: 85, years: '1+' },
+        { name: 'Red Hat', icon: <SiRedhat className="text-2xl" style={{ color: brandColor('Red Hat') }} />, level: 70, years: '1+' }
       ]
     },
     {
@@ -146,12 +147,12 @@ const Skills = () => {
       title: t('skills.categories.databases'),
       icon: <FaDatabase className="text-4xl text-primary" />,
       skills: [
-        { name: 'PostgreSQL', icon: <SiPostgresql className="text-2xl text-[#4169E1]" />, level: 85, years: '2+' },
-        { name: 'MySQL', icon: <SiMysql className="text-2xl text-[#4479A1]" />, level: 80, years: '2+' },
-        { name: 'MongoDB', icon: <SiMongodb className="text-2xl text-[#47A248]" />, level: 78, years: '1+' },
-        { name: 'SQLite', icon: <FaDatabase className="text-2xl text-[#003B57]" />, level: 82, years: '2+' },
-        { name: 'Prisma', icon: <SiPrisma className="text-2xl text-[#2D3748]" />, level: 75, years: '1+' },
-        { name: 'TypeORM', icon: <FaDatabase className="text-2xl text-[#FE0803]" />, level: 72, years: '1+' }
+        { name: 'PostgreSQL', icon: <SiPostgresql className="text-2xl" style={{ color: brandColor('PostgreSQL') }} />, level: 85, years: '2+' },
+        { name: 'MySQL', icon: <SiMysql className="text-2xl" style={{ color: brandColor('MySQL') }} />, level: 80, years: '2+' },
+        { name: 'MongoDB', icon: <SiMongodb className="text-2xl" style={{ color: brandColor('MongoDB') }} />, level: 78, years: '1+' },
+        { name: 'SQLite', icon: <FaDatabase className="text-2xl" style={{ color: brandColor('SQLite') }} />, level: 82, years: '2+' },
+        { name: 'Prisma', icon: <SiPrisma className="text-2xl" style={{ color: brandColor('Prisma') }} />, level: 75, years: '1+' },
+        { name: 'TypeORM', icon: <FaDatabase className="text-2xl" style={{ color: brandColor('TypeORM') }} />, level: 72, years: '1+' }
       ]
     },
     {
@@ -159,8 +160,8 @@ const Skills = () => {
       title: t('skills.categories.realtime'),
       icon: <FaServer className="text-4xl text-primary" />,
       skills: [
-        { name: 'Socket.io', icon: <SiSocketdotio className="text-2xl text-[#010101]" />, level: 75, years: '1+' },
-        { name: 'REST APIs', icon: <FaCode className="text-2xl text-[#61DAFB]" />, level: 90, years: '3+' }
+        { name: 'Socket.io', icon: <SiSocketdotio className="text-2xl" style={{ color: brandColor('Socket.io') }} />, level: 75, years: '1+' },
+        { name: 'REST APIs', icon: <FaCode className="text-2xl" style={{ color: brandColor('REST APIs') }} />, level: 90, years: '3+' }
       ]
     },
     {
@@ -168,8 +169,8 @@ const Skills = () => {
       title: t('skills.categories.cybersecurity'),
       icon: <FaShieldAlt className="text-4xl text-primary" />,
       skills: [
-        { name: 'Network Security', icon: <FaShieldAlt className="text-2xl text-[#4CAF50]" />, level: 70, years: '1+' },
-        { name: 'Red Hat Admin 1', icon: <SiRedhat className="text-2xl text-[#EE0000]" />, level: 68, years: '1+' }
+        { name: 'Network Security', icon: <FaShieldAlt className="text-2xl" style={{ color: brandColor('Network Security') }} />, level: 70, years: '1+' },
+        { name: 'Red Hat Admin 1', icon: <SiRedhat className="text-2xl" style={{ color: brandColor('Red Hat Admin 1') }} />, level: 68, years: '1+' }
       ]
     },
     {
@@ -177,9 +178,9 @@ const Skills = () => {
       title: t('skills.categories.management'),
       icon: <FaProjectDiagram className="text-4xl text-primary" />,
       skills: [
-        { name: 'Agile', icon: <FaProjectDiagram className="text-2xl text-[#0079BF]" />, level: 85, years: '2+' },
-        { name: 'Trello', icon: <FaProjectDiagram className="text-2xl text-[#0079BF]" />, level: 80, years: '2+' },
-        { name: 'Notion', icon: <SiNotion className="text-2xl text-[#000000]" />, level: 75, years: '1+' }
+        { name: 'Agile', icon: <FaProjectDiagram className="text-2xl" style={{ color: brandColor('Agile') }} />, level: 85, years: '2+' },
+        { name: 'Trello', icon: <FaProjectDiagram className="text-2xl" style={{ color: brandColor('Trello') }} />, level: 80, years: '2+' },
+        { name: 'Notion', icon: <SiNotion className="text-2xl" style={{ color: brandColor('Notion') }} />, level: 75, years: '1+' }
       ]
     },
     {
@@ -187,11 +188,11 @@ const Skills = () => {
       title: t('skills.categories.soft'),
       icon: <FaGraduationCap className="text-4xl text-primary" />,
       skills: [
-        { name: t('skills.soft_skills.communication'), icon: <FaCode className="text-2xl text-[#2196F3]" />, level: 90, years: '3+' },
-        { name: t('skills.soft_skills.presentation'), icon: <FaCode className="text-2xl text-[#FF9800]" />, level: 85, years: '2+' },
-        { name: t('skills.soft_skills.problem_solving'), icon: <FaCode className="text-2xl text-[#4CAF50]" />, level: 92, years: '3+' },
-        { name: t('skills.soft_skills.time_management'), icon: <FaCode className="text-2xl text-[#9C27B0]" />, level: 88, years: '3+' },
-        { name: t('skills.soft_skills.adaptability'), icon: <FaCode className="text-2xl text-[#FF5722]" />, level: 90, years: '3+' }
+        { name: t('skills.soft_skills.communication'), icon: <FaCode className="text-2xl text-[rgb(var(--accent))]" />, level: 90, years: '3+' },
+        { name: t('skills.soft_skills.presentation'), icon: <FaCode className="text-2xl text-[rgb(var(--accent))]" />, level: 85, years: '2+' },
+        { name: t('skills.soft_skills.problem_solving'), icon: <FaCode className="text-2xl text-[rgb(var(--accent))]" />, level: 92, years: '3+' },
+        { name: t('skills.soft_skills.time_management'), icon: <FaCode className="text-2xl text-[rgb(var(--accent))]" />, level: 88, years: '3+' },
+        { name: t('skills.soft_skills.adaptability'), icon: <FaCode className="text-2xl text-[rgb(var(--accent))]" />, level: 90, years: '3+' }
       ]
     }
   ], [t]);
@@ -272,7 +273,7 @@ const Skills = () => {
               onClick={() => setSelectedCategory(tab.id)}
               className={`px-4 sm:px-6 min-h-[44px] rounded-full font-semibold transition-all duration-300 ${
                 selectedCategory === tab.id
-                  ? 'bg-[rgb(var(--primary))] text-white shadow-lg shadow-[rgb(var(--primary))]/30'
+                  ? 'bg-[rgb(var(--primary))] text-[rgb(var(--accent-contrast))] shadow-lg shadow-[rgb(var(--primary))]/30'
                   : 'bg-[rgb(var(--card))] text-[rgb(var(--foreground))] border border-[rgb(var(--border))] hover:border-[rgb(var(--primary))]'
               }`}>
               {tab.label}

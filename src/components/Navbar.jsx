@@ -136,7 +136,7 @@ const Navbar = ({ onDownloadCV }) => {
               <div className="relative">
                 {/* Glow effect behind logo */}
                 <motion.div
-                  className="absolute -inset-2 bg-[rgb(var(--primary))]/20 rounded-lg blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+                  className="absolute -inset-2 bg-[rgb(var(--primary))]/8 rounded-lg blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"
                   animate={{
                     scale: [1, 1.1, 1],
                   }}
@@ -165,7 +165,7 @@ const Navbar = ({ onDownloadCV }) => {
 
                 {/* Animated underline */}
                 <motion.div
-                  className="absolute -bottom-1 left-0 h-[2px] bg-gradient-to-r from-[rgb(var(--primary))] via-purple-500 to-[rgb(var(--primary))] rounded-full"
+                  className="absolute -bottom-1 left-0 h-[2px] bg-gradient-to-r from-[rgb(var(--primary))] via-[rgb(var(--accent-hover))] to-[rgb(var(--primary))] rounded-full"
                   initial={{ width: 0 }}
                   whileHover={{ width: '100%' }}
                   transition={{ duration: 0.4, ease: 'easeOut' }}
@@ -227,7 +227,7 @@ const Navbar = ({ onDownloadCV }) => {
             {/* Resume Button */}
             <MagneticButton
               onClick={onDownloadCV}
-              className="group relative px-6 py-2 rounded-full bg-[rgb(var(--primary))] text-white font-semibold overflow-hidden transition-all duration-300 hover:shadow-xl hover:shadow-[rgb(var(--primary))]/30 flex items-center gap-2">
+              className="group relative px-6 py-2 rounded-full bg-[rgb(var(--primary))] text-[rgb(var(--accent-contrast))] font-semibold overflow-hidden transition-all duration-300 hover:shadow-xl hover:shadow-[rgb(var(--primary))]/30 flex items-center gap-2">
               <span className="relative z-10 flex items-center gap-2">
                 <FaDownload className="text-sm" />
                 {t('nav.download_cv')}
@@ -244,7 +244,7 @@ const Navbar = ({ onDownloadCV }) => {
               aria-label="Toggle menu">
               {/* Glow effect on hover */}
               <motion.div
-                className="absolute inset-0 bg-blue-500/20 blur-md opacity-0 group-hover:opacity-100"
+                className="absolute inset-0 bg-[rgb(var(--accent))]/8 blur-md opacity-0 group-hover:opacity-100"
                 transition={{ duration: 0.3 }}
               />
 
@@ -290,7 +290,7 @@ const Navbar = ({ onDownloadCV }) => {
             transition={{ duration: 0.3, ease: 'easeOut' }}
             className="md:hidden absolute top-full left-0 right-0 mt-2 mx-4 rounded-2xl bg-[rgb(var(--card))]/95 backdrop-blur-2xl border border-[rgb(var(--border))] shadow-2xl overflow-hidden">
             {/* Gradient accent on top */}
-            <div className="h-1 bg-gradient-to-r from-blue-500 via-purple-500 to-blue-500" />
+            <div className="h-1 bg-gradient-to-r from-[rgb(var(--accent))] via-[rgb(var(--accent-hover))] to-[rgb(var(--accent))]" />
 
             <div className="px-4 py-6 space-y-2">
               {navItems.map((item, index) => (
@@ -310,17 +310,17 @@ const Navbar = ({ onDownloadCV }) => {
                     className={`group relative block px-5 py-3 rounded-xl text-[rgb(var(--muted-foreground))] hover:text-[rgb(var(--foreground))] transition-all duration-200 cursor-pointer font-medium overflow-hidden ${isArabic ? 'text-right' : 'text-left'}`}>
                     {/* Hover gradient background */}
                     <motion.div
-                      className="absolute inset-0 bg-gradient-to-r from-blue-500/10 to-purple-500/10 opacity-0 group-hover:opacity-100"
+                      className="absolute inset-0 bg-gradient-to-r from-[rgb(var(--accent))]/10 to-[rgb(var(--accent-hover))]/10 opacity-0 group-hover:opacity-100"
                       transition={{ duration: 0.2 }}
                     />
 
                     {/* Border glow on hover */}
-                    <div className="absolute inset-0 rounded-xl border border-transparent group-hover:border-blue-500/30 transition-all duration-200" />
+                    <div className="absolute inset-0 rounded-xl border border-transparent group-hover:border-[rgb(var(--accent))]/30 transition-all duration-200" />
 
                     {/* Number indicator */}
                     <span
                       className={`relative z-10 flex items-center gap-3 ${isArabic ? 'flex-row-reverse' : ''}`}>
-                      <span className="text-xs text-blue-500 font-mono opacity-50 group-hover:opacity-100 transition-opacity">
+                      <span className="text-xs text-[rgb(var(--accent))] font-mono opacity-50 group-hover:opacity-100 transition-opacity">
                         0{index + 1}
                       </span>
                       {item.label}
@@ -328,7 +328,7 @@ const Navbar = ({ onDownloadCV }) => {
 
                     {/* Arrow indicator */}
                     <motion.span
-                      className={`absolute ${isArabic ? 'left-4 rotate-180' : 'right-4'} top-1/2 -translate-y-1/2 text-blue-500 opacity-0 group-hover:opacity-100`}
+                      className={`absolute ${isArabic ? 'left-4 rotate-180' : 'right-4'} top-1/2 -translate-y-1/2 text-[rgb(var(--accent))] opacity-0 group-hover:opacity-100`}
                       initial={{ x: isArabic ? 10 : -10 }}
                       whileHover={{ x: 0 }}
                       transition={{ duration: 0.2 }}>
@@ -346,7 +346,7 @@ const Navbar = ({ onDownloadCV }) => {
                   delay: navItems.length * 0.05 + 0.1,
                   duration: 0.3,
                 }}
-                className="h-px bg-gradient-to-r from-transparent via-white/20 to-transparent my-4"
+                className="h-px bg-gradient-to-r from-transparent via-[rgb(var(--foreground))]/20 to-transparent my-4"
               />
 
               <motion.div
@@ -362,16 +362,16 @@ const Navbar = ({ onDownloadCV }) => {
                     onDownloadCV();
                     setIsOpen(false);
                   }}
-                  className="relative w-full px-5 py-3 rounded-xl bg-[rgb(var(--primary))] text-white font-semibold overflow-hidden transition-all duration-300 flex items-center justify-center gap-2 group">
+                  className="relative w-full px-5 py-3 rounded-xl bg-[rgb(var(--primary))] text-[rgb(var(--accent-contrast))] font-semibold overflow-hidden transition-all duration-300 flex items-center justify-center gap-2 group">
                   {/* Animated gradient on hover */}
                   <motion.div
-                    className="absolute inset-0 bg-gradient-to-r from-blue-500 to-purple-500 opacity-0 group-hover:opacity-100"
+                    className="absolute inset-0 bg-gradient-to-r from-[rgb(var(--accent))] to-[rgb(var(--accent-hover))] opacity-0 group-hover:opacity-100"
                     transition={{ duration: 0.3 }}
                   />
 
                   {/* Shimmer effect */}
                   <motion.div
-                    className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent"
+                    className="absolute inset-0 bg-gradient-to-r from-transparent via-[rgb(var(--foreground))]/30 to-transparent"
                     animate={{ x: ['-100%', '200%'] }}
                     transition={{
                       duration: 2,
@@ -380,7 +380,7 @@ const Navbar = ({ onDownloadCV }) => {
                     }}
                   />
 
-                  <span className="relative z-10 flex items-center gap-2 group-hover:text-white transition-colors">
+                  <span className="relative z-10 flex items-center gap-2 group-hover:text-[rgb(var(--on-scrim))] transition-colors">
                     <FaDownload className="text-sm" />
                     {t('nav.download_cv')}
                   </span>

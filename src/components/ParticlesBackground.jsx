@@ -1,9 +1,12 @@
 "use client";
 import { useCallback } from 'react';
+import { readToken } from '../lib/theme-colors';
 import Particles from 'react-tsparticles';
 import { loadSlim } from 'tsparticles-slim';
 
 const ParticlesBackground = () => {
+  // Particles cannot read a CSS variable, so resolve it once on the client.
+  const accentColor = readToken('--accent');
   const particlesInit = useCallback(async (engine) => {
     await loadSlim(engine);
   }, []);
@@ -43,10 +46,10 @@ const ParticlesBackground = () => {
         },
         particles: {
           color: {
-            value: '#667eea',
+            value: accentColor,
           },
           links: {
-            color: '#667eea',
+            color: accentColor,
             distance: 150,
             enable: true,
             opacity: 0.3,

@@ -237,9 +237,9 @@ const Contact = ({ showNotification }) => {
                 whileTap={{ scale: loading ? 1 : 0.95 }}
                 className={`w-full py-3 rounded-lg font-semibold transition-all ${
                   loading
-                    ? 'bg-gradient-to-r from-blue-400 to-purple-400 cursor-not-allowed opacity-70'
-                    : 'bg-gradient-to-r from-blue-600 to-purple-600 hover:shadow-lg hover:shadow-blue-500/50'
-                } text-white`}>
+                    ? 'bg-gradient-to-r from-[rgb(var(--accent))] to-[rgb(var(--accent-hover))] cursor-not-allowed opacity-70'
+                    : 'bg-gradient-to-r from-[rgb(var(--accent))] to-[rgb(var(--accent-hover))] hover:shadow-lg hover:shadow-[rgb(var(--accent))]/50'
+                } text-[rgb(var(--on-scrim))]`}>
                 {loading ? t('contact.form.sending') : t('contact.form.submit')}
               </motion.button>
             </form>

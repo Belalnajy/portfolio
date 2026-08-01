@@ -65,7 +65,7 @@ const CustomCursor = () => {
           stiffness: 300,
           damping: 25
         }}>
-        <div className="w-full h-full rounded-full border-2 border-blue-500 opacity-50" />
+        <div className="w-full h-full rounded-full border-2 border-[rgb(var(--accent))] opacity-50" />
       </motion.div>
 
       {/* Middle cursor ring with gradient */}
@@ -81,7 +81,7 @@ const CustomCursor = () => {
           stiffness: 400,
           damping: 30
         }}>
-        <div className="w-full h-full rounded-full bg-gradient-to-r from-blue-500 to-purple-500 opacity-30 blur-sm" />
+        <div className="w-full h-full rounded-full bg-gradient-to-r from-[rgb(var(--accent))] to-[rgb(var(--accent-hover))] opacity-30 blur-sm" />
       </motion.div>
 
       {/* Inner cursor dot */}
@@ -97,7 +97,7 @@ const CustomCursor = () => {
           stiffness: 1000,
           damping: 50
         }}>
-        <div className="w-full h-full rounded-full bg-gradient-to-r from-blue-400 to-purple-400" />
+        <div className="w-full h-full rounded-full bg-gradient-to-r from-[rgb(var(--accent))] to-[rgb(var(--accent-hover))]" />
       </motion.div>
     </>
   );

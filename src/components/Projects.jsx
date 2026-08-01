@@ -59,67 +59,78 @@ import {
 import ProjectSkeleton from './skeletons/ProjectSkeleton';
 import ProjectModal from './ProjectModal';
 import { useTranslation } from 'react-i18next';
+import { brandColor } from '../lib/brand-colors';
 
+export const TECH_ICONS = {
+  'HTML': FaHtml5,
+  'CSS': FaCss3Alt,
+  'JavaScript': FaJs,
+  'React': FaReact,
+  'Python': FaPython,
+  'Django': SiDjango,
+  'PostgreSQL': SiPostgresql,
+  'jQuery': SiJquery,
+  'Tailwind': SiTailwindcss,
+  'Bootstrap': FaBootstrap,
+  'TMDB API': FaFilm,
+  'Odoo': SiOdoo,
+  'Next.js': SiNextdotjs,
+  'NestJS': SiNestjs,
+  'TypeScript': SiTypescript,
+  'MongoDB': SiMongodb,
+  'Prisma': SiPrisma,
+  'Socket.io': SiSocketdotio,
+  'Node.js': SiNodedotjs,
+  'Express.js': SiExpress,
+  'TypeORM': FaDatabase,
+  'Nx Monorepo': FaCode,
+  'Leaflet': SiOpenlayers,
+  'AI': FaCode,
+  'Flask': SiFlask,
+  'SQLAlchemy': FaDatabase,
+  'Cloudinary': SiCloudinary,
+  'Turborepo': SiTurborepo,
+  'Puppeteer': FaRobot,
+  'QRCode': FaQrcode,
+  'Recharts': FaChartLine,
+  'Knex.js': FaDatabase,
+  'OpenAI': SiOpenai,
+  'Vite': SiVite,
+  'Radix UI': FaCode,
+  'Nodemailer': FaEnvelope,
+  'FastAPI': SiFastapi,
+  'Gemini': FaRobot,
+  'Celery': SiCelery,
+  'Redis': SiRedis,
+  'Framer Motion': SiFramer,
+  'MyFatoorah': FaCode,
+  'NELC': FaGraduationCap,
+  'SCFHS': FaHospital,
+  'Multer': FaCode,
+  'Excel Processing': FaFileExcel,
+  'React Native': FaReact,
+  'Android': FaAndroid,
+  'Google Play': FaGooglePlay,
+  'REST API': FaCode,
+  'Bug Fixing': FaBug,
+  'UI/UX Redesign': FaMobileAlt,
+  'Tajweed': FaQuran,
+  'Laravel': SiLaravel,
+  'PHP': SiPhp,
+};
+
+/**
+ * Renders a technology mark in its own brand colour, sourced from
+ * src/lib/brand-colors.js. Anything without a known brand colour falls back to
+ * --brand-neutral, which follows the palette.
+ */
 export const getTechIcon = (tech) => {
-  const iconMap = {
-    HTML: <FaHtml5 className="text-[#E34F26]" />,
-    CSS: <FaCss3Alt className="text-[#1572B6]" />,
-    JavaScript: <FaJs className="text-[#F7DF1E]" />,
-    React: <FaReact className="text-[#61DAFB]" />,
-    Python: <FaPython className="text-[#3776AB]" />,
-    Django: <SiDjango className="text-[#092E20]" />,
-    PostgreSQL: <SiPostgresql className="text-[#336791]" />,
-    jQuery: <SiJquery className="text-[#0769AD]" />,
-    Tailwind: <SiTailwindcss className="text-[#06B6D4]" />,
-    Bootstrap: <FaBootstrap className="text-[#7952B3]" />,
-    'TMDB API': <FaFilm className="text-[#01D277]" />,
-    Odoo: <SiOdoo className="text-[#714B67]" />,
-    'Next.js': <SiNextdotjs className="text-[#000000]" />,
-    NestJS: <SiNestjs className="text-[#E0234E]" />,
-    TypeScript: <SiTypescript className="text-[#3178C6]" />,
-    MongoDB: <SiMongodb className="text-[#47A248]" />,
-    Prisma: <SiPrisma className="text-[#2D3748]" />,
-    'Socket.io': <SiSocketdotio className="text-[#010101]" />,
-    'Node.js': <SiNodedotjs className="text-[#339933]" />,
-    'Express.js': <SiExpress className="text-[#000000]" />,
-    TypeORM: <FaDatabase className="text-[#FE0803]" />,
-    'Nx Monorepo': <FaCode className="text-[#143055]" />,
-    Leaflet: <SiOpenlayers className="text-[#199900]" />,
-    AI: <FaCode className="text-[#FF6F00]" />,
-    Flask: <SiFlask className="text-[#000000]" />,
-    SQLAlchemy: <FaDatabase className="text-[#D71F00]" />,
-    Cloudinary: <SiCloudinary className="text-[#3448C5]" />,
-    Turborepo: <SiTurborepo className="text-[#EF4444]" />,
-    Puppeteer: <FaRobot className="text-[#40B5A2]" />,
-    QRCode: <FaQrcode className="text-[#000000]" />,
-    Recharts: <FaChartLine className="text-[#22B5BF]" />,
-    'Knex.js': <FaDatabase className="text-[#E16426]" />,
-    OpenAI: <SiOpenai className="text-[#412991]" />,
-    Vite: <SiVite className="text-[#646CFF]" />,
-    'Radix UI': <FaCode className="text-[#161616]" />,
-    Nodemailer: <FaEnvelope className="text-[#339933]" />,
-    FastAPI: <SiFastapi className="text-[#05998B]" />,
-    Gemini: <FaRobot className="text-[#4285F4]" />,
-    Celery: <SiCelery className="text-[#37814A]" />,
-    Redis: <SiRedis className="text-[#DC382D]" />,
-    'Framer Motion': <SiFramer className="text-[#0055FF]" />,
-    MyFatoorah: <FaCode className="text-[#00B67A]" />,
-    NELC: <FaGraduationCap className="text-[#1B5E20]" />,
-    SCFHS: <FaHospital className="text-[#0D47A1]" />,
-    Multer: <FaCode className="text-[#CF6900]" />,
-    'Excel Processing': <FaFileExcel className="text-[#217346]" />,
-    'React Native': <FaReact className="text-[#61DAFB]" />,
-    Android: <FaAndroid className="text-[#3DDC84]" />,
-    'Google Play': <FaGooglePlay className="text-[#01875F]" />,
-    'REST API': <FaCode className="text-[#0EA5E9]" />,
-    'Bug Fixing': <FaBug className="text-[#EF4444]" />,
-    'UI/UX Redesign': <FaMobileAlt className="text-[#A855F7]" />,
-    Tajweed: <FaQuran className="text-[#0E8A5F]" />,
-    Laravel: <SiLaravel className="text-[#FF2D20]" />,
-    PHP: <SiPhp className="text-[#777BB4]" />,
-  };
-  return (
-    iconMap[tech] || <FaCode className="text-[rgb(var(--muted-foreground))]" />
+  const Icon = TECH_ICONS[tech] || FaCode;
+  const color = brandColor(tech);
+  return color ? (
+    <Icon style={{ color }} />
+  ) : (
+    <Icon className="text-[rgb(var(--brand-neutral))]" />
   );
 };
 
@@ -136,21 +147,21 @@ export const LMS_SUITE = {
       name: 'Injaz',
       url: 'https://lms-injaz.com/',
       image: '/injaz.png',
-      accent: '#0EA5E9',
+      accent: 'rgb(var(--accent))',
     },
     {
       slug: 'hcholding',
       name: 'HC Holding',
       url: 'https://lms-hcholding.org/',
       image: '/hcholding.png',
-      accent: '#22C55E',
+      accent: 'rgb(var(--success))',
     },
     {
       slug: 'mada',
       name: 'Mada Education',
       url: 'https://mada-education.com/',
       image: '/mada.png',
-      accent: '#06B6D4',
+      accent: 'rgb(var(--accent-hover))',
     },
   ],
 };
@@ -194,8 +205,8 @@ const ProjectCard = ({ project, index, onClick }) => {
       }}
       className="group relative glass-card rounded-2xl overflow-hidden shadow-lg transition-all duration-300 cursor-pointer border border-transparent hover:border-[rgb(var(--primary))]/30 flex flex-col h-full bg-[rgb(var(--background))]">
       {/* Sleek Image Container with inner padding */}
-      <div className="relative w-full aspect-video bg-[#0B0F19] p-4 pb-0 flex items-end justify-center overflow-hidden border-b border-[rgb(var(--border))]/30">
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-blue-900/20 via-[#0B0F19]/0 to-[#0B0F19] opacity-50 z-0" />
+      <div className="relative w-full aspect-video bg-[rgb(var(--scrim))] p-4 pb-0 flex items-end justify-center overflow-hidden border-b border-[rgb(var(--border))]/30">
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-[rgb(var(--accent))]/10 via-[rgb(var(--scrim))]/0 to-[rgb(var(--scrim))] opacity-50 z-0" />
 
         <img
           src={project.image}
@@ -205,8 +216,8 @@ const ProjectCard = ({ project, index, onClick }) => {
         />
 
         {/* Hover Glass Overlay - Click to View */}
-        <div className="absolute inset-0 z-20 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-black/40 backdrop-blur-[2px]">
-          <span className="px-6 py-2 rounded-full glass-card text-white text-sm font-semibold tracking-wider flex items-center gap-2 transform translate-y-4 group-hover:translate-y-0 transition-all duration-300">
+        <div className="absolute inset-0 z-20 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-[rgb(var(--scrim))]/60 backdrop-blur-[2px]">
+          <span className="px-6 py-2 rounded-full glass-card text-[rgb(var(--on-scrim))] text-sm font-semibold tracking-wider flex items-center gap-2 transform translate-y-4 group-hover:translate-y-0 transition-all duration-300">
             {t('projects.view_details')}
           </span>
         </div>
@@ -835,8 +846,9 @@ const Projects = () => {
               <button
                 key={category.id}
                 onClick={() => setFilter(category.id)}
-                className={`relative px-4 sm:px-6 min-h-[44px] rounded-full text-sm font-medium transition-colors z-10 whitespace-nowrap ${filter === category.id
-                    ? 'text-white'
+                className={`relative px-4 sm:px-6 min-h-[44px] rounded-full text-sm font-medium transition-colors z-10 whitespace-nowrap ${
+                  filter === category.id
+                    ? 'text-[rgb(var(--on-scrim))]'
                     : 'text-[rgb(var(--muted-foreground))] hover:text-[rgb(var(--foreground))]'
                   }`}>
                 {filter === category.id && (

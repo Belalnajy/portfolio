@@ -87,7 +87,7 @@ const About = () => {
             viewport={REVEAL_VIEWPORT}
             transition={{ duration: 0.5 }}
             className="space-y-6">
-            <h3 className="text-3xl font-bold mb-8 bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
+            <h3 className="text-3xl font-bold mb-8 bg-gradient-to-r from-[rgb(var(--accent))] to-[rgb(var(--accent-hover))] bg-clip-text text-transparent">
               {t('about.personal_info')}
             </h3>
             <div className="space-y-4">
@@ -102,7 +102,7 @@ const About = () => {
                   className="flex items-center gap-6 glass-card glass-hover p-4 rounded-xl cursor-pointer">
                   <div
                     className={`bg-gradient-to-r from-${item.color}-500 to-${item.color}-600 p-3 rounded-lg shrink-0`}>
-                    <div className="text-white text-xl">{item.icon}</div>
+                    <div className="text-[rgb(var(--on-scrim))] text-xl">{item.icon}</div>
                   </div>
                   <div className="flex-1 text-start">
                     <h4 className="text-[rgb(var(--foreground))] font-semibold">
@@ -124,7 +124,7 @@ const About = () => {
             viewport={REVEAL_VIEWPORT}
             transition={{ duration: 0.5 }}
             className="space-y-6">
-            <h3 className="text-3xl font-bold mb-8 bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
+            <h3 className="text-3xl font-bold mb-8 bg-gradient-to-r from-[rgb(var(--accent))] to-[rgb(var(--accent-hover))] bg-clip-text text-transparent">
               {t('about.professional_summary')}
             </h3>
             <div className="glass-card p-6 rounded-xl space-y-4">
@@ -157,7 +157,7 @@ const About = () => {
               transition={{ duration: REVEAL_DURATION, delay: revealDelay(index) }}
               whileHover={{ y: -10, scale: 1.05 }}
               className="glass-card glass-hover p-6 rounded-xl text-center cursor-pointer">
-              <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-gradient-to-r from-blue-500 to-purple-500 text-white text-2xl mb-4">
+              <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-gradient-to-r from-[rgb(var(--accent))] to-[rgb(var(--accent-hover))] text-[rgb(var(--accent-contrast))] text-2xl mb-4">
                 {item.icon}
               </div>
               <h4 className="text-xl font-bold mb-2 text-[rgb(var(--foreground))]">

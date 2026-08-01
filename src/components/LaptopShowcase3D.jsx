@@ -6,6 +6,7 @@ import * as THREE from 'three';
 import { motion, AnimatePresence } from 'framer-motion';
 import { REVEAL_VIEWPORT } from '../lib/motion';
 import { useTranslation } from 'react-i18next';
+import { readToken } from '../lib/theme-colors';
 import { Smartphone, Zap, Layers, Globe, ChevronLeft, ChevronRight } from 'lucide-react';
 
 // ─── Featured Projects for the 3D Showcase ────────────────
@@ -156,8 +157,10 @@ function LaptopModel({ currentProjectIndex, mousePosition }) {
     DISPLAY_H = 1.7;
   const HINGE_R = 0.035;
 
+  // Three.js materials need literal values, so the palette is resolved at runtime.
+  const shell = readToken('--bg');
   const metalMat = {
-    color: '#0a0a0c',
+    color: shell,
     metalness: 0.92,
     roughness: 0.12,
     envMapIntensity: 1.2,
@@ -177,7 +180,7 @@ function LaptopModel({ currentProjectIndex, mousePosition }) {
         rotation={[-Math.PI / 2, 0, 0]}>
         <planeGeometry args={[2.4, 1.05]} />
         <meshStandardMaterial
-          color="#1e1e3a"
+          color={readToken("--surface-raised")}
           metalness={0.7}
           roughness={0.3}
           transparent
@@ -191,7 +194,7 @@ function LaptopModel({ currentProjectIndex, mousePosition }) {
         rotation={[-Math.PI / 2, 0, 0]}>
         <planeGeometry args={[0.85, 0.52]} />
         <meshStandardMaterial
-          color="#1a1a35"
+          color={readToken("--surface")}
           metalness={0.85}
           roughness={0.15}
         />
@@ -203,7 +206,7 @@ function LaptopModel({ currentProjectIndex, mousePosition }) {
         rotation={[0, 0, Math.PI / 2]}>
         <cylinderGeometry args={[HINGE_R, HINGE_R, BASE_W * 0.25, 16]} />
         <meshStandardMaterial
-          color="#111125"
+          color={readToken("--surface")}
           metalness={0.95}
           roughness={0.05}
         />
@@ -236,7 +239,7 @@ function LaptopModel({ currentProjectIndex, mousePosition }) {
         <mesh position={[0, SCREEN_H / 2, SCREEN_D / 2 + 0.0005]}>
           <planeGeometry args={[DISPLAY_W + 0.12, DISPLAY_H + 0.12]} />
           <meshBasicMaterial
-            color="#60A5FA"
+            color={readToken("--accent")}
             transparent
             opacity={0.04}
             side={THREE.FrontSide}
@@ -247,8 +250,8 @@ function LaptopModel({ currentProjectIndex, mousePosition }) {
         <mesh position={[0, SCREEN_H - 0.07, SCREEN_D / 2 + 0.002]}>
           <circleGeometry args={[0.022, 16]} />
           <meshStandardMaterial
-            color="#222"
-            emissive="#004400"
+            color={readToken("--border-subtle")}
+            emissive={readToken("--success")}
             emissiveIntensity={0.3}
           />
         </mesh>
@@ -265,7 +268,7 @@ function CanvasLoader() {
   return (
     <Html center>
       <div className="flex flex-col items-center gap-3">
-        <div className="w-10 h-10 border-[3px] border-blue-400/20 border-t-blue-400 rounded-full animate-spin" />
+        <div className="w-10 h-10 border-[3px] border-[rgb(var(--accent))]/20 border-t-blue-400 rounded-full animate-spin" />
       </div>
     </Html>
   );
@@ -509,12 +512,12 @@ const LaptopShowcase3D = () => {
                   <pointLight
                     position={[-4, 3, -2]}
                     intensity={0.4}
-                    color="#60A5FA"
+                    color={readToken("--accent")}
                   />
                   <pointLight
                     position={[3, 2, 4]}
                     intensity={0.2}
-                    color="#818CF8"
+                    color={readToken("--accent-hover")}
                   />
 
                   {/* Floating laptop */}
@@ -538,7 +541,7 @@ const LaptopShowcase3D = () => {
                     scale={8}
                     blur={2.5}
                     far={4}
-                    color="#1a1a2e"
+                    color={readToken("--surface")}
                   />
 
                   {/* Realistic environment reflections */}
@@ -550,19 +553,19 @@ const LaptopShowcase3D = () => {
                       intensity={0.55}
                       position={[0, 5, -6]}
                       scale={[6, 3, 1]}
-                      color="#dbe6ff"
+                      color={readToken("--muted-text")}
                     />
                     <Lightformer
                       intensity={0.7}
                       position={[-6, 1.5, 2]}
                       scale={[6, 1.2, 1]}
-                      color="#60A5FA"
+                      color={readToken("--accent")}
                     />
                     <Lightformer
                       intensity={0.5}
                       position={[6, 0.5, 2]}
                       scale={[6, 1.2, 1]}
-                      color="#A855F7"
+                      color={readToken("--accent-hover")}
                     />
                   </Environment>
                 </Suspense>
@@ -580,11 +583,11 @@ const LaptopShowcase3D = () => {
                       animate={{ opacity: 1, y: 0 }}
                       exit={{ opacity: 0, y: -12 }}
                       transition={{ duration: 0.35 }}
-                      className="w-full rounded-2xl overflow-hidden border border-[rgb(var(--border))]/50 bg-[#0B0F19] shadow-2xl">
+                      className="w-full rounded-2xl overflow-hidden border border-[rgb(var(--border))]/50 bg-[rgb(var(--scrim))] shadow-2xl">
                       <div className="flex items-center gap-1.5 px-3 py-2 border-b border-[rgb(var(--border))]/40">
-                        <span className="w-2 h-2 rounded-full bg-red-500/70" />
-                        <span className="w-2 h-2 rounded-full bg-yellow-500/70" />
-                        <span className="w-2 h-2 rounded-full bg-green-500/70" />
+                        <span className="w-2 h-2 rounded-full bg-[rgb(var(--destructive))]/70" />
+                        <span className="w-2 h-2 rounded-full bg-[rgb(var(--accent))]/70" />
+                        <span className="w-2 h-2 rounded-full bg-[rgb(var(--success))]/70" />
                       </div>
                       <img
                         src={SHOWCASE_PROJECTS[currentIndex].image}

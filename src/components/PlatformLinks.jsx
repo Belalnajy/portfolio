@@ -37,7 +37,7 @@ const PlatformLinks = ({ variant = 'default' }) => {
             whileTap={{ scale: 0.95 }}
             className="group flex items-center gap-2 px-4 py-2 rounded-lg bg-[rgb(var(--card))] border-2 border-[rgb(var(--border))] hover:border-[rgb(var(--primary))] transition-all shadow-md hover:shadow-lg">
             <div className="w-8 h-8 flex items-center justify-center">
-              <img src={platform.logo} alt={platform.name} className="w-full h-full object-contain" />
+              <img src={platform.logo} alt={platform.name} className="logo-mark w-full h-full object-contain" />
             </div>
             <span className="text-sm font-medium text-[rgb(var(--foreground))]">{platform.name}</span>
           </motion.a>
@@ -60,7 +60,7 @@ const PlatformLinks = ({ variant = 'default' }) => {
             whileTap={{ scale: 0.95 }}
             className="flex items-center gap-2 text-[rgb(var(--foreground))] hover:text-[rgb(var(--primary))] transition-all">
             <div className="w-6 h-6 flex items-center justify-center">
-              <img src={platform.logo} alt={platform.name} className="w-full h-full object-contain" />
+              <img src={platform.logo} alt={platform.name} className="logo-mark w-full h-full object-contain" />
             </div>
             <span className="text-sm font-medium">{platform.name}</span>
           </motion.a>
@@ -81,8 +81,8 @@ const PlatformLinks = ({ variant = 'default' }) => {
           whileHover={{ scale: 1.05, y: -5 }}
           whileTap={{ scale: 0.95 }}
           className="group flex items-center gap-3 px-6 py-3 rounded-xl bg-[rgb(var(--card))] border-2 border-[rgb(var(--border))] hover:border-[rgb(var(--primary))] transition-all shadow-lg hover:shadow-xl">
-          <div className="w-12 h-12 flex items-center justify-center bg-white rounded-lg p-2">
-            <img src={platform.logo} alt={platform.name} className="w-full h-full object-contain" />
+          <div className="w-12 h-12 flex items-center justify-center bg-[rgb(var(--card))] rounded-lg p-2">
+            <img src={platform.logo} alt={platform.name} className="logo-mark w-full h-full object-contain" />
           </div>
           <div className="text-left">
             <p className="font-bold text-[rgb(var(--foreground))] text-sm">
