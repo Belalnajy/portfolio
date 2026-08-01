@@ -434,7 +434,7 @@ const AIAssistant = () => {
             exit={{ opacity: 0, y: 20, scale: 0.95 }}
             className="mb-4 w-[calc(100vw-2rem)] max-w-[350px] md:w-[400px] h-[70dvh] max-h-[500px] glass-card flex flex-col shadow-2xl rounded-2xl overflow-hidden border border-[rgb(var(--primary))]/40 bg-[rgb(var(--background))]/80 md:bg-transparent">
             {/* Header */}
-            <div className="p-4 bg-gradient-to-r from-blue-600/20 to-purple-600/20 flex items-center justify-between border-b border-[rgb(var(--border))]">
+            <div className="p-4 bg-gradient-to-r from-[rgb(var(--accent))]/15 to-[rgb(var(--accent-hover))]/10 flex items-center justify-between border-b border-[rgb(var(--border))]">
               <div className="flex items-center space-x-3">
                 <div className="p-2 bg-gradient-to-r from-[rgb(var(--accent))] to-[rgb(var(--accent-hover))] rounded-lg text-[rgb(var(--accent-contrast))]">
                   <FaUserAstronaut />
@@ -490,12 +490,12 @@ const AIAssistant = () => {
                     <div className="flex justify-center space-x-4 mt-2">
                       <button
                         onClick={() => handleLanguageSelect('en')}
-                        className="px-4 py-2 bg-[rgb(var(--accent))] rounded-xl text-xs font-bold text-[rgb(var(--accent-contrast))] hover:bg-blue-700 transition-all shadow-lg">
+                        className="px-4 py-2 bg-[rgb(var(--accent))] rounded-xl text-xs font-bold text-[rgb(var(--accent-contrast))] hover:bg-[rgb(var(--accent))] transition-all shadow-lg">
                         English 🇺🇸
                       </button>
                       <button
                         onClick={() => handleLanguageSelect('ar')}
-                        className="px-4 py-2 bg-purple-600 rounded-xl text-xs font-bold text-white hover:bg-purple-700 transition-all shadow-lg font-arabic">
+                        className="px-4 py-2 bg-[rgb(var(--accent))] rounded-xl text-xs font-bold text-[rgb(var(--accent-contrast))] hover:bg-[rgb(var(--accent))] transition-all shadow-lg font-arabic">
                         العربية 🇪🇬
                       </button>
                     </div>
@@ -619,7 +619,7 @@ const AIAssistant = () => {
         whileHover={{ scale: 1.1, rotate: 5 }}
         whileTap={{ scale: 0.9 }}
         onClick={() => setIsOpen(!isOpen)}
-        className="w-14 h-14 bg-gradient-to-r from-[rgb(var(--accent))] to-[rgb(var(--accent-hover))] rounded-full flex items-center justify-center text-[rgb(var(--accent-contrast))] shadow-lg shadow-[rgb(var(--accent))]/40 relative group border border-white/20">
+        className="w-14 h-14 glass-card border border-[rgb(var(--border-control))]/40 rounded-full flex items-center justify-center text-[rgb(var(--accent-contrast))] shadow-lg shadow-[rgb(var(--accent))]/40 relative group border border-[rgb(var(--border-control))]/40">
         <AnimatePresence mode="wait">
           {isOpen ? (
             <motion.div

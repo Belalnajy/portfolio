@@ -105,14 +105,14 @@ const Certifications = () => {
 
   const getColorClasses = (color) => {
     const colorMap = {
-      rose: 'bg-rose-500/10 text-rose-500 group-hover:bg-rose-500 group-hover:text-white',
+      rose: 'bg-[rgb(var(--accent))]/10 text-[rgb(var(--destructive))] group-hover:bg-[rgb(var(--accent))] group-hover:text-[rgb(var(--accent-contrast))]',
       blue: 'bg-[rgb(var(--accent))]/10 text-[rgb(var(--accent))] group-hover:bg-[rgb(var(--accent))] group-hover:text-[rgb(var(--accent-contrast))]',
-      cyan: 'bg-cyan-500/10 text-cyan-500 group-hover:bg-cyan-500 group-hover:text-white',
+      cyan: 'bg-[rgb(var(--accent))]/10 text-[rgb(var(--accent))] group-hover:bg-[rgb(var(--accent))] group-hover:text-[rgb(var(--accent-contrast))]',
       green:
-        'bg-[rgb(var(--success))]/10 text-[rgb(var(--success))] group-hover:bg-[rgb(var(--success))] group-hover:text-white',
-      red: 'bg-[rgb(var(--destructive))]/10 text-[rgb(var(--destructive))] group-hover:bg-[rgb(var(--destructive))] group-hover:text-white',
+        'bg-[rgb(var(--success))]/10 text-[rgb(var(--success))] group-hover:bg-[rgb(var(--success))] group-hover:text-[rgb(var(--on-scrim))]',
+      red: 'bg-[rgb(var(--destructive))]/10 text-[rgb(var(--destructive))] group-hover:bg-[rgb(var(--destructive))] group-hover:text-[rgb(var(--on-scrim))]',
       emerald:
-        'bg-emerald-500/10 text-emerald-500 group-hover:bg-emerald-500 group-hover:text-white',
+        'bg-[rgb(var(--accent))]/10 text-[rgb(var(--success))] group-hover:bg-[rgb(var(--accent))] group-hover:text-[rgb(var(--accent-contrast))]',
     };
     return colorMap[color] || colorMap.blue;
   };
@@ -194,7 +194,7 @@ const Certifications = () => {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               onClick={() => setSelectedCert(null)}
-              className="fixed inset-0 bg-black/80 z-50 flex items-center justify-center p-4">
+              className="fixed inset-0 bg-[rgb(var(--scrim))]/80 z-50 flex items-center justify-center p-4">
               <motion.div
                 initial={{ scale: 0.9, opacity: 0 }}
                 animate={{ scale: 1, opacity: 1 }}
@@ -203,7 +203,7 @@ const Certifications = () => {
                 className="relative max-w-4xl w-full bg-[rgb(var(--background))] rounded-xl p-2">
                 <button
                   onClick={() => setSelectedCert(null)}
-                  className="absolute -top-12 right-0 text-white hover:text-[rgb(var(--muted-foreground))] transition-colors">
+                  className="absolute -top-12 right-0 text-[rgb(var(--on-scrim))] hover:text-[rgb(var(--muted-foreground))] transition-colors">
                   <FaTimes className="w-6 h-6" />
                 </button>
                 <img

@@ -78,7 +78,7 @@ const ThemeSwitcher = () => {
         whileHover={{ scale: 1.1 }}
         whileTap={{ scale: 0.9 }}
         onClick={() => setIsOpen(!isOpen)}
-        className="w-14 h-14 rounded-full bg-gradient-to-r from-[rgb(var(--accent))] to-[rgb(var(--accent-hover))] flex items-center justify-center text-[rgb(var(--accent-contrast))] shadow-lg hover:shadow-xl transition-shadow relative group">
+        className="w-14 h-14 rounded-full glass-card border border-[rgb(var(--border-control))]/40 flex items-center justify-center text-[rgb(var(--accent))] shadow-lg hover:shadow-xl transition-shadow relative group">
         <FaPalette className="text-2xl" />
 
         {/* Tooltip */}

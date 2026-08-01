@@ -19,15 +19,15 @@ const Notification = ({ message, type = "success", isVisible, onClose }) => {
           className="fixed top-24 left-1/2 z-50">
           <div
             className={`bg-[rgb(var(--card))] border ${type === "success"
-              ? "border-green-500"
-              : "border-red-500"} rounded-lg shadow-lg p-4 flex items-center space-x-3 min-w-[300px] backdrop-blur-sm`}>
+              ? "border-[rgb(var(--success))]"
+              : "border-[rgb(var(--destructive))]"} rounded-lg shadow-lg p-4 flex items-center space-x-3 min-w-[300px] backdrop-blur-sm`}>
             {icons[type]}
-            <p className="text-white flex-grow">
+            <p className="text-[rgb(var(--on-scrim))] flex-grow">
               {message}
             </p>
             <button
               onClick={onClose}
-              className="text-[rgb(var(--muted-foreground))] hover:text-white transition-colors focus:outline-none">
+              className="text-[rgb(var(--muted-foreground))] hover:text-[rgb(var(--on-scrim))] transition-colors focus:outline-none">
               <FaTimes />
             </button>
           </div>

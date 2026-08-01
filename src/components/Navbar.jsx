@@ -134,7 +134,7 @@ const Navbar = ({ onDownloadCV }) => {
               <div className="relative">
                 {/* Glow effect behind logo */}
                 <motion.div
-                  className="absolute -inset-2 bg-[rgb(var(--primary))]/20 rounded-lg blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+                  className="absolute -inset-2 bg-[rgb(var(--primary))]/8 rounded-lg blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"
                   animate={{
                     scale: [1, 1.1, 1],
                   }}
@@ -163,7 +163,7 @@ const Navbar = ({ onDownloadCV }) => {
 
                 {/* Animated underline */}
                 <motion.div
-                  className="absolute -bottom-1 left-0 h-[2px] bg-gradient-to-r from-[rgb(var(--primary))] via-purple-500 to-[rgb(var(--primary))] rounded-full"
+                  className="absolute -bottom-1 left-0 h-[2px] bg-gradient-to-r from-[rgb(var(--primary))] via-[rgb(var(--accent-hover))] to-[rgb(var(--primary))] rounded-full"
                   initial={{ width: 0 }}
                   whileHover={{ width: '100%' }}
                   transition={{ duration: 0.4, ease: 'easeOut' }}
@@ -242,7 +242,7 @@ const Navbar = ({ onDownloadCV }) => {
               aria-label="Toggle menu">
               {/* Glow effect on hover */}
               <motion.div
-                className="absolute inset-0 bg-[rgb(var(--accent))]/20 blur-md opacity-0 group-hover:opacity-100"
+                className="absolute inset-0 bg-[rgb(var(--accent))]/8 blur-md opacity-0 group-hover:opacity-100"
                 transition={{ duration: 0.3 }}
               />
 
@@ -308,7 +308,7 @@ const Navbar = ({ onDownloadCV }) => {
                     className={`group relative block px-5 py-3 rounded-xl text-[rgb(var(--muted-foreground))] hover:text-[rgb(var(--foreground))] transition-all duration-200 cursor-pointer font-medium overflow-hidden ${isArabic ? 'text-right' : 'text-left'}`}>
                     {/* Hover gradient background */}
                     <motion.div
-                      className="absolute inset-0 bg-gradient-to-r from-blue-500/10 to-purple-500/10 opacity-0 group-hover:opacity-100"
+                      className="absolute inset-0 bg-gradient-to-r from-[rgb(var(--accent))]/10 to-[rgb(var(--accent-hover))]/10 opacity-0 group-hover:opacity-100"
                       transition={{ duration: 0.2 }}
                     />
 
@@ -344,7 +344,7 @@ const Navbar = ({ onDownloadCV }) => {
                   delay: navItems.length * 0.05 + 0.1,
                   duration: 0.3,
                 }}
-                className="h-px bg-gradient-to-r from-transparent via-white/20 to-transparent my-4"
+                className="h-px bg-gradient-to-r from-transparent via-[rgb(var(--foreground))]/20 to-transparent my-4"
               />
 
               <motion.div
@@ -369,7 +369,7 @@ const Navbar = ({ onDownloadCV }) => {
 
                   {/* Shimmer effect */}
                   <motion.div
-                    className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent"
+                    className="absolute inset-0 bg-gradient-to-r from-transparent via-[rgb(var(--foreground))]/30 to-transparent"
                     animate={{ x: ['-100%', '200%'] }}
                     transition={{
                       duration: 2,
@@ -378,7 +378,7 @@ const Navbar = ({ onDownloadCV }) => {
                     }}
                   />
 
-                  <span className="relative z-10 flex items-center gap-2 group-hover:text-white transition-colors">
+                  <span className="relative z-10 flex items-center gap-2 group-hover:text-[rgb(var(--on-scrim))] transition-colors">
                     <FaDownload className="text-sm" />
                     {t('nav.download_cv')}
                   </span>

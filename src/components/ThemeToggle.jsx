@@ -8,7 +8,7 @@ const ThemeToggle = ({ isDark, onToggle }) => {
       whileHover={{ scale: 1.05 }}
       whileTap={{ scale: 0.95 }}
       onClick={onToggle}
-      className="fixed bottom-6 right-6 bg-[rgb(var(--card))] dark:bg-gray-700 p-3 rounded-full shadow-lg z-50">
+      className="fixed bottom-6 right-6 bg-[rgb(var(--card))] dark:bg-[rgb(var(--accent))] p-3 rounded-full shadow-lg z-50">
       <motion.div
         initial={false}
         animate={{ rotate: isDark ? 180 : 0 }}

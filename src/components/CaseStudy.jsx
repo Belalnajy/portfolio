@@ -45,10 +45,10 @@ const CaseStudy = ({ slug, image, liveUrl, stack }) => {
   };
 
   const blocks = [
-    { key: 'challenge', icon: <FaExclamationTriangle />, accent: 'text-amber-400' },
+    { key: 'challenge', icon: <FaExclamationTriangle />, accent: 'text-[rgb(var(--accent))]' },
     { key: 'approach', icon: <FaLightbulb />, accent: 'text-[rgb(var(--accent))]' },
     { key: 'delivered', icon: <FaCubes />, accent: 'text-[rgb(var(--accent-hover))]' },
-    { key: 'outcome', icon: <FaCheckCircle />, accent: 'text-emerald-400' },
+    { key: 'outcome', icon: <FaCheckCircle />, accent: 'text-[rgb(var(--success))]' },
   ];
 
   return (
@@ -79,7 +79,7 @@ const CaseStudy = ({ slug, image, liveUrl, stack }) => {
 
       {/* Hero */}
       <section className="relative pt-12 pb-10 md:pt-20 md:pb-14 overflow-hidden">
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-3xl h-72 bg-[rgb(var(--primary))]/10 blur-[120px] rounded-full pointer-events-none" />
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-3xl h-72 bg-[rgb(var(--primary))]/8 blur-[120px] rounded-full pointer-events-none" />
 
         <div className="container mx-auto px-4 sm:px-6 relative z-10 max-w-4xl text-center">
           <motion.span

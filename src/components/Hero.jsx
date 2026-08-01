@@ -41,7 +41,7 @@ const Hero = ({ onDownloadCV }) => {
       <div className="absolute inset-0 w-full h-full overflow-hidden">
         {/* Animated Gradient Orbs */}
         <div className="absolute top-0 -left-4 w-72 h-72 bg-[rgb(var(--accent))] rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-blob" />
-        <div className="absolute top-0 -right-4 w-72 h-72 bg-blue-400 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-blob animation-delay-2000" />
+        <div className="absolute top-0 -right-4 w-72 h-72 bg-[rgb(var(--accent))] rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-blob animation-delay-2000" />
         <div className="absolute -bottom-8 left-20 w-72 h-72 bg-[rgb(var(--accent))] rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-blob animation-delay-4000" />
 
         {/* Grid Pattern */}
@@ -114,7 +114,7 @@ const Hero = ({ onDownloadCV }) => {
                 rel="noopener noreferrer"
                 whileHover={{ scale: 1.2, rotate: 5 }}
                 whileTap={{ scale: 0.9 }}
-                className="p-3 rounded-full bg-gradient-to-r from-gray-800 to-gray-700 text-white hover:from-blue-600 hover:to-purple-600 transition-all shadow-lg hover:shadow-[rgb(var(--accent))]/50">
+                className="p-3 rounded-full bg-gradient-to-r from-[rgb(var(--accent))] to-[rgb(var(--accent-hover))] text-[rgb(var(--accent-contrast))] hover:from-[rgb(var(--accent-hover))] hover:to-[rgb(var(--accent))] transition-all shadow-lg hover:shadow-[rgb(var(--accent))]/50">
                 <FaGithub className="w-6 h-6" />
               </motion.a>
               <motion.a
@@ -123,7 +123,7 @@ const Hero = ({ onDownloadCV }) => {
                 rel="noopener noreferrer"
                 whileHover={{ scale: 1.2, rotate: -5 }}
                 whileTap={{ scale: 0.9 }}
-                className="p-3 rounded-full bg-gradient-to-r from-[#0A66C2] to-[#004182] text-white hover:shadow-lg hover:shadow-[rgb(var(--accent))]/50 transition-all">
+                className="p-3 rounded-full bg-gradient-to-r from-[${brandColor('LinkedIn')}] to-[${brandColor('LinkedIn Dark')}] text-[rgb(var(--on-scrim))] hover:shadow-lg hover:shadow-[rgb(var(--accent))]/50 transition-all">
                 <FaLinkedin className="w-6 h-6" />
               </motion.a>
             </motion.div>
@@ -185,8 +185,7 @@ const Hero = ({ onDownloadCV }) => {
             className="relative">
             <div className="relative w-full max-w-md mx-auto lg:max-w-full">
               {/* Decorative Elements */}
-              <div className="absolute -inset-4 bg-[rgb(var(--accent))]/20 rounded-full blur-2xl animate-pulse" />
-              <div className="absolute -inset-4 bg-[rgb(var(--accent-hover))]/20 rounded-full blur-2xl animate-pulse animation-delay-2000" />
+              <div className="absolute -inset-4 bg-[rgb(var(--accent))]/6 rounded-full blur-3xl" />
 
               {/* Main Image */}
               <motion.div

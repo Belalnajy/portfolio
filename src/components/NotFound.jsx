@@ -10,7 +10,7 @@ const NotFound = () => {
       <div className="absolute inset-0 w-full h-full overflow-hidden">
         {/* Animated Gradient Orbs */}
         <div className="absolute top-0 -left-4 w-96 h-96 bg-[rgb(var(--destructive))] rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob" />
-        <div className="absolute top-0 -right-4 w-96 h-96 bg-orange-500 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-2000" />
+        <div className="absolute top-0 -right-4 w-96 h-96 bg-[rgb(var(--accent))] rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-2000" />
         <div className="absolute -bottom-8 left-20 w-96 h-96 bg-[rgb(var(--accent))] rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-4000" />
 
         {/* Grid Pattern */}
@@ -27,7 +27,7 @@ const NotFound = () => {
             transition={{ duration: 0.5 }}
             className="mb-8">
             <motion.h1
-              className="text-[150px] md:text-[250px] font-bold leading-none bg-gradient-to-r from-red-400 via-orange-400 to-yellow-400 bg-clip-text text-transparent"
+              className="text-[150px] md:text-[250px] font-bold leading-none bg-gradient-to-r from-[rgb(var(--accent))] to-[rgb(var(--accent-hover))] bg-clip-text text-transparent"
               animate={{
                 textShadow: [
                   "0 0 20px rgba(239, 68, 68, 0.5)",
@@ -89,16 +89,16 @@ const NotFound = () => {
               </div>
               <code className="text-sm text-[rgb(var(--foreground))] font-mono">
                 <span className="text-[rgb(var(--accent-hover))]">if</span>
-                <span className="text-white"> (</span>
+                <span className="text-[rgb(var(--on-scrim))]"> (</span>
                 <span className="text-[rgb(var(--accent))]">pageNotFound</span>
-                <span className="text-white">) {"{"}</span>
+                <span className="text-[rgb(var(--on-scrim))]">) {"{"}</span>
                 <br />
-                <span className="text-white ml-4">
+                <span className="text-[rgb(var(--on-scrim))] ml-4">
                   return{" "}
                   <span className="text-[rgb(var(--success))]">"Go back home!"</span>;
                 </span>
                 <br />
-                <span className="text-white">{"}"}</span>
+                <span className="text-[rgb(var(--on-scrim))]">{"}"}</span>
               </code>
             </div>
           </motion.div>
@@ -148,7 +148,7 @@ const NotFound = () => {
       {[...Array(15)].map((_, i) => (
         <motion.div
           key={i}
-          className="absolute w-2 h-2 bg-gradient-to-r from-red-400 to-yellow-400 rounded-full"
+          className="absolute w-2 h-2 bg-gradient-to-r from-[rgb(var(--accent))] to-[rgb(var(--accent-hover))] rounded-full"
           style={{
             left: `${Math.random() * 100}%`,
             top: `${Math.random() * 100}%`,

@@ -54,24 +54,32 @@
     );
   }
 
-  /* Client logos: neutral at rest so they cannot fight the palette. */
+  /* Client logos: neutral at rest so they cannot fight the palette, full
+     colour on hover. */
   .logo-mark {
-    filter: grayscale(1) contrast(0.9);
-    opacity: 0.55;
-    transition: filter 0.35s ease, opacity 0.35s ease;
+    filter: grayscale(1);
+    opacity: 0.6;
+    transition: filter 0.35s ease, opacity 0.35s ease, background-color 0.35s ease;
   }
   .logo-mark:hover,
   .group:hover .logo-mark {
-    filter: grayscale(0) contrast(1);
+    filter: grayscale(0);
     opacity: 1;
   }
-  /* Dark-on-transparent marks vanish on an ink background, so lift them. */
+
+  /* On the ink background a blanket brightness filter destroys colour marks
+     and turns them into grey blocks. Instead every mark sits on a light plate,
+     which keeps dark-on-transparent logos and colour logos equally legible
+     without guessing at each file. */
   :root:not([data-theme='light']) .logo-mark {
-    filter: grayscale(1) brightness(2.6) contrast(0.75);
+    background-color: rgb(232 237 242 / 0.92);
+    border-radius: 6px;
+    padding: 6px;
+    box-sizing: border-box;
   }
   :root:not([data-theme='light']) .logo-mark:hover,
   :root:not([data-theme='light']) .group:hover .logo-mark {
-    filter: grayscale(0) brightness(1.12) contrast(1);
+    background-color: rgb(255 255 255);
   }
 
   /* Visible focus in both themes. */

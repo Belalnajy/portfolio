@@ -239,7 +239,7 @@ const Contact = ({ showNotification }) => {
                   loading
                     ? 'bg-gradient-to-r from-[rgb(var(--accent))] to-[rgb(var(--accent-hover))] cursor-not-allowed opacity-70'
                     : 'bg-gradient-to-r from-[rgb(var(--accent))] to-[rgb(var(--accent-hover))] hover:shadow-lg hover:shadow-[rgb(var(--accent))]/50'
-                } text-white`}>
+                } text-[rgb(var(--on-scrim))]`}>
                 {loading ? t('contact.form.sending') : t('contact.form.submit')}
               </motion.button>
             </form>
