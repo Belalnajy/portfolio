@@ -337,24 +337,6 @@ const Projects = () => {
         category: 'Full Stack',
       },
       {
-        slug: 'motors',
-        title: t('projects.items.motors.title'),
-        description: t('projects.items.motors.desc'),
-        image: '/motors.png',
-        tags: [
-          'Next.js',
-          'NestJS',
-          'TypeORM',
-          'PostgreSQL',
-          'TypeScript',
-          'Multer',
-        ],
-        features: t('projects.items.motors.features', { returnObjects: true }),
-        github: '#',
-        live: 'https://motorksa.org/',
-        category: 'Full Stack',
-      },
-      {
         slug: 'injaz',
         title: t('projects.items.injaz.title'),
         description: t('projects.items.injaz.desc'),
@@ -560,6 +542,24 @@ const Projects = () => {
         features: t('projects.items.dpms.features', { returnObjects: true }),
         github: '#',
         live: 'https://dpms-rust.vercel.app/',
+        category: 'Full Stack',
+      },
+      {
+        slug: 'motors',
+        title: t('projects.items.motors.title'),
+        description: t('projects.items.motors.desc'),
+        image: '/motors.png',
+        tags: [
+          'Next.js',
+          'NestJS',
+          'TypeORM',
+          'PostgreSQL',
+          'TypeScript',
+          'Multer',
+        ],
+        features: t('projects.items.motors.features', { returnObjects: true }),
+        github: '#',
+        live: 'https://motorksa.org/',
         category: 'Full Stack',
       },
       {
@@ -850,7 +850,7 @@ const Projects = () => {
                   filter === category.id
                     ? 'text-[rgb(var(--on-scrim))]'
                     : 'text-[rgb(var(--muted-foreground))] hover:text-[rgb(var(--foreground))]'
-                }`}>
+                  }`}>
                 {filter === category.id && (
                   <motion.div
                     layoutId="activeFilter"

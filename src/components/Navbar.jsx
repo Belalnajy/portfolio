@@ -15,6 +15,8 @@ const Navbar = ({ onDownloadCV }) => {
   const [scrolled, setScrolled] = useState(false);
   const [activeSection, setActiveSection] = useState('home');
 
+  const isArabic = i18n.language === 'ar';
+
   const toggleLanguage = () => {
     const newLang = i18n.language === 'en' ? 'ar' : 'en';
     i18n.changeLanguage(newLang);
