@@ -33,7 +33,7 @@ const ROWS = 4;
 const GUTTER = 14;
 const FRAME_PAD = 18; // the copper frame's inset around the card block
 const CARD_W = (SIZE - MARGIN * 2 - FRAME_PAD * 2 - GUTTER * (COLS - 1)) / COLS;
-const CARD_H = 96;
+const CARD_H = 106;
 const CARD_PAD_X = 18;
 const CARD_PAD_Y = 15;
 const INNER_W = CARD_W - CARD_PAD_X * 2;
@@ -323,15 +323,13 @@ const COPY = EN
       dir: 'ltr',
       font: 'Inter',
       h1: `Production work for <span class="c">real clients</span>`,
-      sub: `<span class="c">24</span> clients and <span class="c">31</span> projects across Egypt, Saudi Arabia and the Gulf`,
+      // No figures here: the stat bar owns them, so repeating them reads as filler.
+      sub: `Products running in Egypt, Saudi Arabia and the Gulf`,
       features: ['Accredited LMS', 'Billing and invoicing', 'B2B dashboards', 'Mobile apps'],
       label: 'The teams behind the work',
-      // The plus is only on the figures that are a floor, not a count.
       stats: [
-        ['24', 'clients', false],
-        ['31', 'projects', false],
-        ['240', 'students taught', true],
-        ['2', 'years', true],
+        ['24', 'clients'],
+        ['31', 'projects'],
       ],
       foot: ['Belal Nagy', 'Full-Stack Developer', '<span class="site">belalnagy.com</span>'],
     }
@@ -339,19 +337,18 @@ const COPY = EN
       dir: 'rtl',
       font: 'Cairo',
       h1: `شغل حقيقي مع <span class="c">عملاء حقيقيين</span>`,
-      sub: `<span class="c">24</span> عميل و<span class="c">31</span> مشروع في مصر والسعودية والخليج`,
+      sub: `منتجات شغالة في مصر والسعودية والخليج`,
       features: ['منصات تعليم معتمدة', 'فوترة وحسابات', 'لوحات تحكم B2B', 'تطبيقات موبايل'],
       label: 'الشركات اللي ورا الشغل ده',
       stats: [
-        ['24', 'عميل', false],
-        ['31', 'مشروع', false],
-        ['240', 'طالب اتدرّبوا', true],
-        ['2', 'سنة خبرة', true],
+        ['24', 'عميل'],
+        ['31', 'مشروع'],
       ],
       foot: ['بلال ناجي', 'Full-Stack Developer', '<span class="site">belalnagy.com</span>'],
     };
 
-const GRID_TOP = 396;
+const GRID_TOP = 382;
+const STATS_BOTTOM = 104;
 const gridW = COLS * CARD_W + (COLS - 1) * GUTTER;
 const gridH = ROWS * CARD_H + (ROWS - 1) * GUTTER;
 
@@ -411,23 +408,25 @@ const html = `<style>
         border:1px solid rgba(255,255,255,.09);box-shadow:0 2px 10px rgba(0,0,0,.28)}
   .card img{object-fit:contain}
 
-  .label{position:absolute;left:${MARGIN}px;right:${MARGIN}px;top:${GRID_TOP + gridH + FRAME_PAD * 2 + 26}px;
-         text-align:center;font-size:19px;font-weight:700;letter-spacing:${COPY.dir === 'rtl' ? '0' : '3px'};
+  .label{position:absolute;left:${MARGIN}px;right:${MARGIN}px;top:${GRID_TOP + gridH + FRAME_PAD * 2 + 24}px;
+         text-align:center;font-size:19px;font-weight:700;line-height:1.25;
+         letter-spacing:${COPY.dir === 'rtl' ? '0' : '3px'};
          ${COPY.dir === 'rtl' ? '' : 'text-transform:uppercase;'}color:${MUTED}}
 
-  .stats{position:absolute;left:${MARGIN}px;right:${MARGIN}px;bottom:118px;
-         display:flex;justify-content:center;align-items:stretch;gap:0;
-         border:1px solid rgba(255,255,255,.10);border-radius:18px;
-         background:rgba(255,255,255,.035);padding:20px 0}
-  .stat{flex:1;text-align:center;padding:0 8px}
-  .stat + .stat{border-inline-start:1px solid rgba(255,255,255,.10)}
-  .stat b{display:block;font-size:46px;font-weight:800;color:#fff;line-height:1.1}
-  .stat b em{font-style:normal;color:${COPPER}}
-  .stat span{display:block;margin-top:4px;font-size:19px;font-weight:600;color:${MUTED}}
+  /* Two figures do not fill a full-width bar, so the bar becomes a centred
+     pill sized to its contents and the numbers grow to carry the space. */
+  .stats-wrap{position:absolute;left:0;right:0;bottom:${STATS_BOTTOM}px;text-align:center}
+  .stats{display:inline-flex;align-items:stretch;
+         border:1px solid rgba(224,160,60,.35);border-radius:20px;
+         background:rgba(255,255,255,.04);padding:16px 0}
+  .stat{padding:0 56px;text-align:center}
+  .stat + .stat{border-inline-start:1px solid rgba(255,255,255,.12)}
+  .stat b{display:block;font-size:52px;font-weight:800;color:${COPPER};line-height:1.05}
+  .stat span{display:block;margin-top:4px;font-size:20px;font-weight:600;color:#C3CED8;line-height:1.3}
 
   /* Flex rather than one run of text: a line mixing Arabic and Latin gets
      reordered by bidi, and the name has to come first in both languages. */
-  .foot{position:absolute;left:0;right:0;bottom:48px;display:flex;justify-content:center;
+  .foot{position:absolute;left:0;right:0;bottom:42px;display:flex;justify-content:center;
         align-items:center;gap:12px;font-size:21px;font-weight:600;color:${MUTED}}
   .foot .dot{opacity:.55}
   .foot .site{color:${COPPER};font-weight:700}
@@ -451,11 +450,9 @@ ${cards}
 
 <div class="label">${COPY.label}</div>
 
-<div class="stats">
-  ${COPY.stats
-    .map(([n, l, plus]) => `<div class="stat"><b>${n}${plus ? '<em>+</em>' : ''}</b><span>${l}</span></div>`)
-    .join('')}
-</div>
+<div class="stats-wrap"><div class="stats">
+  ${COPY.stats.map(([n, l]) => `<div class="stat"><b>${n}</b><span>${l}</span></div>`).join('')}
+</div></div>
 
 <div class="foot">${COPY.foot.join('<span class="dot">&middot;</span>')}</div>`;
 
@@ -463,8 +460,44 @@ await page.setContent(html);
 await page.evaluate(() => document.fonts.ready);
 await page.evaluate((dir) => document.documentElement.setAttribute('dir', dir), COPY.dir);
 await page.waitForTimeout(400);
+
+/* The blocks are absolutely positioned, so a copy change in either language can
+   silently push two of them into each other. Check rather than eyeball it. */
+const layout = await page.evaluate(() => {
+  const box = (sel) => {
+    const el = document.querySelector(sel);
+    if (!el) return null;
+    const r = el.getBoundingClientRect();
+    return { sel, top: Math.round(r.top), bottom: Math.round(r.bottom), left: Math.round(r.left), right: Math.round(r.right) };
+  };
+  const order = ['.head', '.feats', '.frame', '.label', '.stats', '.foot'].map(box).filter(Boolean);
+  const clashes = [];
+  for (let i = 0; i < order.length - 1; i++) {
+    const gap = order[i + 1].top - order[i].bottom;
+    if (gap < 0) clashes.push(`${order[i].sel} overlaps ${order[i + 1].sel} by ${-gap}px`);
+  }
+  const spill = order.filter((b) => b.top < 0 || b.bottom > 1200 || b.left < 0 || b.right > 1200);
+  return { order, clashes, spill: spill.map((b) => b.sel) };
+});
+
+console.log(`\n  ${'block'.padEnd(10)}${'top'.padStart(6)}${'bottom'.padStart(8)}${'gap below'.padStart(11)}`);
+console.log('  ' + '-'.repeat(35));
+layout.order.forEach((b, i) => {
+  const next = layout.order[i + 1];
+  console.log(
+    `  ${b.sel.padEnd(10)}${String(b.top).padStart(6)}${String(b.bottom).padStart(8)}` +
+      (next ? String(next.top - b.bottom).padStart(11) : ''),
+  );
+});
+if (layout.clashes.length || layout.spill.length) {
+  layout.clashes.forEach((c) => console.error(`  ! ${c}`));
+  layout.spill.forEach((s) => console.error(`  ! ${s} falls outside the canvas`));
+}
+
 mkdirSync(OUT_DIR, { recursive: true });
 await page.screenshot({ path: OUT });
 await browser.close();
+
+if (layout.clashes.length || layout.spill.length) process.exitCode = 1;
 
 console.log(`\n  wrote ${path.relative(ROOT, OUT)}  ${SIZE}x${SIZE}\n`);
