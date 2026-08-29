@@ -13,7 +13,7 @@ const InteractiveTimeline = () => {
   const experiences = useMemo(() => {
     const items = t('timeline.items', { returnObjects: true });
     const metadata = [
-      { type: 'work', icon: <FaBriefcase />, color: 'from-[rgb(var(--accent))] to-[rgb(var(--accent-hover))]' },
+      { type: 'work', icon: <FaBriefcase />, logo: '/logos/ezsec-logo.png', color: 'from-[rgb(var(--accent))] to-[rgb(var(--accent-hover))]' },
       { type: 'work', icon: <FaBriefcase />, logo: '/logos/indstrz-logo.png', color: 'from-[rgb(var(--accent))] to-[rgb(var(--accent-hover))]' },
       { type: 'work', icon: <FaBriefcase />, logo: '/logos/sf-logo.png', color: 'from-[rgb(var(--accent))] to-[rgb(var(--accent-hover))]' },
       { type: 'work', icon: <FaLaptopCode />, logo: '/logos/iti-logo.png', color: 'from-[rgb(var(--accent))] to-[rgb(var(--accent-hover))]' },

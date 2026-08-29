@@ -18,6 +18,7 @@ const Experience = () => {
       period: '01/2026 - Present',
       type: 'work',
       icon: <FaLaptopCode />,
+      logo: '/logos/ezsec-logo.png',
       description: [
         'Working remotely as a Software Engineer at a Canadian cybersecurity company specializing in easy-to-use cyber security solutions',
         'Building, maintaining, and shipping software products end-to-end within a fully remote team',
