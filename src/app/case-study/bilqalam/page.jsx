@@ -8,7 +8,7 @@ export default function BilqalamCaseStudyPage() {
   return (
     <CaseStudy
       slug="bilqalam"
-      image="/bilqalam.png"
+      image="/bilqalam.webp"
       liveUrl="https://bilqalaminstitute.net/"
       stack={STACK}
     />

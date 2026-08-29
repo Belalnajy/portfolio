@@ -145,6 +145,7 @@ const CaseStudy = ({ slug, image, liveUrl, stack }) => {
           <img
             src={image}
             alt={t(`${base}.title`)}
+            loading="lazy"
             className="w-full h-auto rounded-lg"
           />
         </motion.div>

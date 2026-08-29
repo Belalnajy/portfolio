@@ -194,8 +194,11 @@ const Hero = ({ onDownloadCV }) => {
                 className="relative">
                 <div className="w-full aspect-square rounded-full border-4 border-[rgb(var(--accent))]/30 overflow-hidden">
                   <img
-                    src="/hero.png"
+                    src="/hero.webp"
                     alt="Belal Nagy"
+                    width="1080"
+                    height="1080"
+                    fetchPriority="high"
                     className="w-full h-full object-cover object-center"
                   />
                 </div>

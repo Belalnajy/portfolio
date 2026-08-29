@@ -5,14 +5,14 @@ import { REVEAL_VIEWPORT } from '../lib/motion';
 import { useTranslation } from 'react-i18next';
 
 const logos = [
-  'toyo228-logo.png', 'motors-logo.png', 'injaz-logo.png', 'hcholding-logo.png',
-  'mutlq-logo.png', 'mada-logo.png', 'bilqalam-logo.png', 'medicta-logo.png',
-  '21-secondary-logo.png', 'CME-logo.png', 'DiaMonitor-logo.png',
-  'KMBC-logo.png', 'amarna-logo.png', 'baserah-logo.png',
-  'dmagni-logo.png', 'indstrz-logo.png', 'manqla-logo.png',
-  'nextstop-logo.png', 'profleet-logo.png', 'quotemate-logo.png',
-  'rabzan-logo.svg', 'sf-logo.png', 'sonomedix-logo.png',
-  'uduipa-logo.png', 'upafa-edu-logo.png', 'waferlee.png'
+  'toyo228-logo.webp', 'motors-logo.webp', 'injaz-logo.webp', 'hcholding-logo.webp',
+  'mutlq-logo.webp', 'mada-logo.webp', 'bilqalam-logo.webp', 'medicta-logo.webp',
+  '21-secondary-logo.webp', 'CME-logo.webp', 'DiaMonitor-logo.webp',
+  'KMBC-logo.webp', 'amarna-logo.webp', 'baserah-logo.webp',
+  'dmagni-logo.webp', 'indstrz-logo.webp', 'manqla-logo.webp',
+  'nextstop-logo.webp', 'profleet-logo.webp', 'quotemate-logo.webp',
+  'rabzan-logo.svg', 'sf-logo.webp', 'sonomedix-logo.webp',
+  'uduipa-logo.webp', 'upafa-edu-logo.webp', 'waferlee.webp'
 ];
 
 const half = Math.ceil(logos.length / 2);
