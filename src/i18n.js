@@ -43,7 +43,7 @@ const resources = {
         values: {
           name: 'Belal Nagy',
           role: 'Full Stack Developer',
-          education: 'Bachelor of Business (MIS)',
+          education: 'Bachelor of Business (BIS)',
           location: 'Alexandria, Egypt'
         },
         summary_p1: 'Full-stack developer based in <1>Alexandria, Egypt</1>. I work in Next.js, Laravel, NestJS, Node.js, Django and PostgreSQL. I am currently a full-stack developer at <3>S&F in Saudi Arabia</3>.',
@@ -532,6 +532,17 @@ const resources = {
         },
         items: [
           {
+            title: 'Software Engineer',
+            company: 'ezSec Inc (Canada)',
+            location: 'Remote, Kitchener, Canada',
+            period: '01/2026 - Present',
+            description: [
+              'Working remotely as a Software Engineer at a Canadian cybersecurity company specializing in easy-to-use cyber security solutions',
+              'Building, maintaining, and shipping software products end-to-end within a fully remote team',
+              'Handling DevOps tasks: deploying finished software to production servers, configuring environments, and keeping services running'
+            ]
+          },
+          {
             title: 'Co-Founder',
             company: 'Indstrz',
             location: 'Remote, Egypt',
@@ -595,7 +606,7 @@ const resources = {
             ]
           },
           {
-            title: 'Bachelor of Business (MIS)',
+            title: 'Bachelor of Business (English Section) – Business Information Systems (BIS)',
             company: 'Alexandria University',
             location: 'Alexandria, Egypt',
             period: '07/2019 - 07/2023',
@@ -998,7 +1009,7 @@ const resources = {
         values: {
           name: 'بلال ناجي',
           role: 'مطور Full Stack',
-          education: 'بكالوريوس أعمال (نظم معلومات)',
+          education: 'بكالوريوس أعمال (BIS)',
           location: 'الإسكندرية، مصر'
         },
         summary_p1: 'مطور Full-Stack مقيم في <1>الإسكندرية، مصر</1>. أشتغل بـ Next.js و Laravel و NestJS و Node.js و Django و PostgreSQL. حالياً مطور Full-Stack في <3>شركة S&F بالسعودية</3>.',
@@ -1487,6 +1498,17 @@ const resources = {
         },
         items: [
           {
+            title: 'مهندس برمجيات (Software Engineer)',
+            company: 'شركة ezSec Inc (كندا)',
+            location: 'عن بُعد، كيتشنر، كندا',
+            period: '01/2026 - الحالي',
+            description: [
+              'العمل عن بُعد كمهندس برمجيات في شركة كندية متخصصة في حلول الأمن السيبراني سهلة الاستخدام',
+              'بناء وتطوير وإطلاق منتجات برمجية بشكل متكامل ضمن فريق يعمل عن بُعد بالكامل',
+              'تنفيذ مهام DevOps: نشر البرمجيات المكتملة على سيرفرات الإنتاج وتهيئة البيئات وضمان استمرارية تشغيل الخدمات'
+            ]
+          },
+          {
             title: 'شريك مؤسس (Co-Founder)',
             company: 'Indstrz',
             location: 'عن بُعد، مصر',
@@ -1550,7 +1572,7 @@ const resources = {
             ]
           },
           {
-            title: 'بكالوريوس التجارة (نظم المعلومات الإدارية)',
+            title: 'بكالوريوس الأعمال (القسم الإنجليزي) – نظم معلومات الأعمال (BIS)',
             company: 'جامعة الإسكندرية',
             location: 'الإسكندرية، مصر',
             period: '07/2019 - 07/2023',
