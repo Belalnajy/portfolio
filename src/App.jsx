@@ -1,5 +1,6 @@
 "use client";
 import { useEffect, useState } from 'react';
+import dynamic from 'next/dynamic';
 import { resolvePreferredLanguage } from './i18n';
 import { useTranslation } from 'react-i18next';
 import { MotionConfig } from 'framer-motion';
@@ -23,12 +24,17 @@ import AnimatedStats from './components/AnimatedStats';
 import ThemeSwitcher from './components/ThemeSwitcher';
 import Certifications from './components/Certifications';
 import Services from './components/Services';
-import LaptopShowcase3D from './components/LaptopShowcase3D';
+import LazyMount from './components/LazyMount';
 import Footer from './components/Footer';
-import LoadingScreen from './components/LoadingScreen';
 import DarkModeToggle from './components/DarkModeToggle';
 import Testimonials from './components/Testimonials';
 import AIAssistant from './components/AIAssistant';
+
+// three.js + drei only ship in their own chunk, requested when the section is
+// actually about to be seen (see LazyMount below).
+const LaptopShowcase3D = dynamic(() => import('./components/LaptopShowcase3D'), {
+  ssr: false,
+});
 
 function App() {
   const [notification, setNotification] = useState({
@@ -36,7 +42,6 @@ function App() {
     type: '',
     isVisible: false,
   });
-  const [isLoading, setIsLoading] = useState(true);
 
   const { i18n } = useTranslation();
 
@@ -53,10 +58,6 @@ function App() {
     document.dir = i18n.dir();
     document.documentElement.lang = i18n.language;
   }, [i18n.language, i18n]);
-
-  const handleLoadingComplete = () => {
-    setIsLoading(false);
-  };
 
   const showNotification = (message, type = 'success') => {
     setNotification({
@@ -96,7 +97,6 @@ function App() {
     // reducedMotion="user" drops transform and layout animations for anyone who
     // has asked their OS to reduce motion, without touching opacity fades.
     <MotionConfig reducedMotion="user">
-      {isLoading && <LoadingScreen onLoadingComplete={handleLoadingComplete} />}
       {/* overflow-x-clip contains the decorative entrance offsets and blurred
           blobs, which otherwise let the page pan sideways on phones in RTL.
           `clip` rather than `hidden` so no scroll container is created. */}
@@ -123,9 +123,12 @@ function App() {
           <PlatformSuite />
           <Projects />
           {/* Pulls an HDR map from an external CDN; contained so a failed fetch
-              cannot tear down the rest of the page. */}
+              cannot tear down the rest of the page. Mounted lazily so the
+              three.js chunk is only downloaded when the section approaches. */}
           <SectionErrorBoundary>
-            <LaptopShowcase3D />
+            <LazyMount minHeight={480}>
+              <LaptopShowcase3D />
+            </LazyMount>
           </SectionErrorBoundary>
           <BrandLogos />
           <Skills />
