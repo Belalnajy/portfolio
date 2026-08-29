@@ -12,6 +12,19 @@ const Experience = () => {
 
   const experiences = [
     {
+      title: 'Software Engineer',
+      company: 'ezSec Inc (Canada)',
+      location: 'Remote, Kitchener, Canada',
+      period: '01/2026 - Present',
+      type: 'work',
+      icon: <FaLaptopCode />,
+      description: [
+        'Working remotely as a Software Engineer at a Canadian cybersecurity company specializing in easy-to-use cyber security solutions',
+        'Building, maintaining, and shipping software products end-to-end within a fully remote team',
+        'Handling DevOps tasks: deploying finished software to production servers, configuring environments, and keeping services running'
+      ]
+    },
+    {
       title: 'Full Stack Developer',
       company: 'S&F (Saudi Arabia)',
       location: 'Remote, Saudi Arabia',
@@ -80,7 +93,7 @@ const Experience = () => {
     },
     {
       title:
-        'Bachelor of Business (English Section), Management Information System(MIS)',
+        'Bachelor of Business (English Section) – Business Information Systems (BIS)',
       company: 'Alexandria University',
       location: 'Alexandria, Egypt',
       period: '07/2019 - 07/2023',
