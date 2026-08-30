@@ -1,5 +1,6 @@
 "use client";
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import Image from 'next/image';
 import { createPortal } from 'react-dom';
 import { motion, AnimatePresence, useDragControls } from 'framer-motion';
 import {
@@ -12,6 +13,8 @@ import {
 } from 'react-icons/fa';
 import { getTechIcon } from './Projects';
 import { useTranslation } from 'react-i18next';
+import { coverMeta } from '../lib/cover-meta';
+import { useFocusTrap } from '../lib/useFocusTrap';
 
 const MOBILE_QUERY = '(max-width: 639px)';
 
@@ -34,10 +37,13 @@ const ProjectModal = ({ project, isOpen, onClose }) => {
   const { t } = useTranslation();
   const isMobile = useIsMobile();
   const dragControls = useDragControls();
+  const dialogRef = useRef(null);
   // Portals need a DOM target, so nothing renders until after mount.
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => setMounted(true), []);
+  // Tab stays inside the sheet; focus returns to the card on close.
+  useFocusTrap(dialogRef, isOpen && mounted && !!project);
 
   useEffect(() => {
     if (!isOpen) return;
@@ -49,6 +55,8 @@ const ProjectModal = ({ project, isOpen, onClose }) => {
   }, [isOpen, onClose]);
 
   if (!mounted || !project) return null;
+
+  const cover = coverMeta(project.image);
 
   // On phones the sheet rises from the bottom edge; on wider screens it scales
   // in as a centred dialog.
@@ -93,6 +101,8 @@ const ProjectModal = ({ project, isOpen, onClose }) => {
               dragConstraints={{ top: 0, bottom: 0 }}
               dragElastic={{ top: 0, bottom: 0.5 }}
               onDragEnd={handleDragEnd}
+              ref={dialogRef}
+              tabIndex={-1}
               role="dialog"
               aria-modal="true"
               aria-label={project.title}
@@ -134,11 +144,15 @@ const ProjectModal = ({ project, isOpen, onClose }) => {
                       dead space above the screenshot. */}
                   <div className="w-full aspect-[2/1] sm:aspect-[21/9] relative flex items-center sm:items-end justify-center p-3 sm:p-4 sm:pb-0">
                     <div className="absolute inset-0 bg-gradient-to-t from-[rgb(var(--scrim))]/85 via-[rgb(var(--scrim))]/35 to-transparent z-[1]" />
-                    <img
+                    <Image
                       src={project.image}
                       alt={project.title}
-                      className="relative z-0 max-w-full max-h-full object-contain rounded-lg sm:rounded-t-lg shadow-2xl"
-                      loading="lazy"
+                      width={cover.w}
+                      height={cover.h}
+                      sizes="(min-width: 640px) 850px, 100vw"
+                      placeholder={cover.blur ? 'blur' : 'empty'}
+                      blurDataURL={cover.blur}
+                      className="relative z-0 max-w-full max-h-full w-auto h-auto object-contain rounded-lg sm:rounded-t-lg shadow-2xl"
                     />
                   </div>
                 </div>

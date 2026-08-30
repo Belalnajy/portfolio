@@ -237,9 +237,9 @@ const Testimonials = () => {
                         {testimonials[activeIndex].name.charAt(0)}
                       </div>
                       <div>
-                        <h4 className="font-bold text-[rgb(var(--foreground))] text-xl mb-1">
+                        <p className="font-bold text-[rgb(var(--foreground))] text-xl mb-1">
                           {testimonials[activeIndex].name}
-                        </h4>
+                        </p>
                         <p className="text-[rgb(var(--muted-foreground))] text-sm font-medium">
                           {testimonials[activeIndex].role}
                         </p>

@@ -1,7 +1,8 @@
 "use client";
 import { motion, AnimatePresence } from 'framer-motion';
 import { REVEAL_VIEWPORT, revealDelay, REVEAL_DURATION } from '../lib/motion';
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useRef, useEffect } from 'react';
+import { useFocusTrap } from '../lib/useFocusTrap';
 import {
   FaCode,
   FaGraduationCap,
@@ -16,6 +17,17 @@ import { useTranslation } from 'react-i18next';
 const Certifications = () => {
   const { t } = useTranslation();
   const [selectedCert, setSelectedCert] = useState(null);
+  const lightboxRef = useRef(null);
+  useFocusTrap(lightboxRef, !!selectedCert);
+
+  useEffect(() => {
+    if (!selectedCert) return;
+    const onKeyDown = (event) => {
+      if (event.key === 'Escape') setSelectedCert(null);
+    };
+    window.addEventListener('keydown', onKeyDown);
+    return () => window.removeEventListener('keydown', onKeyDown);
+  }, [selectedCert]);
 
   const certificates = useMemo(
     () => [
@@ -196,6 +208,11 @@ const Certifications = () => {
               onClick={() => setSelectedCert(null)}
               className="fixed inset-0 bg-[rgb(var(--scrim))]/80 z-50 flex items-center justify-center p-4">
               <motion.div
+                ref={lightboxRef}
+                tabIndex={-1}
+                role="dialog"
+                aria-modal="true"
+                aria-label={selectedCert.title}
                 initial={{ scale: 0.9, opacity: 0 }}
                 animate={{ scale: 1, opacity: 1 }}
                 exit={{ scale: 0.9, opacity: 0 }}
@@ -203,6 +220,7 @@ const Certifications = () => {
                 className="relative max-w-4xl w-full bg-[rgb(var(--background))] rounded-xl p-2">
                 <button
                   onClick={() => setSelectedCert(null)}
+                  aria-label={t('projects.modal.close')}
                   className="absolute -top-12 right-0 text-[rgb(var(--on-scrim))] hover:text-[rgb(var(--muted-foreground))] transition-colors">
                   <FaTimes className="w-6 h-6" />
                 </button>

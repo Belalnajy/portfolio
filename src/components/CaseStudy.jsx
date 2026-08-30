@@ -1,5 +1,7 @@
 "use client";
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
+import Image from 'next/image';
+import { I18nextProvider } from 'react-i18next';
 import { motion } from 'framer-motion';
 import { REVEAL_VIEWPORT, revealDelay, REVEAL_DURATION } from '../lib/motion';
 import { useTranslation } from 'react-i18next';
@@ -14,29 +16,58 @@ import {
   FaLayerGroup,
 } from 'react-icons/fa';
 import { getTechIcon } from './Projects';
-import { resolvePreferredLanguage } from '../i18n';
+import IconDefaults from './IconDefaults';
+import { coverMeta } from '../lib/cover-meta';
+import {
+  createI18nInstance,
+  resolvePreferredLanguage,
+  loadLanguage,
+  DEFAULT_LANGUAGE,
+} from '../i18n';
 
 /**
  * Long-form write-up for a single project. `slug` selects the
  * `case_studies.<slug>` translation block, so further case studies only need
- * translations plus an entry in the route.
+ * translations plus an entry in src/lib/case-studies.js.
+ *
+ * Renders outside <App/>, so it owns its own i18n instance: `lang` is the
+ * language the route prerenders in and `bundle` its translations.
  */
-const CaseStudy = ({ slug, image, liveUrl, stack }) => {
+const CaseStudy = ({ lang = DEFAULT_LANGUAGE, bundle, ...props }) => {
+  const [i18nInstance] = useState(() => createI18nInstance(lang, bundle));
+  return (
+    <I18nextProvider i18n={i18nInstance}>
+      <IconDefaults>
+        <CaseStudyContent pageLang={lang} {...props} />
+      </IconDefaults>
+    </I18nextProvider>
+  );
+};
+
+const CaseStudyContent = ({ slug, image, liveUrl, stack, pageLang }) => {
   const { t, i18n } = useTranslation();
   const isArabic = i18n.language === 'ar';
   const Back = isArabic ? FaArrowRight : FaArrowLeft;
   const base = `case_studies.${slug}`;
+  // Links back into the one-page site follow the language being read.
+  const home = isArabic ? '/ar' : '';
+  const cover = coverMeta(image);
 
-  // This page renders outside <App/>, which is what normally applies the
-  // language and direction, so do it here too.
   useEffect(() => {
-    const preferred = resolvePreferredLanguage();
-    if (preferred !== i18n.language) i18n.changeLanguage(preferred);
-  }, [i18n]);
+    const preferred = resolvePreferredLanguage(pageLang);
+    if (preferred !== i18n.language) loadLanguage(i18n, preferred);
+  }, [i18n, pageLang]);
 
   useEffect(() => {
     document.dir = i18n.dir();
     document.documentElement.lang = i18n.language;
+    // Keep the URL on the matching language route.
+    const { pathname, hash } = window.location;
+    if (i18n.language === 'ar' && pathname.startsWith('/case-study/')) {
+      window.history.replaceState(null, '', `/ar${pathname}${hash}`);
+    } else if (i18n.language === 'en' && pathname.startsWith('/ar/case-study/')) {
+      window.history.replaceState(null, '', `${pathname.slice(3)}${hash}`);
+    }
   }, [i18n.language, i18n]);
 
   const asArray = (key) => {
@@ -57,7 +88,7 @@ const CaseStudy = ({ slug, image, liveUrl, stack }) => {
       <header className="sticky top-0 z-40 bg-[rgb(var(--background))]/90 backdrop-blur-xl border-b border-[rgb(var(--border))]/50">
         <div className="container mx-auto px-4 sm:px-6 h-16 flex items-center justify-between gap-3">
           <a
-            href="/#projects"
+            href={`${home}/#projects`}
             className="inline-flex items-center gap-2 min-h-[44px] px-3 -mx-3 rounded-lg text-sm font-medium text-[rgb(var(--muted-foreground))] hover:text-[rgb(var(--foreground))] transition-colors"
           >
             <Back className="text-xs" />
@@ -142,10 +173,14 @@ const CaseStudy = ({ slug, image, liveUrl, stack }) => {
           transition={{ duration: 0.6, delay: 0.2 }}
           className="rounded-2xl overflow-hidden border border-[rgb(var(--border))]/50 bg-[rgb(var(--scrim))] p-3 sm:p-5"
         >
-          <img
+          <Image
             src={image}
             alt={t(`${base}.title`)}
-            loading="lazy"
+            width={cover.w}
+            height={cover.h}
+            sizes="(min-width: 1024px) 960px, 100vw"
+            placeholder={cover.blur ? 'blur' : 'empty'}
+            blurDataURL={cover.blur}
             className="w-full h-auto rounded-lg"
           />
         </motion.div>
@@ -240,13 +275,13 @@ const CaseStudy = ({ slug, image, liveUrl, stack }) => {
           </p>
           <div className="flex flex-col sm:flex-row gap-3 justify-center">
             <a
-              href="/#contact"
+              href={`${home}/#contact`}
               className="inline-flex items-center justify-center min-h-[48px] px-6 rounded-xl font-semibold bg-gradient-to-r from-[rgb(var(--accent))] to-[rgb(var(--accent-hover))] hover:from-[rgb(var(--accent-hover))] hover:to-[rgb(var(--accent))] text-[rgb(var(--accent-contrast))] shadow-lg transition-all active:scale-[0.98]"
             >
               {t('case_studies.cta_button')}
             </a>
             <a
-              href="/#projects"
+              href={`${home}/#projects`}
               className="inline-flex items-center justify-center gap-2 min-h-[48px] px-6 rounded-xl font-semibold glass-card border border-[rgb(var(--border))] hover:bg-[rgb(var(--muted))]/40 transition-colors"
             >
               <Back className="text-xs" />

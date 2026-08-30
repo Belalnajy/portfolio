@@ -1,7 +1,8 @@
 "use client";
 import { useEffect, useState } from 'react';
 import dynamic from 'next/dynamic';
-import { createI18nInstance, resolvePreferredLanguage, DEFAULT_LANGUAGE } from './i18n';
+import { createI18nInstance, resolvePreferredLanguage, loadLanguage, DEFAULT_LANGUAGE } from './i18n';
+import IconDefaults from './components/IconDefaults';
 import { I18nextProvider, useTranslation } from 'react-i18next';
 import { MotionConfig } from 'framer-motion';
 import Navbar from './components/Navbar';
@@ -17,7 +18,6 @@ import Skills from './components/Skills';
 import Contact from './components/Contact';
 import ScrollProgress from './components/ScrollProgress';
 import Notification from './components/Notification';
-import ParticlesBackground from './components/ParticlesBackground';
 import CustomCursor from './components/CustomCursor';
 import AnimatedStats from './components/AnimatedStats';
 import WhatsAppButton from './components/WhatsAppButton';
@@ -35,6 +35,41 @@ const LaptopShowcase3D = dynamic(() => import('./components/LaptopShowcase3D'), 
   ssr: false,
 });
 
+// tsparticles is ~280KB of decoration. It mounts only on desktop, only for
+// visitors who welcome motion, and only once the page has loaded and gone
+// idle, so it never competes with the hero image for the first paint.
+const ParticlesBackground = dynamic(() => import('./components/ParticlesBackground'), {
+  ssr: false,
+});
+
+const DeferredParticles = () => {
+  const [show, setShow] = useState(false);
+
+  useEffect(() => {
+    if (!window.matchMedia('(min-width: 768px)').matches) return;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+    let idleId;
+    const schedule = () => {
+      idleId =
+        'requestIdleCallback' in window
+          ? window.requestIdleCallback(() => setShow(true), { timeout: 4000 })
+          : window.setTimeout(() => setShow(true), 2000);
+    };
+    if (document.readyState === 'complete') schedule();
+    else window.addEventListener('load', schedule, { once: true });
+
+    return () => {
+      window.removeEventListener('load', schedule);
+      if (idleId === undefined) return;
+      if ('cancelIdleCallback' in window) window.cancelIdleCallback(idleId);
+      else clearTimeout(idleId);
+    };
+  }, []);
+
+  return show ? <ParticlesBackground /> : null;
+};
+
 function AppContent({ pageLang }) {
   const [notification, setNotification] = useState({
     message: '',
@@ -49,7 +84,7 @@ function AppContent({ pageLang }) {
   useEffect(() => {
     const preferred = resolvePreferredLanguage(pageLang);
     if (preferred !== i18n.language) {
-      i18n.changeLanguage(preferred);
+      loadLanguage(i18n, preferred);
     }
   }, [i18n, pageLang]);
 
@@ -109,7 +144,7 @@ function AppContent({ pageLang }) {
           `clip` rather than `hidden` so no scroll container is created. */}
       <div className="min-h-screen bg-[rgb(var(--background))] text-[rgb(var(--foreground))] transition-colors duration-300 relative overflow-x-clip">
         <CustomCursor />
-        <ParticlesBackground />
+        <DeferredParticles />
         <DarkModeToggle />
         <WhatsAppButton />
         <ScrollProgress />
@@ -156,15 +191,18 @@ function AppContent({ pageLang }) {
 }
 
 /**
- * `lang` is the language this route was statically prerendered in: `/` renders
- * with the default English instance, `/ar` passes 'ar' and gets fully Arabic
- * server markup that search engines can index.
+ * `lang` is the language this route was statically prerendered in and
+ * `bundle` its translations: `/` passes English, `/ar` passes Arabic and gets
+ * fully Arabic server markup that search engines can index. Only that one
+ * bundle ships with the route; the other loads if the visitor switches.
  */
-function App({ lang = DEFAULT_LANGUAGE }) {
-  const [i18nInstance] = useState(() => createI18nInstance(lang));
+function App({ lang = DEFAULT_LANGUAGE, bundle }) {
+  const [i18nInstance] = useState(() => createI18nInstance(lang, bundle));
   return (
     <I18nextProvider i18n={i18nInstance}>
-      <AppContent pageLang={lang} />
+      <IconDefaults>
+        <AppContent pageLang={lang} />
+      </IconDefaults>
     </I18nextProvider>
   );
 }

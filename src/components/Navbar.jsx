@@ -7,6 +7,7 @@ import { FiMenu, FiX } from 'react-icons/fi';
 import { HiSparkles } from 'react-icons/hi';
 import MagneticButton from './MagneticButton';
 import { useTranslation } from 'react-i18next';
+import { loadLanguage } from '../i18n';
 
 const Navbar = ({ onDownloadCV }) => {
   const { t, i18n } = useTranslation();
@@ -18,7 +19,8 @@ const Navbar = ({ onDownloadCV }) => {
 
   const toggleLanguage = () => {
     const newLang = i18n.language === 'en' ? 'ar' : 'en';
-    i18n.changeLanguage(newLang);
+    // Fetches the other bundle on first use, then switches.
+    loadLanguage(i18n, newLang);
   };
 
   useEffect(() => {
@@ -99,11 +101,8 @@ const Navbar = ({ onDownloadCV }) => {
   const desktopNavItems = navItems.filter((item) => !item.mobileOnly);
 
   return (
-    <motion.nav
-      initial={{ y: -100, opacity: 0 }}
-      animate={{ y: 0, opacity: 1 }}
-      transition={{ duration: 0.6, ease: 'easeOut' }}
-      className={`fixed w-full z-50 transition-all duration-500 ${
+    <nav
+      className={`fixed w-full z-50 transition-all duration-500 animate-fadeInDown ${
         scrolled
           ? 'bg-[rgb(var(--card))]/90 backdrop-blur-3xl shadow-2xl border-b border-[rgb(var(--border))]'
           : 'bg-transparent'
@@ -378,7 +377,7 @@ const Navbar = ({ onDownloadCV }) => {
           </motion.div>
         )}
       </AnimatePresence>
-    </motion.nav>
+    </nav>
   );
 };
 

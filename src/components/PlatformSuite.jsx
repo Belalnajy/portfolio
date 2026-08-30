@@ -1,4 +1,5 @@
 "use client";
+import Image from 'next/image';
 import { motion } from 'framer-motion';
 import { REVEAL_VIEWPORT, revealDelay, REVEAL_DURATION } from '../lib/motion';
 import { useTranslation } from 'react-i18next';
@@ -13,6 +14,7 @@ import {
   FaShieldAlt,
 } from 'react-icons/fa';
 import { LMS_SUITE } from './Projects';
+import { coverMeta } from '../lib/cover-meta';
 
 const SHARED_CAPABILITIES = [
   { key: 'engine', icon: <FaServer /> },
@@ -103,11 +105,15 @@ const PlatformSuite = () => {
                   className="absolute inset-x-0 top-0 h-1 z-10"
                   style={{ backgroundColor: member.accent }}
                 />
-                <img
+                <Image
                   src={member.image}
                   alt={member.name}
-                  loading="lazy"
-                  className="max-w-full max-h-full object-contain rounded-lg opacity-85 group-hover:opacity-100 group-hover:scale-[1.03] transition-all duration-500"
+                  width={coverMeta(member.image).w}
+                  height={coverMeta(member.image).h}
+                  sizes="(min-width: 768px) 30vw, 90vw"
+                  placeholder={coverMeta(member.image).blur ? 'blur' : 'empty'}
+                  blurDataURL={coverMeta(member.image).blur}
+                  className="max-w-full max-h-full w-auto h-auto object-contain rounded-lg opacity-85 group-hover:opacity-100 group-hover:scale-[1.03] transition-all duration-500"
                 />
               </div>
 

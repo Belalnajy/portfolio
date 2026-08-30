@@ -1,0 +1,28 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  build-and-audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm run lint
+      - run: npm run build
+      # Every text pair must clear WCAG contrast in both themes.
+      - run: node scripts/contrast-report.mjs
+      # Lighthouse budget against the production build (mobile emulation).
+      # Chrome ships on ubuntu-latest; chrome-launcher finds it on its own.
+      - name: Lighthouse budget
+        run: |
+          npx next start -p 4310 &
+          timeout 60 bash -c 'until curl -sf http://127.0.0.1:4310 >/dev/null; do sleep 1; done'
+          node scripts/lighthouse.mjs http://127.0.0.1:4310/ "mobile /" --min-perf 80 --min-a11y 95 --min-seo 100 --min-bp 100

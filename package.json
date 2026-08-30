@@ -7,13 +7,16 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "eslint src",
+    "lighthouse": "node scripts/lighthouse.mjs",
+    "cover-meta": "node scripts/cover-meta.mjs"
   },
   "dependencies": {
     "@emailjs/browser": "^4.4.1",
     "@react-three/drei": "^10.7.7",
     "@react-three/fiber": "^9.6.0",
     "@tailwindcss/postcss": "^4.3.0",
+    "@vercel/analytics": "^2.0.1",
     "framer-motion": "^12.7.4",
     "i18next": "^26.0.5",
     "lucide-react": "^0.503.0",
@@ -36,6 +39,7 @@
     "@types/react-dom": "^19.0.4",
     "chrome-launcher": "^1.2.1",
     "eslint": "^9.22.0",
+    "eslint-plugin-react": "^7.37.5",
     "eslint-plugin-react-hooks": "^5.2.0",
     "globals": "^16.0.0",
     "lighthouse": "^13.4.1"

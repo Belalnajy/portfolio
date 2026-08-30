@@ -1,15 +1,9 @@
 'use client';
 
 import CaseStudy from '../../../components/CaseStudy';
+import { CASE_STUDIES } from '../../../lib/case-studies';
+import en from '../../../locales/en';
 
-const STACK = ['Next.js', 'React', 'Flask', 'PostgreSQL', 'Socket.io', 'SQLAlchemy'];
-
-export default function IndstrzCaseStudyPage() {
-  return (
-    <CaseStudy
-      slug="indstrz"
-      image="/indstrz.webp"
-      stack={STACK}
-    />
-  );
+export default function Page() {
+  return <CaseStudy slug="indstrz" {...CASE_STUDIES.indstrz} lang="en" bundle={en} />;
 }

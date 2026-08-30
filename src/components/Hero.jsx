@@ -1,8 +1,12 @@
 'use client';
+import Image from 'next/image';
 import { motion } from 'framer-motion';
 import { TypeAnimation } from 'react-type-animation';
 import { FaGithub, FaLinkedin, FaDownload } from 'react-icons/fa';
 import { brandColor } from '../lib/brand-colors';
+import { coverMeta } from '../lib/cover-meta';
+
+const HERO_IMAGE = '/hero.webp';
 import MagneticButton from './MagneticButton';
 import PlatformLinks from './PlatformLinks';
 import { useTranslation } from 'react-i18next';
@@ -10,6 +14,7 @@ import { useTranslation } from 'react-i18next';
 const Hero = ({ onDownloadCV }) => {
   const { t, i18n } = useTranslation();
   const isArabic = i18n.language === 'ar';
+  const hero = coverMeta(HERO_IMAGE);
 
   const typingSequence = isArabic
     ? [
@@ -51,28 +56,25 @@ const Hero = ({ onDownloadCV }) => {
       <div className="container mx-auto px-6 z-10">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           {/* Text Content */}
-          <motion.div
-            initial={{ opacity: 0, x: isArabic ? 50 : -50 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8 }}
-            className={`text-center lg:text-start`}>
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.5, delay: 0.3 }}>
-              <span className="inline-block px-5 py-2 rounded-full bg-[rgb(var(--accent))]/10 border border-[rgb(var(--accent))]/30 text-[rgb(var(--accent))] text-sm font-medium mb-6">
-                {t('hero.welcome')}
+          {/* Entrances are CSS keyframes, not framer `initial` props: the
+              server markup would otherwise ship this column at opacity 0 and
+              the LCP would wait for the whole bundle to hydrate. */}
+          <div className="text-center lg:text-start">
+            <div className="animate-fadeInUp" style={{ animationDelay: '0.1s' }}>
+              {/* Availability is the first thing a prospective client checks. */}
+              <span className="inline-flex items-center gap-2.5 px-5 py-2 rounded-full bg-[rgb(var(--success))]/10 border border-[rgb(var(--success))]/30 text-[rgb(var(--foreground))] text-sm font-medium mb-6">
+                <span className="relative flex h-2.5 w-2.5">
+                  <span className="absolute inline-flex h-full w-full rounded-full bg-[rgb(var(--success))] opacity-75 animate-ping" />
+                  <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-[rgb(var(--success))]" />
+                </span>
+                {t('hero.available')}
               </span>
-            </motion.div>
+            </div>
 
-            <motion.h1
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.4 }}
-              className="text-5xl md:text-7xl font-bold mb-6 text-[rgb(var(--foreground))]">
+            <h1 className="text-5xl md:text-7xl font-bold mb-6 text-[rgb(var(--foreground))] animate-fadeInUp">
               {t('hero.greeting_start')}
               {t('hero.name')}
-            </motion.h1>
+            </h1>
 
             <div
               className={`text-2xl md:text-3xl mb-8 h-12 flex items-center justify-center lg:justify-start`}>
@@ -103,15 +105,14 @@ const Hero = ({ onDownloadCV }) => {
             </p>
 
             {/* Social Links */}
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.5, delay: 0.6 }}
-              className="flex items-center justify-center lg:justify-start gap-4 mb-8">
+            <div
+              className="flex items-center justify-center lg:justify-start gap-4 mb-8 animate-fadeInUp"
+              style={{ animationDelay: '0.25s' }}>
               <motion.a
                 href="https://github.com/Belalnajy"
                 target="_blank"
                 rel="noopener noreferrer"
+                aria-label="GitHub"
                 whileHover={{ scale: 1.2, rotate: 5 }}
                 whileTap={{ scale: 0.9 }}
                 className="p-3 rounded-full bg-gradient-to-r from-[rgb(var(--accent))] to-[rgb(var(--accent-hover))] text-[rgb(var(--accent-contrast))] hover:from-[rgb(var(--accent-hover))] hover:to-[rgb(var(--accent))] transition-all shadow-lg hover:shadow-[rgb(var(--accent))]/50">
@@ -121,6 +122,7 @@ const Hero = ({ onDownloadCV }) => {
                 href="https://linkedin.com/in/belalnajy"
                 target="_blank"
                 rel="noopener noreferrer"
+                aria-label="LinkedIn"
                 whileHover={{ scale: 1.2, rotate: -5 }}
                 whileTap={{ scale: 0.9 }}
                 style={{
@@ -129,14 +131,12 @@ const Hero = ({ onDownloadCV }) => {
                 className="p-3 rounded-full text-[rgb(var(--on-scrim))] hover:shadow-lg hover:shadow-[rgb(var(--accent))]/50 transition-all">
                 <FaLinkedin className="w-6 h-6" />
               </motion.a>
-            </motion.div>
+            </div>
 
             {/* CTA Buttons */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.8 }}
-              className="flex flex-wrap justify-center lg:justify-start gap-4">
+            <div
+              className="flex flex-wrap justify-center lg:justify-start gap-4 animate-fadeInUp"
+              style={{ animationDelay: '0.35s' }}>
               <MagneticButton
                 href="#projects"
                 className="bg-[rgb(var(--primary))] text-[rgb(var(--accent-contrast))] px-8 py-3 rounded-lg font-semibold hover:bg-[rgb(var(--primary))]/90 transition-all inline-flex items-center">
@@ -153,29 +153,21 @@ const Hero = ({ onDownloadCV }) => {
                 <FaDownload className="text-sm" />
                 {t('hero.download_cv')}
               </MagneticButton>
-            </motion.div>
+            </div>
 
             {/* Platform Links */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 1 }}
-              className="mt-8">
+            <div className="mt-8 animate-fadeInUp" style={{ animationDelay: '0.45s' }}>
               <p className="text-[rgb(var(--muted-foreground))] text-sm mb-3">
                 {t('hero.follow_me')}
               </p>
               <div className="flex justify-center lg:justify-start">
                 <PlatformLinks variant="compact" />
               </div>
-            </motion.div>
-          </motion.div>
+            </div>
+          </div>
 
           {/* Image Container */}
-          <motion.div
-            initial={{ opacity: 0, x: 50 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8 }}
-            className="relative">
+          <div className="relative animate-fadeInUp" style={{ animationDelay: '0.15s' }}>
             <div className="relative w-full max-w-[280px] sm:max-w-sm md:max-w-md mx-auto lg:max-w-full">
               {/* Decorative Elements */}
               <div className="absolute -inset-4 bg-[rgb(var(--accent))]/6 rounded-full blur-3xl" />
@@ -186,12 +178,17 @@ const Hero = ({ onDownloadCV }) => {
                 transition={{ duration: 0.3 }}
                 className="relative">
                 <div className="w-full aspect-square rounded-full border-4 border-[rgb(var(--accent))]/30 overflow-hidden">
-                  <img
-                    src="/hero.webp"
+                  {/* LCP element: `priority` preloads it and `sizes` keeps
+                      phones from downloading the desktop rendition. */}
+                  <Image
+                    src={HERO_IMAGE}
                     alt="Belal Nagy"
-                    width="1080"
-                    height="1080"
-                    fetchPriority="high"
+                    width={hero.w}
+                    height={hero.h}
+                    priority
+                    sizes="(min-width: 1024px) 45vw, (min-width: 640px) 384px, 280px"
+                    placeholder={hero.blur ? 'blur' : 'empty'}
+                    blurDataURL={hero.blur}
                     className="w-full h-full object-cover object-center"
                   />
                 </div>
@@ -222,7 +219,7 @@ const Hero = ({ onDownloadCV }) => {
                 </motion.div>
               </motion.div>
             </div>
-          </motion.div>
+          </div>
         </div>
       </div>
     </section>

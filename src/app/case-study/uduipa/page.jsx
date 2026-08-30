@@ -1,16 +1,9 @@
 'use client';
 
 import CaseStudy from '../../../components/CaseStudy';
+import { CASE_STUDIES } from '../../../lib/case-studies';
+import en from '../../../locales/en';
 
-const STACK = ['Next.js', 'NestJS', 'TypeScript', 'PostgreSQL', 'Turborepo', 'Puppeteer'];
-
-export default function UduipaCaseStudyPage() {
-  return (
-    <CaseStudy
-      slug="uduipa"
-      image="/uduipa.webp"
-      liveUrl="https://uduipa.com"
-      stack={STACK}
-    />
-  );
+export default function Page() {
+  return <CaseStudy slug="uduipa" {...CASE_STUDIES.uduipa} lang="en" bundle={en} />;
 }

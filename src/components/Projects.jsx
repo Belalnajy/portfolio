@@ -1,5 +1,6 @@
 "use client";
 import { useState, useEffect, useMemo } from 'react';
+import Image from 'next/image';
 import { motion, AnimatePresence } from 'framer-motion';
 import { REVEAL_VIEWPORT, LONG_LIST_VIEWPORT, revealDelay, REVEAL_DURATION } from '../lib/motion';
 import {
@@ -60,6 +61,7 @@ import ProjectSkeleton from './skeletons/ProjectSkeleton';
 import ProjectModal from './ProjectModal';
 import { useTranslation } from 'react-i18next';
 import { brandColor } from '../lib/brand-colors';
+import { coverMeta } from '../lib/cover-meta';
 
 export const TECH_ICONS = {
   'HTML': FaHtml5,
@@ -167,8 +169,8 @@ export const LMS_SUITE = {
 };
 
 const ProjectCard = ({ project, index, onClick }) => {
-  const { t, i18n } = useTranslation();
-  const isArabic = i18n.language === 'ar';
+  const { t } = useTranslation();
+  const cover = coverMeta(project.image);
   const [rotateX, setRotateX] = useState(0);
   const [rotateY, setRotateY] = useState(0);
 
@@ -208,12 +210,24 @@ const ProjectCard = ({ project, index, onClick }) => {
       <div className="relative w-full aspect-video bg-[rgb(var(--scrim))] p-4 pb-0 flex items-end justify-center overflow-hidden border-b border-[rgb(var(--border))]/30">
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-[rgb(var(--accent))]/10 via-[rgb(var(--scrim))]/0 to-[rgb(var(--scrim))] opacity-50 z-0" />
 
-        <img
+        <Image
           src={project.image}
           alt={project.title}
+          width={cover.w}
+          height={cover.h}
+          sizes="(min-width: 1280px) 400px, (min-width: 768px) 45vw, 90vw"
+          placeholder={cover.blur ? 'blur' : 'empty'}
+          blurDataURL={cover.blur}
           className="relative z-10 w-[90%] h-auto object-contain rounded-t-xl transform group-hover:-translate-y-2 transition-transform duration-500 will-change-transform drop-shadow-[0_-5px_15px_rgba(0,0,0,0.5)]"
-          loading="lazy"
         />
+
+        {/* One concrete outcome, so the card says what the project did and
+            not only what it was built with. */}
+        {project.impact && (
+          <span className="absolute top-3 start-3 z-20 px-2.5 py-1 rounded-full text-[11px] font-semibold bg-[rgb(var(--scrim))]/80 text-[rgb(var(--on-scrim))] border border-[rgb(var(--on-scrim))]/15 backdrop-blur-sm">
+            {project.impact}
+          </span>
+        )}
 
         {/* Hover Glass Overlay - Click to View */}
         <div className="absolute inset-0 z-20 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-[rgb(var(--scrim))]/60 backdrop-blur-[2px]">
@@ -257,8 +271,7 @@ const ProjectCard = ({ project, index, onClick }) => {
 };
 
 const Projects = () => {
-  const { t, i18n } = useTranslation();
-  const isArabic = i18n.language === 'ar';
+  const { t } = useTranslation();
   // Content comes from the local i18n bundle, so there is nothing to wait for.
   const [loading] = useState(false);
   const [filter, setFilter] = useState('All');
@@ -289,6 +302,7 @@ const Projects = () => {
         slug: 'bilqalam',
         featured: true,
         title: t('projects.items.bilqalam.title'),
+        impact: t('projects.items.bilqalam.impact', { defaultValue: '' }),
         description: t('projects.items.bilqalam.desc'),
         image: '/bilqalam.webp',
         tags: ['Next.js', 'React', 'Laravel', 'PHP', 'Tailwind'],
@@ -304,6 +318,7 @@ const Projects = () => {
         slug: 'medicta',
         featured: true,
         title: t('projects.items.medicta.title'),
+        impact: t('projects.items.medicta.impact', { defaultValue: '' }),
         description: t('projects.items.medicta.desc'),
         image: '/medicta.webp',
         tags: [
@@ -323,6 +338,7 @@ const Projects = () => {
         slug: 'toyo228',
         featured: true,
         title: t('projects.items.toyo228.title'),
+        impact: t('projects.items.toyo228.impact', { defaultValue: '' }),
         description: t('projects.items.toyo228.desc'),
         image: '/toyo228.webp',
         tags: [
@@ -344,6 +360,7 @@ const Projects = () => {
         slug: 'injaz',
         featured: true,
         title: t('projects.items.injaz.title'),
+        impact: t('projects.items.injaz.impact', { defaultValue: '' }),
         description: t('projects.items.injaz.desc'),
         image: '/injaz.webp',
         tags: [
@@ -419,6 +436,7 @@ const Projects = () => {
         featured: true,
         caseStudy: '/case-study/indstrz',
         title: t('projects.items.indstrz.title'),
+        impact: t('projects.items.indstrz.impact', { defaultValue: '' }),
         description: t('projects.items.indstrz.desc'),
         image: '/indstrz.webp',
         tags: [
@@ -555,6 +573,7 @@ const Projects = () => {
         slug: 'motors',
         featured: true,
         title: t('projects.items.motors.title'),
+        impact: t('projects.items.motors.impact', { defaultValue: '' }),
         description: t('projects.items.motors.desc'),
         image: '/motors.webp',
         tags: [
@@ -575,6 +594,7 @@ const Projects = () => {
         featured: true,
         caseStudy: '/case-study/uduipa',
         title: t('projects.items.uduipa.title'),
+        impact: t('projects.items.uduipa.impact', { defaultValue: '' }),
         description: t('projects.items.uduipa.desc'),
         image: '/uduipa.webp',
         tags: [
@@ -668,6 +688,7 @@ const Projects = () => {
         featured: true,
         caseStudy: '/case-study/profleet',
         title: t('projects.items.profleet.title'),
+        impact: t('projects.items.profleet.impact', { defaultValue: '' }),
         description: t('projects.items.profleet.desc'),
         image: '/profleet.webp',
         tags: [

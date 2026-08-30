@@ -1,16 +1,9 @@
 'use client';
 
 import CaseStudy from '../../../components/CaseStudy';
+import { CASE_STUDIES } from '../../../lib/case-studies';
+import en from '../../../locales/en';
 
-const STACK = ['Next.js', 'React', 'Laravel', 'PHP', 'Tailwind'];
-
-export default function BilqalamCaseStudyPage() {
-  return (
-    <CaseStudy
-      slug="bilqalam"
-      image="/bilqalam.webp"
-      liveUrl="https://bilqalaminstitute.net/"
-      stack={STACK}
-    />
-  );
+export default function Page() {
+  return <CaseStudy slug="bilqalam" {...CASE_STUDIES.bilqalam} lang="en" bundle={en} />;
 }

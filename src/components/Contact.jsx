@@ -2,7 +2,6 @@
 import { useState, useRef, useMemo, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { REVEAL_VIEWPORT, revealDelay, REVEAL_DURATION } from '../lib/motion';
-import emailjs from '@emailjs/browser';
 import {
   FaEnvelope,
   FaPhone,
@@ -43,6 +42,8 @@ const Contact = ({ showNotification }) => {
       const publicKey =
         process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY || 'your_public_key';
 
+      // The SDK is only needed once someone actually submits.
+      const { default: emailjs } = await import('@emailjs/browser');
       await emailjs.sendForm(serviceId, templateId, formRef.current, publicKey);
 
       showNotification?.(t('contact.notifications.success'), 'success');
