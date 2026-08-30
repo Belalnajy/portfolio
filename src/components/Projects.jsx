@@ -642,7 +642,7 @@ const Projects = () => {
           returnObjects: true,
         }),
         github: '#',
-        live: '#',
+        live: 'https://smart-fast.com/',
         category: 'Full Stack',
       },
       {
@@ -705,7 +705,7 @@ const Projects = () => {
         tags: ['Next.js', 'Tailwind', 'Node.js', 'Express.js', 'MongoDB'],
         features: t('projects.items.orca.features', { returnObjects: true }),
         github: '#',
-        live: '#',
+        live: 'https://orcastore.vercel.app/',
         category: 'Full Stack',
       },
       {
