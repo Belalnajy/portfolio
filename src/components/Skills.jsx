@@ -19,7 +19,12 @@ import {
   FaProjectDiagram,
   FaGraduationCap,
   FaSearch,
-  FaTimes
+  FaTimes,
+  FaComments,
+  FaChalkboardTeacher,
+  FaLightbulb,
+  FaClock,
+  FaSyncAlt,
 } from 'react-icons/fa';
 import SkillSkeleton from './skeletons/SkillSkeleton';
 import {
@@ -188,11 +193,11 @@ const Skills = () => {
       title: t('skills.categories.soft'),
       icon: <FaGraduationCap className="text-4xl text-primary" />,
       skills: [
-        { name: t('skills.soft_skills.communication'), icon: <FaCode className="text-2xl text-[rgb(var(--accent))]" />, level: 90, years: '3+' },
-        { name: t('skills.soft_skills.presentation'), icon: <FaCode className="text-2xl text-[rgb(var(--accent))]" />, level: 85, years: '2+' },
-        { name: t('skills.soft_skills.problem_solving'), icon: <FaCode className="text-2xl text-[rgb(var(--accent))]" />, level: 92, years: '3+' },
-        { name: t('skills.soft_skills.time_management'), icon: <FaCode className="text-2xl text-[rgb(var(--accent))]" />, level: 88, years: '3+' },
-        { name: t('skills.soft_skills.adaptability'), icon: <FaCode className="text-2xl text-[rgb(var(--accent))]" />, level: 90, years: '3+' }
+        { name: t('skills.soft_skills.communication'), icon: <FaComments className="text-2xl text-[rgb(var(--accent))]" />, level: 90, years: '3+' },
+        { name: t('skills.soft_skills.presentation'), icon: <FaChalkboardTeacher className="text-2xl text-[rgb(var(--accent))]" />, level: 85, years: '2+' },
+        { name: t('skills.soft_skills.problem_solving'), icon: <FaLightbulb className="text-2xl text-[rgb(var(--accent))]" />, level: 92, years: '3+' },
+        { name: t('skills.soft_skills.time_management'), icon: <FaClock className="text-2xl text-[rgb(var(--accent))]" />, level: 88, years: '3+' },
+        { name: t('skills.soft_skills.adaptability'), icon: <FaSyncAlt className="text-2xl text-[rgb(var(--accent))]" />, level: 90, years: '3+' }
       ]
     }
   ], [t]);

@@ -14,8 +14,10 @@ import {
   FaLightbulb,
   FaCheckCircle,
 } from 'react-icons/fa';
+import { useTranslation } from 'react-i18next';
 
 const FaqAssistant = () => {
+  const { t } = useTranslation();
   const [isOpen, setIsOpen] = useState(false);
   const [language, setLanguage] = useState(null); // 'en' or 'ar'
   const [messages, setMessages] = useState([
@@ -441,10 +443,10 @@ const FaqAssistant = () => {
                 </div>
                 <div>
                   <h3 className="font-bold text-[rgb(var(--foreground))]">
-                    Quick FAQ
+                    {t('faq.title')}
                   </h3>
                   <p className="text-xs text-[rgb(var(--success))]">
-                    Instant answers about Belal
+                    {t('faq.subtitle')}
                   </p>
                 </div>
               </div>
@@ -619,7 +621,8 @@ const FaqAssistant = () => {
         whileHover={{ scale: 1.1, rotate: 5 }}
         whileTap={{ scale: 0.9 }}
         onClick={() => setIsOpen(!isOpen)}
-        className="w-14 h-14 glass-card border border-[rgb(var(--border-control))]/40 rounded-full flex items-center justify-center text-[rgb(var(--accent-contrast))] shadow-lg shadow-[rgb(var(--accent))]/40 relative group border border-[rgb(var(--border-control))]/40">
+        aria-label={t('faq.tooltip')}
+        className="w-14 h-14 bg-gradient-to-r from-[rgb(var(--accent))] to-[rgb(var(--accent-hover))] rounded-full flex items-center justify-center text-[rgb(var(--accent-contrast))] shadow-lg shadow-[rgb(var(--accent))]/40 relative group">
         <AnimatePresence mode="wait">
           {isOpen ? (
             <motion.div
@@ -646,7 +649,7 @@ const FaqAssistant = () => {
         {/* Tooltip */}
         {!isOpen && (
           <div className="absolute right-full mr-4 px-3 py-1 bg-gradient-to-r from-[rgb(var(--accent))] to-[rgb(var(--accent-hover))] text-[rgb(var(--accent-contrast))] text-xs rounded-lg opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none">
-            How can I help you?
+            {t('faq.tooltip')}
           </div>
         )}
       </motion.button>

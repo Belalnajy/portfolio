@@ -173,7 +173,7 @@ const Navbar = ({ onDownloadCV }) => {
           </motion.a>
 
           {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center gap-4">
+          <div className="hidden xl:flex items-center gap-4">
             <motion.div
               className="relative flex items-center gap-1 px-3 py-2 rounded-full bg-[rgb(var(--card))]/80 backdrop-blur-xl border border-[rgb(var(--border))] shadow-lg"
               whileHover={{ scale: 1.02 }}
@@ -230,7 +230,7 @@ const Navbar = ({ onDownloadCV }) => {
           </div>
 
           {/* Mobile Navigation Button - Enhanced */}
-          <div className="md:hidden flex items-center">
+          <div className="xl:hidden flex items-center">
             <motion.button
               whileTap={{ scale: 0.9 }}
               onClick={() => setIsOpen(!isOpen)}
@@ -282,7 +282,7 @@ const Navbar = ({ onDownloadCV }) => {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: -20, scale: 0.95 }}
             transition={{ duration: 0.3, ease: 'easeOut' }}
-            className="md:hidden absolute top-full left-0 right-0 mt-2 mx-4 rounded-2xl bg-[rgb(var(--card))]/95 backdrop-blur-2xl border border-[rgb(var(--border))] shadow-2xl overflow-hidden">
+            className="xl:hidden absolute top-full left-0 right-0 mt-2 mx-4 rounded-2xl bg-[rgb(var(--card))]/95 backdrop-blur-2xl border border-[rgb(var(--border))] shadow-2xl overflow-hidden">
             {/* Gradient accent on top */}
             <div className="h-1 bg-gradient-to-r from-[rgb(var(--accent))] via-[rgb(var(--accent-hover))] to-[rgb(var(--accent))]" />
 

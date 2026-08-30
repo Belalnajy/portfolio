@@ -1126,6 +1126,11 @@ const resources = {
       notifications: {
         cv_success: 'CV downloaded successfully!',
         cv_error: 'Failed to download CV. Please try again.'
+      },
+      faq: {
+        title: 'Quick FAQ',
+        subtitle: 'Instant answers about Belal',
+        tooltip: 'How can I help you?'
       }
     }
   },
@@ -2253,6 +2258,11 @@ const resources = {
       notifications: {
         cv_success: 'تم تحميل السيرة الذاتية بنجاح!',
         cv_error: 'فشل تحميل السيرة الذاتية. حاول مرة أخرى.'
+      },
+      faq: {
+        title: 'أسئلة سريعة',
+        subtitle: 'إجابات فورية عن بلال',
+        tooltip: 'كيف أقدر أساعدك؟'
       }
     }
   }

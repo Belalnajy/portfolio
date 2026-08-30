@@ -14,6 +14,19 @@ import { useTranslation } from 'react-i18next';
 
 const SERVICE_TITLE = "تصميم وتطوير موقع ويب كامل واحترافي | Full Stack Web";
 const KHAMSAT_CATEGORIES = ["جودة الخدمة", "التواصل والمتابعة", "التسليم بالموعد"];
+
+// The rating chips come from Khamsat/Mostaql in Arabic; the English UI shows
+// their meaning rather than a script most visitors there cannot read.
+const CATEGORY_EN = {
+  'جودة الخدمة': 'Service quality',
+  'التواصل والمتابعة': 'Communication & follow-up',
+  'التسليم بالموعد': 'On-time delivery',
+  'التسليم في الموعد': 'On-time delivery',
+  'الاحترافية بالتعامل': 'Professionalism',
+  'جودة العمل المسلّم': 'Quality of delivered work',
+  'الخبرة بمجال المشروع': 'Domain expertise',
+  'التعامل معه مرّة أخرى': 'Would hire again',
+};
 const KHAMSAT_PROFILE = "https://khamsat.com/user/belalnajy/reviews";
 
 /**
@@ -97,6 +110,11 @@ const Testimonials = () => {
       ...conf,
       ...(items[conf.key] || {}),
       date: formatRelative(conf.date),
+    })).map((item) => ({
+      ...item,
+      categories: isArabic
+        ? item.categories
+        : item.categories.map((c) => CATEGORY_EN[c] || c),
     }));
   }, [t, now, isArabic]);
 

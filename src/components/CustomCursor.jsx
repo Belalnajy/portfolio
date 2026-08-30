@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 
 const CustomCursor = () => {
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  const [mousePosition, setMousePosition] = useState(null);
   const [cursorVariant, setCursorVariant] = useState("default");
 
   useEffect(() => {
@@ -33,6 +33,10 @@ const CustomCursor = () => {
       document.removeEventListener("mouseover", handleMouseOver);
     };
   }, []);
+
+  // Nothing renders until the pointer has actually moved, so the rings don't
+  // sit in the top-left corner on first paint.
+  if (!mousePosition) return null;
 
   const variants = {
     default: {

@@ -176,7 +176,7 @@ const Hero = ({ onDownloadCV }) => {
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8 }}
             className="relative">
-            <div className="relative w-full max-w-md mx-auto lg:max-w-full">
+            <div className="relative w-full max-w-[280px] sm:max-w-sm md:max-w-md mx-auto lg:max-w-full">
               {/* Decorative Elements */}
               <div className="absolute -inset-4 bg-[rgb(var(--accent))]/6 rounded-full blur-3xl" />
 

@@ -1,27 +1,38 @@
 "use client";
 import { motion } from 'framer-motion';
+import { useTranslation } from 'react-i18next';
+
+const PLATFORMS = [
+  {
+    nameAr: 'مستقل',
+    nameEn: 'Mostaql',
+    url: 'https://mostaql.com/u/belalnagy',
+    logo: '/mostqal.webp'
+  },
+  {
+    nameAr: 'خمسات',
+    nameEn: 'Khamsat',
+    url: 'https://khamsat.com/user/belalnajy',
+    logo: '/khamsat.webp'
+  },
+  {
+    nameAr: 'نفذلي',
+    nameEn: 'Nafezly',
+    url: 'https://www.nafezly.com/u/belalnajy',
+    logo: '/nafzly.webp'
+  }
+];
 
 const PlatformLinks = ({ variant = 'default' }) => {
-  const platforms = [
-    {
-      name: 'Mostaql',
-      nameEn: 'Mostaql',
-      url: 'https://mostaql.com/u/belalnagy',
-      logo: '/mostqal.webp'
-    },
-    {
-      name: 'Khamsat',
-      nameEn: 'Khamsat',
-      url: 'https://khamsat.com/user/belalnajy',
-      logo: '/khamsat.webp'
-    },
-    {
-      name: 'Nafezly',
-      nameEn: 'Nafezly',
-      url: 'https://www.nafezly.com/u/belalnajy',
-      logo: '/nafzly.webp'
-    }
-  ];
+  const { i18n } = useTranslation();
+  const isArabic = i18n.language === 'ar';
+  // Primary label follows the page language; the other script rides along in
+  // the full-card variant instead of the name being printed twice.
+  const platforms = PLATFORMS.map((p) => ({
+    ...p,
+    name: isArabic ? p.nameAr : p.nameEn,
+    altName: isArabic ? p.nameEn : p.nameAr,
+  }));
 
   if (variant === 'compact') {
     // For Hero section - horizontal compact
@@ -29,7 +40,7 @@ const PlatformLinks = ({ variant = 'default' }) => {
       <div className="flex items-center gap-3 flex-wrap justify-center">
         {platforms.map((platform) => (
           <motion.a
-            key={platform.name}
+            key={platform.url}
             href={platform.url}
             target="_blank"
             rel="noopener noreferrer"
@@ -52,7 +63,7 @@ const PlatformLinks = ({ variant = 'default' }) => {
       <div className="flex flex-wrap items-center justify-center gap-4">
         {platforms.map((platform) => (
           <motion.a
-            key={platform.name}
+            key={platform.url}
             href={platform.url}
             target="_blank"
             rel="noopener noreferrer"
@@ -74,7 +85,7 @@ const PlatformLinks = ({ variant = 'default' }) => {
     <div className="flex flex-wrap items-center justify-center gap-4">
       {platforms.map((platform) => (
         <motion.a
-          key={platform.name}
+          key={platform.url}
           href={platform.url}
           target="_blank"
           rel="noopener noreferrer"
@@ -89,7 +100,7 @@ const PlatformLinks = ({ variant = 'default' }) => {
               {platform.name}
             </p>
             <p className="text-xs text-[rgb(var(--muted-foreground))]">
-              {platform.nameEn}
+              {platform.altName}
             </p>
           </div>
         </motion.a>
