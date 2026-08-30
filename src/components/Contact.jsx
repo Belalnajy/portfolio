@@ -69,30 +69,26 @@ const Contact = ({ showNotification }) => {
         title: t('contact.info.email'),
         value: 'belalnajy9@gmail.com',
         href: 'mailto:belalnajy9@gmail.com',
-        color: 'blue',
       },
       {
         icon: <FaPhone />,
         title: t('contact.info.phone'),
         // Revealed on click. A plain tel: link on a public page gets scraped.
         value: '01201369949',
-        href: 'tel:01201369949',
+        href: 'tel:+201201369949',
         reveal: true,
-        color: 'purple',
       },
       {
         icon: <FaMapMarkerAlt />,
         title: t('contact.info.location'),
         value: t('contact.info.alexandria'),
         href: null,
-        color: 'pink',
       },
       {
         icon: <FaLinkedin />,
         title: t('contact.info.linkedin'),
         value: 'linkedin.com/in/belalnajy',
         href: 'https://linkedin.com/in/belalnajy',
-        color: 'cyan',
       },
     ],
     [t],
@@ -132,9 +128,8 @@ const Contact = ({ showNotification }) => {
                 transition={{ duration: REVEAL_DURATION, delay: revealDelay(index) }}
                 whileHover={{ y: -5, scale: 1.02 }}
                 className="flex items-start gap-6 glass-card glass-hover p-6 rounded-xl cursor-pointer shadow-lg hover:shadow-xl transition-all duration-300 border border-[rgb(var(--border))]/50">
-                <div
-                  className={`bg-gradient-to-br from-${item.color}-500/20 to-${item.color}-600/30 p-4 rounded-xl border border-${item.color}-500/30 flex-shrink-0 group-hover:scale-110 transition-transform duration-300`}>
-                  <div className={`text-${item.color}-400 text-3xl`}>{item.icon}</div>
+                <div className="bg-[rgb(var(--primary))]/10 p-4 rounded-xl border border-[rgb(var(--primary))]/25 flex-shrink-0 group-hover:scale-110 transition-transform duration-300">
+                  <div className="text-[rgb(var(--primary))] text-3xl">{item.icon}</div>
                 </div>
                 <div>
                   <h3 className="text-xl font-semibold text-[rgb(var(--foreground))] mb-2 text-start">

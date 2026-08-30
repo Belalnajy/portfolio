@@ -1,5 +1,4 @@
 "use client";
-import { Link } from 'react-scroll';
 import { motion } from 'framer-motion';
 import { REVEAL_VIEWPORT } from '../lib/motion';
 import {
@@ -107,8 +106,8 @@ const Footer = () => {
                 <motion.a
                   key={index}
                   href={social.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
+                  target={social.href.startsWith('http') ? '_blank' : undefined}
+                  rel={social.href.startsWith('http') ? 'noopener noreferrer' : undefined}
                   whileHover={{ scale: 1.1, y: -3 }}
                   whileTap={{ scale: 0.95 }}
                   className={`p-3.5 rounded-xl bg-[rgb(var(--muted))]/50 text-[rgb(var(--foreground))] ${social.color} transition-all border border-[rgb(var(--border))]/50 shadow-lg hover:shadow-[rgb(var(--accent))]/10`}
@@ -131,12 +130,8 @@ const Footer = () => {
             <ul className="grid grid-cols-2 gap-y-4 gap-x-8">
               {quickLinks.map((link, index) => (
                 <li key={index}>
-                  <Link
-                    to={link.to}
-                    spy={true}
-                    smooth={true}
-                    duration={300}
-                    offset={-70}
+                  <a
+                    href={`#${link.to}`}
                     className={`text-[rgb(var(--muted-foreground))] hover:text-[rgb(var(--primary))] transition-all cursor-pointer flex items-center gap-2.5 group min-h-[40px] -my-1`}>
                     <div className="transition-transform duration-300 group-hover:scale-125">
                       {isArabic ? (
@@ -146,7 +141,7 @@ const Footer = () => {
                       )}
                     </div>
                     <span className="text-base font-medium">{link.name}</span>
-                  </Link>
+                  </a>
                 </li>
               ))}
             </ul>
@@ -185,19 +180,13 @@ const Footer = () => {
             </ul>
 
             <div className="mt-10">
-              <Link
-                to="contact"
-                spy={true}
-                smooth={true}
-                duration={300}
-                offset={-70}>
-                <motion.button
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
-                  className="w-full bg-gradient-to-r from-[rgb(var(--accent))] to-[rgb(var(--accent-hover))] text-[rgb(var(--accent-contrast))] px-6 py-4 rounded-xl font-bold transition-all shadow-lg shadow-[rgb(var(--accent))]/10 hover:shadow-[rgb(var(--accent))]/20">
-                  {t('contact.title')}
-                </motion.button>
-              </Link>
+              <motion.a
+                href="#contact"
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+                className="block w-full text-center bg-gradient-to-r from-[rgb(var(--accent))] to-[rgb(var(--accent-hover))] text-[rgb(var(--accent-contrast))] px-6 py-4 rounded-xl font-bold transition-all shadow-lg shadow-[rgb(var(--accent))]/10 hover:shadow-[rgb(var(--accent))]/20">
+                {t('contact.title')}
+              </motion.a>
             </div>
           </motion.div>
         </div>
@@ -211,7 +200,7 @@ const Footer = () => {
           className="py-12 border-t border-[rgb(var(--border))]/30">
           <div className="text-center mb-10">
             <span className="text-[rgb(var(--primary))] font-bold text-sm tracking-widest uppercase mb-2 block">
-              Connect
+              {t('footer.connect')}
             </span>
             <h4 className="text-2xl font-bold text-[rgb(var(--foreground))]">
               {t('footer.follow_me')}

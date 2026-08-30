@@ -40,25 +40,21 @@ const About = () => {
       icon: <FaUser />,
       label: t('about.labels.name'),
       value: t('about.values.name'),
-      color: 'blue',
     },
     {
       icon: <FaCode />,
       label: t('about.labels.role'),
       value: t('about.values.role'),
-      color: 'purple',
     },
     {
       icon: <FaGraduationCap />,
       label: t('about.labels.education'),
       value: t('about.values.education'),
-      color: 'pink',
     },
     {
       icon: <FaMapMarkerAlt />,
       label: t('about.labels.location'),
       value: t('about.values.location'),
-      color: 'cyan',
     },
   ];
 
@@ -100,9 +96,8 @@ const About = () => {
                   transition={{ duration: REVEAL_DURATION, delay: revealDelay(index) }}
                   whileHover={{ x: isArabic ? -10 : 10, scale: 1.02 }}
                   className="flex items-center gap-6 glass-card glass-hover p-4 rounded-xl cursor-pointer">
-                  <div
-                    className={`bg-gradient-to-r from-${item.color}-500 to-${item.color}-600 p-3 rounded-lg shrink-0`}>
-                    <div className="text-[rgb(var(--on-scrim))] text-xl">{item.icon}</div>
+                  <div className="bg-[rgb(var(--primary))]/10 border border-[rgb(var(--primary))]/25 p-3 rounded-lg shrink-0">
+                    <div className="text-[rgb(var(--primary))] text-xl">{item.icon}</div>
                   </div>
                   <div className="flex-1 text-start">
                     <h4 className="text-[rgb(var(--foreground))] font-semibold">

@@ -43,7 +43,7 @@ function AppContent({ pageLang }) {
     isVisible: false,
   });
 
-  const { i18n } = useTranslation();
+  const { t, i18n } = useTranslation();
 
   // Apply the stored/browser language only after hydration, so the first render
   // matches the markup prerendered in this route's language.
@@ -57,6 +57,14 @@ function AppContent({ pageLang }) {
   useEffect(() => {
     document.dir = i18n.dir();
     document.documentElement.lang = i18n.language;
+    // Keep the URL in step with the language, so copying the address bar
+    // shares the page in the language the visitor is actually reading.
+    const { pathname, hash } = window.location;
+    if (i18n.language === 'ar' && pathname === '/') {
+      window.history.replaceState(null, '', `/ar${hash}`);
+    } else if (i18n.language === 'en' && pathname === '/ar') {
+      window.history.replaceState(null, '', `/${hash}`);
+    }
   }, [i18n.language, i18n]);
 
   const showNotification = (message, type = 'success') => {
@@ -86,10 +94,10 @@ function AppContent({ pageLang }) {
       window.URL.revokeObjectURL(url);
       document.body.removeChild(a);
 
-      showNotification('CV downloaded successfully!');
+      showNotification(t('notifications.cv_success'));
     } catch (error) {
       console.error('Error downloading CV:', error);
-      showNotification('Failed to download CV. Please try again.', 'error');
+      showNotification(t('notifications.cv_error'), 'error');
     }
   };
 

@@ -1091,7 +1091,7 @@ const resources = {
         },
         notifications: {
           success: "Message sent successfully! I'll get back to you soon.",
-          error: 'Failed to send message. Please try again or email me directly.'
+          error: 'Failed to send message. Please email me directly at belalnajy9@gmail.com.'
         }
       },
       nav: {
@@ -1116,7 +1116,16 @@ const resources = {
         get_in_touch: 'Get in Touch',
         follow_me: 'Follow me on platforms',
         back_to_top: 'Back to Top',
+        connect: 'Connect',
         freelance_notice: 'Designed & Developed by Belal Nagy | Open for freelance opportunities'
+      },
+      theme: {
+        choose: 'Choose Theme',
+        change: 'Change Theme'
+      },
+      notifications: {
+        cv_success: 'CV downloaded successfully!',
+        cv_error: 'Failed to download CV. Please try again.'
       }
     }
   },
@@ -2209,7 +2218,7 @@ const resources = {
         },
         notifications: {
           success: 'تم إرسال الرسالة بنجاح! سأرد عليك في أقرب وقت.',
-          error: 'فشل إرسال الرسالة. يرجى المحاولة مرة أخرى أو مراسلتي مباشرة.'
+          error: 'فشل إرسال الرسالة. راسلني مباشرة على belalnajy9@gmail.com.'
         }
       },
       nav: {
@@ -2234,7 +2243,16 @@ const resources = {
         get_in_touch: 'تواصل معي',
         follow_me: 'تابعني على المنصات الرقمية',
         back_to_top: 'العودة للأعلى',
+        connect: 'تواصل',
         freelance_notice: 'تصميم وتطوير بلال ناجي | متاح لعروض العمل الحر'
+      },
+      theme: {
+        choose: 'اختر اللون',
+        change: 'تغيير اللون'
+      },
+      notifications: {
+        cv_success: 'تم تحميل السيرة الذاتية بنجاح!',
+        cv_error: 'فشل تحميل السيرة الذاتية. حاول مرة أخرى.'
       }
     }
   }

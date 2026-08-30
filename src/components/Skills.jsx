@@ -101,7 +101,7 @@ const Skills = () => {
       skills: [
         { name: 'Python', icon: <FaPython className="text-2xl" style={{ color: brandColor('Python') }} />, level: 90, years: '3+' },
         { name: 'JavaScript', icon: <SiJavascript className="text-2xl" style={{ color: brandColor('JavaScript') }} />, level: 85, years: '2+' },
-        { name: 'TypeScript', icon: <SiJavascript className="text-2xl" style={{ color: brandColor('TypeScript') }} />, level: 80, years: '1+' },
+        { name: 'TypeScript', icon: <SiTypescript className="text-2xl" style={{ color: brandColor('TypeScript') }} />, level: 80, years: '1+' },
         { name: 'HTML5', icon: <FaHtml5 className="text-2xl" style={{ color: brandColor('HTML5') }} />, level: 95, years: '3+' },
         { name: 'CSS3', icon: <FaCss3Alt className="text-2xl" style={{ color: brandColor('CSS3') }} />, level: 90, years: '3+' }
       ]

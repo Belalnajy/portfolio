@@ -1,6 +1,5 @@
 "use client";
 import { useState, useEffect } from 'react';
-import { Link } from 'react-scroll';
 import { motion, AnimatePresence } from 'framer-motion';
 import { revealDelay } from '../lib/motion';
 import { FaDownload, FaGlobe } from 'react-icons/fa';
@@ -128,11 +127,11 @@ const Navbar = ({ onDownloadCV }) => {
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
         <div className="flex items-center justify-between h-20">
           {/* Logo with enhanced animation */}
-          <Link to="home" smooth={true} duration={500}>
-            <motion.div
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              className="flex items-center cursor-pointer group relative">
+          <motion.a
+            href="#home"
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            className="flex items-center cursor-pointer group relative">
               <div className="relative">
                 {/* Glow effect behind logo */}
                 <motion.div
@@ -171,8 +170,7 @@ const Navbar = ({ onDownloadCV }) => {
                   transition={{ duration: 0.4, ease: 'easeOut' }}
                 />
               </div>
-            </motion.div>
-          </Link>
+          </motion.a>
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center gap-4">
@@ -181,13 +179,9 @@ const Navbar = ({ onDownloadCV }) => {
               whileHover={{ scale: 1.02 }}
               transition={{ duration: 0.2 }}>
               {desktopNavItems.map((item, index) => (
-                <Link
+                <a
                   key={item.to}
-                  to={item.to}
-                  spy={false}
-                  smooth={true}
-                  duration={500}
-                  offset={-100}
+                  href={`#${item.to}`}
                   className="cursor-pointer relative">
                   <motion.div
                     whileHover={{ scale: 1.05, y: -2 }}
@@ -210,7 +204,7 @@ const Navbar = ({ onDownloadCV }) => {
                     )}
                     <span className="relative z-10">{item.label}</span>
                   </motion.div>
-                </Link>
+                </a>
               ))}
             </motion.div>
 
@@ -294,13 +288,9 @@ const Navbar = ({ onDownloadCV }) => {
 
             <div className="px-4 py-6 space-y-2">
               {navItems.map((item, index) => (
-                <Link
+                <a
                   key={item.label}
-                  to={item.to}
-                  spy={false}
-                  smooth={true}
-                  duration={500}
-                  offset={-100}
+                  href={`#${item.to}`}
                   onClick={() => setIsOpen(false)}>
                   <motion.div
                     initial={{ opacity: 0, x: isArabic ? 20 : -20 }}
@@ -335,7 +325,7 @@ const Navbar = ({ onDownloadCV }) => {
                       →
                     </motion.span>
                   </motion.div>
-                </Link>
+                </a>
               ))}
 
               {/* Divider */}

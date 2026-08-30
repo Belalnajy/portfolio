@@ -19,6 +19,10 @@ const half = Math.ceil(logos.length / 2);
 const row1 = logos.slice(0, half);
 const row2 = logos.slice(half);
 
+// "toyo228-logo.webp" -> "toyo228" — good enough for alt text and tooltips.
+const logoName = (file) =>
+  file.replace(/([-_]?logo)?\.(webp|svg|png)$/i, '').replace(/-/g, ' ');
+
 const MarqueeRow = ({ items, direction }) => {
   // Duplicate the array to create the infinite looping effect
   const duplicatedItems = [...items, ...items];
@@ -37,7 +41,7 @@ const MarqueeRow = ({ items, direction }) => {
             className="w-40 md:w-64 h-28 md:h-36 flex-shrink-0 relative group glass-card p-6 md:p-8 rounded-2xl flex justify-center items-center hover:bg-[rgb(var(--background))]/50 transition-all duration-300">
             <img
               src={`/logos/${logo}`}
-              alt={`Brand logo`}
+              alt={logoName(logo)}
               className="logo-mark max-w-full max-h-full object-contain group-hover:scale-110"
               loading="lazy"
             />
@@ -73,6 +77,12 @@ const BrandLogos = () => {
           .marquee-container:hover .animate-marquee-left,
           .marquee-container:hover .animate-marquee-right {
             animation-play-state: paused;
+          }
+          @media (prefers-reduced-motion: reduce) {
+            .animate-marquee-left,
+            .animate-marquee-right {
+              animation: none;
+            }
           }
         `}
       </style>

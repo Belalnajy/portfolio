@@ -2,8 +2,10 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FaPalette } from 'react-icons/fa';
+import { useTranslation } from 'react-i18next';
 
 const ThemeSwitcher = () => {
+  const { t } = useTranslation();
   const [isOpen, setIsOpen] = useState(false);
   const [currentTheme, setCurrentTheme] = useState('copper');
 
@@ -60,6 +62,19 @@ const ThemeSwitcher = () => {
     root.setProperty('--accent-hover-dark', theme.dark.hover);
     root.setProperty('--accent-subtle-dark', theme.dark.subtle);
     localStorage.setItem('accent', themeName);
+    // Resolved values, so the pre-paint script in the root layout can restore
+    // the accent without knowing the palette table.
+    localStorage.setItem(
+      'accent-vars',
+      JSON.stringify({
+        '--accent-light': theme.light.accent,
+        '--accent-hover-light': theme.light.hover,
+        '--accent-subtle-light': theme.light.subtle,
+        '--accent-dark': theme.dark.accent,
+        '--accent-hover-dark': theme.dark.hover,
+        '--accent-subtle-dark': theme.dark.subtle,
+      }),
+    );
   };
 
   const handleThemeChange = (themeName) => {
@@ -78,7 +93,7 @@ const ThemeSwitcher = () => {
             exit={{ opacity: 0, y: 20, scale: 0.8 }}
             className="absolute bottom-16 left-0 glass-card p-4 rounded-xl shadow-2xl mb-2 min-w-[200px]">
             <h3 className="text-sm font-semibold mb-3 text-[rgb(var(--foreground))]">
-              Choose Theme
+              {t('theme.choose')}
             </h3>
             <div className="grid grid-cols-2 gap-2">
               {themes.map((theme) => (
@@ -110,13 +125,14 @@ const ThemeSwitcher = () => {
         whileHover={{ scale: 1.1 }}
         whileTap={{ scale: 0.9 }}
         onClick={() => setIsOpen(!isOpen)}
+        aria-label={t('theme.change')}
         className="w-14 h-14 rounded-full glass-card border border-[rgb(var(--border-control))]/40 flex items-center justify-center text-[rgb(var(--accent))] shadow-lg hover:shadow-xl transition-shadow relative group">
         <FaPalette className="text-2xl" />
 
         {/* Tooltip */}
         {!isOpen && (
           <div className="absolute left-full ml-4 px-3 py-1 bg-gradient-to-r from-[rgb(var(--accent))] to-[rgb(var(--accent-hover))] text-[rgb(var(--accent-contrast))] text-xs rounded-lg opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none">
-            Change Theme
+            {t('theme.change')}
           </div>
         )}
       </motion.button>

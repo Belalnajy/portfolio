@@ -248,11 +248,10 @@
     font-family: 'Cairo', 'Inter', sans-serif;
   }
   html {
-    scroll-behavior: smooth;
     scroll-padding-top: 80px;
   }
 
-  /* Smooth scroll with custom easing */
+  /* Anchor navigation animates only for visitors who welcome motion. */
   @media (prefers-reduced-motion: no-preference) {
     html {
       scroll-behavior: smooth;
@@ -415,11 +414,6 @@
 /* Selection */
 ::selection {
   @apply bg-[rgb(var(--primary))]/30 text-[rgb(var(--foreground))];
-}
-
-/* Focus Outline */
-*:focus {
-  @apply outline-none ring-2 ring-[rgb(var(--ring))] ring-offset-2 ring-offset-[rgb(var(--background))];
 }
 
 /* Hide custom cursor on mobile */

@@ -1,7 +1,6 @@
 "use client";
 import { motion } from 'framer-motion';
 import { REVEAL_VIEWPORT, revealDelay, REVEAL_DURATION } from '../lib/motion';
-import { Link } from 'react-scroll';
 import { useTranslation } from 'react-i18next';
 import { FaCheck, FaClock, FaStar, FaArrowRight, FaArrowLeft } from 'react-icons/fa';
 
@@ -102,8 +101,8 @@ const Packages = () => {
                   ))}
                 </ul>
 
-                <Link to="contact" smooth={true} duration={500} offset={-80}>
-                  <button
+                <a href="#contact" className="block">
+                  <span
                     className={`w-full min-h-[48px] rounded-xl font-semibold flex items-center justify-center gap-2 transition-all active:scale-[0.98] ${
                       tier.featured
                         ? 'bg-gradient-to-r from-[rgb(var(--accent))] to-[rgb(var(--accent-hover))] hover:from-[rgb(var(--accent-hover))] hover:to-[rgb(var(--accent))] text-[rgb(var(--accent-contrast))] shadow-lg'
@@ -112,8 +111,8 @@ const Packages = () => {
                   >
                     {t('packages.cta')}
                     <Arrow className="text-xs" />
-                  </button>
-                </Link>
+                  </span>
+                </a>
               </motion.div>
             );
           })}

@@ -2,7 +2,9 @@
 import { useRef, useState } from 'react';
 import { motion } from 'framer-motion';
 
-const MagneticButton = ({ children, className = '', ...props }) => {
+// Renders a real <a> when given an href (keyboard-focusable, native smooth
+// scroll via CSS scroll-behavior), and a <button> otherwise.
+const MagneticButton = ({ children, className = '', href, ...props }) => {
   const ref = useRef(null);
   const [position, setPosition] = useState({ x: 0, y: 0 });
 
@@ -19,10 +21,12 @@ const MagneticButton = ({ children, className = '', ...props }) => {
   };
 
   const { x, y } = position;
+  const Tag = href ? motion.a : motion.button;
 
   return (
-    <motion.button
+    <Tag
       ref={ref}
+      href={href}
       onMouseMove={handleMouse}
       onMouseLeave={reset}
       animate={{ x, y }}
@@ -30,7 +34,7 @@ const MagneticButton = ({ children, className = '', ...props }) => {
       className={className}
       {...props}>
       {children}
-    </motion.button>
+    </Tag>
   );
 };
 

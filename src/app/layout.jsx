@@ -150,6 +150,11 @@ const WEBSITE_JSON_LD = {
   author: { '@type': 'Person', name: 'Belal Nagy' },
 };
 
+// Runs before first paint so a returning visitor never sees a flash of the
+// defaults: light mode is stamped (dark needs no attribute), and a non-copper
+// accent choice is restored from the resolved values ThemeSwitcher persists.
+const THEME_INIT = `try{var d=document.documentElement;if(localStorage.getItem('mode')==='light')d.setAttribute('data-theme','light');var a=JSON.parse(localStorage.getItem('accent-vars')||'null');if(a)for(var k in a)d.style.setProperty(k,a[k])}catch(e){}`;
+
 export default function RootLayout({ children }) {
   return (
     <html lang="en" suppressHydrationWarning>
@@ -157,6 +162,7 @@ export default function RootLayout({ children }) {
         className={`${inter.variable} ${cairo.variable} antialiased`}
         suppressHydrationWarning
       >
+        <script dangerouslySetInnerHTML={{ __html: THEME_INIT }} />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(PERSON_JSON_LD) }}

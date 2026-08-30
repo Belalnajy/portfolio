@@ -7,6 +7,10 @@ const CustomCursor = () => {
   const [cursorVariant, setCursorVariant] = useState("default");
 
   useEffect(() => {
+    // Touch devices never show the custom cursor (CSS hides it too), so skip
+    // the listeners entirely.
+    if (!window.matchMedia("(pointer: fine)").matches) return;
+
     const mouseMove = e => {
       setMousePosition({
         x: e.clientX,
@@ -14,27 +18,19 @@ const CustomCursor = () => {
       });
     };
 
-    const handleMouseEnter = () => setCursorVariant("hover");
-    const handleMouseLeave = () => setCursorVariant("default");
+    // Delegated, so elements mounted later (the project modal, the mobile
+    // menu, lazy sections, archive cards) get the hover treatment too.
+    const INTERACTIVE = "a, button, [role='button'], input, textarea, .cursor-pointer";
+    const handleMouseOver = e => {
+      setCursorVariant(e.target.closest(INTERACTIVE) ? "hover" : "default");
+    };
 
     window.addEventListener("mousemove", mouseMove);
-
-    // Add event listeners to interactive elements
-    const interactiveElements = document.querySelectorAll(
-      "a, button, [role='button'], input, textarea, .cursor-pointer"
-    );
-
-    interactiveElements.forEach(el => {
-      el.addEventListener("mouseenter", handleMouseEnter);
-      el.addEventListener("mouseleave", handleMouseLeave);
-    });
+    document.addEventListener("mouseover", handleMouseOver);
 
     return () => {
       window.removeEventListener("mousemove", mouseMove);
-      interactiveElements.forEach(el => {
-        el.removeEventListener("mouseenter", handleMouseEnter);
-        el.removeEventListener("mouseleave", handleMouseLeave);
-      });
+      document.removeEventListener("mouseover", handleMouseOver);
     };
   }, []);
 

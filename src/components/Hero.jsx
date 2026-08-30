@@ -1,8 +1,8 @@
 'use client';
 import { motion } from 'framer-motion';
 import { TypeAnimation } from 'react-type-animation';
-import { Link } from 'react-scroll';
 import { FaGithub, FaLinkedin, FaDownload } from 'react-icons/fa';
+import { brandColor } from '../lib/brand-colors';
 import MagneticButton from './MagneticButton';
 import PlatformLinks from './PlatformLinks';
 import { useTranslation } from 'react-i18next';
@@ -123,7 +123,10 @@ const Hero = ({ onDownloadCV }) => {
                 rel="noopener noreferrer"
                 whileHover={{ scale: 1.2, rotate: -5 }}
                 whileTap={{ scale: 0.9 }}
-                className="p-3 rounded-full bg-gradient-to-r from-[${brandColor('LinkedIn')}] to-[${brandColor('LinkedIn Dark')}] text-[rgb(var(--on-scrim))] hover:shadow-lg hover:shadow-[rgb(var(--accent))]/50 transition-all">
+                style={{
+                  background: `linear-gradient(to right, ${brandColor('LinkedIn')}, ${brandColor('LinkedIn Dark')})`,
+                }}
+                className="p-3 rounded-full text-[rgb(var(--on-scrim))] hover:shadow-lg hover:shadow-[rgb(var(--accent))]/50 transition-all">
                 <FaLinkedin className="w-6 h-6" />
               </motion.a>
             </motion.div>
@@ -134,26 +137,16 @@ const Hero = ({ onDownloadCV }) => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.8 }}
               className="flex flex-wrap justify-center lg:justify-start gap-4">
-              <Link
-                to="projects"
-                spy={true}
-                smooth={true}
-                duration={300}
-                offset={-70}>
-                <MagneticButton className="bg-[rgb(var(--primary))] text-[rgb(var(--accent-contrast))] px-8 py-3 rounded-lg font-semibold hover:bg-[rgb(var(--primary))]/90 transition-all">
-                  {t('hero.view_projects')}
-                </MagneticButton>
-              </Link>
-              <Link
-                to="contact"
-                spy={true}
-                smooth={true}
-                duration={300}
-                offset={-70}>
-                <MagneticButton className="border-2 border-[rgb(var(--primary))] text-[rgb(var(--primary))] px-8 py-3 rounded-lg font-semibold hover:bg-[rgb(var(--primary))] hover:text-[rgb(var(--accent-contrast))] transition-all">
-                  {t('hero.contact_me')}
-                </MagneticButton>
-              </Link>
+              <MagneticButton
+                href="#projects"
+                className="bg-[rgb(var(--primary))] text-[rgb(var(--accent-contrast))] px-8 py-3 rounded-lg font-semibold hover:bg-[rgb(var(--primary))]/90 transition-all inline-flex items-center">
+                {t('hero.view_projects')}
+              </MagneticButton>
+              <MagneticButton
+                href="#contact"
+                className="border-2 border-[rgb(var(--primary))] text-[rgb(var(--primary))] px-8 py-3 rounded-lg font-semibold hover:bg-[rgb(var(--primary))] hover:text-[rgb(var(--accent-contrast))] transition-all inline-flex items-center">
+                {t('hero.contact_me')}
+              </MagneticButton>
               <MagneticButton
                 onClick={onDownloadCV}
                 className="bg-[rgb(var(--muted))] text-[rgb(var(--foreground))] px-6 py-3 rounded-lg font-semibold hover:bg-[rgb(var(--muted))]/80 transition-all inline-flex items-center gap-2">
