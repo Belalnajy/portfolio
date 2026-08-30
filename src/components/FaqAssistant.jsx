@@ -15,7 +15,7 @@ import {
   FaCheckCircle,
 } from 'react-icons/fa';
 
-const AIAssistant = () => {
+const FaqAssistant = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [language, setLanguage] = useState(null); // 'en' or 'ar'
   const [messages, setMessages] = useState([
@@ -192,12 +192,12 @@ const AIAssistant = () => {
           'I specialize in NestJS and Django for their robustness. I build secure REST & GraphQL APIs with proper RBAC, JWT authentication, and optimized database queries using TypeORM or Prisma.',
       },
       {
-        question: 'Assistant Tech Stack',
+        question: 'How is this FAQ built?',
         id: 'assistant_tech_stack',
         category: 'Tech',
         icon: <FaCode />,
         answer:
-          'This tool is built with React 19, Framer Motion, and Tailwind CSS. It demonstrates my ability to handle complex state, bilingual RTL logic, and premium UI animations without external heavy libraries.',
+          'This FAQ widget is hand-built with React 19, Framer Motion, and Tailwind CSS — curated answers, not an AI chatbot. It demonstrates my ability to handle complex state, bilingual RTL logic, and premium UI animations without heavy external libraries.',
       },
 
       // --- HR & General ---
@@ -441,10 +441,10 @@ const AIAssistant = () => {
                 </div>
                 <div>
                   <h3 className="font-bold text-[rgb(var(--foreground))]">
-                    Belal Smart Assistant
+                    Quick FAQ
                   </h3>
                   <p className="text-xs text-[rgb(var(--success))]">
-                    Online | Smart Helper
+                    Instant answers about Belal
                   </p>
                 </div>
               </div>
@@ -654,4 +654,4 @@ const AIAssistant = () => {
   );
 };
 
-export default AIAssistant;
+export default FaqAssistant;

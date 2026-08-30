@@ -28,7 +28,7 @@ import LazyMount from './components/LazyMount';
 import Footer from './components/Footer';
 import DarkModeToggle from './components/DarkModeToggle';
 import Testimonials from './components/Testimonials';
-import AIAssistant from './components/AIAssistant';
+import FaqAssistant from './components/FaqAssistant';
 
 // three.js + drei only ship in their own chunk, requested when the section is
 // actually about to be seen (see LazyMount below).
@@ -140,7 +140,7 @@ function App() {
           <Packages />
           <Testimonials />
           <Contact showNotification={showNotification} />
-          <AIAssistant />
+          <FaqAssistant />
         </main>
         <Footer />
       </div>

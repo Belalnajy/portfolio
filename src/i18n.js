@@ -532,10 +532,12 @@ const resources = {
         },
         items: [
           {
+            key: 'ezsec',
             title: 'Software Engineer',
             company: 'ezSec Inc (Canada)',
             location: 'Remote, Kitchener, Canada',
             period: '01/2026 - Present',
+            employment: 'Full-time',
             description: [
               'Working remotely as a Software Engineer at a Canadian cybersecurity company specializing in easy-to-use cyber security solutions',
               'Building, maintaining, and shipping software products end-to-end within a fully remote team',
@@ -543,10 +545,12 @@ const resources = {
             ]
           },
           {
+            key: 'indstrz',
             title: 'Co-Founder',
             company: 'Indstrz',
             location: 'Remote, Egypt',
             period: '01/2024 - Present',
+            employment: 'Side venture',
             description: [
               'Co-founded a B2B industrial platform for industrial procurement',
               'Selected for the Venture Ready Program, implemented by Plug and Play with support from GIZ Egypt and ITIDA, hosted at Creativa Innovation Hubs in Alexandria',
@@ -555,10 +559,12 @@ const resources = {
             ]
           },
           {
+            key: 'sf',
             title: 'Full Stack Developer',
             company: 'S&F (Saudi Arabia)',
             location: 'Remote, Saudi Arabia',
             period: '07/2025 - Present',
+            employment: 'Part-time',
             description: [
               'Built and maintained full-stack applications using Django, Node.js, React.js, and PostgreSQL',
               'Designed and deployed backend services & RESTful APIs for web and mobile apps',
@@ -566,20 +572,24 @@ const resources = {
             ]
           },
           {
+            key: 'iti_instructor',
             title: 'External Instructor - Front-End Development',
             company: 'Information Technology Institute (ITI)',
             location: 'Remote, Egypt',
             period: '07/2025 - 10/2025',
+            employment: 'Contract',
             description: [
               'Taught Front-End Development (HTML, CSS, JavaScript) to more than 240 students',
               'Designed and delivered practical coding sessions and real-world project guidance'
             ]
           },
           {
+            key: 'freelance',
             title: 'Freelance Web Developer',
             company: 'Self-Employed',
             location: 'Remote, Egypt',
             period: '03/2025 - Present',
+            employment: 'Freelance',
             description: [
               'Built full-stack, production-ready web apps for Gulf clients',
               'Delivered scalable, multilingual, and RTL-supported platforms',
@@ -587,25 +597,30 @@ const resources = {
             ]
           },
           {
+            key: 'iti_intern',
             title: 'Full Stack Development Using Python Intern',
             company: 'Information Technology Institute (ITI)',
             location: 'Hybrid, Egypt',
             period: '11/2024 - 04/2025',
+            employment: 'Internship',
             description: [
               'Worked on hands-on projects covering Python, Django, databases, and front-end technologies'
             ]
           },
           {
+            key: 'ezdk',
             title: 'IT Infrastructure Intern',
             company: 'Al Ezz Dekheila Steel Co. EZDK',
             location: 'Alexandria, Egypt',
             period: '09/2022 - 10/2022',
+            employment: 'Internship',
             description: [
               'Gained hands-on experience in IT infrastructure and software development',
               'Assisted in software development tasks and IT support'
             ]
           },
           {
+            key: 'alexu',
             title: 'Bachelor of Business (English Section) – Business Information Systems (BIS)',
             company: 'Alexandria University',
             location: 'Alexandria, Egypt',
@@ -1498,10 +1513,12 @@ const resources = {
         },
         items: [
           {
+            key: 'ezsec',
             title: 'مهندس برمجيات (Software Engineer)',
             company: 'شركة ezSec Inc (كندا)',
             location: 'عن بُعد، كيتشنر، كندا',
             period: '01/2026 - الحالي',
+            employment: 'دوام كامل',
             description: [
               'العمل عن بُعد كمهندس برمجيات في شركة كندية متخصصة في حلول الأمن السيبراني سهلة الاستخدام',
               'بناء وتطوير وإطلاق منتجات برمجية بشكل متكامل ضمن فريق يعمل عن بُعد بالكامل',
@@ -1509,10 +1526,12 @@ const resources = {
             ]
           },
           {
+            key: 'indstrz',
             title: 'شريك مؤسس (Co-Founder)',
             company: 'Indstrz',
             location: 'عن بُعد، مصر',
             period: '01/2024 - الحالي',
+            employment: 'مشروع جانبي',
             description: [
               'شريك مؤسس لمنصة Indstrz، منصة صناعية B2B للتوريد الصناعي',
               'تم اختيار المنصة ضمن برنامج Venture Ready، المنفَّذ بواسطة Plug and Play بدعم من GIZ Egypt و ITIDA، ومستضاف في مراكز Creativa للابتكار بالإسكندرية',
@@ -1521,10 +1540,12 @@ const resources = {
             ]
           },
           {
+            key: 'sf',
             title: 'مطور ويب متكامل (Full Stack)',
             company: 'شركة S&F (السعودية)',
             location: 'عن بُعد، المملكة العربية السعودية',
             period: '07/2025 - الحالي',
+            employment: 'دوام جزئي',
             description: [
               'بناء وتطوير تطبيقات متكاملة باستخدام Django، Node.js، React.js، و PostgreSQL',
               'تصميم ونشر خدمات الـ Backend و RESTful APIs لتطبيقات الويب والموبايل',
@@ -1532,20 +1553,24 @@ const resources = {
             ]
           },
           {
+            key: 'iti_instructor',
             title: 'محاضر خارجي - تطوير واجهات المواقع (Front-End)',
             company: 'معهد تكنولوجيا المعلومات (ITI)',
             location: 'عن بُعد، مصر',
             period: '07/2025 - 10/2025',
+            employment: 'عقد مؤقت',
             description: [
               'تدريس تطوير واجهات المواقع (HTML, CSS, JavaScript) لأكثر من 240 طالباً',
               'تصميم وتقديم جلسات برمجية عملية وإرشاد الطلاب في مشاريع حقيقية'
             ]
           },
           {
+            key: 'freelance',
             title: 'مطور ويب مستقل (Freelance)',
             company: 'عمل حر',
             location: 'عن بُعد، مصر',
             period: '03/2025 - الحالي',
+            employment: 'عمل حر',
             description: [
               'بناء تطبيقات ويب متكاملة وجاهزة للنشر لعملاء في منطقة الخليج',
               'تسليم منصات قابلة للتوسع تدعم اللغات المتعددة واتجاه RTL',
@@ -1553,25 +1578,30 @@ const resources = {
             ]
           },
           {
+            key: 'iti_intern',
             title: 'متدرب تطوير ويب متكامل باستخدام بايثون',
             company: 'معهد تكنولوجيا المعلومات (ITI)',
             location: 'هجين، مصر',
             period: '11/2024 - 04/2025',
+            employment: 'تدريب',
             description: [
               'العمل على مشاريع تطبيقية تشمل بايثون، ديجانجو، قواعد البيانات، وتقنيات الواجهة الأمامية'
             ]
           },
           {
+            key: 'ezdk',
             title: 'متدرب في البنية التحتية لتكنولوجيا المعلومات',
             company: 'شركة عز الدخيلة للصلب (EZDK)',
             location: 'الإسكندرية، مصر',
             period: '09/2022 - 10/2022',
+            employment: 'تدريب',
             description: [
               'اكتساب خبرة عملية في البنية التحتية لتكنولوجيا المعلومات وتطوير البرمجيات',
               'المساعدة في مهام تطوير البرمجيات والدعم الفني للمنظومة'
             ]
           },
           {
+            key: 'alexu',
             title: 'بكالوريوس الأعمال (القسم الإنجليزي) – نظم معلومات الأعمال (BIS)',
             company: 'جامعة الإسكندرية',
             location: 'الإسكندرية، مصر',
