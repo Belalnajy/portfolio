@@ -1,6 +1,5 @@
 import { CASE_STUDIES } from '../lib/case-studies';
-
-const SITE_URL = 'https://belalnagy.com';
+import { SITE_URL } from '../lib/site';
 
 // Bump when the home page content changes. A fixed date tells crawlers what
 // actually changed, where `new Date()` claimed every page changed on every deploy.

@@ -1,11 +1,12 @@
 import { Inter, Cairo } from 'next/font/google';
 import { Analytics } from '@vercel/analytics/next';
+import { SITE_URL } from '../lib/site';
 import './globals.css';
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-inter' });
 const cairo = Cairo({ subsets: ['arabic'], variable: '--font-cairo' });
 
-export const SITE_URL = 'https://belalnagy.com';
+export { SITE_URL } from '../lib/site';
 
 // Shared by the root metadata and by every child route that declares its own
 // `openGraph`. Next overwrites nested metadata fields rather than merging them,

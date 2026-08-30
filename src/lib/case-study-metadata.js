@@ -1,6 +1,6 @@
 import en from '../locales/en';
 import ar from '../locales/ar';
-import { SITE_URL } from '../app/layout';
+import { SITE_URL } from './site';
 
 const BUNDLES = { en, ar };
 
