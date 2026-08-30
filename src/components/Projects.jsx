@@ -432,7 +432,7 @@ const Projects = () => {
         ],
         features: t('projects.items.indstrz.features', { returnObjects: true }),
         github: '#',
-        live: '#',
+        live: 'https://indstrz.com/en',
         category: 'Full Stack',
       },
       {
@@ -621,7 +621,7 @@ const Projects = () => {
         tags: ['FastAPI', 'Python', 'MongoDB', 'AI', 'Gemini'],
         features: t('projects.items.baserah.features', { returnObjects: true }),
         github: '#',
-        live: '#',
+        live: 'https://baserah.ai/',
         category: 'Full Stack',
       },
       {
