@@ -8,8 +8,25 @@ import {
   FaGlobe,
   FaShieldAlt,
   FaWrench,
+  FaComments,
+  FaDraftingCompass,
+  FaCode,
+  FaVial,
+  FaRocket,
+  FaLifeRing,
 } from "react-icons/fa";
 import { useTranslation } from 'react-i18next';
+
+// "How I work" lives inside Services as a compact strip rather than a
+// section of its own; #process keeps old links working.
+const PROCESS_STEPS = [
+  { key: 'discovery', icon: <FaComments /> },
+  { key: 'blueprint', icon: <FaDraftingCompass /> },
+  { key: 'build', icon: <FaCode /> },
+  { key: 'review', icon: <FaVial /> },
+  { key: 'launch', icon: <FaRocket /> },
+  { key: 'support', icon: <FaLifeRing /> },
+];
 
 const Services = () => {
   const { t, i18n } = useTranslation();
@@ -98,12 +115,60 @@ const Services = () => {
           ))}
         </div>
 
+        {/* How I work — six steps, one line each */}
+        <motion.div
+          id="process"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={REVEAL_VIEWPORT}
+          transition={{ duration: 0.5 }}
+          className="mt-20 scroll-mt-24">
+          <div className="text-center mb-10">
+            <span className="text-[rgb(var(--primary))] font-bold tracking-widest uppercase text-xs sm:text-sm mb-3 block">
+              {t('process.label')}
+            </span>
+            <h3 className="text-2xl sm:text-3xl font-bold text-[rgb(var(--foreground))] tracking-tight mb-3">
+              {t('process.title')}
+            </h3>
+            <p className="text-[rgb(var(--muted-foreground))] max-w-2xl mx-auto text-base leading-relaxed">
+              {t('process.subtitle')}
+            </p>
+          </div>
+
+          <ol className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            {PROCESS_STEPS.map((step, index) => (
+              <motion.li
+                key={step.key}
+                initial={{ opacity: 0, y: 16 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={REVEAL_VIEWPORT}
+                transition={{ duration: REVEAL_DURATION, delay: revealDelay(index) }}
+                className="relative flex gap-4 p-5 rounded-xl bg-[rgb(var(--muted))]/10 border border-[rgb(var(--border))]/50 hover:border-[rgb(var(--primary))]/40 transition-colors">
+                <span className="shrink-0 inline-flex items-center justify-center w-11 h-11 rounded-lg bg-[rgb(var(--primary))]/10 text-[rgb(var(--primary))] border border-[rgb(var(--primary))]/20 text-lg">
+                  {step.icon}
+                </span>
+                <div className="min-w-0">
+                  <h4 className="font-bold text-[rgb(var(--foreground))] leading-snug mb-1">
+                    {t(`process.steps.${step.key}.title`)}
+                  </h4>
+                  <p className="text-xs text-[rgb(var(--muted-foreground))] leading-relaxed mb-2">
+                    {t(`process.steps.${step.key}.desc`)}
+                  </p>
+                  <span className="inline-block text-[11px] font-semibold px-2.5 py-0.5 rounded-full bg-[rgb(var(--primary))]/10 text-[rgb(var(--primary))]">
+                    {t(`process.steps.${step.key}.deliverable`)}
+                  </span>
+                </div>
+              </motion.li>
+            ))}
+          </ol>
+        </motion.div>
+
         {/* CTA Section */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={REVEAL_VIEWPORT}
-          transition={{ duration: 0.5, delay: 0.5 }}
+          transition={{ duration: 0.5, delay: 0.2 }}
           className="mt-16 text-center">
           <p className="text-[rgb(var(--muted-foreground))] text-lg mb-6">
             {t('services.ready')}

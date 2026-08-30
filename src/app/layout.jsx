@@ -150,10 +150,9 @@ const WEBSITE_JSON_LD = {
   author: { '@type': 'Person', name: 'Belal Nagy' },
 };
 
-// Runs before first paint so a returning visitor never sees a flash of the
-// defaults: light mode is stamped (dark needs no attribute), and a non-copper
-// accent choice is restored from the resolved values ThemeSwitcher persists.
-const THEME_INIT = `try{var d=document.documentElement;if(localStorage.getItem('mode')==='light')d.setAttribute('data-theme','light');var a=JSON.parse(localStorage.getItem('accent-vars')||'null');if(a)for(var k in a)d.style.setProperty(k,a[k])}catch(e){}`;
+// Runs before first paint so a visitor who chose light mode never sees a dark
+// flash. Dark is the default (no attribute); only light needs stamping.
+const THEME_INIT = `try{if(localStorage.getItem('mode')==='light')document.documentElement.setAttribute('data-theme','light')}catch(e){}`;
 
 export default function RootLayout({ children }) {
   return (

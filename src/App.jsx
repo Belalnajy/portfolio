@@ -11,7 +11,6 @@ import InteractiveTimeline from './components/InteractiveTimeline';
 import Projects from './components/Projects';
 import PlatformSuite from './components/PlatformSuite';
 import SectionErrorBoundary from './components/SectionErrorBoundary';
-import HowIWork from './components/HowIWork';
 import Packages from './components/Packages';
 import BrandLogos from './components/BrandLogos';
 import Skills from './components/Skills';
@@ -21,7 +20,7 @@ import Notification from './components/Notification';
 import ParticlesBackground from './components/ParticlesBackground';
 import CustomCursor from './components/CustomCursor';
 import AnimatedStats from './components/AnimatedStats';
-import ThemeSwitcher from './components/ThemeSwitcher';
+import WhatsAppButton from './components/WhatsAppButton';
 import Certifications from './components/Certifications';
 import Services from './components/Services';
 import LazyMount from './components/LazyMount';
@@ -112,7 +111,7 @@ function AppContent({ pageLang }) {
         <CustomCursor />
         <ParticlesBackground />
         <DarkModeToggle />
-        <ThemeSwitcher />
+        <WhatsAppButton />
         <ScrollProgress />
         <Notification
           message={notification.message}
@@ -143,8 +142,8 @@ function AppContent({ pageLang }) {
           <InteractiveTimeline />
           <AnimatedStats />
           <Certifications />
+          {/* Services carries the "how I work" process strip (#process). */}
           <Services />
-          <HowIWork />
           <Packages />
           <Testimonials />
           <Contact showNotification={showNotification} />

@@ -505,18 +505,13 @@ const resources = {
       skills: {
         title: 'Skills & Expertise',
         subtitle: 'A comprehensive overview of my technical skills and areas of expertise with proficiency levels.',
-        search_placeholder: 'Search skills...',
-        no_results: 'No skills found matching "{{query}}"',
         categories: {
           all: 'All',
           languages: 'Programming Languages',
           frameworks: 'Frameworks & Libraries',
-          devops: 'DevOps & Tools',
-          databases: 'Databases & ORMs',
-          realtime: 'Real-Time & APIs',
-          cybersecurity: 'Cybersecurity',
-          management: 'Project Management',
-          soft: 'Soft Skills'
+          devops: 'DevOps, Infra & Security',
+          databases: 'Databases & APIs',
+          soft: 'Workflow & Soft Skills'
         },
         soft_skills: {
           communication: 'Communication',
@@ -1075,7 +1070,9 @@ const resources = {
           location: 'Location',
           linkedin: 'LinkedIn',
           alexandria: 'Alexandria, Egypt',
-          show_phone: 'Show phone number'
+          show_phone: 'Show phone number',
+          whatsapp: 'WhatsApp',
+          whatsapp_cta: 'Chat on WhatsApp'
         },
         form: {
           name: 'Name',
@@ -1119,13 +1116,13 @@ const resources = {
         connect: 'Connect',
         freelance_notice: 'Designed & Developed by Belal Nagy | Open for freelance opportunities'
       },
-      theme: {
-        choose: 'Choose Theme',
-        change: 'Change Theme'
-      },
       notifications: {
         cv_success: 'CV downloaded successfully!',
         cv_error: 'Failed to download CV. Please try again.'
+      },
+      whatsapp: {
+        aria: 'Chat on WhatsApp',
+        message: "Hi Belal, I found you through your portfolio and I'd like to discuss a project."
       },
       faq: {
         title: 'Quick FAQ',
@@ -1637,18 +1634,13 @@ const resources = {
       skills: {
         title: 'المهارات والخبرات',
         subtitle: 'نظرة شاملة على مهاراتي التقنية ومجالات خبرتي مع مستويات الإتقان.',
-        search_placeholder: 'ابحث عن المهارات...',
-        no_results: 'لم يتم العثور على مهارات تطابق "{{query}}"',
         categories: {
           all: 'الكل',
           languages: 'لغات البرمجة',
           frameworks: 'أطر العمل والمكتبات',
-          devops: 'DevOps والأدوات',
-          databases: 'قواعد البيانات و ORM',
-          realtime: 'الأنظمة اللحظية والـ APIs',
-          cybersecurity: 'الأمن السيبراني',
-          management: 'إدارة المشاريع',
-          soft: 'المهارات الناعمة'
+          devops: 'DevOps والبنية التحتية والأمن',
+          databases: 'قواعد البيانات والـ APIs',
+          soft: 'أسلوب العمل والمهارات الناعمة'
         },
         soft_skills: {
           communication: 'مهارات التواصل',
@@ -2207,7 +2199,9 @@ const resources = {
           location: 'الموقع',
           linkedin: 'لينكد إن',
           alexandria: 'الإسكندرية، مصر',
-          show_phone: 'إظهار رقم الهاتف'
+          show_phone: 'إظهار رقم الهاتف',
+          whatsapp: 'واتساب',
+          whatsapp_cta: 'راسلني على واتساب'
         },
         form: {
           name: 'الاسم',
@@ -2251,13 +2245,13 @@ const resources = {
         connect: 'تواصل',
         freelance_notice: 'تصميم وتطوير بلال ناجي | متاح لعروض العمل الحر'
       },
-      theme: {
-        choose: 'اختر اللون',
-        change: 'تغيير اللون'
-      },
       notifications: {
         cv_success: 'تم تحميل السيرة الذاتية بنجاح!',
         cv_error: 'فشل تحميل السيرة الذاتية. حاول مرة أخرى.'
+      },
+      whatsapp: {
+        aria: 'راسلني على واتساب',
+        message: 'أهلاً بلال، وصلتلك من موقعك وحابب أناقش معاك مشروع.'
       },
       faq: {
         title: 'أسئلة سريعة',

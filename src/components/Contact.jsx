@@ -1,5 +1,5 @@
 "use client";
-import { useState, useRef, useMemo } from 'react';
+import { useState, useRef, useMemo, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { REVEAL_VIEWPORT, revealDelay, REVEAL_DURATION } from '../lib/motion';
 import emailjs from '@emailjs/browser';
@@ -8,8 +8,10 @@ import {
   FaPhone,
   FaMapMarkerAlt,
   FaLinkedin,
+  FaWhatsapp,
 } from 'react-icons/fa';
 import { useTranslation } from 'react-i18next';
+import { whatsappUrl } from './WhatsAppButton';
 
 const Contact = ({ showNotification }) => {
   const { t, i18n } = useTranslation();
@@ -59,11 +61,21 @@ const Contact = ({ showNotification }) => {
   };
 
   // The number stays out of the markup until the visitor asks for it, so
-  // scrapers crawling the page never see a tel: link.
+  // scrapers crawling the page never see a tel: link. The WhatsApp link gets
+  // the same treatment: attached after hydration, absent from the static HTML.
   const [revealedPhone, setRevealedPhone] = useState(false);
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => setMounted(true), []);
 
   const contactInfo = useMemo(
     () => [
+      {
+        icon: <FaWhatsapp />,
+        title: t('contact.info.whatsapp'),
+        value: t('contact.info.whatsapp_cta'),
+        href: mounted ? whatsappUrl(t('contact.whatsapp_message', { defaultValue: t('whatsapp.message') })) : null,
+        highlight: true,
+      },
       {
         icon: <FaEnvelope />,
         title: t('contact.info.email'),
@@ -91,7 +103,7 @@ const Contact = ({ showNotification }) => {
         href: 'https://linkedin.com/in/belalnajy',
       },
     ],
-    [t],
+    [t, mounted],
   );
 
   return (
@@ -128,8 +140,13 @@ const Contact = ({ showNotification }) => {
                 transition={{ duration: REVEAL_DURATION, delay: revealDelay(index) }}
                 whileHover={{ y: -5, scale: 1.02 }}
                 className="flex items-start gap-6 glass-card glass-hover p-6 rounded-xl cursor-pointer shadow-lg hover:shadow-xl transition-all duration-300 border border-[rgb(var(--border))]/50">
-                <div className="bg-[rgb(var(--primary))]/10 p-4 rounded-xl border border-[rgb(var(--primary))]/25 flex-shrink-0 group-hover:scale-110 transition-transform duration-300">
-                  <div className="text-[rgb(var(--primary))] text-3xl">{item.icon}</div>
+                <div
+                  className={`p-4 rounded-xl border flex-shrink-0 group-hover:scale-110 transition-transform duration-300 ${
+                    item.highlight
+                      ? 'bg-[#25D366]/15 border-[#25D366]/40'
+                      : 'bg-[rgb(var(--primary))]/10 border-[rgb(var(--primary))]/25'
+                  }`}>
+                  <div className={`text-3xl ${item.highlight ? 'text-[#25D366]' : 'text-[rgb(var(--primary))]'}`}>{item.icon}</div>
                 </div>
                 <div>
                   <h3 className="text-xl font-semibold text-[rgb(var(--foreground))] mb-2 text-start">

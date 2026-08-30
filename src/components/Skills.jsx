@@ -18,8 +18,6 @@ import {
   FaShieldAlt,
   FaProjectDiagram,
   FaGraduationCap,
-  FaSearch,
-  FaTimes,
   FaComments,
   FaChalkboardTeacher,
   FaLightbulb,
@@ -91,12 +89,10 @@ const SkillCard = ({ category, index }) => {
 };
 
 const Skills = () => {
-  const { t, i18n } = useTranslation();
-  const isArabic = i18n.language === 'ar';
+  const { t } = useTranslation();
   // Content comes from the local i18n bundle, so there is nothing to wait for.
   const [loading] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState('All');
-  const [searchQuery, setSearchQuery] = useState('');
 
   const skillCategories = useMemo(() => [
     {
@@ -144,7 +140,8 @@ const Skills = () => {
         { name: 'Apache', icon: <SiApache className="text-2xl" style={{ color: brandColor('Apache') }} />, level: 75, years: '2+' },
         { name: 'Nginx', icon: <SiNginx className="text-2xl" style={{ color: brandColor('Nginx') }} />, level: 78, years: '1+' },
         { name: 'Vercel', icon: <SiVercel className="text-2xl" style={{ color: brandColor('Vercel') }} />, level: 85, years: '1+' },
-        { name: 'Red Hat', icon: <SiRedhat className="text-2xl" style={{ color: brandColor('Red Hat') }} />, level: 70, years: '1+' }
+        { name: 'Red Hat', icon: <SiRedhat className="text-2xl" style={{ color: brandColor('Red Hat') }} />, level: 70, years: '1+' },
+        { name: 'Network Security', icon: <FaShieldAlt className="text-2xl" style={{ color: brandColor('Network Security') }} />, level: 70, years: '1+' }
       ]
     },
     {
@@ -157,42 +154,19 @@ const Skills = () => {
         { name: 'MongoDB', icon: <SiMongodb className="text-2xl" style={{ color: brandColor('MongoDB') }} />, level: 78, years: '1+' },
         { name: 'SQLite', icon: <FaDatabase className="text-2xl" style={{ color: brandColor('SQLite') }} />, level: 82, years: '2+' },
         { name: 'Prisma', icon: <SiPrisma className="text-2xl" style={{ color: brandColor('Prisma') }} />, level: 75, years: '1+' },
-        { name: 'TypeORM', icon: <FaDatabase className="text-2xl" style={{ color: brandColor('TypeORM') }} />, level: 72, years: '1+' }
+        { name: 'TypeORM', icon: <FaDatabase className="text-2xl" style={{ color: brandColor('TypeORM') }} />, level: 72, years: '1+' },
+        { name: 'REST APIs', icon: <FaCode className="text-2xl" style={{ color: brandColor('REST APIs') }} />, level: 90, years: '3+' },
+        { name: 'Socket.io', icon: <SiSocketdotio className="text-2xl" style={{ color: brandColor('Socket.io') }} />, level: 75, years: '1+' }
       ]
     },
     {
-      id: 'RealTime',
-      title: t('skills.categories.realtime'),
-      icon: <FaServer className="text-4xl text-primary" />,
-      skills: [
-        { name: 'Socket.io', icon: <SiSocketdotio className="text-2xl" style={{ color: brandColor('Socket.io') }} />, level: 75, years: '1+' },
-        { name: 'REST APIs', icon: <FaCode className="text-2xl" style={{ color: brandColor('REST APIs') }} />, level: 90, years: '3+' }
-      ]
-    },
-    {
-      id: 'Cybersecurity',
-      title: t('skills.categories.cybersecurity'),
-      icon: <FaShieldAlt className="text-4xl text-primary" />,
-      skills: [
-        { name: 'Network Security', icon: <FaShieldAlt className="text-2xl" style={{ color: brandColor('Network Security') }} />, level: 70, years: '1+' },
-        { name: 'Red Hat Admin 1', icon: <SiRedhat className="text-2xl" style={{ color: brandColor('Red Hat Admin 1') }} />, level: 68, years: '1+' }
-      ]
-    },
-    {
-      id: 'Management',
-      title: t('skills.categories.management'),
+      id: 'Workflow',
+      title: t('skills.categories.soft'),
       icon: <FaProjectDiagram className="text-4xl text-primary" />,
       skills: [
         { name: 'Agile', icon: <FaProjectDiagram className="text-2xl" style={{ color: brandColor('Agile') }} />, level: 85, years: '2+' },
         { name: 'Trello', icon: <FaProjectDiagram className="text-2xl" style={{ color: brandColor('Trello') }} />, level: 80, years: '2+' },
-        { name: 'Notion', icon: <SiNotion className="text-2xl" style={{ color: brandColor('Notion') }} />, level: 75, years: '1+' }
-      ]
-    },
-    {
-      id: 'Soft',
-      title: t('skills.categories.soft'),
-      icon: <FaGraduationCap className="text-4xl text-primary" />,
-      skills: [
+        { name: 'Notion', icon: <SiNotion className="text-2xl" style={{ color: brandColor('Notion') }} />, level: 75, years: '1+' },
         { name: t('skills.soft_skills.communication'), icon: <FaComments className="text-2xl text-[rgb(var(--accent))]" />, level: 90, years: '3+' },
         { name: t('skills.soft_skills.presentation'), icon: <FaChalkboardTeacher className="text-2xl text-[rgb(var(--accent))]" />, level: 85, years: '2+' },
         { name: t('skills.soft_skills.problem_solving'), icon: <FaLightbulb className="text-2xl text-[rgb(var(--accent))]" />, level: 92, years: '3+' },
@@ -208,15 +182,12 @@ const Skills = () => {
     ...skillCategories.map(cat => ({ id: cat.title, label: cat.title }))
   ], [skillCategories, t]);
 
-  // Filter skills based on selected category and search query
-  const filteredCategories = useMemo(() => skillCategories.filter(category => {
-    const matchesCategory = selectedCategory === 'All' || category.title === selectedCategory;
-    const matchesSearch = searchQuery === '' || 
-      category.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      category.skills.some(skill => skill.name.toLowerCase().includes(searchQuery.toLowerCase()));
-    
-    return matchesCategory && matchesSearch;
-  }), [skillCategories, selectedCategory, searchQuery]);
+  const filteredCategories = useMemo(
+    () => skillCategories.filter(
+      (category) => selectedCategory === 'All' || category.title === selectedCategory,
+    ),
+    [skillCategories, selectedCategory],
+  );
 
   return (
     <section id="skills" className="py-20">
@@ -231,32 +202,6 @@ const Skills = () => {
           <p className="text-[rgb(var(--muted-foreground))] max-w-2xl mx-auto">
             {t('skills.subtitle')}
           </p>
-        </motion.div>
-
-        {/* Search Bar */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={REVEAL_VIEWPORT}
-          transition={{ duration: 0.5, delay: 0.1 }}
-          className="max-w-md mx-auto mb-8">
-          <div className="relative">
-            <FaSearch className={`absolute ${isArabic ? 'right-4' : 'left-4'} top-1/2 transform -translate-y-1/2 text-[rgb(var(--muted-foreground)))]`} />
-            <input
-              type="text"
-              placeholder={t('skills.search_placeholder')}
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              className={`w-full ${isArabic ? 'pr-12 pl-12 text-right' : 'pl-12 pr-12 text-left'} py-3 bg-[rgb(var(--card))] border border-[rgb(var(--border))] rounded-xl focus:outline-none focus:border-[rgb(var(--primary))] transition-colors duration-300 text-[rgb(var(--foreground)))]`}
-            />
-            {searchQuery && (
-              <button
-                onClick={() => setSearchQuery('')}
-                className={`absolute ${isArabic ? 'left-4' : 'right-4'} top-1/2 transform -translate-y-1/2 text-[rgb(var(--muted-foreground))] hover:text-[rgb(var(--foreground))] transition-colors`}>
-                <FaTimes />
-              </button>
-            )}
-          </div>
         </motion.div>
 
         {/* Category Filter Tabs */}
@@ -299,7 +244,7 @@ const Skills = () => {
                 <SkillSkeleton key={index} index={index} />
               ))}
             </motion.div>
-          ) : filteredCategories.length > 0 ? (
+          ) : (
             <motion.div
               key="content"
               initial={{ opacity: 0 }}
@@ -309,17 +254,6 @@ const Skills = () => {
               {filteredCategories.map((category, index) => (
                 <SkillCard key={category.id} category={category} index={index} />
               ))}
-            </motion.div>
-          ) : (
-            <motion.div
-              key="empty"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -20 }}
-              className="text-center py-12">
-              <p className="text-[rgb(var(--muted-foreground))] text-lg">
-                {t('skills.no_results', { query: searchQuery })}
-              </p>
             </motion.div>
           )}
         </AnimatePresence>

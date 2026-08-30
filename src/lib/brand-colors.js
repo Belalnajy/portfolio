@@ -89,6 +89,7 @@ export const BRAND_COLORS = {
   "UI/UX Redesign": '#A855F7',
   "Vercel": '#000000',
   "Vite": '#646CFF',
+  "WhatsApp": '#25D366',
   "jQuery": '#0769AD'
 };
 

@@ -30,7 +30,6 @@ const Footer = () => {
       { name: t('nav.suite'), to: 'platform-suite' },
       { name: t('nav.skills'), to: 'skills' },
       { name: t('nav.services'), to: 'services' },
-      { name: t('nav.process'), to: 'process' },
       { name: t('nav.packages'), to: 'packages' },
       { name: t('nav.testimonials'), to: 'testimonials' },
       { name: t('nav.contact'), to: 'contact' },
