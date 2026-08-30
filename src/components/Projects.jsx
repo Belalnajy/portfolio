@@ -146,21 +146,21 @@ export const LMS_SUITE = {
       slug: 'injaz',
       name: 'Injaz',
       url: 'https://lms-injaz.com/',
-      image: '/injaz.png',
+      image: '/injaz.webp',
       accent: 'rgb(var(--accent))',
     },
     {
       slug: 'hcholding',
       name: 'HC Holding',
       url: 'https://lms-hcholding.org/',
-      image: '/hcholding.png',
+      image: '/hcholding.webp',
       accent: 'rgb(var(--success))',
     },
     {
       slug: 'mada',
       name: 'Mada Education',
       url: 'https://mada-education.com/',
-      image: '/mada.png',
+      image: '/mada.webp',
       accent: 'rgb(var(--accent-hover))',
     },
   ],
@@ -264,6 +264,7 @@ const Projects = () => {
   const [filter, setFilter] = useState('All');
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedProject, setSelectedProject] = useState(null);
+  const [showArchive, setShowArchive] = useState(false);
 
   // Lock scroll when modal is open
   useEffect(() => {
@@ -286,9 +287,10 @@ const Projects = () => {
     () => [
       {
         slug: 'bilqalam',
+        featured: true,
         title: t('projects.items.bilqalam.title'),
         description: t('projects.items.bilqalam.desc'),
-        image: '/bilqalam.png',
+        image: '/bilqalam.webp',
         tags: ['Next.js', 'React', 'Laravel', 'PHP', 'Tailwind'],
         features: t('projects.items.bilqalam.features', {
           returnObjects: true,
@@ -300,9 +302,10 @@ const Projects = () => {
       },
       {
         slug: 'medicta',
+        featured: true,
         title: t('projects.items.medicta.title'),
         description: t('projects.items.medicta.desc'),
-        image: '/medicta.png',
+        image: '/medicta.webp',
         tags: [
           'React Native',
           'Android',
@@ -318,9 +321,10 @@ const Projects = () => {
       },
       {
         slug: 'toyo228',
+        featured: true,
         title: t('projects.items.toyo228.title'),
         description: t('projects.items.toyo228.desc'),
-        image: '/toyo228.png',
+        image: '/toyo228.webp',
         tags: [
           'Next.js',
           'NestJS',
@@ -338,9 +342,10 @@ const Projects = () => {
       },
       {
         slug: 'injaz',
+        featured: true,
         title: t('projects.items.injaz.title'),
         description: t('projects.items.injaz.desc'),
-        image: '/injaz.png',
+        image: '/injaz.webp',
         tags: [
           'Django',
           'PostgreSQL',
@@ -361,7 +366,7 @@ const Projects = () => {
         slug: 'hcholding',
         title: t('projects.items.hcholding.title'),
         description: t('projects.items.hcholding.desc'),
-        image: '/hcholding.png',
+        image: '/hcholding.webp',
         tags: [
           'Django',
           'PostgreSQL',
@@ -382,7 +387,7 @@ const Projects = () => {
         slug: 'mada',
         title: t('projects.items.mada.title'),
         description: t('projects.items.mada.desc'),
-        image: '/mada.png',
+        image: '/mada.webp',
         tags: [
           'Django',
           'PostgreSQL',
@@ -402,7 +407,7 @@ const Projects = () => {
         slug: 'mutlq',
         title: t('projects.items.mutlq.title'),
         description: t('projects.items.mutlq.desc'),
-        image: '/mutlq.png',
+        image: '/mutlq.webp',
         tags: ['Django', 'PostgreSQL', 'Tailwind', 'JavaScript'],
         features: t('projects.items.mutlq.features', { returnObjects: true }),
         github: '#',
@@ -411,9 +416,11 @@ const Projects = () => {
       },
       {
         slug: 'indstrz',
+        featured: true,
+        caseStudy: '/case-study/indstrz',
         title: t('projects.items.indstrz.title'),
         description: t('projects.items.indstrz.desc'),
-        image: '/indstrz.png',
+        image: '/indstrz.webp',
         tags: [
           'Next.js',
           'React',
@@ -432,7 +439,7 @@ const Projects = () => {
         slug: 'sonomedix',
         title: t('projects.items.sonomedix.title'),
         description: t('projects.items.sonomedix.desc'),
-        image: '/sonomedix.png',
+        image: '/sonomedix.webp',
         tags: ['React', 'Tailwind', 'Node.js', 'Express.js', 'MongoDB'],
         features: t('projects.items.sonomedix.features', {
           returnObjects: true,
@@ -445,7 +452,7 @@ const Projects = () => {
         slug: 'kmbc',
         title: t('projects.items.kmbc.title'),
         description: t('projects.items.kmbc.desc'),
-        image: '/kmbc.png',
+        image: '/kmbc.webp',
         tags: ['Next.js', 'Tailwind', 'Framer Motion', 'React'],
         features: t('projects.items.kmbc.features', { returnObjects: true }),
         github: '#',
@@ -456,7 +463,7 @@ const Projects = () => {
         slug: 'rabzan',
         title: t('projects.items.rabzan.title'),
         description: t('projects.items.rabzan.desc'),
-        image: '/rabzan.png',
+        image: '/rabzan.webp',
         tags: ['React', 'Tailwind', 'JavaScript'],
         features: t('projects.items.rabzan.features', { returnObjects: true }),
         github: '#',
@@ -467,7 +474,7 @@ const Projects = () => {
         slug: 'manqla',
         title: t('projects.items.manqla.title'),
         description: t('projects.items.manqla.desc'),
-        image: '/manqla.png',
+        image: '/manqla.webp',
         tags: ['React', 'Tailwind', 'TypeScript'],
         features: t('projects.items.manqla.features', { returnObjects: true }),
         github: '#',
@@ -478,7 +485,7 @@ const Projects = () => {
         slug: 'sems',
         title: t('projects.items.sems.title'),
         description: t('projects.items.sems.desc'),
-        image: '/sems.png',
+        image: '/sems.webp',
         tags: ['Next.js', 'Tailwind', 'React', 'TypeScript'],
         features: t('projects.items.sems.features', { returnObjects: true }),
         github: '#',
@@ -489,7 +496,7 @@ const Projects = () => {
         slug: 'nextstop',
         title: t('projects.items.nextstop.title'),
         description: t('projects.items.nextstop.desc'),
-        image: '/nextstop.png',
+        image: '/nextstop.webp',
         tags: ['Next.js', 'Tailwind', 'Vercel', 'React'],
         features: t('projects.items.nextstop.features', {
           returnObjects: true,
@@ -502,7 +509,7 @@ const Projects = () => {
         slug: 'quotemate',
         title: t('projects.items.quotemate.title'),
         description: t('projects.items.quotemate.desc'),
-        image: '/quotemate.png',
+        image: '/quotemate.webp',
         tags: ['Next.js', 'Tailwind', 'AI', 'OpenAI', 'React'],
         features: t('projects.items.quotemate.features', {
           returnObjects: true,
@@ -515,7 +522,7 @@ const Projects = () => {
         slug: 'dmagni',
         title: t('projects.items.dmagni.title'),
         description: t('projects.items.dmagni.desc'),
-        image: '/dmagni.png',
+        image: '/dmagni.webp',
         tags: ['Next.js', 'Tailwind', 'AI', 'React'],
         features: t('projects.items.dmagni.features', { returnObjects: true }),
         github: '#',
@@ -526,7 +533,7 @@ const Projects = () => {
         slug: 'cme',
         title: t('projects.items.cme.title'),
         description: t('projects.items.cme.desc'),
-        image: '/cme.png',
+        image: '/cme.webp',
         tags: ['Next.js', 'Tailwind', 'React', 'PostgreSQL'],
         features: t('projects.items.cme.features', { returnObjects: true }),
         github: '#',
@@ -537,7 +544,7 @@ const Projects = () => {
         slug: 'dpms',
         title: t('projects.items.dpms.title'),
         description: t('projects.items.dpms.desc'),
-        image: '/dpms.png',
+        image: '/dpms.webp',
         tags: ['Next.js', 'Tailwind', 'React', 'PostgreSQL'],
         features: t('projects.items.dpms.features', { returnObjects: true }),
         github: '#',
@@ -546,9 +553,10 @@ const Projects = () => {
       },
       {
         slug: 'motors',
+        featured: true,
         title: t('projects.items.motors.title'),
         description: t('projects.items.motors.desc'),
-        image: '/motors.png',
+        image: '/motors.webp',
         tags: [
           'Next.js',
           'NestJS',
@@ -564,9 +572,11 @@ const Projects = () => {
       },
       {
         slug: 'uduipa',
+        featured: true,
+        caseStudy: '/case-study/uduipa',
         title: t('projects.items.uduipa.title'),
         description: t('projects.items.uduipa.desc'),
-        image: '/uduipa.png',
+        image: '/uduipa.webp',
         tags: [
           'Next.js',
           'NestJS',
@@ -586,7 +596,7 @@ const Projects = () => {
         slug: 'waferlee',
         title: t('projects.items.waferlee.title'),
         description: t('projects.items.waferlee.desc'),
-        image: '/waferlee.png',
+        image: '/waferlee.webp',
         tags: [
           'Next.js',
           'NestJS',
@@ -607,7 +617,7 @@ const Projects = () => {
         slug: 'baserah',
         title: t('projects.items.baserah.title'),
         description: t('projects.items.baserah.desc'),
-        image: '/baserah.png',
+        image: '/baserah.webp',
         tags: ['FastAPI', 'Python', 'MongoDB', 'AI', 'Gemini'],
         features: t('projects.items.baserah.features', { returnObjects: true }),
         github: '#',
@@ -618,7 +628,7 @@ const Projects = () => {
         slug: 'sf_portal',
         title: t('projects.items.sf_portal.title'),
         description: t('projects.items.sf_portal.desc'),
-        image: '/smartfast.png',
+        image: '/smartfast.webp',
         tags: [
           'React',
           'TypeScript',
@@ -639,7 +649,7 @@ const Projects = () => {
         slug: 'journal',
         title: t('projects.items.journal.title'),
         description: t('projects.items.journal.desc'),
-        image: '/journal.png',
+        image: '/journal.webp',
         tags: [
           'React',
           'NestJS',
@@ -655,9 +665,11 @@ const Projects = () => {
       },
       {
         slug: 'profleet',
+        featured: true,
+        caseStudy: '/case-study/profleet',
         title: t('projects.items.profleet.title'),
         description: t('projects.items.profleet.desc'),
-        image: '/profleet.png',
+        image: '/profleet.webp',
         tags: [
           'Next.js',
           'TypeScript',
@@ -677,7 +689,7 @@ const Projects = () => {
         slug: 'clinic',
         title: t('projects.items.clinic.title'),
         description: t('projects.items.clinic.desc'),
-        image: '/clinic.png',
+        image: '/clinic.webp',
         tags: ['React', 'Django', 'PostgreSQL', 'Tailwind', 'AI'],
         features: t('projects.items.clinic.features', { returnObjects: true }),
         github: '#',
@@ -689,7 +701,7 @@ const Projects = () => {
         slug: 'orca',
         title: t('projects.items.orca.title'),
         description: t('projects.items.orca.desc'),
-        image: '/orca.png',
+        image: '/orca.webp',
         tags: ['Next.js', 'Tailwind', 'Node.js', 'Express.js', 'MongoDB'],
         features: t('projects.items.orca.features', { returnObjects: true }),
         github: '#',
@@ -700,7 +712,7 @@ const Projects = () => {
         slug: 'amarna',
         title: t('projects.items.amarna.title'),
         description: t('projects.items.amarna.desc'),
-        image: '/amarna.png',
+        image: '/amarna.webp',
         tags: ['CMS', 'RTL', 'Customization'],
         features: t('projects.items.amarna.features', { returnObjects: true }),
         github: '#',
@@ -711,7 +723,7 @@ const Projects = () => {
         slug: 'inventory',
         title: t('projects.items.inventory.title'),
         description: t('projects.items.inventory.desc'),
-        image: '/inventory.png',
+        image: '/inventory.webp',
         tags: ['Django', 'PostgreSQL', 'Bootstrap', 'JavaScript'],
         features: t('projects.items.inventory.features', {
           returnObjects: true,
@@ -725,7 +737,7 @@ const Projects = () => {
         slug: 'cinemascore',
         title: t('projects.items.cinemascore.title'),
         description: t('projects.items.cinemascore.desc'),
-        image: '/cinemascore.png',
+        image: '/cinemascore.webp',
         tags: ['React', 'Bootstrap', 'TMDB API'],
         features: t('projects.items.cinemascore.features', {
           returnObjects: true,
@@ -738,7 +750,7 @@ const Projects = () => {
         slug: 'movieweb',
         title: t('projects.items.movieweb.title'),
         description: t('projects.items.movieweb.desc'),
-        image: '/movies.png',
+        image: '/movies.webp',
         tags: ['HTML', 'CSS', 'JavaScript', 'jQuery', 'Tailwind'],
         features: t('projects.items.movieweb.features', {
           returnObjects: true,
@@ -751,7 +763,7 @@ const Projects = () => {
         slug: 'hms_odoo',
         title: t('projects.items.hms_odoo.title'),
         description: t('projects.items.hms_odoo.desc'),
-        image: '/HMS.png',
+        image: '/HMS.webp',
         tags: ['Odoo', 'Python', 'PostgreSQL'],
         features: t('projects.items.hms_odoo.features', {
           returnObjects: true,
@@ -764,7 +776,7 @@ const Projects = () => {
         slug: 'bookstore',
         title: t('projects.items.bookstore.title'),
         description: t('projects.items.bookstore.desc'),
-        image: '/book.png',
+        image: '/book.webp',
         tags: ['HTML', 'CSS', 'JavaScript', 'jQuery', 'Bootstrap'],
         features: t('projects.items.bookstore.features', {
           returnObjects: true,
@@ -777,7 +789,7 @@ const Projects = () => {
         slug: 'library',
         title: t('projects.items.library.title'),
         description: t('projects.items.library.desc'),
-        image: '/library.png',
+        image: '/library.webp',
         tags: ['Django', 'PostgreSQL', 'Python'],
         features: t('projects.items.library.features', { returnObjects: true }),
         github: 'https://github.com/Belalnajy/LMSProject',
@@ -788,7 +800,7 @@ const Projects = () => {
         slug: 'alva_ai',
         title: t('projects.items.alva_ai.title'),
         description: t('projects.items.alva_ai.desc'),
-        image: '/alva.png',
+        image: '/alva.webp',
         tags: [
           'React',
           'Node.js',
@@ -814,6 +826,14 @@ const Projects = () => {
       project.description.toLowerCase().includes(searchTerm.toLowerCase());
     return matchesFilter && matchesSearch;
   });
+
+  // The default view curates the strongest work; filtering or searching always
+  // looks through the complete archive so nothing becomes unreachable.
+  const isDefaultView = filter === 'All' && searchTerm.trim() === '';
+  const visibleProjects =
+    isDefaultView && !showArchive
+      ? filteredProjects.filter((project) => project.featured)
+      : filteredProjects;
 
   return (
     <section id="projects" className="py-20 relative min-h-screen">
@@ -880,8 +900,8 @@ const Projects = () => {
             Array.from({ length: 6 }).map((_, index) => (
               <ProjectSkeleton key={index} index={index} />
             ))
-          ) : filteredProjects.length > 0 ? (
-            filteredProjects.map((project, index) => (
+          ) : visibleProjects.length > 0 ? (
+            visibleProjects.map((project, index) => (
               <ProjectCard
                 key={project.slug}
                 project={project}
@@ -898,6 +918,24 @@ const Projects = () => {
             </motion.div>
           )}
         </div>
+
+        {/* Archive toggle — only meaningful in the curated default view */}
+        {isDefaultView && (
+          <div className="mt-12 flex flex-col items-center gap-3 text-center">
+            {!showArchive && (
+              <p className="text-sm text-[rgb(var(--muted-foreground))]">
+                {t('projects.featured_note')}
+              </p>
+            )}
+            <button
+              onClick={() => setShowArchive((prev) => !prev)}
+              className="px-8 py-3 rounded-full border border-[rgb(var(--border))] bg-[rgb(var(--muted))]/30 hover:border-[rgb(var(--primary))] hover:text-[rgb(var(--primary))] transition-colors text-sm font-semibold text-[rgb(var(--foreground))]">
+              {showArchive
+                ? t('projects.show_featured')
+                : t('projects.show_all', { count: projectsData.length })}
+            </button>
+          </div>
+        )}
       </div>
 
       <ProjectModal

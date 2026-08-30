@@ -27,7 +27,7 @@ const Certifications = () => {
         icon: <SiUdemy className="text-2xl" />,
         platform: 'Udemy',
         color: 'rose',
-        image: '/certificates/python-django.png',
+        image: '/certificates/python-django.webp',
       },
       {
         id: 2,
@@ -37,7 +37,7 @@ const Certifications = () => {
         icon: <FaCode className="text-2xl" />,
         platform: '365 Data Science',
         color: 'blue',
-        image: '/certificates/intro-python.png',
+        image: '/certificates/intro-python.webp',
       },
       {
         id: 3,
@@ -47,7 +47,7 @@ const Certifications = () => {
         icon: <FaDocker className="text-2xl" />,
         platform: 'KodeKloud',
         color: 'cyan',
-        image: '/certificates/docker.jpg',
+        image: '/certificates/docker.webp',
       },
       {
         id: 4,
@@ -57,7 +57,7 @@ const Certifications = () => {
         icon: <FaCode className="text-2xl" />,
         platform: '365 Data Science',
         color: 'blue',
-        image: '/certificates/git-github.png',
+        image: '/certificates/git-github.webp',
       },
       {
         id: 5,
@@ -67,7 +67,7 @@ const Certifications = () => {
         icon: <FaGraduationCap className="text-2xl" />,
         platform: 'MCIT',
         color: 'green',
-        image: '/certificates/web-dev.png',
+        image: '/certificates/web-dev.webp',
       },
       {
         id: 6,
@@ -77,7 +77,7 @@ const Certifications = () => {
         icon: <SiUdemy className="text-2xl" />,
         platform: 'Udemy',
         color: 'rose',
-        image: '/certificates/ui-ux.png',
+        image: '/certificates/ui-ux.webp',
       },
       {
         id: 7,
@@ -87,7 +87,7 @@ const Certifications = () => {
         icon: <SiRedhat className="text-2xl" />,
         platform: 'Mahara Tech',
         color: 'red',
-        image: '/certificates/redhat.png',
+        image: '/certificates/redhat.webp',
       },
       {
         id: 8,
@@ -97,7 +97,7 @@ const Certifications = () => {
         icon: <FaAndroid className="text-2xl" />,
         platform: 'SkillsDynamix',
         color: 'emerald',
-        image: '/certificates/android.png',
+        image: '/certificates/android.webp',
       },
     ],
     [t],
@@ -209,6 +209,7 @@ const Certifications = () => {
                 <img
                   src={selectedCert.image}
                   alt={selectedCert.title}
+                  loading="lazy"
                   className="w-full h-auto rounded-lg"
                 />
               </motion.div>

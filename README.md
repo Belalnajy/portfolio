@@ -53,7 +53,7 @@ Copy `.env.example` to `.env` and fill in your EmailJS credentials:
 cp .env.example .env
 ```
 
-Then edit `.env` with your EmailJS values. See [EMAILJS_SETUP.md](./EMAILJS_SETUP.md) for detailed instructions.
+Then edit `.env` with your EmailJS values. See [EMAILJS_SETUP.md](./docs/EMAILJS_SETUP.md) for detailed instructions.
 
 5. Start the development server
 
@@ -76,7 +76,7 @@ The contact form uses EmailJS to send emails directly to your inbox. To set it u
 3. Create an email template
 4. Copy your Service ID, Template ID, and Public Key to `.env`
 
-For detailed step-by-step instructions, see [EMAILJS_SETUP.md](./EMAILJS_SETUP.md)
+For detailed step-by-step instructions, see [EMAILJS_SETUP.md](./docs/EMAILJS_SETUP.md)
 
 ## 🌐 Deployment
 

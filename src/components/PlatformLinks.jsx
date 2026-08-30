@@ -7,19 +7,19 @@ const PlatformLinks = ({ variant = 'default' }) => {
       name: 'Mostaql',
       nameEn: 'Mostaql',
       url: 'https://mostaql.com/u/belalnagy',
-      logo: '/mostqal.png'
+      logo: '/mostqal.webp'
     },
     {
       name: 'Khamsat',
       nameEn: 'Khamsat',
       url: 'https://khamsat.com/user/belalnajy',
-      logo: '/khamsat.png'
+      logo: '/khamsat.webp'
     },
     {
       name: 'Nafezly',
       nameEn: 'Nafezly',
       url: 'https://www.nafezly.com/u/belalnajy',
-      logo: '/nafzly.png'
+      logo: '/nafzly.webp'
     }
   ];
 
@@ -37,7 +37,7 @@ const PlatformLinks = ({ variant = 'default' }) => {
             whileTap={{ scale: 0.95 }}
             className="group flex items-center gap-2 px-4 py-2 rounded-lg bg-[rgb(var(--card))] border-2 border-[rgb(var(--border))] hover:border-[rgb(var(--primary))] transition-all shadow-md hover:shadow-lg">
             <div className="w-8 h-8 flex items-center justify-center">
-              <img src={platform.logo} alt={platform.name} className="logo-mark w-full h-full object-contain" />
+              <img src={platform.logo} alt={platform.name} loading="lazy" className="logo-mark w-full h-full object-contain" />
             </div>
             <span className="text-sm font-medium text-[rgb(var(--foreground))]">{platform.name}</span>
           </motion.a>
@@ -60,7 +60,7 @@ const PlatformLinks = ({ variant = 'default' }) => {
             whileTap={{ scale: 0.95 }}
             className="flex items-center gap-2 text-[rgb(var(--foreground))] hover:text-[rgb(var(--primary))] transition-all">
             <div className="w-6 h-6 flex items-center justify-center">
-              <img src={platform.logo} alt={platform.name} className="logo-mark w-full h-full object-contain" />
+              <img src={platform.logo} alt={platform.name} loading="lazy" className="logo-mark w-full h-full object-contain" />
             </div>
             <span className="text-sm font-medium">{platform.name}</span>
           </motion.a>
@@ -82,7 +82,7 @@ const PlatformLinks = ({ variant = 'default' }) => {
           whileTap={{ scale: 0.95 }}
           className="group flex items-center gap-3 px-6 py-3 rounded-xl bg-[rgb(var(--card))] border-2 border-[rgb(var(--border))] hover:border-[rgb(var(--primary))] transition-all shadow-lg hover:shadow-xl">
           <div className="w-12 h-12 flex items-center justify-center bg-[rgb(var(--card))] rounded-lg p-2">
-            <img src={platform.logo} alt={platform.name} className="logo-mark w-full h-full object-contain" />
+            <img src={platform.logo} alt={platform.name} loading="lazy" className="logo-mark w-full h-full object-contain" />
           </div>
           <div className="text-left">
             <p className="font-bold text-[rgb(var(--foreground))] text-sm">

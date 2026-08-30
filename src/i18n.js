@@ -70,6 +70,9 @@ const resources = {
         search_placeholder: 'Search projects by name...',
         no_results: 'No projects found matching your criteria',
         view_details: 'View Details',
+        show_all: 'Show the full archive ({{count}} projects)',
+        show_featured: 'Show featured only',
+        featured_note: 'A hand-picked selection — the full archive is one click away.',
         categories: {
           all: 'All',
           fullstack: 'Full Stack',
@@ -532,10 +535,12 @@ const resources = {
         },
         items: [
           {
+            key: 'ezsec',
             title: 'Software Engineer',
             company: 'ezSec Inc (Canada)',
             location: 'Remote, Kitchener, Canada',
             period: '01/2026 - Present',
+            employment: 'Full-time',
             description: [
               'Working remotely as a Software Engineer at a Canadian cybersecurity company specializing in easy-to-use cyber security solutions',
               'Building, maintaining, and shipping software products end-to-end within a fully remote team',
@@ -543,10 +548,12 @@ const resources = {
             ]
           },
           {
+            key: 'indstrz',
             title: 'Co-Founder',
             company: 'Indstrz',
             location: 'Remote, Egypt',
             period: '01/2024 - Present',
+            employment: 'Side venture',
             description: [
               'Co-founded a B2B industrial platform for industrial procurement',
               'Selected for the Venture Ready Program, implemented by Plug and Play with support from GIZ Egypt and ITIDA, hosted at Creativa Innovation Hubs in Alexandria',
@@ -555,10 +562,12 @@ const resources = {
             ]
           },
           {
+            key: 'sf',
             title: 'Full Stack Developer',
             company: 'S&F (Saudi Arabia)',
             location: 'Remote, Saudi Arabia',
             period: '07/2025 - Present',
+            employment: 'Part-time',
             description: [
               'Built and maintained full-stack applications using Django, Node.js, React.js, and PostgreSQL',
               'Designed and deployed backend services & RESTful APIs for web and mobile apps',
@@ -566,20 +575,24 @@ const resources = {
             ]
           },
           {
+            key: 'iti_instructor',
             title: 'External Instructor - Front-End Development',
             company: 'Information Technology Institute (ITI)',
             location: 'Remote, Egypt',
             period: '07/2025 - 10/2025',
+            employment: 'Contract',
             description: [
               'Taught Front-End Development (HTML, CSS, JavaScript) to more than 240 students',
               'Designed and delivered practical coding sessions and real-world project guidance'
             ]
           },
           {
+            key: 'freelance',
             title: 'Freelance Web Developer',
             company: 'Self-Employed',
             location: 'Remote, Egypt',
             period: '03/2025 - Present',
+            employment: 'Freelance',
             description: [
               'Built full-stack, production-ready web apps for Gulf clients',
               'Delivered scalable, multilingual, and RTL-supported platforms',
@@ -587,25 +600,30 @@ const resources = {
             ]
           },
           {
+            key: 'iti_intern',
             title: 'Full Stack Development Using Python Intern',
             company: 'Information Technology Institute (ITI)',
             location: 'Hybrid, Egypt',
             period: '11/2024 - 04/2025',
+            employment: 'Internship',
             description: [
               'Worked on hands-on projects covering Python, Django, databases, and front-end technologies'
             ]
           },
           {
+            key: 'ezdk',
             title: 'IT Infrastructure Intern',
             company: 'Al Ezz Dekheila Steel Co. EZDK',
             location: 'Alexandria, Egypt',
             period: '09/2022 - 10/2022',
+            employment: 'Internship',
             description: [
               'Gained hands-on experience in IT infrastructure and software development',
               'Assisted in software development tasks and IT support'
             ]
           },
           {
+            key: 'alexu',
             title: 'Bachelor of Business (English Section) – Business Information Systems (BIS)',
             company: 'Alexandria University',
             location: 'Alexandria, Egypt',
@@ -850,6 +868,140 @@ const resources = {
               'Operations consolidated into a single system'
             ]
           }
+        },
+        indstrz: {
+          title: 'Indstrz, a B2B Industrial Procurement Platform Built From Zero',
+          summary: 'A B2B platform I co-founded that digitizes industrial procurement: buyers post RFQs, verified vendors respond, and both sides negotiate in real time. Selected for the Venture Ready Program by Plug and Play with support from GIZ Egypt and ITIDA.',
+          facts: {
+            role: 'Co-founder and technical lead',
+            scope: 'Digital RFQ workflow, real-time negotiation engine, platform architecture',
+            audience: 'Industrial buyers and verified vendors'
+          },
+          challenge: {
+            body: 'Industrial procurement still runs on phone calls, spreadsheets and long email chains. Requesting quotes is slow, comparing offers is manual, and negotiations leave no trail. The platform had to move that whole cycle online — RFQs, vendor responses and live negotiation — and stay responsive with many conversations running at once.',
+            points: [
+              'Traditional RFQ cycles are slow and untracked',
+              'Negotiation needed to happen live, not over email',
+              'Many concurrent conversations to handle smoothly',
+              'Vendors must be verified before they can respond'
+            ]
+          },
+          approach: {
+            body: 'I led the technical build with Next.js on the frontend and a Flask backend on PostgreSQL, structured as a layered architecture with a modular application factory pattern so features stay isolated and testable. Real-time messaging and notifications run over Socket.io, and access control is role-based with JWT token revocation.',
+            points: [
+              'Next.js frontend, Flask and PostgreSQL backend',
+              'Layered, modular application factory architecture',
+              'Socket.io for live messaging and notifications',
+              'Role-based access control with JWT revocation'
+            ]
+          },
+          delivered: {
+            body: 'The core of the platform is the digital RFQ workflow between buyers and verified vendors, wrapped in real-time negotiation and automated conversation management.',
+            points: [
+              'Digital RFQ workflows between buyers and verified vendors',
+              'Real-time negotiation engine with live notifications',
+              'Automated conversation management',
+              'Secure role-based access for every account type'
+            ]
+          },
+          outcome: {
+            body: 'Indstrz was selected for the Venture Ready Program, implemented by Plug and Play with support from GIZ Egypt and ITIDA, and hosted at Creativa Innovation Hubs in Alexandria — external validation of both the product and the build.',
+            points: [
+              'Selected for the Venture Ready Program by Plug and Play',
+              'Supported by GIZ Egypt and ITIDA',
+              'Hosted at Creativa Innovation Hubs in Alexandria'
+            ]
+          }
+        },
+        uduipa: {
+          title: 'UDUIPA, the Official Digital Platform of a University Union',
+          summary: 'The official academic union platform at uduipa.com: centralized membership management, automated verification workflows, and document generation, delivered as a high-performance monorepo in three languages.',
+          facts: {
+            role: 'Full-stack developer',
+            scope: 'Membership management, automated verification, document pipelines',
+            audience: 'Union members and administrators'
+          },
+          challenge: {
+            body: 'An official academic union needs one trustworthy registry of its members, a way to verify credentials that outsiders can rely on, and official documents issued consistently rather than assembled by hand. Everything had to work in Arabic, English and French, with Arabic RTL as a first-class citizen.',
+            points: [
+              'One authoritative membership registry',
+              'Verification that third parties can trust',
+              'Official documents issued automatically, not by hand',
+              'Three languages including full Arabic RTL'
+            ]
+          },
+          approach: {
+            body: 'I built it as a Turborepo monorepo with Next.js and NestJS on PostgreSQL, so the member portal and the admin side share types and logic. A scalable RBAC system with secure JWT authentication separates member, staff and admin capabilities, and document generation is fully automated with Puppeteer-driven PDFs and QR codes.',
+            points: [
+              'Turborepo monorepo: Next.js, NestJS, PostgreSQL',
+              'Scalable RBAC with secure JWT authentication',
+              'Automated PDF generation with QR verification codes',
+              'Analytics built in from the start'
+            ]
+          },
+          delivered: {
+            body: 'A production platform that manages memberships centrally and turns verification into an automated workflow instead of an office queue.',
+            points: [
+              'Centralized membership management',
+              'Official academic verification workflows',
+              'Automated document pipelines with PDF and QR generation',
+              'Fully localized RTL UI in Arabic, English and French',
+              'Analytics dashboards for administrators'
+            ]
+          },
+          outcome: {
+            body: 'The platform is live at uduipa.com as the union\'s official system. It is my reference project for reliable, large-scale production systems built for academic institutions.',
+            points: [
+              'Live in production at uduipa.com',
+              'The union\'s official digital platform',
+              'Verification and document issuing fully automated'
+            ]
+          }
+        },
+        profleet: {
+          title: 'Pro Fleet, an Intelligent Fleet Management Platform',
+          summary: 'A multilingual fleet management platform built for a Saudi startup: real-time GPS tracking on interactive maps, role-based dashboards, automated billing, and live shipment tracking, with full Arabic RTL support.',
+          facts: {
+            role: 'Full-stack developer',
+            scope: 'Real-time tracking, role-based dashboards, billing, shipment operations',
+            audience: 'Fleet operators, drivers and administrators of a Saudi startup'
+          },
+          challenge: {
+            body: 'Running a fleet without live visibility means finding out about problems after they happen. The client needed real-time positions on a map, dashboards cut per role, billing that runs itself, and an interface that works in Arabic RTL as naturally as in English.',
+            points: [
+              'Live GPS visibility across the whole fleet',
+              'Different roles need different dashboards',
+              'Billing and payments should run automatically',
+              'Arabic RTL as a first-class experience'
+            ]
+          },
+          approach: {
+            body: 'The platform is built on Next.js and TypeScript with Prisma on PostgreSQL. Live positions stream over Socket.io onto interactive Leaflet maps, and every dashboard is scoped by role. An AI chatbot assists users inside the product.',
+            points: [
+              'Next.js, TypeScript, Prisma, PostgreSQL',
+              'Socket.io streaming onto interactive Leaflet maps',
+              'Role-scoped dashboards and analytics',
+              'AI chatbot for smart user assistance'
+            ]
+          },
+          delivered: {
+            body: 'An operations platform that covers the fleet lifecycle: where every vehicle is now, who may see and do what, and how the money side runs.',
+            points: [
+              'Real-time GPS tracking with interactive maps',
+              'Role-based dashboards and analytics',
+              'Automated billing and payment processing',
+              'Live shipment tracking and fleet operations management',
+              'Multilingual UI with full Arabic RTL'
+            ]
+          },
+          outcome: {
+            body: 'Delivered for a Saudi startup as a complete, multilingual fleet platform — one of the data-heavy, real-time systems I build for Gulf clients.',
+            points: [
+              'Built end-to-end for a Saudi startup',
+              'Real-time from GPS to notifications',
+              'Fully bilingual with Arabic RTL throughout'
+            ]
+          }
         }
       },
       testimonials: {
@@ -1036,6 +1188,9 @@ const resources = {
         search_placeholder: 'ابحث عن المشاريع بالاسم...',
         no_results: 'لم يتم العثور على مشاريع تطابق بحثك',
         view_details: 'عرض التفاصيل',
+        show_all: 'عرض الأرشيف الكامل ({{count}} مشروعاً)',
+        show_featured: 'عرض المشاريع المميزة فقط',
+        featured_note: 'مجموعة مختارة بعناية — الأرشيف الكامل على بُعد ضغطة واحدة.',
         categories: {
           all: 'الكل',
           fullstack: 'Full Stack',
@@ -1498,10 +1653,12 @@ const resources = {
         },
         items: [
           {
+            key: 'ezsec',
             title: 'مهندس برمجيات (Software Engineer)',
             company: 'شركة ezSec Inc (كندا)',
             location: 'عن بُعد، كيتشنر، كندا',
             period: '01/2026 - الحالي',
+            employment: 'دوام كامل',
             description: [
               'العمل عن بُعد كمهندس برمجيات في شركة كندية متخصصة في حلول الأمن السيبراني سهلة الاستخدام',
               'بناء وتطوير وإطلاق منتجات برمجية بشكل متكامل ضمن فريق يعمل عن بُعد بالكامل',
@@ -1509,10 +1666,12 @@ const resources = {
             ]
           },
           {
+            key: 'indstrz',
             title: 'شريك مؤسس (Co-Founder)',
             company: 'Indstrz',
             location: 'عن بُعد، مصر',
             period: '01/2024 - الحالي',
+            employment: 'مشروع جانبي',
             description: [
               'شريك مؤسس لمنصة Indstrz، منصة صناعية B2B للتوريد الصناعي',
               'تم اختيار المنصة ضمن برنامج Venture Ready، المنفَّذ بواسطة Plug and Play بدعم من GIZ Egypt و ITIDA، ومستضاف في مراكز Creativa للابتكار بالإسكندرية',
@@ -1521,10 +1680,12 @@ const resources = {
             ]
           },
           {
+            key: 'sf',
             title: 'مطور ويب متكامل (Full Stack)',
             company: 'شركة S&F (السعودية)',
             location: 'عن بُعد، المملكة العربية السعودية',
             period: '07/2025 - الحالي',
+            employment: 'دوام جزئي',
             description: [
               'بناء وتطوير تطبيقات متكاملة باستخدام Django، Node.js، React.js، و PostgreSQL',
               'تصميم ونشر خدمات الـ Backend و RESTful APIs لتطبيقات الويب والموبايل',
@@ -1532,20 +1693,24 @@ const resources = {
             ]
           },
           {
+            key: 'iti_instructor',
             title: 'محاضر خارجي - تطوير واجهات المواقع (Front-End)',
             company: 'معهد تكنولوجيا المعلومات (ITI)',
             location: 'عن بُعد، مصر',
             period: '07/2025 - 10/2025',
+            employment: 'عقد مؤقت',
             description: [
               'تدريس تطوير واجهات المواقع (HTML, CSS, JavaScript) لأكثر من 240 طالباً',
               'تصميم وتقديم جلسات برمجية عملية وإرشاد الطلاب في مشاريع حقيقية'
             ]
           },
           {
+            key: 'freelance',
             title: 'مطور ويب مستقل (Freelance)',
             company: 'عمل حر',
             location: 'عن بُعد، مصر',
             period: '03/2025 - الحالي',
+            employment: 'عمل حر',
             description: [
               'بناء تطبيقات ويب متكاملة وجاهزة للنشر لعملاء في منطقة الخليج',
               'تسليم منصات قابلة للتوسع تدعم اللغات المتعددة واتجاه RTL',
@@ -1553,25 +1718,30 @@ const resources = {
             ]
           },
           {
+            key: 'iti_intern',
             title: 'متدرب تطوير ويب متكامل باستخدام بايثون',
             company: 'معهد تكنولوجيا المعلومات (ITI)',
             location: 'هجين، مصر',
             period: '11/2024 - 04/2025',
+            employment: 'تدريب',
             description: [
               'العمل على مشاريع تطبيقية تشمل بايثون، ديجانجو، قواعد البيانات، وتقنيات الواجهة الأمامية'
             ]
           },
           {
+            key: 'ezdk',
             title: 'متدرب في البنية التحتية لتكنولوجيا المعلومات',
             company: 'شركة عز الدخيلة للصلب (EZDK)',
             location: 'الإسكندرية، مصر',
             period: '09/2022 - 10/2022',
+            employment: 'تدريب',
             description: [
               'اكتساب خبرة عملية في البنية التحتية لتكنولوجيا المعلومات وتطوير البرمجيات',
               'المساعدة في مهام تطوير البرمجيات والدعم الفني للمنظومة'
             ]
           },
           {
+            key: 'alexu',
             title: 'بكالوريوس الأعمال (القسم الإنجليزي) – نظم معلومات الأعمال (BIS)',
             company: 'جامعة الإسكندرية',
             location: 'الإسكندرية، مصر',
@@ -1816,6 +1986,140 @@ const resources = {
               'توحيد العمليات في نظام واحد'
             ]
           }
+        },
+        indstrz: {
+          title: 'Indstrz، منصة مشتريات صناعية B2B مبنية من الصفر',
+          summary: 'منصة B2B شاركت في تأسيسها بترقمن المشتريات الصناعية: المشتري ينشر طلب عرض أسعار (RFQ)، والموردون المعتمدون يردوا، والطرفين يتفاوضوا لحظياً. تم اختيارها ضمن برنامج Venture Ready من Plug and Play بدعم GIZ Egypt و ITIDA.',
+          facts: {
+            role: 'شريك مؤسس وقائد تقني',
+            scope: 'دورة RFQ رقمية، محرك تفاوض لحظي، معمارية المنصة',
+            audience: 'مشترون صناعيون وموردون معتمدون'
+          },
+          challenge: {
+            body: 'المشتريات الصناعية لسه شغالة بالتليفونات والشيتات وسلاسل الإيميلات الطويلة. طلب عروض الأسعار بطيء، ومقارنة العروض يدوية، والمفاوضات مبيتسجلش منها حاجة. المنصة كان لازم تنقل الدورة دي كلها أونلاين — طلبات العروض وردود الموردين والتفاوض المباشر — وتفضل سريعة مع محادثات كتير شغالة في نفس الوقت.',
+            points: [
+              'دورات RFQ التقليدية بطيئة وغير موثقة',
+              'التفاوض لازم يحصل لحظياً مش على الإيميل',
+              'محادثات متزامنة كتير لازم تتعامل بسلاسة',
+              'الموردون لازم يتم اعتمادهم قبل ما يردوا'
+            ]
+          },
+          approach: {
+            body: 'قدت البناء التقني بواجهة Next.js وخلفية Flask على PostgreSQL، بمعمارية طبقية بنمط Modular Application Factory عشان كل ميزة تفضل معزولة وقابلة للاختبار. المراسلة والإشعارات اللحظية شغالة بـ Socket.io، والصلاحيات قائمة على الأدوار مع إبطال توكن JWT.',
+            points: [
+              'واجهة Next.js وخلفية Flask و PostgreSQL',
+              'معمارية طبقية بنمط Modular Application Factory',
+              'Socket.io للمراسلة والإشعارات اللحظية',
+              'صلاحيات قائمة على الأدوار مع إبطال JWT'
+            ]
+          },
+          delivered: {
+            body: 'قلب المنصة هو دورة الـ RFQ الرقمية بين المشترين والموردين المعتمدين، ومعاها تفاوض لحظي وإدارة محادثات مؤتمتة.',
+            points: [
+              'دورات RFQ رقمية بين المشترين والموردين المعتمدين',
+              'محرك تفاوض لحظي مع إشعارات مباشرة',
+              'إدارة محادثات مؤتمتة',
+              'صلاحيات آمنة قائمة على الأدوار لكل نوع حساب'
+            ]
+          },
+          outcome: {
+            body: 'تم اختيار Indstrz ضمن برنامج Venture Ready، المنفَّذ بواسطة Plug and Play بدعم من GIZ Egypt و ITIDA، ومستضاف في مراكز Creativa للابتكار بالإسكندرية — اعتراف خارجي بالمنتج وطريقة بنائه.',
+            points: [
+              'مختارة ضمن برنامج Venture Ready من Plug and Play',
+              'بدعم من GIZ Egypt و ITIDA',
+              'مستضافة في مراكز Creativa للابتكار بالإسكندرية'
+            ]
+          }
+        },
+        uduipa: {
+          title: 'UDUIPA، المنصة الرقمية الرسمية لاتحاد جامعي',
+          summary: 'المنصة الرسمية للاتحاد الأكاديمي على uduipa.com: إدارة مركزية للعضويات، ودورات تحقق مؤتمتة، وتوليد مستندات رسمية — مبنية كـ Monorepo عالي الأداء بثلاث لغات.',
+          facts: {
+            role: 'مطور Full-Stack',
+            scope: 'إدارة العضويات، التحقق المؤتمت، دورات معالجة المستندات',
+            audience: 'أعضاء الاتحاد والإداريون'
+          },
+          challenge: {
+            body: 'الاتحاد الأكاديمي الرسمي محتاج سجل واحد موثوق لأعضائه، وطريقة للتحقق من العضويات تقدر أي جهة خارجية تعتمد عليها، ومستندات رسمية تصدر بشكل موحد مش تتجمع يدوياً. وكل ده لازم يشتغل بالعربي والإنجليزي والفرنساوي، مع الـ RTL العربي كأولوية مش إضافة.',
+            points: [
+              'سجل عضويات واحد موثوق',
+              'تحقق تقدر الجهات الخارجية تعتمد عليه',
+              'مستندات رسمية تصدر أوتوماتيكياً مش يدوياً',
+              'ثلاث لغات مع دعم كامل للـ RTL العربي'
+            ]
+          },
+          approach: {
+            body: 'بنيتها كـ Monorepo بـ Turborepo مع Next.js و NestJS على PostgreSQL، فبوابة الأعضاء ولوحة الإدارة بيتشاركوا نفس الأنواع والمنطق. نظام صلاحيات RBAC واسع النطاق مع مصادقة JWT آمنة بيفصل صلاحيات العضو والموظف والأدمن، وتوليد المستندات مؤتمت بالكامل بـ PDF عبر Puppeteer ورموز QR.',
+            points: [
+              'Turborepo Monorepo: Next.js و NestJS و PostgreSQL',
+              'نظام RBAC واسع النطاق مع مصادقة JWT آمنة',
+              'توليد PDF مؤتمت مع رموز QR للتحقق',
+              'التحليلات مدمجة من البداية'
+            ]
+          },
+          delivered: {
+            body: 'منصة إنتاجية بتدير العضويات مركزياً وبتحوّل التحقق لدورة عمل مؤتمتة بدل طابور في مكتب.',
+            points: [
+              'إدارة مركزية للعضويات',
+              'دورات تحقق أكاديمي رسمية',
+              'دورات مستندات مؤتمتة بتوليد PDF ورموز QR',
+              'واجهة كاملة الترجمة بالعربي والإنجليزي والفرنساوي مع RTL',
+              'لوحات تحليلات للإداريين'
+            ]
+          },
+          outcome: {
+            body: 'المنصة شغالة فعلياً على uduipa.com كالنظام الرسمي للاتحاد، وهي مشروعي المرجعي للأنظمة الإنتاجية الكبيرة الموثوقة المبنية للمؤسسات الأكاديمية.',
+            points: [
+              'تعمل فعلياً على uduipa.com',
+              'المنصة الرقمية الرسمية للاتحاد',
+              'التحقق وإصدار المستندات مؤتمت بالكامل'
+            ]
+          }
+        },
+        profleet: {
+          title: 'Pro Fleet، منصة ذكية لإدارة الأساطيل',
+          summary: 'منصة متعددة اللغات لإدارة الأساطيل مبنية لشركة ناشئة سعودية: تتبع GPS لحظي على خرائط تفاعلية، لوحات تحكم قائمة على الأدوار، فوترة مؤتمتة، وتتبع مباشر للشحنات، مع دعم كامل للـ RTL العربي.',
+          facts: {
+            role: 'مطور Full-Stack',
+            scope: 'تتبع لحظي، لوحات تحكم بالأدوار، فوترة، عمليات الشحن',
+            audience: 'مشغلو الأسطول والسائقون والإداريون في شركة ناشئة سعودية'
+          },
+          challenge: {
+            body: 'إدارة أسطول من غير رؤية لحظية معناها إنك بتعرف بالمشكلة بعد ما تحصل. العميل كان محتاج مواقع مباشرة على الخريطة، ولوحات تحكم مفصّلة حسب الدور، وفوترة تشتغل لوحدها، وواجهة تشتغل بالعربي RTL بنفس سلاسة الإنجليزي.',
+            points: [
+              'رؤية GPS مباشرة للأسطول كله',
+              'كل دور محتاج لوحة تحكم مختلفة',
+              'الفوترة والمدفوعات تشتغل أوتوماتيكياً',
+              'العربي RTL كتجربة أساسية مش ثانوية'
+            ]
+          },
+          approach: {
+            body: 'المنصة مبنية على Next.js و TypeScript مع Prisma على PostgreSQL. المواقع اللحظية بتتدفق عبر Socket.io على خرائط Leaflet تفاعلية، وكل لوحة تحكم محددة النطاق حسب الدور، ومعاها شات بوت ذكاء اصطناعي بيساعد المستخدمين جوه المنتج.',
+            points: [
+              'Next.js و TypeScript و Prisma و PostgreSQL',
+              'Socket.io يبث على خرائط Leaflet تفاعلية',
+              'لوحات تحكم وتحليلات محددة حسب الدور',
+              'شات بوت ذكاء اصطناعي لمساعدة المستخدمين'
+            ]
+          },
+          delivered: {
+            body: 'منصة تشغيلية بتغطي دورة حياة الأسطول: كل عربية فين دلوقتي، ومين يشوف ويعمل إيه، والجانب المالي بيمشي إزاي.',
+            points: [
+              'تتبع GPS لحظي مع خرائط تفاعلية',
+              'لوحات تحكم وتحليلات قائمة على الأدوار',
+              'فوترة مؤتمتة ومعالجة للمدفوعات',
+              'تتبع مباشر للشحنات وإدارة عمليات الأسطول',
+              'واجهة متعددة اللغات مع RTL عربي كامل'
+            ]
+          },
+          outcome: {
+            body: 'اتسلّمت لشركة ناشئة سعودية كمنصة أسطول متكاملة متعددة اللغات — واحدة من الأنظمة اللحظية الغنية بالبيانات اللي ببنيها لعملاء الخليج.',
+            points: [
+              'مبنية بالكامل لشركة ناشئة سعودية',
+              'لحظية من الـ GPS للإشعارات',
+              'ثنائية اللغة بالكامل مع RTL عربي في كل مكان'
+            ]
+          }
         }
       },
       testimonials: {
@@ -1942,14 +2246,19 @@ export const DEFAULT_LANGUAGE = 'en';
 export const LANGUAGE_STORAGE_KEY = 'i18nextLng';
 
 /**
- * The page is statically prerendered, so detection can't run before the first
- * render — the server would emit English markup while the client rendered
- * Arabic, and every translated string would fail hydration. Instead i18next
- * always initialises in English (matching the prerendered HTML) and the stored
- * or browser language is applied after mount, behind the loading screen.
+ * Each route is statically prerendered in its own language (`/` in English,
+ * `/ar` in Arabic), so detection can't run before the first render — the
+ * server markup and the first client render must agree or every translated
+ * string fails hydration. The stored or browser preference is applied after
+ * mount instead.
+ *
+ * `pageLanguage` is the language the current route was prerendered in. A
+ * stored explicit choice always wins; the browser language is only consulted
+ * on the default (English) route — a visitor who opened /ar deliberately
+ * should not be bounced to English by their browser locale.
  */
-export const resolvePreferredLanguage = () => {
-  if (typeof window === 'undefined') return DEFAULT_LANGUAGE;
+export const resolvePreferredLanguage = (pageLanguage = DEFAULT_LANGUAGE) => {
+  if (typeof window === 'undefined') return pageLanguage;
 
   try {
     const stored = window.localStorage.getItem(LANGUAGE_STORAGE_KEY);
@@ -1958,30 +2267,48 @@ export const resolvePreferredLanguage = () => {
     // localStorage can throw in private mode — fall through to the browser language.
   }
 
+  if (pageLanguage !== DEFAULT_LANGUAGE) return pageLanguage;
+
   const navigatorLanguage = window.navigator?.language || '';
   const base = navigatorLanguage.split('-')[0];
-  return SUPPORTED_LANGUAGES.includes(base) ? base : DEFAULT_LANGUAGE;
+  return SUPPORTED_LANGUAGES.includes(base) ? base : pageLanguage;
 };
 
-i18n.use(initReactI18next).init({
+const I18N_OPTIONS = {
   resources,
-  lng: DEFAULT_LANGUAGE,
   fallbackLng: DEFAULT_LANGUAGE,
   supportedLngs: SUPPORTED_LANGUAGES,
   interpolation: {
     escapeValue: false
   }
-});
+};
 
 // The detector plugin used to persist this; keep the behaviour without it.
-if (typeof window !== 'undefined') {
-  i18n.on('languageChanged', (language) => {
+const persistLanguageChoice = (instance) => {
+  if (typeof window === 'undefined') return;
+  instance.on('languageChanged', (language) => {
     try {
       window.localStorage.setItem(LANGUAGE_STORAGE_KEY, language);
     } catch {
       // Ignore write failures — the language still applies for this session.
     }
   });
-}
+};
+
+i18n.use(initReactI18next).init({ ...I18N_OPTIONS, lng: DEFAULT_LANGUAGE });
+persistLanguageChoice(i18n);
+
+/**
+ * A standalone instance initialised synchronously in `lng`, for routes that
+ * must prerender in a non-default language (the /ar home page). All resources
+ * are bundled, so `initImmediate: false` makes init fully synchronous and the
+ * server render already carries the right strings.
+ */
+export const createI18nInstance = (lng = DEFAULT_LANGUAGE) => {
+  const instance = i18n.createInstance();
+  instance.use(initReactI18next).init({ ...I18N_OPTIONS, lng, initImmediate: false });
+  persistLanguageChoice(instance);
+  return instance;
+};
 
 export default i18n;

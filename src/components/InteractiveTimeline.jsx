@@ -12,20 +12,22 @@ const InteractiveTimeline = () => {
 
   const experiences = useMemo(() => {
     const items = t('timeline.items', { returnObjects: true });
-    const metadata = [
-      { type: 'work', icon: <FaBriefcase />, color: 'from-[rgb(var(--accent))] to-[rgb(var(--accent-hover))]' },
-      { type: 'work', icon: <FaBriefcase />, logo: '/logos/indstrz-logo.png', color: 'from-[rgb(var(--accent))] to-[rgb(var(--accent-hover))]' },
-      { type: 'work', icon: <FaBriefcase />, logo: '/logos/sf-logo.png', color: 'from-[rgb(var(--accent))] to-[rgb(var(--accent-hover))]' },
-      { type: 'work', icon: <FaLaptopCode />, logo: '/logos/iti-logo.png', color: 'from-[rgb(var(--accent))] to-[rgb(var(--accent-hover))]' },
-      { type: 'work', icon: <FaLaptopCode />, color: 'from-[rgb(var(--accent))] to-[rgb(var(--accent-hover))]' },
-      { type: 'education', icon: <FaGraduationCap />, logo: '/logos/iti-logo.png', color: 'from-[rgb(var(--accent))] to-[rgb(var(--accent-hover))]' },
-      { type: 'work', icon: <FaBriefcase />, logo: '/logos/ezzsteel-logo.png', color: 'from-[rgb(var(--accent))] to-[rgb(var(--accent-hover))]' },
-      { type: 'education', icon: <FaGraduationCap />, logo: '/logos/alex-uni-logo.png', color: 'from-[rgb(var(--accent))] to-[rgb(var(--accent-hover))]' },
-    ];
+    // Language-neutral metadata, matched to i18n items by their `key` field so
+    // reordering or inserting entries can never mis-assign a logo.
+    const metadata = {
+      ezsec: { type: 'work', icon: <FaBriefcase />, logo: '/logos/ezsec-logo.webp' },
+      indstrz: { type: 'work', icon: <FaBriefcase />, logo: '/logos/indstrz-logo.webp' },
+      sf: { type: 'work', icon: <FaBriefcase />, logo: '/logos/sf-logo.webp' },
+      iti_instructor: { type: 'work', icon: <FaLaptopCode />, logo: '/logos/iti-logo.webp' },
+      freelance: { type: 'work', icon: <FaLaptopCode /> },
+      iti_intern: { type: 'education', icon: <FaGraduationCap />, logo: '/logos/iti-logo.webp' },
+      ezdk: { type: 'work', icon: <FaBriefcase />, logo: '/logos/ezzsteel-logo.webp' },
+      alexu: { type: 'education', icon: <FaGraduationCap />, logo: '/logos/alex-uni-logo.webp' },
+    };
 
-    return items.map((item, index) => ({
+    return items.map((item) => ({
       ...item,
-      ...metadata[index]
+      ...(metadata[item.key] || { type: 'work', icon: <FaBriefcase /> })
     }));
   }, [t]);
 
@@ -84,9 +86,10 @@ const InteractiveTimeline = () => {
                       <div className="flex items-start flex-1 min-w-0">
                         <div className={`w-14 h-14 rounded-xl bg-[rgb(var(--card))] flex items-center justify-center ${isArabic ? 'ml-4' : 'mr-4'} border border-[rgb(var(--border))]/50 flex-shrink-0 overflow-hidden p-2 shadow-sm transition-transform duration-300 group-hover:scale-110`}>
                           {exp.logo ? (
-                            <img 
-                              src={exp.logo} 
-                              alt={exp.company} 
+                            <img
+                              src={exp.logo}
+                              alt={exp.company}
+                              loading="lazy"
                               className="logo-mark w-full h-full object-contain"
                             />
                           ) : (
@@ -127,6 +130,11 @@ const InteractiveTimeline = () => {
                       <span className="flex items-center gap-1 bg-[rgb(var(--muted))]/50 px-3 py-1.5 rounded-full whitespace-nowrap">
                         <FaMapMarkerAlt className="text-[rgb(var(--primary))]" /> {exp.location}
                       </span>
+                      {exp.employment && (
+                        <span className="flex items-center gap-1 bg-[rgb(var(--primary))]/10 text-[rgb(var(--primary))] font-semibold px-3 py-1.5 rounded-full whitespace-nowrap">
+                          {exp.employment}
+                        </span>
+                      )}
                     </div>
 
                     <ul className="space-y-2.5 relative">
