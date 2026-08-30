@@ -264,6 +264,7 @@ const Projects = () => {
   const [filter, setFilter] = useState('All');
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedProject, setSelectedProject] = useState(null);
+  const [showArchive, setShowArchive] = useState(false);
 
   // Lock scroll when modal is open
   useEffect(() => {
@@ -286,6 +287,7 @@ const Projects = () => {
     () => [
       {
         slug: 'bilqalam',
+        featured: true,
         title: t('projects.items.bilqalam.title'),
         description: t('projects.items.bilqalam.desc'),
         image: '/bilqalam.webp',
@@ -300,6 +302,7 @@ const Projects = () => {
       },
       {
         slug: 'medicta',
+        featured: true,
         title: t('projects.items.medicta.title'),
         description: t('projects.items.medicta.desc'),
         image: '/medicta.webp',
@@ -318,6 +321,7 @@ const Projects = () => {
       },
       {
         slug: 'toyo228',
+        featured: true,
         title: t('projects.items.toyo228.title'),
         description: t('projects.items.toyo228.desc'),
         image: '/toyo228.webp',
@@ -338,6 +342,7 @@ const Projects = () => {
       },
       {
         slug: 'injaz',
+        featured: true,
         title: t('projects.items.injaz.title'),
         description: t('projects.items.injaz.desc'),
         image: '/injaz.webp',
@@ -411,6 +416,7 @@ const Projects = () => {
       },
       {
         slug: 'indstrz',
+        featured: true,
         title: t('projects.items.indstrz.title'),
         description: t('projects.items.indstrz.desc'),
         image: '/indstrz.webp',
@@ -546,6 +552,7 @@ const Projects = () => {
       },
       {
         slug: 'motors',
+        featured: true,
         title: t('projects.items.motors.title'),
         description: t('projects.items.motors.desc'),
         image: '/motors.webp',
@@ -564,6 +571,7 @@ const Projects = () => {
       },
       {
         slug: 'uduipa',
+        featured: true,
         title: t('projects.items.uduipa.title'),
         description: t('projects.items.uduipa.desc'),
         image: '/uduipa.webp',
@@ -655,6 +663,7 @@ const Projects = () => {
       },
       {
         slug: 'profleet',
+        featured: true,
         title: t('projects.items.profleet.title'),
         description: t('projects.items.profleet.desc'),
         image: '/profleet.webp',
@@ -815,6 +824,14 @@ const Projects = () => {
     return matchesFilter && matchesSearch;
   });
 
+  // The default view curates the strongest work; filtering or searching always
+  // looks through the complete archive so nothing becomes unreachable.
+  const isDefaultView = filter === 'All' && searchTerm.trim() === '';
+  const visibleProjects =
+    isDefaultView && !showArchive
+      ? filteredProjects.filter((project) => project.featured)
+      : filteredProjects;
+
   return (
     <section id="projects" className="py-20 relative min-h-screen">
       <div className="container mx-auto px-4 relative z-10">
@@ -880,8 +897,8 @@ const Projects = () => {
             Array.from({ length: 6 }).map((_, index) => (
               <ProjectSkeleton key={index} index={index} />
             ))
-          ) : filteredProjects.length > 0 ? (
-            filteredProjects.map((project, index) => (
+          ) : visibleProjects.length > 0 ? (
+            visibleProjects.map((project, index) => (
               <ProjectCard
                 key={project.slug}
                 project={project}
@@ -898,6 +915,24 @@ const Projects = () => {
             </motion.div>
           )}
         </div>
+
+        {/* Archive toggle — only meaningful in the curated default view */}
+        {isDefaultView && (
+          <div className="mt-12 flex flex-col items-center gap-3 text-center">
+            {!showArchive && (
+              <p className="text-sm text-[rgb(var(--muted-foreground))]">
+                {t('projects.featured_note')}
+              </p>
+            )}
+            <button
+              onClick={() => setShowArchive((prev) => !prev)}
+              className="px-8 py-3 rounded-full border border-[rgb(var(--border))] bg-[rgb(var(--muted))]/30 hover:border-[rgb(var(--primary))] hover:text-[rgb(var(--primary))] transition-colors text-sm font-semibold text-[rgb(var(--foreground))]">
+              {showArchive
+                ? t('projects.show_featured')
+                : t('projects.show_all', { count: projectsData.length })}
+            </button>
+          </div>
+        )}
       </div>
 
       <ProjectModal

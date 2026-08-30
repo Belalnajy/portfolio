@@ -70,6 +70,9 @@ const resources = {
         search_placeholder: 'Search projects by name...',
         no_results: 'No projects found matching your criteria',
         view_details: 'View Details',
+        show_all: 'Show the full archive ({{count}} projects)',
+        show_featured: 'Show featured only',
+        featured_note: 'A hand-picked selection — the full archive is one click away.',
         categories: {
           all: 'All',
           fullstack: 'Full Stack',
@@ -1051,6 +1054,9 @@ const resources = {
         search_placeholder: 'ابحث عن المشاريع بالاسم...',
         no_results: 'لم يتم العثور على مشاريع تطابق بحثك',
         view_details: 'عرض التفاصيل',
+        show_all: 'عرض الأرشيف الكامل ({{count}} مشروعاً)',
+        show_featured: 'عرض المشاريع المميزة فقط',
+        featured_note: 'مجموعة مختارة بعناية — الأرشيف الكامل على بُعد ضغطة واحدة.',
         categories: {
           all: 'الكل',
           fullstack: 'Full Stack',
