@@ -1978,14 +1978,19 @@ export const DEFAULT_LANGUAGE = 'en';
 export const LANGUAGE_STORAGE_KEY = 'i18nextLng';
 
 /**
- * The page is statically prerendered, so detection can't run before the first
- * render — the server would emit English markup while the client rendered
- * Arabic, and every translated string would fail hydration. Instead i18next
- * always initialises in English (matching the prerendered HTML) and the stored
- * or browser language is applied after mount, behind the loading screen.
+ * Each route is statically prerendered in its own language (`/` in English,
+ * `/ar` in Arabic), so detection can't run before the first render — the
+ * server markup and the first client render must agree or every translated
+ * string fails hydration. The stored or browser preference is applied after
+ * mount instead.
+ *
+ * `pageLanguage` is the language the current route was prerendered in. A
+ * stored explicit choice always wins; the browser language is only consulted
+ * on the default (English) route — a visitor who opened /ar deliberately
+ * should not be bounced to English by their browser locale.
  */
-export const resolvePreferredLanguage = () => {
-  if (typeof window === 'undefined') return DEFAULT_LANGUAGE;
+export const resolvePreferredLanguage = (pageLanguage = DEFAULT_LANGUAGE) => {
+  if (typeof window === 'undefined') return pageLanguage;
 
   try {
     const stored = window.localStorage.getItem(LANGUAGE_STORAGE_KEY);
@@ -1994,30 +1999,48 @@ export const resolvePreferredLanguage = () => {
     // localStorage can throw in private mode — fall through to the browser language.
   }
 
+  if (pageLanguage !== DEFAULT_LANGUAGE) return pageLanguage;
+
   const navigatorLanguage = window.navigator?.language || '';
   const base = navigatorLanguage.split('-')[0];
-  return SUPPORTED_LANGUAGES.includes(base) ? base : DEFAULT_LANGUAGE;
+  return SUPPORTED_LANGUAGES.includes(base) ? base : pageLanguage;
 };
 
-i18n.use(initReactI18next).init({
+const I18N_OPTIONS = {
   resources,
-  lng: DEFAULT_LANGUAGE,
   fallbackLng: DEFAULT_LANGUAGE,
   supportedLngs: SUPPORTED_LANGUAGES,
   interpolation: {
     escapeValue: false
   }
-});
+};
 
 // The detector plugin used to persist this; keep the behaviour without it.
-if (typeof window !== 'undefined') {
-  i18n.on('languageChanged', (language) => {
+const persistLanguageChoice = (instance) => {
+  if (typeof window === 'undefined') return;
+  instance.on('languageChanged', (language) => {
     try {
       window.localStorage.setItem(LANGUAGE_STORAGE_KEY, language);
     } catch {
       // Ignore write failures — the language still applies for this session.
     }
   });
-}
+};
+
+i18n.use(initReactI18next).init({ ...I18N_OPTIONS, lng: DEFAULT_LANGUAGE });
+persistLanguageChoice(i18n);
+
+/**
+ * A standalone instance initialised synchronously in `lng`, for routes that
+ * must prerender in a non-default language (the /ar home page). All resources
+ * are bundled, so `initImmediate: false` makes init fully synchronous and the
+ * server render already carries the right strings.
+ */
+export const createI18nInstance = (lng = DEFAULT_LANGUAGE) => {
+  const instance = i18n.createInstance();
+  instance.use(initReactI18next).init({ ...I18N_OPTIONS, lng, initImmediate: false });
+  persistLanguageChoice(instance);
+  return instance;
+};
 
 export default i18n;

@@ -1,8 +1,8 @@
 "use client";
 import { useEffect, useState } from 'react';
 import dynamic from 'next/dynamic';
-import { resolvePreferredLanguage } from './i18n';
-import { useTranslation } from 'react-i18next';
+import { createI18nInstance, resolvePreferredLanguage, DEFAULT_LANGUAGE } from './i18n';
+import { I18nextProvider, useTranslation } from 'react-i18next';
 import { MotionConfig } from 'framer-motion';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
@@ -36,7 +36,7 @@ const LaptopShowcase3D = dynamic(() => import('./components/LaptopShowcase3D'), 
   ssr: false,
 });
 
-function App() {
+function AppContent({ pageLang }) {
   const [notification, setNotification] = useState({
     message: '',
     type: '',
@@ -46,13 +46,13 @@ function App() {
   const { i18n } = useTranslation();
 
   // Apply the stored/browser language only after hydration, so the first render
-  // matches the prerendered English markup. Runs behind the loading screen.
+  // matches the markup prerendered in this route's language.
   useEffect(() => {
-    const preferred = resolvePreferredLanguage();
+    const preferred = resolvePreferredLanguage(pageLang);
     if (preferred !== i18n.language) {
       i18n.changeLanguage(preferred);
     }
-  }, [i18n]);
+  }, [i18n, pageLang]);
 
   useEffect(() => {
     document.dir = i18n.dir();
@@ -145,6 +145,20 @@ function App() {
         <Footer />
       </div>
     </MotionConfig>
+  );
+}
+
+/**
+ * `lang` is the language this route was statically prerendered in: `/` renders
+ * with the default English instance, `/ar` passes 'ar' and gets fully Arabic
+ * server markup that search engines can index.
+ */
+function App({ lang = DEFAULT_LANGUAGE }) {
+  const [i18nInstance] = useState(() => createI18nInstance(lang));
+  return (
+    <I18nextProvider i18n={i18nInstance}>
+      <AppContent pageLang={lang} />
+    </I18nextProvider>
   );
 }
 

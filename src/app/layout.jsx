@@ -21,6 +21,11 @@ export const metadata = {
   metadataBase: new URL(SITE_URL),
   alternates: {
     canonical: '/',
+    languages: {
+      en: '/',
+      ar: '/ar',
+      'x-default': '/',
+    },
   },
   title: {
     default: 'Belal Nagy | Full Stack Developer Portfolio',
@@ -103,6 +108,48 @@ export const viewport = {
   ],
 };
 
+// Structured data so search engines can attach name, photo, role and profiles
+// to the site. Person and WebSite are stable facts, safe to serve on every route.
+const PERSON_JSON_LD = {
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  name: 'Belal Nagy',
+  alternateName: 'بلال ناجي',
+  url: SITE_URL,
+  image: `${SITE_URL}/hero.webp`,
+  jobTitle: 'Software Engineer & Full-Stack Developer',
+  worksFor: {
+    '@type': 'Organization',
+    name: 'ezSec Inc',
+  },
+  alumniOf: {
+    '@type': 'CollegeOrUniversity',
+    name: 'Alexandria University',
+  },
+  address: {
+    '@type': 'PostalAddress',
+    addressLocality: 'Alexandria',
+    addressCountry: 'EG',
+  },
+  knowsLanguage: ['en', 'ar'],
+  sameAs: [
+    'https://github.com/Belalnajy',
+    'https://linkedin.com/in/belalnajy',
+    'https://khamsat.com/user/belalnajy',
+    'https://mostaql.com/u/belalnagy',
+    'https://www.nafezly.com/u/belalnajy',
+  ],
+};
+
+const WEBSITE_JSON_LD = {
+  '@context': 'https://schema.org',
+  '@type': 'WebSite',
+  name: 'Belal Nagy Portfolio',
+  url: SITE_URL,
+  inLanguage: ['en', 'ar'],
+  author: { '@type': 'Person', name: 'Belal Nagy' },
+};
+
 export default function RootLayout({ children }) {
   return (
     <html lang="en" suppressHydrationWarning>
@@ -110,6 +157,14 @@ export default function RootLayout({ children }) {
         className={`${inter.variable} ${cairo.variable} antialiased`}
         suppressHydrationWarning
       >
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(PERSON_JSON_LD) }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(WEBSITE_JSON_LD) }}
+        />
         {children}
       </body>
     </html>
