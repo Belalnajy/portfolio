@@ -417,6 +417,7 @@ const Projects = () => {
       {
         slug: 'indstrz',
         featured: true,
+        caseStudy: '/case-study/indstrz',
         title: t('projects.items.indstrz.title'),
         description: t('projects.items.indstrz.desc'),
         image: '/indstrz.webp',
@@ -572,6 +573,7 @@ const Projects = () => {
       {
         slug: 'uduipa',
         featured: true,
+        caseStudy: '/case-study/uduipa',
         title: t('projects.items.uduipa.title'),
         description: t('projects.items.uduipa.desc'),
         image: '/uduipa.webp',
@@ -664,6 +666,7 @@ const Projects = () => {
       {
         slug: 'profleet',
         featured: true,
+        caseStudy: '/case-study/profleet',
         title: t('projects.items.profleet.title'),
         description: t('projects.items.profleet.desc'),
         image: '/profleet.webp',
