@@ -1,4 +1,5 @@
 import { CASE_STUDIES } from '../lib/case-studies';
+import { BLOG_POSTS } from '../lib/blog';
 import { SITE_URL } from '../lib/site';
 
 // Bump when the home page content changes. A fixed date tells crawlers what
@@ -20,6 +21,7 @@ const entry = (path, lastModified, priority, alternates) => ({
 const STATIC_PAGES = [
   { path: '/work', priority: 0.9 },
   { path: '/services', priority: 0.9 },
+  { path: '/blog', priority: 0.7 },
   { path: '/now', priority: 0.6 },
 ];
 
@@ -38,6 +40,11 @@ export default function sitemap() {
   for (const [slug, { updated }] of Object.entries(CASE_STUDIES)) {
     const paths = { en: `/case-study/${slug}`, ar: `/ar/case-study/${slug}` };
     entries.push(entry(paths.en, updated, 0.8, paths), entry(paths.ar, updated, 0.8, paths));
+  }
+
+  for (const [slug, { date }] of Object.entries(BLOG_POSTS)) {
+    const paths = { en: `/blog/${slug}`, ar: `/ar/blog/${slug}` };
+    entries.push(entry(paths.en, date, 0.7, paths), entry(paths.ar, date, 0.7, paths));
   }
 
   return entries;

@@ -945,6 +945,7 @@ const en = {
         packages: 'Packages',
         testimonials: 'Testimonials',
         now: 'Now',
+        blog: 'Blog',
         contact: 'Contact',
         download_cv: 'Download CV'
       },
@@ -978,6 +979,16 @@ const en = {
         availability_title: 'Availability',
         availability_body: 'Full-time at ezSec. Open to freelance projects with a clear scope — the fastest way to start is the contact form.',
         availability_cta: 'Start a conversation',
+      },
+      blog_page: {
+        title: 'Writing',
+        subtitle:
+          'Engineering write-ups from shipped projects — the decisions, the costs, and what I would do again.',
+        read: 'Read the article',
+        minutes: '{{count}} min read',
+        back: 'All articles',
+        next: 'Next article',
+        byline: 'Belal Nagy',
       },
       footer: {
         build_line: 'Designed & engineered by Belal Nagy — Next.js 16 · Tailwind 4 · Vercel',

@@ -945,6 +945,7 @@ const ar = {
         packages: 'الباكدجات',
         testimonials: 'قالوا عني',
         now: 'الآن',
+        blog: 'المقالات',
         contact: 'تواصل معي',
         download_cv: 'تحميل السيرة الذاتية'
       },
@@ -978,6 +979,16 @@ const ar = {
         availability_title: 'التوفر',
         availability_body: 'دوام كامل في ezSec. متاح لمشاريع فريلانس بنطاق واضح — أسرع طريقة نبدأ بيها هي فورم التواصل.',
         availability_cta: 'ابدأ الحديث',
+      },
+      blog_page: {
+        title: 'مقالات',
+        subtitle:
+          'مقالات هندسية من مشاريع تم تسليمها فعلاً — القرارات، والتكاليف، وما الذي سأكرره مرة أخرى.',
+        read: 'اقرأ المقالة',
+        minutes: 'قراءة {{count}} دقائق',
+        back: 'كل المقالات',
+        next: 'المقالة التالية',
+        byline: 'بلال ناجي',
       },
       footer: {
         build_line: 'تصميم وهندسة بلال ناجي — Next.js 16 · Tailwind 4 · Vercel',

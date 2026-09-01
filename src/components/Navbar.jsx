@@ -102,6 +102,7 @@ const Navbar = () => {
     { label: t('nav.projects'), href: `${home}/work`, route: '/work' },
     { label: t('nav.services'), href: `${home}/services`, route: '/services' },
     { label: t('nav.now'), href: `${home}/now`, route: '/now' },
+    { label: t('nav.blog'), href: `${home}/blog`, route: '/blog' },
     { label: t('nav.suite'), href: `${home}/#platform-suite`, anchor: 'platform-suite', mobileOnly: true },
     { label: t('nav.testimonials'), href: `${home}/#testimonials`, anchor: 'testimonials', mobileOnly: true },
     { label: t('nav.contact'), href: `${home}/#contact`, anchor: 'contact' },
