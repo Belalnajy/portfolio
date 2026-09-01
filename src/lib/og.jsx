@@ -1,6 +1,6 @@
 import { ImageResponse } from 'next/og';
 import { CASE_STUDIES } from './case-studies';
-import en from '../locales/en';
+import { loadNarrative } from './case-study-metadata';
 
 export const OG_SIZE = { width: 1200, height: 630 };
 export const OG_CONTENT_TYPE = 'image/png';
@@ -13,11 +13,9 @@ const COPPER = '#C87F1E';
 const TEXT = '#E8EDF2';
 const MUTED = '#93A1B0';
 
-export const ogAlt = (slug) => `${CASE_STUDIES[slug].name} — a case study by Belal Nagy`;
-
-export const caseStudyOgImage = (slug) => {
+export const caseStudyOgImage = async (slug) => {
   const project = CASE_STUDIES[slug];
-  const copy = en.translation.case_studies[slug];
+  const copy = (await loadNarrative(slug)).en;
 
   return new ImageResponse(
     (

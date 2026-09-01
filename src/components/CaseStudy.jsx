@@ -26,9 +26,11 @@ import {
 } from '../i18n';
 
 /**
- * Long-form write-up for a single project. `slug` selects the
- * `case_studies.<slug>` translation block, so further case studies only need
- * translations plus an entry in src/lib/case-studies.js.
+ * Long-form write-up for a single project. The per-project copy comes in via
+ * `narrative` ({ en, ar }) from src/content/case-studies/<slug>.js, so each
+ * page ships only its own story; shared labels still come from the
+ * translation bundle. Further case studies only need a content module plus an
+ * entry in src/lib/case-studies.js.
  *
  * Renders outside <App/>, so it owns its own i18n instance: `lang` is the
  * language the route prerenders in and `bundle` its translations.
@@ -44,11 +46,11 @@ const CaseStudy = ({ lang = DEFAULT_LANGUAGE, bundle, ...props }) => {
   );
 };
 
-const CaseStudyContent = ({ slug, image, liveUrl, stack, pageLang }) => {
+const CaseStudyContent = ({ narrative, image, liveUrl, stack, pageLang }) => {
   const { t, i18n } = useTranslation();
   const isArabic = i18n.language === 'ar';
   const Back = isArabic ? FaArrowRight : FaArrowLeft;
-  const base = `case_studies.${slug}`;
+  const copy = (isArabic && narrative.ar) || narrative.en;
   // Links back into the one-page site follow the language being read.
   const home = isArabic ? '/ar' : '';
   const cover = coverMeta(image);
@@ -70,10 +72,7 @@ const CaseStudyContent = ({ slug, image, liveUrl, stack, pageLang }) => {
     }
   }, [i18n.language, i18n]);
 
-  const asArray = (key) => {
-    const value = t(`${base}.${key}`, { returnObjects: true });
-    return Array.isArray(value) ? value : [];
-  };
+  const asArray = (value) => (Array.isArray(value) ? value : []);
 
   const blocks = [
     { key: 'challenge', icon: <FaExclamationTriangle />, accent: 'text-[rgb(var(--accent))]' },
@@ -129,7 +128,7 @@ const CaseStudyContent = ({ slug, image, liveUrl, stack, pageLang }) => {
             transition={{ duration: 0.6, delay: 0.05 }}
             className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight leading-tight mb-4"
           >
-            {t(`${base}.title`)}
+            {copy.title}
           </motion.h1>
 
           <motion.p
@@ -138,7 +137,7 @@ const CaseStudyContent = ({ slug, image, liveUrl, stack, pageLang }) => {
             transition={{ duration: 0.6, delay: 0.1 }}
             className="text-base sm:text-lg text-[rgb(var(--muted-foreground))] leading-relaxed"
           >
-            {t(`${base}.summary`)}
+            {copy.summary}
           </motion.p>
 
           {/* Fact strip */}
@@ -157,7 +156,7 @@ const CaseStudyContent = ({ slug, image, liveUrl, stack, pageLang }) => {
                   {t(`case_studies.facts.${fact}`)}
                 </dt>
                 <dd className="text-sm font-semibold text-[rgb(var(--foreground))]">
-                  {t(`${base}.facts.${fact}`)}
+                  {copy.facts[fact]}
                 </dd>
               </div>
             ))}
@@ -175,7 +174,7 @@ const CaseStudyContent = ({ slug, image, liveUrl, stack, pageLang }) => {
         >
           <Image
             src={image}
-            alt={t(`${base}.title`)}
+            alt={copy.title}
             width={cover.w}
             height={cover.h}
             sizes="(min-width: 1024px) 960px, 100vw"
@@ -189,7 +188,8 @@ const CaseStudyContent = ({ slug, image, liveUrl, stack, pageLang }) => {
       {/* Narrative blocks */}
       <section className="container mx-auto px-4 sm:px-6 max-w-4xl py-14 md:py-20 space-y-10 md:space-y-14">
         {blocks.map((block, index) => {
-          const points = asArray(`${block.key}.points`);
+          const section = copy[block.key] || {};
+          const points = asArray(section.points);
           return (
             <motion.article
               key={block.key}
@@ -211,7 +211,7 @@ const CaseStudyContent = ({ slug, image, liveUrl, stack, pageLang }) => {
               </div>
 
               <p className="text-base sm:text-lg text-[rgb(var(--muted-foreground))] leading-relaxed">
-                {t(`${base}.${block.key}.body`)}
+                {section.body}
               </p>
 
               {points.length > 0 && (
