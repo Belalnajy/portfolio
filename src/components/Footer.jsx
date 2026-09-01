@@ -21,20 +21,22 @@ const Footer = () => {
   const isArabic = i18n.language === 'ar';
   const currentYear = new Date().getFullYear();
 
+  // Anchors live on the home page; routes are their own pages. `home` keeps
+  // every link inside the language being read.
+  const home = isArabic ? '/ar' : '';
   const quickLinks = useMemo(
     () => [
-      { name: t('nav.home'), to: 'home' },
-      { name: t('nav.about'), to: 'about' },
-      { name: t('nav.timeline'), to: 'experience' },
-      { name: t('nav.projects'), to: 'projects' },
-      { name: t('nav.suite'), to: 'platform-suite' },
-      { name: t('nav.skills'), to: 'skills' },
-      { name: t('nav.services'), to: 'services' },
-      { name: t('nav.packages'), to: 'packages' },
-      { name: t('nav.testimonials'), to: 'testimonials' },
-      { name: t('nav.contact'), to: 'contact' },
+      { name: t('nav.home'), href: `${home}/` },
+      { name: t('nav.about'), href: `${home}/#about` },
+      { name: t('nav.timeline'), href: `${home}/#experience` },
+      { name: t('nav.suite'), href: `${home}/#platform-suite` },
+      { name: t('nav.projects'), href: `${home}/work` },
+      { name: t('nav.services'), href: `${home}/services` },
+      { name: t('nav.now'), href: `${home}/now` },
+      { name: t('nav.testimonials'), href: `${home}/#testimonials` },
+      { name: t('nav.contact'), href: `${home}/#contact` },
     ],
-    [t],
+    [t, home],
   );
 
   const contactInfo = useMemo(
@@ -130,7 +132,7 @@ const Footer = () => {
               {quickLinks.map((link, index) => (
                 <li key={index}>
                   <a
-                    href={`#${link.to}`}
+                    href={link.href}
                     className={`text-[rgb(var(--muted-foreground))] hover:text-[rgb(var(--primary))] transition-all cursor-pointer flex items-center gap-2.5 group min-h-[40px] -my-1`}>
                     <div className="transition-transform duration-300 group-hover:scale-125">
                       {isArabic ? (

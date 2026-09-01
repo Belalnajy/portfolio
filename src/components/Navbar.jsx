@@ -8,9 +8,11 @@ import { HiSparkles } from 'react-icons/hi';
 import MagneticButton from './MagneticButton';
 import { useTranslation } from 'react-i18next';
 import { loadLanguage } from '../i18n';
+import { useSite } from './SiteShell';
 
-const Navbar = ({ onDownloadCV }) => {
+const Navbar = () => {
   const { t, i18n } = useTranslation();
+  const { downloadCV } = useSite();
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [activeSection, setActiveSection] = useState('home');
@@ -84,21 +86,37 @@ const Navbar = ({ onDownloadCV }) => {
     };
   }, []);
 
-  // Desktop keeps the compact set; the mobile drawer has room for everything.
+  // Multi-page navigation: anchors live on the home page, routes are their
+  // own pages. `home` keeps every link inside the language being read.
+  const home = isArabic ? '/ar' : '';
+  const [pathname, setPathname] = useState('');
+  useEffect(() => {
+    setPathname(window.location.pathname);
+  }, []);
+  const onHome = pathname === '/' || pathname === '/ar';
+
   const navItems = [
-    { label: t('nav.home'), to: 'home' },
-    { label: t('nav.about'), to: 'about' },
-    { label: t('nav.projects'), to: 'projects' },
-    { label: t('nav.suite'), to: 'platform-suite', mobileOnly: true },
-    { label: t('nav.skills'), to: 'skills' },
-    { label: t('nav.timeline'), to: 'experience' },
-    { label: t('nav.services'), to: 'services' },
-    { label: t('nav.packages'), to: 'packages' },
-    { label: t('nav.testimonials'), to: 'testimonials', mobileOnly: true },
-    { label: t('nav.contact'), to: 'contact' },
+    { label: t('nav.home'), href: `${home}/`, route: '/' },
+    { label: t('nav.about'), href: `${home}/#about`, anchor: 'about' },
+    { label: t('nav.timeline'), href: `${home}/#experience`, anchor: 'experience' },
+    { label: t('nav.projects'), href: `${home}/work`, route: '/work' },
+    { label: t('nav.services'), href: `${home}/services`, route: '/services' },
+    { label: t('nav.now'), href: `${home}/now`, route: '/now' },
+    { label: t('nav.suite'), href: `${home}/#platform-suite`, anchor: 'platform-suite', mobileOnly: true },
+    { label: t('nav.testimonials'), href: `${home}/#testimonials`, anchor: 'testimonials', mobileOnly: true },
+    { label: t('nav.contact'), href: `${home}/#contact`, anchor: 'contact' },
   ];
 
   const desktopNavItems = navItems.filter((item) => !item.mobileOnly);
+
+  // A route item lights up on its page; anchors light up while scrolling home.
+  const isActive = (item) => {
+    if (item.route) {
+      const current = pathname.replace(/^\/ar(?=\/|$)/, '') || '/';
+      return item.route === '/' ? current === '/' && activeSection === 'home' : current === item.route;
+    }
+    return onHome && activeSection === item.anchor;
+  };
 
   return (
     <nav
@@ -125,7 +143,7 @@ const Navbar = ({ onDownloadCV }) => {
         <div className="flex items-center justify-between h-20">
           {/* Logo with enhanced animation */}
           <motion.a
-            href="#home"
+            href={`${home}/`}
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
             className="flex items-center cursor-pointer group relative">
@@ -177,18 +195,18 @@ const Navbar = ({ onDownloadCV }) => {
               transition={{ duration: 0.2 }}>
               {desktopNavItems.map((item, index) => (
                 <a
-                  key={item.to}
-                  href={`#${item.to}`}
+                  key={item.label}
+                  href={item.href}
                   className="cursor-pointer relative">
                   <motion.div
                     whileHover={{ scale: 1.05, y: -2 }}
                     whileTap={{ scale: 0.95 }}
                     className={`relative px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 ${
-                      activeSection === item.to
+                      isActive(item)
                         ? 'text-[rgb(var(--primary))] font-semibold'
                         : 'text-[rgb(var(--muted-foreground))] hover:text-[rgb(var(--foreground))]'
                     }`}>
-                    {activeSection === item.to && (
+                    {isActive(item) && (
                       <motion.div
                         layoutId="activeSection"
                         className="absolute inset-0 bg-gradient-to-r from-[rgb(var(--primary))]/10 to-[rgb(var(--primary))]/5 rounded-full border border-[rgb(var(--primary))]/20"
@@ -217,7 +235,7 @@ const Navbar = ({ onDownloadCV }) => {
 
             {/* Resume Button */}
             <MagneticButton
-              onClick={onDownloadCV}
+              onClick={downloadCV}
               className="group relative px-6 py-2 rounded-full bg-[rgb(var(--primary))] text-[rgb(var(--accent-contrast))] font-semibold overflow-hidden transition-all duration-300 hover:shadow-xl hover:shadow-[rgb(var(--primary))]/30 flex items-center gap-2">
               <span className="relative z-10 flex items-center gap-2">
                 <FaDownload className="text-sm" />
@@ -287,7 +305,7 @@ const Navbar = ({ onDownloadCV }) => {
               {navItems.map((item, index) => (
                 <a
                   key={item.label}
-                  href={`#${item.to}`}
+                  href={item.href}
                   onClick={() => setIsOpen(false)}>
                   <motion.div
                     initial={{ opacity: 0, x: isArabic ? 20 : -20 }}
@@ -346,7 +364,7 @@ const Navbar = ({ onDownloadCV }) => {
                 className="pt-2">
                 <button
                   onClick={() => {
-                    onDownloadCV();
+                    downloadCV();
                     setIsOpen(false);
                   }}
                   className="relative w-full px-5 py-3 rounded-xl bg-[rgb(var(--primary))] text-[rgb(var(--accent-contrast))] font-semibold overflow-hidden transition-all duration-300 flex items-center justify-center gap-2 group">

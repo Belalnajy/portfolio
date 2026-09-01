@@ -38,8 +38,11 @@ Key facts:
 
 ## Main pages
 
-- [Home (English)](${SITE_URL}/): portfolio, skills, experience timeline, services and packages
-- [Home (Arabic)](${SITE_URL}/ar): the same portfolio, fully in Arabic (case studies also at /ar/case-study/<slug>)
+- [Home (English)](${SITE_URL}/): who Belal is, experience timeline, flagship projects and contact
+- [Home (Arabic)](${SITE_URL}/ar): the same site, fully in Arabic (every page also exists under /ar)
+- [Work](${SITE_URL}/work): the complete archive of 35 projects with skills and certifications
+- [Services & packages](${SITE_URL}/services): what Belal offers, the delivery process and pricing packages
+- [Now](${SITE_URL}/now): what he is focused on right now, updated regularly
 - [CV (PDF)](${SITE_URL}/Belal_Nagy_CV.pdf)
 
 ## Case studies

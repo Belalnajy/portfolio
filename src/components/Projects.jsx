@@ -340,9 +340,15 @@ const FeaturedRow = ({ project, index, onClick, isArabic }) => {
   );
 };
 
-const Projects = () => {
+/**
+ * variant="home": the four flagship editorial rows plus a link into /work —
+ * no filters, search or archive. variant="full" (default) is the complete
+ * archive experience used on /work.
+ */
+const Projects = ({ variant = 'full' }) => {
   const { t, i18n } = useTranslation();
   const isArabic = i18n.language === 'ar';
+  const isHome = variant === 'home';
   // Content comes from the local i18n bundle, so there is nothing to wait for.
   const [loading] = useState(false);
   const [filter, setFilter] = useState('All');
@@ -929,8 +935,9 @@ const Projects = () => {
   // The default view curates the strongest work; filtering or searching always
   // looks through the complete archive so nothing becomes unreachable.
   const isDefaultView = filter === 'All' && searchTerm.trim() === '';
-  const visibleProjects =
-    isDefaultView && !showArchive
+  const visibleProjects = isHome
+    ? projectsData.filter((project) => project.featured).slice(0, 4)
+    : isDefaultView && !showArchive
       ? filteredProjects.filter((project) => project.featured)
       : filteredProjects;
 
@@ -952,6 +959,7 @@ const Projects = () => {
         </motion.div>
 
         {/* Filter & Search - Premium Segmented Control */}
+        {!isHome && (
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -993,8 +1001,9 @@ const Projects = () => {
             />
           </div>
         </motion.div>
+        )}
 
-        {isDefaultView && !showArchive ? (
+        {isHome || (isDefaultView && !showArchive) ? (
           /* Curated view: editorial rows, one flagship per row. */
           <div className="space-y-20 lg:space-y-28 max-w-6xl mx-auto">
             {visibleProjects.map((project, index) => (
@@ -1033,8 +1042,19 @@ const Projects = () => {
           </div>
         )}
 
+        {/* Home: one link into the full archive page */}
+        {isHome && (
+          <div className="mt-16 flex justify-center">
+            <a
+              href={`${isArabic ? '/ar' : ''}/work`}
+              className="px-8 py-3.5 rounded-full border border-[rgb(var(--border-control))] hover:border-[rgb(var(--primary))] hover:text-[rgb(var(--primary))] transition-colors text-sm font-semibold text-[rgb(var(--foreground))]">
+              {t('projects.view_all', { count: projectsData.length })}
+            </a>
+          </div>
+        )}
+
         {/* Archive toggle — only meaningful in the curated default view */}
-        {isDefaultView && (
+        {!isHome && isDefaultView && (
           <div className="mt-12 flex flex-col items-center gap-3 text-center">
             {!showArchive && (
               <p className="text-sm text-[rgb(var(--muted-foreground))]">

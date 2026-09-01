@@ -1,6 +1,7 @@
 "use client";
+import { useRef } from 'react';
 import Image from 'next/image';
-import { motion } from 'framer-motion';
+import { motion, useScroll, useTransform, useReducedMotion } from 'framer-motion';
 import { REVEAL_VIEWPORT, revealDelay, REVEAL_DURATION } from '../lib/motion';
 import { useTranslation } from 'react-i18next';
 import {
@@ -24,6 +25,79 @@ const SHARED_CAPABILITIES = [
   { key: 'roles', icon: <FaShieldAlt /> },
   { key: 'branding', icon: <FaPalette /> },
 ];
+
+/**
+ * Scroll-driven diagram of the suite's whole story: one hardened core, three
+ * connector lines drawing themselves as the section scrolls in, three brands
+ * lighting up in turn. Falls back to a fully-drawn static diagram for
+ * visitors who prefer reduced motion.
+ */
+const EngineStory = () => {
+  const ref = useRef(null);
+  const prefersReducedMotion = useReducedMotion();
+  const { scrollYProgress } = useScroll({
+    target: ref,
+    offset: ['start 0.92', 'start 0.35'],
+  });
+
+  const still = (value) => (prefersReducedMotion ? 1 : value);
+  const coreOpacity = useTransform(scrollYProgress, [0, 0.25], [0, 1]);
+  const coreScale = useTransform(scrollYProgress, [0, 0.25], [0.85, 1]);
+  const lineProgress = useTransform(scrollYProgress, [0.2, 0.6], [0, 1]);
+  const brandOpacities = [
+    useTransform(scrollYProgress, [0.45, 0.65], [0, 1]),
+    useTransform(scrollYProgress, [0.55, 0.75], [0, 1]),
+    useTransform(scrollYProgress, [0.65, 0.85], [0, 1]),
+  ];
+  const brandLifts = [
+    useTransform(scrollYProgress, [0.45, 0.65], [14, 0]),
+    useTransform(scrollYProgress, [0.55, 0.75], [14, 0]),
+    useTransform(scrollYProgress, [0.65, 0.85], [14, 0]),
+  ];
+
+  return (
+    <div ref={ref} className="max-w-2xl mx-auto mb-14 select-none" aria-hidden="true" dir="ltr">
+      {/* The core */}
+      <motion.div
+        style={{ opacity: still(coreOpacity), scale: still(coreScale) }}
+        className="mx-auto w-fit px-5 py-2.5 rounded-xl bg-[rgb(var(--primary))]/10 border border-[rgb(var(--primary))]/35 text-[rgb(var(--primary))] font-mono text-sm font-semibold shadow-[0_0_30px_rgb(var(--accent)/0.15)]">
+        Django + PostgreSQL core
+      </motion.div>
+
+      {/* Connectors */}
+      <svg viewBox="0 0 400 72" className="w-full h-16 sm:h-[72px]" fill="none">
+        {[
+          'M200 0 C 200 40, 66 32, 66 72',
+          'M200 0 L 200 72',
+          'M200 0 C 200 40, 334 32, 334 72',
+        ].map((d, i) => (
+          <motion.path
+            key={i}
+            d={d}
+            stroke="rgb(var(--accent) / 0.55)"
+            strokeWidth="1.5"
+            strokeDasharray="4 4"
+            style={{ pathLength: still(lineProgress) }}
+          />
+        ))}
+      </svg>
+
+      {/* The three brands */}
+      <div className="grid grid-cols-3 gap-3">
+        {LMS_SUITE.members.map((member, i) => (
+          <motion.div
+            key={member.slug}
+            style={{ opacity: still(brandOpacities[i]), y: prefersReducedMotion ? 0 : brandLifts[i] }}
+            className="text-center px-2 py-2.5 rounded-xl bg-[rgb(var(--muted))]/25 border border-[rgb(var(--border))]/60 text-xs sm:text-sm font-semibold text-[rgb(var(--foreground))] truncate"
+          >
+            <span className="inline-block w-2 h-2 rounded-full me-2" style={{ backgroundColor: member.accent }} />
+            {member.name}
+          </motion.div>
+        ))}
+      </div>
+    </div>
+  );
+};
 
 const PlatformSuite = () => {
   const { t } = useTranslation();
@@ -52,6 +126,9 @@ const PlatformSuite = () => {
             {t('platform_suite.subtitle')}
           </p>
         </motion.div>
+
+        {/* One engine → three brands, told by the scroll */}
+        <EngineStory />
 
         {/* Shared engine capabilities */}
         <motion.div

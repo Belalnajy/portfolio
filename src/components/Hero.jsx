@@ -3,6 +3,7 @@ import { FaGithub, FaLinkedin, FaDownload, FaArrowDown, FaStar, FaCheckCircle } 
 import MagneticButton from './MagneticButton';
 import PlatformLinks from './PlatformLinks';
 import { useTranslation } from 'react-i18next';
+import { useSite } from './SiteShell';
 
 /**
  * Type-first hero with a freelance proof panel. The name is the artwork
@@ -12,8 +13,9 @@ import { useTranslation } from 'react-i18next';
  * `initial` props so the server markup ships visible and the LCP (the
  * headline text) never waits for hydration.
  */
-const Hero = ({ onDownloadCV }) => {
+const Hero = () => {
   const { t } = useTranslation();
+  const { downloadCV } = useSite();
 
   return (
     <section
@@ -84,7 +86,7 @@ const Hero = ({ onDownloadCV }) => {
                 {t('hero.contact_me')}
               </MagneticButton>
               <MagneticButton
-                onClick={onDownloadCV}
+                onClick={downloadCV}
                 className="text-[rgb(var(--muted-foreground))] px-4 py-3.5 rounded-xl font-semibold hover:text-[rgb(var(--foreground))] transition-all inline-flex items-center gap-2">
                 <FaDownload className="text-sm" />
                 {t('hero.download_cv')}
