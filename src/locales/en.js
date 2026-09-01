@@ -16,9 +16,25 @@ const en = {
         view_projects: 'View Projects',
         contact_me: 'Contact Me',
         download_cv: 'Download CV',
+        role_line: 'Software Engineer — Full-Stack Developer',
+        now_label: 'Now',
+        now_value: 'Software Engineer @ ezSec Inc',
+        now_meta: 'Remote — Kitchener, Canada',
+        scroll: 'Scroll',
         follow_me: 'Follow me on Arabic platforms'
       },
       about: {
+        bento: {
+          now: 'Now',
+          now_value: 'Software Engineer @ ezSec Inc',
+          now_meta: 'Remote — Kitchener, Canada',
+          base: 'Based in',
+          base_value: 'Alexandria, Egypt',
+          base_meta: '31.2°N 29.9°E — working worldwide',
+          langs: 'Languages',
+          langs_value: 'Arabic (native) · English',
+          stack_title: 'Core stack',
+        },
         title: 'About Me',
         subtitle: 'Full-stack developer in Alexandria, Egypt. Next.js, Laravel, NestJS, Node.js, Django, PostgreSQL.',
         personal_info: 'Personal Information',
@@ -35,7 +51,7 @@ const en = {
           education: 'Bachelor of Business (BIS)',
           location: 'Alexandria, Egypt'
         },
-        summary_p1: 'Full-stack developer based in <1>Alexandria, Egypt</1>. I work in Next.js, Laravel, NestJS, Node.js, Django and PostgreSQL. I am currently a full-stack developer at <3>S&F in Saudi Arabia</3>.',
+        summary_p1: 'Full-stack developer based in <1>Alexandria, Egypt</1>. I work in Next.js, Laravel, NestJS, Node.js, Django and PostgreSQL. I am currently a Software Engineer at <3>ezSec Inc in Canada</3>, working remotely.',
         summary_p2: 'I am the sole developer on <1>Bilqalam Institute</1>, a production learning platform serving thousands of enrolled students. It handles student enrollment and management, billing and invoicing, and the admin reporting dashboards the institute runs on. I built it and I maintain it alone, in <3>Next.js and Laravel</3>.',
         summary_p3: 'I also built a multi-tenant LMS engine that runs as <1>three separately branded accredited platforms</1>, Injaz, HC Holding and Mada Education, on one hardened Django and PostgreSQL core. I co-founded Indstrz, a B2B industrial platform, and taught front-end development to <3>240+ students</3> as an external instructor at ITI. Arabic and RTL work goes into every project I ship, including the financial and data-heavy interfaces.',
         highlights: {
@@ -798,6 +814,8 @@ const en = {
         }
       },
       case_studies: {
+        next: 'Next case study',
+        previous: 'Previous case study',
         label: 'Case Study',
         back: 'Back to Projects',
         visit: 'Visit Live Site',
@@ -922,7 +940,19 @@ const en = {
         contact: 'Contact',
         download_cv: 'Download CV'
       },
+      cmdk: {
+        placeholder: 'Search sections, case studies...',
+        sections: 'Sections',
+        case_studies: 'Case studies',
+        actions: 'Actions',
+        no_results: 'No results',
+        download_cv: 'Download CV',
+        switch_lang: 'العربية',
+        hint: 'Navigate',
+        open_hint: 'Press ⌘K to navigate',
+      },
       footer: {
+        build_line: 'Designed & engineered by Belal Nagy — Next.js 16 · Tailwind 4 · Vercel',
         about_title: 'Belal Nagy',
         about_text: 'I build web platforms from zero, and take over existing codebases that need fixing. 31 projects for 27 clients across Egypt and the Gulf.',
         quick_links: 'Quick Links',

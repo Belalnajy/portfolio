@@ -218,6 +218,9 @@ const Footer = () => {
               transition={{ duration: 0.5, delay: 0.4 }}
               className="text-[rgb(var(--muted-foreground))] text-sm font-medium">
               <p>{t('footer.freelance_notice')}</p>
+              <p className="mt-2 font-mono text-xs text-[rgb(var(--muted-foreground))]/70" dir="ltr">
+                {t('footer.build_line')}
+              </p>
             </motion.div>
 
             {/* Back to Top Button */}

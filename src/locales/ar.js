@@ -16,9 +16,25 @@ const ar = {
         view_projects: 'عرض المشاريع',
         contact_me: 'تواصل معي',
         download_cv: 'تحميل CV',
+        role_line: 'مهندس برمجيات — مطور Full-Stack',
+        now_label: 'حالياً',
+        now_value: 'مهندس برمجيات @ ezSec Inc',
+        now_meta: 'عن بُعد — كيتشنر، كندا',
+        scroll: 'اسكرول',
         follow_me: 'تابعني على المنصات العربية'
       },
       about: {
+        bento: {
+          now: 'حالياً',
+          now_value: 'مهندس برمجيات @ ezSec Inc',
+          now_meta: 'عن بُعد — كيتشنر، كندا',
+          base: 'مقيم في',
+          base_value: 'الإسكندرية، مصر',
+          base_meta: '31.2°N 29.9°E — بشتغل مع العالم كله',
+          langs: 'اللغات',
+          langs_value: 'العربية (الأم) · الإنجليزية',
+          stack_title: 'التقنيات الأساسية',
+        },
         title: 'عني',
         subtitle: 'مطور Full-Stack من الإسكندرية، مصر. Next.js و Laravel و NestJS و Node.js و Django و PostgreSQL.',
         personal_info: 'المعلومات الشخصية',
@@ -35,7 +51,7 @@ const ar = {
           education: 'بكالوريوس أعمال (BIS)',
           location: 'الإسكندرية، مصر'
         },
-        summary_p1: 'مطور Full-Stack مقيم في <1>الإسكندرية، مصر</1>. أشتغل بـ Next.js و Laravel و NestJS و Node.js و Django و PostgreSQL. حالياً مطور Full-Stack في <3>شركة S&F بالسعودية</3>.',
+        summary_p1: 'مطور Full-Stack مقيم في <1>الإسكندرية، مصر</1>. أشتغل بـ Next.js و Laravel و NestJS و Node.js و Django و PostgreSQL. حالياً مهندس برمجيات في <3>شركة ezSec Inc بكندا</3> عن بُعد.',
         summary_p2: 'أنا المطور الوحيد على <1>معهد بالقلم</1>، منصة تعليمية تعمل فعلياً وتخدم آلاف الطلاب المسجلين. المنصة بتدير تسجيل الطلاب وإدارتهم، والفوترة وإصدار الفواتير، ولوحات التقارير الإدارية اللي المعهد بيشتغل عليها. أنا بنيتها وبصيانتها لوحدي، بـ <3>Next.js و Laravel</3>.',
         summary_p3: 'كمان بنيت محرك LMS متعدد المستأجرين بيشتغل كـ <1>ثلاث منصات معتمدة بهويات منفصلة</1>، الإنجاز والتجمع الصحي القابضة ومدى التعليمية، فوق نواة واحدة من Django و PostgreSQL. شاركت في تأسيس Indstrz، منصة صناعية B2B، ودرّست تطوير الواجهات الأمامية لـ <3>أكثر من ٢٤٠ طالباً</3> كمحاضر خارجي في ITI. شغل العربية والـ RTL موجود في كل مشروع بسلّمه، بما فيه الواجهات المالية والمليانة بيانات.',
         highlights: {
@@ -798,6 +814,8 @@ const ar = {
         }
       },
       case_studies: {
+        next: 'دراسة الحالة التالية',
+        previous: 'دراسة الحالة السابقة',
         label: 'دراسة حالة',
         back: 'رجوع للمشاريع',
         visit: 'زيارة الموقع',
@@ -922,7 +940,19 @@ const ar = {
         contact: 'تواصل معي',
         download_cv: 'تحميل السيرة الذاتية'
       },
+      cmdk: {
+        placeholder: 'ابحث في الأقسام ودراسات الحالة...',
+        sections: 'الأقسام',
+        case_studies: 'دراسات الحالة',
+        actions: 'إجراءات',
+        no_results: 'لا توجد نتائج',
+        download_cv: 'تحميل السيرة الذاتية',
+        switch_lang: 'English',
+        hint: 'تنقل',
+        open_hint: 'اضغط ⌘K للتنقل',
+      },
       footer: {
+        build_line: 'تصميم وهندسة بلال ناجي — Next.js 16 · Tailwind 4 · Vercel',
         about_title: 'بلال ناجي',
         about_text: 'أبني منصات ويب من الصفر، وأستلم الأكواد القائمة اللي محتاجة إصلاح. ٣١ مشروعاً لـ ٢٧ عميلاً في مصر والخليج.',
         quick_links: 'روابط سريعة',
