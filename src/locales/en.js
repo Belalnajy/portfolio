@@ -20,6 +20,7 @@ const en = {
         freelance_rating: '100% positive client reviews',
         freelance_platforms: 'Khamsat · Mostaql · Nafezly',
         hire_me: 'Hire me for a project',
+        hire_me_b: 'Get a free project estimate',
         role_line: 'Software Engineer — Full-Stack Developer',
         now_label: 'Now',
         now_value: 'Software Engineer @ ezSec Inc',
@@ -82,6 +83,7 @@ const en = {
         view_all: 'Explore all {{count}} projects',
         show_all: 'Show the full archive ({{count}} projects)',
         show_featured: 'Show featured only',
+        load_more: 'Load more ({{count}} remaining)',
         featured_note: 'A hand-picked selection — the full archive is one click away.',
         categories: {
           all: 'All',
@@ -943,6 +945,7 @@ const en = {
         packages: 'Packages',
         testimonials: 'Testimonials',
         now: 'Now',
+        blog: 'Blog',
         contact: 'Contact',
         download_cv: 'Download CV'
       },
@@ -976,6 +979,16 @@ const en = {
         availability_title: 'Availability',
         availability_body: 'Full-time at ezSec. Open to freelance projects with a clear scope — the fastest way to start is the contact form.',
         availability_cta: 'Start a conversation',
+      },
+      blog_page: {
+        title: 'Writing',
+        subtitle:
+          'Engineering write-ups from shipped projects — the decisions, the costs, and what I would do again.',
+        read: 'Read the article',
+        minutes: '{{count}} min read',
+        back: 'All articles',
+        next: 'Next article',
+        byline: 'Belal Nagy',
       },
       footer: {
         build_line: 'Designed & engineered by Belal Nagy — Next.js 16 · Tailwind 4 · Vercel',

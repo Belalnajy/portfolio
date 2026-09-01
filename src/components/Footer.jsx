@@ -33,6 +33,7 @@ const Footer = () => {
       { name: t('nav.projects'), href: `${home}/work` },
       { name: t('nav.services'), href: `${home}/services` },
       { name: t('nav.now'), href: `${home}/now` },
+      { name: t('nav.blog'), href: `${home}/blog` },
       { name: t('nav.testimonials'), href: `${home}/#testimonials` },
       { name: t('nav.contact'), href: `${home}/#contact` },
     ],

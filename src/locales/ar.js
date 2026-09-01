@@ -20,6 +20,7 @@ const ar = {
         freelance_rating: '١٠٠٪ تقييمات إيجابية من العملاء',
         freelance_platforms: 'خمسات · مستقل · نفذلي',
         hire_me: 'اشتغل معايا في مشروعك',
+        hire_me_b: 'اطلب تقييم مجاني لمشروعك',
         role_line: 'مهندس برمجيات — مطور Full-Stack',
         now_label: 'حالياً',
         now_value: 'مهندس برمجيات @ ezSec Inc',
@@ -82,6 +83,7 @@ const ar = {
         view_all: 'استكشف كل الـ {{count}} مشروعاً',
         show_all: 'عرض الأرشيف الكامل ({{count}} مشروعاً)',
         show_featured: 'عرض المشاريع المميزة فقط',
+        load_more: 'عرض المزيد (باقي {{count}})',
         featured_note: 'مجموعة مختارة بعناية — الأرشيف الكامل على بُعد ضغطة واحدة.',
         categories: {
           all: 'الكل',
@@ -943,6 +945,7 @@ const ar = {
         packages: 'الباكدجات',
         testimonials: 'قالوا عني',
         now: 'الآن',
+        blog: 'المقالات',
         contact: 'تواصل معي',
         download_cv: 'تحميل السيرة الذاتية'
       },
@@ -976,6 +979,16 @@ const ar = {
         availability_title: 'التوفر',
         availability_body: 'دوام كامل في ezSec. متاح لمشاريع فريلانس بنطاق واضح — أسرع طريقة نبدأ بيها هي فورم التواصل.',
         availability_cta: 'ابدأ الحديث',
+      },
+      blog_page: {
+        title: 'مقالات',
+        subtitle:
+          'مقالات هندسية من مشاريع تم تسليمها فعلاً — القرارات، والتكاليف، وما الذي سأكرره مرة أخرى.',
+        read: 'اقرأ المقالة',
+        minutes: 'قراءة {{count}} دقائق',
+        back: 'كل المقالات',
+        next: 'المقالة التالية',
+        byline: 'بلال ناجي',
       },
       footer: {
         build_line: 'تصميم وهندسة بلال ناجي — Next.js 16 · Tailwind 4 · Vercel',

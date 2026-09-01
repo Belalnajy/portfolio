@@ -1,5 +1,6 @@
 import { CASE_STUDIES, CASE_STUDY_SLUGS } from '../../lib/case-studies';
 import { loadNarrative } from '../../lib/case-study-metadata';
+import { BLOG_POSTS, BLOG_SLUGS } from '../../lib/blog';
 import { SITE_URL } from '../../lib/site';
 
 export const dynamic = 'force-static';
@@ -43,7 +44,15 @@ Key facts:
 - [Work](${SITE_URL}/work): the complete archive of 35 projects with skills and certifications
 - [Services & packages](${SITE_URL}/services): what Belal offers, the delivery process and pricing packages
 - [Now](${SITE_URL}/now): what he is focused on right now, updated regularly
+- [Blog](${SITE_URL}/blog): engineering write-ups from shipped projects
 - [CV (PDF)](${SITE_URL}/Belal_Nagy_CV.pdf)
+
+## Articles
+
+${BLOG_SLUGS.map(
+  (slug) =>
+    `- [${BLOG_POSTS[slug].en.title}](${SITE_URL}/blog/${slug}): ${BLOG_POSTS[slug].en.description}`,
+).join('\n')}
 
 ## Case studies
 

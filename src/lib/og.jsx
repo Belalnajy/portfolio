@@ -13,6 +13,74 @@ const COPPER = '#C87F1E';
 const TEXT = '#E8EDF2';
 const MUTED = '#93A1B0';
 
+/**
+ * Share card for a top-level page: same ink-and-copper frame as the case
+ * studies, with the page title doing the talking. Latin copy only — the
+ * default OG font carries no Arabic glyphs, so /ar pages reuse these cards.
+ */
+export const pageOgImage = (title, subtitle) =>
+  new ImageResponse(
+    (
+      <div
+        style={{
+          width: '100%',
+          height: '100%',
+          display: 'flex',
+          background: `linear-gradient(135deg, ${INK} 0%, ${SURFACE} 100%)`,
+          color: TEXT,
+          fontFamily: 'sans-serif',
+        }}>
+        <div style={{ width: 18, height: '100%', background: COPPER, display: 'flex' }} />
+        <div
+          style={{
+            flex: 1,
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'space-between',
+            padding: '64px 72px',
+          }}>
+          <div style={{ display: 'flex', flexDirection: 'column' }}>
+            <div
+              style={{
+                fontSize: 22,
+                letterSpacing: 6,
+                color: COPPER,
+                fontWeight: 700,
+                marginBottom: 28,
+                display: 'flex',
+              }}>
+              BELALNAGY.COM
+            </div>
+            <div style={{ fontSize: 96, fontWeight: 800, lineHeight: 1.05, display: 'flex' }}>
+              {title}
+            </div>
+            <div
+              style={{
+                fontSize: 32,
+                color: MUTED,
+                marginTop: 26,
+                lineHeight: 1.35,
+                display: 'flex',
+                maxWidth: 980,
+              }}>
+              {subtitle}
+            </div>
+          </div>
+
+          <div style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'flex-end' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end' }}>
+              <div style={{ fontSize: 30, fontWeight: 700, display: 'flex' }}>Belal Nagy</div>
+              <div style={{ fontSize: 22, color: MUTED, display: 'flex' }}>
+                Software Engineer — Full-Stack Developer
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    ),
+    OG_SIZE,
+  );
+
 export const caseStudyOgImage = async (slug) => {
   const project = CASE_STUDIES[slug];
   const copy = (await loadNarrative(slug)).en;

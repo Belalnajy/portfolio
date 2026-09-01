@@ -46,7 +46,7 @@ const CaseStudy = ({ lang = DEFAULT_LANGUAGE, bundle, ...props }) => {
   );
 };
 
-const CaseStudyContent = ({ narrative, image, liveUrl, stack, nav, pageLang }) => {
+const CaseStudyContent = ({ slug, narrative, image, liveUrl, stack, nav, pageLang }) => {
   const { t, i18n } = useTranslation();
   const isArabic = i18n.language === 'ar';
   const Back = isArabic ? FaArrowRight : FaArrowLeft;
@@ -181,6 +181,7 @@ const CaseStudyContent = ({ narrative, image, liveUrl, stack, nav, pageLang }) =
             sizes="(min-width: 1024px) 960px, 100vw"
             placeholder={cover.blur ? 'blur' : 'empty'}
             blurDataURL={cover.blur}
+            style={{ viewTransitionName: `cover-${slug}` }}
             className="w-full h-auto rounded-lg"
           />
         </motion.div>

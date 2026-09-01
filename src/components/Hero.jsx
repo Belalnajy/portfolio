@@ -4,6 +4,7 @@ import MagneticButton from './MagneticButton';
 import PlatformLinks from './PlatformLinks';
 import { useTranslation } from 'react-i18next';
 import { useSite } from './SiteShell';
+import { useCtaVariant } from '../lib/use-cta-variant';
 
 /**
  * Type-first hero with a freelance proof panel. The name is the artwork
@@ -16,6 +17,7 @@ import { useSite } from './SiteShell';
 const Hero = () => {
   const { t } = useTranslation();
   const { downloadCV } = useSite();
+  const { ctaVariant, trackCtaClick } = useCtaVariant();
 
   return (
     <section
@@ -82,6 +84,7 @@ const Hero = () => {
               </MagneticButton>
               <MagneticButton
                 href="#contact"
+                onClick={() => trackCtaClick('hero_main')}
                 className="border border-[rgb(var(--border-control))] text-[rgb(var(--foreground))] px-8 py-3.5 rounded-xl font-semibold hover:border-[rgb(var(--primary))] hover:text-[rgb(var(--primary))] transition-all inline-flex items-center">
                 {t('hero.contact_me')}
               </MagneticButton>
@@ -159,10 +162,13 @@ const Hero = () => {
                 </div>
               </div>
 
+              {/* A/B-tested wording: which framing gets a freelance visitor to
+                  reach out — direct hire vs. project outcome. */}
               <a
                 href="#contact"
+                onClick={() => trackCtaClick('hero_panel')}
                 className="flex items-center justify-center w-full min-h-[48px] px-5 rounded-xl font-semibold bg-gradient-to-r from-[rgb(var(--accent))] to-[rgb(var(--accent-hover))] hover:from-[rgb(var(--accent-hover))] hover:to-[rgb(var(--accent))] text-[rgb(var(--accent-contrast))] shadow-lg transition-all active:scale-[0.98] mb-5">
-                {t('hero.hire_me')}
+                {t(ctaVariant === 'b' ? 'hero.hire_me_b' : 'hero.hire_me')}
               </a>
 
               {/* The platforms themselves, tappable */}

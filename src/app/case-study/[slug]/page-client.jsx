@@ -9,6 +9,7 @@ import en from '../../../locales/en';
 export default function CaseStudyPageClient({ slug, narrative, nav }) {
   return (
     <CaseStudy
+      slug={slug}
       {...CASE_STUDIES[slug]}
       narrative={narrative}
       nav={nav}
