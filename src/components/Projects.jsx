@@ -172,26 +172,6 @@ export const LMS_SUITE = {
 const ProjectCard = ({ project, index, onClick }) => {
   const { t } = useTranslation();
   const cover = coverMeta(project.image);
-  const [rotateX, setRotateX] = useState(0);
-  const [rotateY, setRotateY] = useState(0);
-
-  const handleMouseMove = (e) => {
-    const card = e.currentTarget;
-    const rect = card.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    const y = e.clientY - rect.top;
-    const centerX = rect.width / 2;
-    const centerY = rect.height / 2;
-    const rotateXValue = ((y - centerY) / centerY) * -10;
-    const rotateYValue = ((x - centerX) / centerX) * 10;
-    setRotateX(rotateXValue);
-    setRotateY(rotateYValue);
-  };
-
-  const handleMouseLeave = () => {
-    setRotateX(0);
-    setRotateY(0);
-  };
 
   return (
     <motion.div
@@ -199,14 +179,8 @@ const ProjectCard = ({ project, index, onClick }) => {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={LONG_LIST_VIEWPORT}
       transition={{ duration: REVEAL_DURATION, delay: revealDelay(index) }}
-      onMouseMove={handleMouseMove}
-      onMouseLeave={handleMouseLeave}
       onClick={() => onClick(project)}
-      style={{
-        transform: `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`,
-        transition: 'transform 0.1s ease-out',
-      }}
-      className="group relative glass-card rounded-2xl overflow-hidden shadow-lg transition-all duration-300 cursor-pointer border border-transparent hover:border-[rgb(var(--primary))]/30 flex flex-col h-full bg-[rgb(var(--background))]">
+      className="group relative glass-card rounded-2xl overflow-hidden shadow-lg transition-all duration-300 cursor-pointer border border-transparent hover:border-[rgb(var(--primary))]/30 hover:-translate-y-1 flex flex-col h-full bg-[rgb(var(--background))]">
       {/* Sleek Image Container with inner padding */}
       <div className="relative w-full aspect-video bg-[rgb(var(--scrim))] p-4 pb-0 flex items-end justify-center overflow-hidden border-b border-[rgb(var(--border))]/30">
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-[rgb(var(--accent))]/10 via-[rgb(var(--scrim))]/0 to-[rgb(var(--scrim))] opacity-50 z-0" />
@@ -271,8 +245,104 @@ const ProjectCard = ({ project, index, onClick }) => {
   );
 };
 
-const Projects = () => {
+/**
+ * Editorial row for the curated default view: oversized index, screenshot,
+ * one-line impact and direct routes into the case study. The archive and any
+ * filtered view keep the denser card grid.
+ */
+const FeaturedRow = ({ project, index, onClick, isArabic }) => {
   const { t } = useTranslation();
+  const cover = coverMeta(project.image);
+  const flip = index % 2 === 1;
+  const caseStudyHref = project.caseStudy
+    ? `${isArabic ? '/ar' : ''}${project.caseStudy}`
+    : null;
+
+  return (
+    <motion.article
+      initial={{ opacity: 0, y: 32 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={REVEAL_VIEWPORT}
+      transition={{ duration: 0.55 }}
+      className="group grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-12 items-center">
+      {/* Screenshot */}
+      <div className={`lg:col-span-7 ${flip ? 'lg:order-2' : ''}`}>
+        <button
+          type="button"
+          onClick={() => onClick(project)}
+          aria-label={project.title}
+          className="block w-full cursor-pointer">
+          <div className="relative rounded-2xl overflow-hidden border border-[rgb(var(--border))]/60 bg-[rgb(var(--scrim))] p-3 sm:p-4 transition-colors duration-300 group-hover:border-[rgb(var(--primary))]/40">
+            <Image
+              src={project.image}
+              alt={project.title}
+              width={cover.w}
+              height={cover.h}
+              sizes="(min-width: 1024px) 640px, 100vw"
+              placeholder={cover.blur ? 'blur' : 'empty'}
+              blurDataURL={cover.blur}
+              className="w-full h-auto rounded-lg transition-transform duration-500 group-hover:scale-[1.015]"
+            />
+          </div>
+        </button>
+      </div>
+
+      {/* Copy */}
+      <div className={`lg:col-span-5 text-start ${flip ? 'lg:order-1' : ''}`}>
+        <p className="font-display text-6xl md:text-7xl font-bold text-outline leading-none mb-4 select-none" dir="ltr">
+          {String(index + 1).padStart(2, '0')}
+        </p>
+        {project.impact && (
+          <span className="inline-block px-3 py-1 rounded-full text-xs font-semibold bg-[rgb(var(--primary))]/10 text-[rgb(var(--primary))] border border-[rgb(var(--primary))]/25 mb-3">
+            {project.impact}
+          </span>
+        )}
+        <h3 className="font-display text-2xl md:text-3xl font-bold text-[rgb(var(--foreground))] mb-3 leading-tight">
+          {project.title}
+        </h3>
+        <p className="text-[rgb(var(--muted-foreground))] leading-relaxed mb-5">
+          {project.description}
+        </p>
+        <div className="flex flex-wrap gap-3 mb-6 text-lg">
+          {project.tags.slice(0, 6).map((tech) => (
+            <span key={tech} title={tech}>
+              {getTechIcon(tech)}
+            </span>
+          ))}
+        </div>
+        <div className="flex flex-wrap gap-3">
+          {caseStudyHref && (
+            <a
+              href={caseStudyHref}
+              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl font-semibold text-sm bg-[rgb(var(--primary))]/10 text-[rgb(var(--primary))] border border-[rgb(var(--primary))]/30 hover:bg-[rgb(var(--primary))]/20 transition-colors">
+              {t('projects.modal.case_study')}
+            </a>
+          )}
+          {project.live && project.live !== '#' && (
+            <a
+              href={project.live}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl font-semibold text-sm border border-[rgb(var(--border-control))] text-[rgb(var(--foreground))] hover:border-[rgb(var(--primary))] hover:text-[rgb(var(--primary))] transition-colors">
+              <FaExternalLinkAlt className="text-xs" />
+              {t('projects.modal.live_link')}
+            </a>
+          )}
+          <button
+            type="button"
+            onClick={() => onClick(project)}
+            className="inline-flex items-center px-5 py-2.5 rounded-xl font-semibold text-sm text-[rgb(var(--muted-foreground))] hover:text-[rgb(var(--foreground))] transition-colors">
+            {t('projects.view_details')}
+          </button>
+        </div>
+      </div>
+    </motion.article>
+  );
+};
+
+const Projects = () => {
+  const { t, i18n } = useTranslation();
+  const isArabic = i18n.language === 'ar';
   // Content comes from the local i18n bundle, so there is nothing to wait for.
   const [loading] = useState(false);
   const [filter, setFilter] = useState('All');
@@ -924,29 +994,44 @@ const Projects = () => {
           </div>
         </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8">
-          {loading ? (
-            Array.from({ length: 6 }).map((_, index) => (
-              <ProjectSkeleton key={index} index={index} />
-            ))
-          ) : visibleProjects.length > 0 ? (
-            visibleProjects.map((project, index) => (
-              <ProjectCard
+        {isDefaultView && !showArchive ? (
+          /* Curated view: editorial rows, one flagship per row. */
+          <div className="space-y-20 lg:space-y-28 max-w-6xl mx-auto">
+            {visibleProjects.map((project, index) => (
+              <FeaturedRow
                 key={project.slug}
                 project={project}
                 index={index}
                 onClick={setSelectedProject}
+                isArabic={isArabic}
               />
-            ))
-          ) : (
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              className="col-span-full flex flex-col items-center justify-center py-20 text-[rgb(var(--muted-foreground))]">
-              <p className="text-xl">{t('projects.no_results')}</p>
-            </motion.div>
-          )}
-        </div>
+            ))}
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8">
+            {loading ? (
+              Array.from({ length: 6 }).map((_, index) => (
+                <ProjectSkeleton key={index} index={index} />
+              ))
+            ) : visibleProjects.length > 0 ? (
+              visibleProjects.map((project, index) => (
+                <ProjectCard
+                  key={project.slug}
+                  project={project}
+                  index={index}
+                  onClick={setSelectedProject}
+                />
+              ))
+            ) : (
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                className="col-span-full flex flex-col items-center justify-center py-20 text-[rgb(var(--muted-foreground))]">
+                <p className="text-xl">{t('projects.no_results')}</p>
+              </motion.div>
+            )}
+          </div>
+        )}
 
         {/* Archive toggle — only meaningful in the curated default view */}
         {isDefaultView && (

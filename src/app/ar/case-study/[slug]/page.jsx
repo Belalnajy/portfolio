@@ -17,6 +17,18 @@ export async function generateMetadata({ params }) {
   return caseStudyMetadata(slug, 'ar');
 }
 
+// Previous/next neighbours in registry order, wrapping at the ends, so every
+// case study leads to another one.
+const neighbours = (slug) => {
+  const index = CASE_STUDY_SLUGS.indexOf(slug);
+  const at = (offset) =>
+    CASE_STUDY_SLUGS[(index + offset + CASE_STUDY_SLUGS.length) % CASE_STUDY_SLUGS.length];
+  return {
+    prev: { slug: at(-1), name: CASE_STUDIES[at(-1)].name },
+    next: { slug: at(1), name: CASE_STUDIES[at(1)].name },
+  };
+};
+
 export default async function ArabicPage({ params }) {
   const { slug } = await params;
   const narrative = await loadNarrative(slug);
@@ -31,7 +43,7 @@ export default async function ArabicPage({ params }) {
           dangerouslySetInnerHTML={{ __html: JSON.stringify(block) }}
         />
       ))}
-      <CaseStudyPageClient slug={slug} narrative={narrative} />
+      <CaseStudyPageClient slug={slug} narrative={narrative} nav={neighbours(slug)} />
     </div>
   );
 }

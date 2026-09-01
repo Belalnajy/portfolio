@@ -1,10 +1,13 @@
-import { Inter, Cairo } from 'next/font/google';
+import { Inter, Cairo, Space_Grotesk } from 'next/font/google';
 import { Analytics } from '@vercel/analytics/next';
 import { SITE_URL } from '../lib/site';
 import './globals.css';
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-inter' });
 const cairo = Cairo({ subsets: ['arabic'], variable: '--font-cairo' });
+// Display face for headlines and the hero wordmark; Cairo covers Arabic
+// display duty since Space Grotesk has no Arabic glyphs.
+const spaceGrotesk = Space_Grotesk({ subsets: ['latin'], variable: '--font-display' });
 
 export { SITE_URL } from '../lib/site';
 
@@ -180,7 +183,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en" suppressHydrationWarning>
       <body
-        className={`${inter.variable} ${cairo.variable} antialiased`}
+        className={`${inter.variable} ${cairo.variable} ${spaceGrotesk.variable} antialiased`}
         suppressHydrationWarning
       >
         <script dangerouslySetInnerHTML={{ __html: THEME_INIT }} />

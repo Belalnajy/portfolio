@@ -18,9 +18,8 @@ import Skills from './components/Skills';
 import Contact from './components/Contact';
 import ScrollProgress from './components/ScrollProgress';
 import Notification from './components/Notification';
-import CustomCursor from './components/CustomCursor';
-import AnimatedStats from './components/AnimatedStats';
 import WhatsAppButton from './components/WhatsAppButton';
+import CommandPalette from './components/CommandPalette';
 import Certifications from './components/Certifications';
 import Services from './components/Services';
 import LazyMount from './components/LazyMount';
@@ -34,41 +33,6 @@ import FaqAssistant from './components/FaqAssistant';
 const LaptopShowcase3D = dynamic(() => import('./components/LaptopShowcase3D'), {
   ssr: false,
 });
-
-// tsparticles is ~280KB of decoration. It mounts only on desktop, only for
-// visitors who welcome motion, and only once the page has loaded and gone
-// idle, so it never competes with the hero image for the first paint.
-const ParticlesBackground = dynamic(() => import('./components/ParticlesBackground'), {
-  ssr: false,
-});
-
-const DeferredParticles = () => {
-  const [show, setShow] = useState(false);
-
-  useEffect(() => {
-    if (!window.matchMedia('(min-width: 768px)').matches) return;
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-
-    let idleId;
-    const schedule = () => {
-      idleId =
-        'requestIdleCallback' in window
-          ? window.requestIdleCallback(() => setShow(true), { timeout: 4000 })
-          : window.setTimeout(() => setShow(true), 2000);
-    };
-    if (document.readyState === 'complete') schedule();
-    else window.addEventListener('load', schedule, { once: true });
-
-    return () => {
-      window.removeEventListener('load', schedule);
-      if (idleId === undefined) return;
-      if ('cancelIdleCallback' in window) window.cancelIdleCallback(idleId);
-      else clearTimeout(idleId);
-    };
-  }, []);
-
-  return show ? <ParticlesBackground /> : null;
-};
 
 function AppContent({ pageLang }) {
   const [notification, setNotification] = useState({
@@ -143,8 +107,9 @@ function AppContent({ pageLang }) {
           blobs, which otherwise let the page pan sideways on phones in RTL.
           `clip` rather than `hidden` so no scroll container is created. */}
       <div className="min-h-screen bg-[rgb(var(--background))] text-[rgb(var(--foreground))] transition-colors duration-300 relative overflow-x-clip">
-        <CustomCursor />
-        <DeferredParticles />
+        {/* One quiet film-grain layer instead of a particles canvas. */}
+        <div className="grain-overlay" aria-hidden="true" />
+        <CommandPalette />
         <DarkModeToggle />
         <WhatsAppButton />
         <ScrollProgress />
@@ -175,7 +140,6 @@ function AppContent({ pageLang }) {
           <BrandLogos />
           <Skills />
           <InteractiveTimeline />
-          <AnimatedStats />
           <Certifications />
           {/* Services carries the "how I work" process strip (#process). */}
           <Services />
