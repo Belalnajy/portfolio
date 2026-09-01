@@ -9,6 +9,7 @@ import ar from '../../../../locales/ar';
 export default function CaseStudyPageClient({ slug, narrative, nav }) {
   return (
     <CaseStudy
+      slug={slug}
       {...CASE_STUDIES[slug]}
       narrative={narrative}
       nav={nav}

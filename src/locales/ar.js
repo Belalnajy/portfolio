@@ -20,6 +20,7 @@ const ar = {
         freelance_rating: '١٠٠٪ تقييمات إيجابية من العملاء',
         freelance_platforms: 'خمسات · مستقل · نفذلي',
         hire_me: 'اشتغل معايا في مشروعك',
+        hire_me_b: 'اطلب تقييم مجاني لمشروعك',
         role_line: 'مهندس برمجيات — مطور Full-Stack',
         now_label: 'حالياً',
         now_value: 'مهندس برمجيات @ ezSec Inc',
@@ -82,6 +83,7 @@ const ar = {
         view_all: 'استكشف كل الـ {{count}} مشروعاً',
         show_all: 'عرض الأرشيف الكامل ({{count}} مشروعاً)',
         show_featured: 'عرض المشاريع المميزة فقط',
+        load_more: 'عرض المزيد (باقي {{count}})',
         featured_note: 'مجموعة مختارة بعناية — الأرشيف الكامل على بُعد ضغطة واحدة.',
         categories: {
           all: 'الكل',

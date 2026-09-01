@@ -1,5 +1,5 @@
 "use client";
-import { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect, useMemo, useRef } from 'react';
 import Image from 'next/image';
 import { motion, AnimatePresence } from 'framer-motion';
 import { REVEAL_VIEWPORT, LONG_LIST_VIEWPORT, revealDelay, REVEAL_DURATION } from '../lib/motion';
@@ -281,6 +281,7 @@ const FeaturedRow = ({ project, index, onClick, isArabic }) => {
               sizes="(min-width: 1024px) 640px, 100vw"
               placeholder={cover.blur ? 'blur' : 'empty'}
               blurDataURL={cover.blur}
+              style={{ viewTransitionName: `cover-${project.slug}` }}
               className="w-full h-auto rounded-lg transition-transform duration-500 group-hover:scale-[1.015]"
             />
           </div>
@@ -340,6 +341,10 @@ const FeaturedRow = ({ project, index, onClick, isArabic }) => {
   );
 };
 
+// Grid pages render in steps of this size; a sentinel near the bottom of the
+// grid loads the next step, so 30+ cards never mount (or decode images) at once.
+const GRID_PAGE_SIZE = 12;
+
 /**
  * variant="home": the four flagship editorial rows plus a link into /work —
  * no filters, search or archive. variant="full" (default) is the complete
@@ -355,6 +360,13 @@ const Projects = ({ variant = 'full' }) => {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedProject, setSelectedProject] = useState(null);
   const [showArchive, setShowArchive] = useState(false);
+  const [gridLimit, setGridLimit] = useState(GRID_PAGE_SIZE);
+  const sentinelRef = useRef(null);
+
+  // A new filter, search or archive toggle starts the grid from page one again.
+  useEffect(() => {
+    setGridLimit(GRID_PAGE_SIZE);
+  }, [filter, searchTerm, showArchive]);
 
   // Lock scroll when modal is open
   useEffect(() => {
@@ -941,6 +953,27 @@ const Projects = ({ variant = 'full' }) => {
       ? filteredProjects.filter((project) => project.featured)
       : filteredProjects;
 
+  const isGridView = !isHome && !(isDefaultView && !showArchive);
+  const gridProjects = isGridView
+    ? visibleProjects.slice(0, gridLimit)
+    : visibleProjects;
+  const hasMoreGrid = isGridView && visibleProjects.length > gridLimit;
+
+  // Load the next grid page when the sentinel scrolls near the viewport.
+  useEffect(() => {
+    if (!hasMoreGrid || !sentinelRef.current) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setGridLimit((prev) => prev + GRID_PAGE_SIZE);
+        }
+      },
+      { rootMargin: '600px 0px' },
+    );
+    observer.observe(sentinelRef.current);
+    return () => observer.disconnect();
+  }, [hasMoreGrid]);
+
   return (
     <section id="projects" className="py-20 relative min-h-screen">
       <div className="container mx-auto px-4 relative z-10">
@@ -1017,17 +1050,19 @@ const Projects = ({ variant = 'full' }) => {
             ))}
           </div>
         ) : (
+          <>
           <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8">
             {loading ? (
               Array.from({ length: 6 }).map((_, index) => (
                 <ProjectSkeleton key={index} index={index} />
               ))
-            ) : visibleProjects.length > 0 ? (
-              visibleProjects.map((project, index) => (
+            ) : gridProjects.length > 0 ? (
+              gridProjects.map((project, index) => (
                 <ProjectCard
                   key={project.slug}
                   project={project}
-                  index={index}
+                  // Stagger within the freshly loaded page, not the whole list.
+                  index={index % GRID_PAGE_SIZE}
                   onClick={setSelectedProject}
                 />
               ))
@@ -1040,6 +1075,20 @@ const Projects = ({ variant = 'full' }) => {
               </motion.div>
             )}
           </div>
+          {/* Progressive-load sentinel: also a real button, so keyboard and
+              find-in-page users are not stuck with only the first page. */}
+          {hasMoreGrid && (
+            <div ref={sentinelRef} className="mt-12 flex justify-center">
+              <button
+                onClick={() => setGridLimit((prev) => prev + GRID_PAGE_SIZE)}
+                className="px-8 py-3 rounded-full border border-[rgb(var(--border))] bg-[rgb(var(--muted))]/30 hover:border-[rgb(var(--primary))] hover:text-[rgb(var(--primary))] transition-colors text-sm font-semibold text-[rgb(var(--foreground))]">
+                {t('projects.load_more', {
+                  count: visibleProjects.length - gridLimit,
+                })}
+              </button>
+            </div>
+          )}
+          </>
         )}
 
         {/* Home: one link into the full archive page */}

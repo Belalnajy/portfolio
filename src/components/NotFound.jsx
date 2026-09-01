@@ -1,173 +1,61 @@
 "use client";
-import { motion } from "framer-motion";
-import Link from "next/link";
-import { FaHome, FaRocket, FaExclamationTriangle } from "react-icons/fa";
+import Link from 'next/link';
+import { FaHome, FaLayerGroup, FaEnvelope } from 'react-icons/fa';
 
+/**
+ * On-brand 404: the display type does the talking. Static and bilingual —
+ * a not-found page has no locale context, so both languages get a line.
+ */
 const NotFound = () => {
   return (
     <div className="min-h-screen flex items-center justify-center relative overflow-hidden bg-[rgb(var(--background))]">
-      {/* Animated Background */}
-      <div className="absolute inset-0 w-full h-full overflow-hidden">
-        {/* Animated Gradient Orbs */}
-        <div className="absolute top-0 -left-4 w-96 h-96 bg-[rgb(var(--destructive))] rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob" />
-        <div className="absolute top-0 -right-4 w-96 h-96 bg-[rgb(var(--accent))] rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-2000" />
-        <div className="absolute -bottom-8 left-20 w-96 h-96 bg-[rgb(var(--accent))] rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-4000" />
+      <div className="grain-overlay" aria-hidden="true" />
+      <div
+        className="absolute inset-0 dot-grid [mask-image:radial-gradient(ellipse_60%_50%_at_50%_45%,black,transparent)]"
+        aria-hidden="true"
+      />
+      <div className="absolute -top-32 start-1/3 w-[30rem] h-[30rem] bg-[rgb(var(--accent))]/8 rounded-full blur-[130px] pointer-events-none" aria-hidden="true" />
 
-        {/* Grid Pattern */}
-        <div className="absolute inset-0 w-full h-full bg-[radial-gradient(#dc2626_1px,transparent_1px)] bg-[size:30px_30px] opacity-10" />
-      </div>
+      <div className="container mx-auto px-6 relative z-10 text-center py-24">
+        <p className="font-display font-bold leading-none select-none mb-6" aria-hidden="true">
+          <span className="block text-[7rem] sm:text-[11rem] text-outline">404</span>
+        </p>
 
-      {/* Content */}
-      <div className="container mx-auto px-6 relative z-10">
-        <div className="text-center">
-          {/* 404 Animation */}
-          <motion.div
-            initial={{ scale: 0.5, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            transition={{ duration: 0.5 }}
-            className="mb-8">
-            <motion.h1
-              className="text-[150px] md:text-[250px] font-bold leading-none bg-gradient-to-r from-[rgb(var(--accent))] to-[rgb(var(--accent-hover))] bg-clip-text text-transparent"
-              animate={{
-                textShadow: [
-                  "0 0 20px rgba(239, 68, 68, 0.5)",
-                  "0 0 40px rgba(239, 68, 68, 0.8)",
-                  "0 0 20px rgba(239, 68, 68, 0.5)",
-                ],
-              }}
-              transition={{ duration: 2, repeat: Infinity }}>
-              404
-            </motion.h1>
-          </motion.div>
+        <h1 className="font-display text-2xl sm:text-4xl font-bold text-[rgb(var(--foreground))] mb-3">
+          This page doesn&apos;t exist
+        </h1>
+        <p className="text-lg text-[rgb(var(--muted-foreground))] mb-1" dir="rtl" lang="ar">
+          الصفحة دي مش موجودة — بس الشغل الحقيقي موجود تحت 👇
+        </p>
+        <p className="text-[rgb(var(--muted-foreground))] mb-10">
+          The work, however, very much does.
+        </p>
 
-          {/* Warning Icon */}
-          <motion.div
-            initial={{ y: -20, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            transition={{ delay: 0.3 }}
-            className="mb-6">
-            <motion.div
-              animate={{
-                rotate: [0, 10, -10, 10, 0],
-                scale: [1, 1.1, 1],
-              }}
-              transition={{ duration: 2, repeat: Infinity }}
-              className="inline-block">
-              <FaExclamationTriangle className="text-6xl text-[rgb(var(--accent))]" />
-            </motion.div>
-          </motion.div>
-
-          {/* Error Message */}
-          <motion.div
-            initial={{ y: 20, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            transition={{ delay: 0.5 }}
-            className="mb-8">
-            <h2 className="text-4xl md:text-5xl font-bold text-[rgb(var(--foreground))] mb-4">
-              Oops! Page Not Found
-            </h2>
-            <p className="text-xl text-[rgb(var(--muted-foreground))] max-w-2xl mx-auto mb-2">
-              The page you're looking for seems to have wandered off into the
-              digital void.
-            </p>
-            <p className="text-lg text-[rgb(var(--muted-foreground))]">
-              Don't worry, even the best developers get lost sometimes! 🚀
-            </p>
-          </motion.div>
-
-          {/* Animated Code Block */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.7 }}
-            className="mb-12 max-w-md mx-auto">
-            <div className="glass-card p-6 rounded-xl text-left">
-              <div className="flex items-center space-x-2 mb-3">
-                <div className="w-3 h-3 rounded-full bg-[rgb(var(--destructive))]" />
-                <div className="w-3 h-3 rounded-full bg-[rgb(var(--accent))]" />
-                <div className="w-3 h-3 rounded-full bg-[rgb(var(--success))]" />
-              </div>
-              <code className="text-sm text-[rgb(var(--foreground))] font-mono">
-                <span className="text-[rgb(var(--accent-hover))]">if</span>
-                <span className="text-[rgb(var(--on-scrim))]"> (</span>
-                <span className="text-[rgb(var(--accent))]">pageNotFound</span>
-                <span className="text-[rgb(var(--on-scrim))]">) {"{"}</span>
-                <br />
-                <span className="text-[rgb(var(--on-scrim))] ml-4">
-                  return{" "}
-                  <span className="text-[rgb(var(--success))]">"Go back home!"</span>;
-                </span>
-                <br />
-                <span className="text-[rgb(var(--on-scrim))]">{"}"}</span>
-              </code>
-            </div>
-          </motion.div>
-
-          {/* Action Buttons */}
-          <motion.div
-            initial={{ y: 20, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            transition={{ delay: 0.9 }}
-            className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-            <Link href="/">
-              <motion.button
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className="flex items-center space-x-2 bg-gradient-to-r from-[rgb(var(--accent))] to-[rgb(var(--accent-hover))] text-[rgb(var(--accent-contrast))] px-8 py-4 rounded-lg font-semibold shadow-lg hover:shadow-xl transition-all">
-                <FaHome />
-                <span>Go Back Home</span>
-              </motion.button>
-            </Link>
-
-            <Link href="/#contact">
-              <motion.button
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className="flex items-center space-x-2 border-2 border-[rgb(var(--accent))] text-[rgb(var(--accent))] px-8 py-4 rounded-lg font-semibold hover:bg-[rgb(var(--accent))] hover:text-[rgb(var(--accent-contrast))] transition-all">
-                <FaRocket />
-                <span>Contact Support</span>
-              </motion.button>
-            </Link>
-          </motion.div>
-
-          {/* Fun Fact */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 1.1 }}
-            className="mt-12">
-            <p className="text-[rgb(var(--muted-foreground))] text-sm">
-              💡 Fun Fact: 404 errors got their name from room 404 at CERN,
-              where the web was born!
-            </p>
-          </motion.div>
+        <div className="flex flex-col sm:flex-row gap-3 justify-center items-center mb-10">
+          <Link
+            href="/"
+            className="inline-flex items-center gap-2 min-h-[48px] px-7 rounded-xl font-semibold bg-[rgb(var(--primary))] text-[rgb(var(--accent-contrast))] hover:bg-[rgb(var(--primary))]/90 shadow-lg transition-all active:scale-[0.98]">
+            <FaHome className="text-sm" />
+            Home
+          </Link>
+          <Link
+            href="/work"
+            className="inline-flex items-center gap-2 min-h-[48px] px-7 rounded-xl font-semibold border border-[rgb(var(--border-control))] text-[rgb(var(--foreground))] hover:border-[rgb(var(--primary))] hover:text-[rgb(var(--primary))] transition-colors">
+            <FaLayerGroup className="text-sm" />
+            Work
+          </Link>
+          <Link
+            href="/#contact"
+            className="inline-flex items-center gap-2 min-h-[48px] px-7 rounded-xl font-semibold text-[rgb(var(--muted-foreground))] hover:text-[rgb(var(--foreground))] transition-colors">
+            <FaEnvelope className="text-sm" />
+            Contact
+          </Link>
         </div>
-      </div>
 
-      {/* Floating Elements */}
-      {[...Array(15)].map((_, i) => (
-        <motion.div
-          key={i}
-          className="absolute w-2 h-2 bg-gradient-to-r from-[rgb(var(--accent))] to-[rgb(var(--accent-hover))] rounded-full"
-          style={{
-            left: `${Math.random() * 100}%`,
-            top: `${Math.random() * 100}%`,
-          }}
-          initial={{
-            opacity: 0,
-          }}
-          animate={{
-            y: [0, Math.random() * 200 - 100],
-            x: [0, Math.random() * 200 - 100],
-            opacity: [0, 1, 0],
-          }}
-          transition={{
-            duration: Math.random() * 5 + 3,
-            repeat: Infinity,
-            delay: Math.random() * 2,
-          }}
-        />
-      ))}
+        <p className="text-xs font-mono text-[rgb(var(--muted-foreground))]/60" dir="ltr">
+          HTTP 404 · try <kbd className="px-1.5 py-0.5 rounded border border-[rgb(var(--border))]">⌘K</kbd> on any page to jump anywhere
+        </p>
+      </div>
     </div>
   );
 };

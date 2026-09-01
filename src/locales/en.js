@@ -20,6 +20,7 @@ const en = {
         freelance_rating: '100% positive client reviews',
         freelance_platforms: 'Khamsat · Mostaql · Nafezly',
         hire_me: 'Hire me for a project',
+        hire_me_b: 'Get a free project estimate',
         role_line: 'Software Engineer — Full-Stack Developer',
         now_label: 'Now',
         now_value: 'Software Engineer @ ezSec Inc',
@@ -82,6 +83,7 @@ const en = {
         view_all: 'Explore all {{count}} projects',
         show_all: 'Show the full archive ({{count}} projects)',
         show_featured: 'Show featured only',
+        load_more: 'Load more ({{count}} remaining)',
         featured_note: 'A hand-picked selection — the full archive is one click away.',
         categories: {
           all: 'All',
