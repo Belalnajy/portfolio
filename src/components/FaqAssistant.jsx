@@ -427,7 +427,7 @@ const FaqAssistant = () => {
   };
 
   return (
-    <div className="fixed bottom-[calc(max(1rem,env(safe-area-inset-bottom))+3.75rem)] md:bottom-24 right-4 md:right-6 z-[9999]">
+    <div className="fixed bottom-[calc(max(1rem,env(safe-area-inset-bottom))+8.25rem)] md:bottom-24 right-4 md:right-6 z-[9999]">
       <AnimatePresence>
         {isOpen && (
           <motion.div

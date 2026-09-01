@@ -17,6 +17,7 @@ import WhatsAppButton from './WhatsAppButton';
 import CommandPalette from './CommandPalette';
 import DarkModeToggle from './DarkModeToggle';
 import FaqAssistant from './FaqAssistant';
+import MobileTabBar from './MobileTabBar';
 
 /**
  * Everything a page needs from the shell: toasts and the CV download, without
@@ -118,6 +119,9 @@ const ShellContent = ({ pageLang, children }) => {
           <main className="relative z-10">{children}</main>
           <FaqAssistant />
           <Footer />
+          {/* Keeps the footer's last line clear of the phone tab bar. */}
+          <div className="h-16 md:hidden" aria-hidden="true" />
+          <MobileTabBar />
         </div>
       </SiteContext.Provider>
     </MotionConfig>

@@ -33,7 +33,7 @@ const WhatsAppButton = () => {
       whileHover={{ scale: 1.1 }}
       whileTap={{ scale: 0.9 }}
       style={{ backgroundColor: brandColor('WhatsApp') }}
-      className="fixed right-4 md:right-6 bottom-[max(1rem,env(safe-area-inset-bottom))] md:bottom-6 z-[9999] w-14 h-14 rounded-full flex items-center justify-center text-[rgb(var(--scrim))] shadow-lg shadow-[#25D366]/40 group">
+      className="fixed right-4 md:right-6 bottom-[calc(max(1rem,env(safe-area-inset-bottom))+4.5rem)] md:bottom-6 z-[9999] w-14 h-14 rounded-full flex items-center justify-center text-[rgb(var(--scrim))] shadow-lg shadow-[#25D366]/40 group">
       <FaWhatsapp size={30} />
 
       {/* Tooltip */}
