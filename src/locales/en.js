@@ -79,6 +79,7 @@ const en = {
         search_placeholder: 'Search projects by name...',
         no_results: 'No projects found matching your criteria',
         view_details: 'View Details',
+        view_all: 'Explore all {{count}} projects',
         show_all: 'Show the full archive ({{count}} projects)',
         show_featured: 'Show featured only',
         featured_note: 'A hand-picked selection — the full archive is one click away.',
@@ -941,6 +942,7 @@ const en = {
         services: 'Services',
         packages: 'Packages',
         testimonials: 'Testimonials',
+        now: 'Now',
         contact: 'Contact',
         download_cv: 'Download CV'
       },
@@ -954,6 +956,26 @@ const en = {
         switch_lang: 'العربية',
         hint: 'Navigate',
         open_hint: 'Press ⌘K to navigate',
+      },
+      now_page: {
+        title: 'Now',
+        subtitle: 'What I am focused on these days — updated as life changes.',
+        updated: 'Last updated: September 2026',
+        focus_title: 'Working on',
+        focus: [
+          'Software Engineer at ezSec Inc (Canada, remote): building and shipping cybersecurity software, plus the DevOps side — deploying releases to production servers and keeping them running',
+          'Indstrz, the B2B industrial procurement platform I co-founded: RFQ workflows and the real-time negotiation engine',
+          'Freelance projects for clients in Egypt and the Gulf, with a focus on Arabic-first platforms',
+        ],
+        learning_title: 'Sharpening',
+        learning: [
+          'Security engineering practices from working inside a cybersecurity company',
+          'Production infrastructure: deployment pipelines, server operations and monitoring',
+          'AI-assisted development workflows, used with review discipline',
+        ],
+        availability_title: 'Availability',
+        availability_body: 'Full-time at ezSec. Open to freelance projects with a clear scope — the fastest way to start is the contact form.',
+        availability_cta: 'Start a conversation',
       },
       footer: {
         build_line: 'Designed & engineered by Belal Nagy — Next.js 16 · Tailwind 4 · Vercel',

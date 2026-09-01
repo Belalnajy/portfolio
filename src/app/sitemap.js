@@ -17,9 +17,23 @@ const entry = (path, lastModified, priority, alternates) => ({
   },
 });
 
+const STATIC_PAGES = [
+  { path: '/work', priority: 0.9 },
+  { path: '/services', priority: 0.9 },
+  { path: '/now', priority: 0.6 },
+];
+
 export default function sitemap() {
   const home = { en: '/', ar: '/ar' };
   const entries = [entry('/', HOME_UPDATED, 1, home), entry('/ar', HOME_UPDATED, 1, home)];
+
+  for (const { path, priority } of STATIC_PAGES) {
+    const paths = { en: path, ar: `/ar${path}` };
+    entries.push(
+      entry(paths.en, HOME_UPDATED, priority, paths),
+      entry(paths.ar, HOME_UPDATED, priority, paths),
+    );
+  }
 
   for (const [slug, { updated }] of Object.entries(CASE_STUDIES)) {
     const paths = { en: `/case-study/${slug}`, ar: `/ar/case-study/${slug}` };

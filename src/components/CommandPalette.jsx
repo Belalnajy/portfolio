@@ -48,8 +48,10 @@ const CommandPalette = () => {
     const home = isArabic ? '/ar' : '';
     const sections = [
       { id: 'about', label: t('nav.about'), href: `${home}/#about` },
-      { id: 'projects', label: t('nav.projects'), href: `${home}/#projects` },
       { id: 'experience', label: t('nav.timeline'), href: `${home}/#experience` },
+      { id: 'work', label: t('nav.projects'), href: `${home}/work` },
+      { id: 'services', label: t('nav.services'), href: `${home}/services` },
+      { id: 'now', label: t('nav.now'), href: `${home}/now` },
       { id: 'testimonials', label: t('nav.testimonials'), href: `${home}/#testimonials` },
       { id: 'contact', label: t('nav.contact'), href: `${home}/#contact` },
     ].map((section) => ({ ...section, group: 'sections', icon: <FaHashtag /> }));

@@ -10,9 +10,11 @@ import {
   FaWhatsapp,
 } from 'react-icons/fa';
 import { useTranslation } from 'react-i18next';
+import { useSite } from './SiteShell';
 import { whatsappUrl } from './WhatsAppButton';
 
-const Contact = ({ showNotification }) => {
+const Contact = () => {
+  const { showNotification } = useSite();
   const { t, i18n } = useTranslation();
   const isArabic = i18n.language === 'ar';
   const formRef = useRef();
