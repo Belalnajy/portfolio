@@ -48,6 +48,21 @@ const ShellContent = ({ pageLang, children }) => {
     }
   }, [i18n, pageLang]);
 
+  // Installable PWA: register the hand-written service worker (public/sw.js)
+  // once per page load. Production only — caching dev builds only confuses.
+  useEffect(() => {
+    if (
+      process.env.NODE_ENV !== 'production' ||
+      !('serviceWorker' in navigator)
+    ) {
+      return;
+    }
+    navigator.serviceWorker.register('/sw.js').catch(() => {
+      // Registration failing (old browser, blocked storage) costs nothing:
+      // the site simply stays a plain website.
+    });
+  }, []);
+
   useEffect(() => {
     document.dir = i18n.dir();
     document.documentElement.lang = i18n.language;
