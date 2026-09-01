@@ -1,8 +1,10 @@
 /**
- * Route-level facts for each long-form case study. The narrative lives in the
- * translation bundles under `case_studies.<slug>`; this is only what the page
- * shell and the share image need. Both /case-study/<slug> and /ar/case-study/
- * <slug> read from here so the two never drift.
+ * Route-level facts for each long-form case study. The narrative (both
+ * languages) lives in `src/content/case-studies/<slug>.js` and is loaded per
+ * page; this registry is only what page shells, share images, the sitemap and
+ * the project-card links need — small enough to import from client code.
+ * Both /case-study/<slug> and /ar/case-study/<slug> read from here so the two
+ * never drift.
  */
 export const CASE_STUDIES = {
   bilqalam: {
@@ -32,6 +34,218 @@ export const CASE_STUDIES = {
     liveUrl: 'https://pro-fleet.vercel.app/',
     stack: ['Next.js', 'TypeScript', 'Prisma', 'Socket.io', 'PostgreSQL', 'Leaflet'],
     updated: '2026-08-30',
+  },
+  medicta: {
+    name: 'Medicta',
+    image: '/medicta.webp',
+    liveUrl: 'https://play.google.com/store/apps/details?id=com.medicta',
+    stack: ['React Native', 'Android', 'REST API', 'UI/UX Redesign'],
+    updated: '2026-08-31',
+  },
+  toyo228: {
+    name: 'Toyo228',
+    image: '/toyo228.webp',
+    liveUrl: 'http://toyo228.com/en',
+    stack: ['Next.js', 'NestJS', 'TypeORM', 'PostgreSQL', 'TypeScript', 'Turborepo'],
+    updated: '2026-08-31',
+  },
+  injaz: {
+    name: 'Injaz',
+    image: '/injaz.webp',
+    liveUrl: 'https://lms-injaz.com/',
+    stack: ['Django', 'PostgreSQL', 'Python', 'Celery', 'Redis', 'MyFatoorah'],
+    updated: '2026-08-31',
+  },
+  hcholding: {
+    name: 'HC Holding',
+    image: '/hcholding.webp',
+    liveUrl: 'https://lms-hcholding.org/',
+    stack: ['Django', 'PostgreSQL', 'Python', 'Celery', 'Redis', 'MyFatoorah'],
+    updated: '2026-08-31',
+  },
+  mada: {
+    name: 'Mada Education',
+    image: '/mada.webp',
+    liveUrl: 'https://mada-education.com/',
+    stack: ['Django', 'PostgreSQL', 'Python', 'Celery', 'Redis', 'Tailwind'],
+    updated: '2026-08-31',
+  },
+  mutlq: {
+    name: 'Mutlq',
+    image: '/mutlq.webp',
+    liveUrl: 'https://mutlq.org/',
+    stack: ['Django', 'PostgreSQL', 'Tailwind', 'JavaScript'],
+    updated: '2026-08-31',
+  },
+  motors: {
+    name: 'Motors',
+    image: '/motors.webp',
+    liveUrl: 'https://motorksa.org/',
+    stack: ['Next.js', 'NestJS', 'TypeORM', 'PostgreSQL', 'TypeScript', 'Multer'],
+    updated: '2026-08-31',
+  },
+  waferlee: {
+    name: 'Waferlee',
+    image: '/waferlee.webp',
+    liveUrl: 'https://waferlee.ae',
+    stack: ['Next.js', 'NestJS', 'TypeORM', 'PostgreSQL', 'Tailwind', 'Radix UI'],
+    updated: '2026-08-31',
+  },
+  baserah: {
+    name: 'Baserah AI',
+    image: '/baserah.webp',
+    stack: ['FastAPI', 'Python', 'MongoDB', 'AI', 'Gemini'],
+    updated: '2026-08-31',
+  },
+  sf_portal: {
+    name: 'S&F Digital Portfolio',
+    image: '/smartfast.webp',
+    liveUrl: 'https://smart-fast.com/',
+    stack: ['React', 'TypeScript', 'Vite', 'Radix UI', 'Tailwind', 'Django'],
+    updated: '2026-08-31',
+  },
+  journal: {
+    name: 'Scientific Journal System',
+    image: '/journal.webp',
+    liveUrl: 'https://upafa-edu.net/',
+    stack: ['React', 'NestJS', 'TypeORM', 'PostgreSQL', 'TypeScript', 'Nx Monorepo'],
+    updated: '2026-08-31',
+  },
+  clinic: {
+    name: 'Clinic Management System',
+    image: '/clinic.webp',
+    liveUrl: 'https://clinic-project-2.vercel.app/',
+    stack: ['React', 'Django', 'PostgreSQL', 'Tailwind', 'AI'],
+    updated: '2026-08-31',
+  },
+  manqla: {
+    name: 'Manqla',
+    image: '/manqla.webp',
+    liveUrl: 'https://www.manqla.com/',
+    stack: ['React', 'Tailwind', 'TypeScript'],
+    updated: '2026-08-31',
+  },
+  orca: {
+    name: 'Orca',
+    image: '/orca.webp',
+    liveUrl: 'https://orcastore.vercel.app/',
+    stack: ['Next.js', 'Tailwind', 'Node.js', 'Express.js', 'MongoDB'],
+    updated: '2026-08-31',
+  },
+  amarna: {
+    name: 'Amarna Travel',
+    image: '/amarna.webp',
+    liveUrl: 'https://amarna-travel.trekksoft.com/ar',
+    stack: ['CMS', 'RTL', 'Customization'],
+    updated: '2026-08-31',
+  },
+  sonomedix: {
+    name: 'Sonomedix News',
+    image: '/sonomedix.webp',
+    liveUrl: 'https://sonomedix.cloud/',
+    stack: ['React', 'Tailwind', 'Node.js', 'Express.js', 'MongoDB'],
+    updated: '2026-08-31',
+  },
+  nextstop: {
+    name: 'NextStop Visa',
+    image: '/nextstop.webp',
+    liveUrl: 'https://next-stop-project-nine.vercel.app/',
+    stack: ['Next.js', 'Tailwind', 'React'],
+    updated: '2026-08-31',
+  },
+  kmbc: {
+    name: 'KMBC',
+    image: '/kmbc.webp',
+    liveUrl: 'https://www.kmbc-kw.com/',
+    stack: ['Next.js', 'Tailwind', 'Framer Motion', 'React'],
+    updated: '2026-08-31',
+  },
+  rabzan: {
+    name: 'Rabzan Trading',
+    image: '/rabzan.webp',
+    liveUrl: 'https://www.rabzan.com/',
+    stack: ['React', 'Tailwind', 'JavaScript'],
+    updated: '2026-08-31',
+  },
+  sems: {
+    name: 'Tahsili Platform',
+    image: '/sems.webp',
+    liveUrl: 'https://sems-project.vercel.app/',
+    stack: ['Next.js', 'Tailwind', 'React', 'TypeScript'],
+    updated: '2026-08-31',
+  },
+  quotemate: {
+    name: 'QuoteMate',
+    image: '/quotemate.webp',
+    liveUrl: 'https://quote-mateapp.vercel.app/',
+    stack: ['Next.js', 'Tailwind', 'AI', 'OpenAI', 'React'],
+    updated: '2026-08-31',
+  },
+  dmagni: {
+    name: 'Dmagni',
+    image: '/dmagni.webp',
+    liveUrl: 'https://dmagni-project.vercel.app/',
+    stack: ['Next.js', 'Tailwind', 'AI', 'React'],
+    updated: '2026-08-31',
+  },
+  cme: {
+    name: 'Itimad Tibbi',
+    image: '/cme.webp',
+    liveUrl: 'https://cmehours.online/',
+    stack: ['Next.js', 'Tailwind', 'React', 'PostgreSQL'],
+    updated: '2026-08-31',
+  },
+  dpms: {
+    name: 'DiaMonitor',
+    image: '/dpms.webp',
+    liveUrl: 'https://dpms-rust.vercel.app/',
+    stack: ['Next.js', 'Tailwind', 'React', 'PostgreSQL'],
+    updated: '2026-08-31',
+  },
+  alva_ai: {
+    name: 'Alva AI (PULSE)',
+    image: '/alva.webp',
+    stack: ['React', 'Node.js', 'Express.js', 'OpenAI', 'Tailwind', 'Vite'],
+    updated: '2026-08-31',
+  },
+  inventory: {
+    name: 'Inventory System',
+    image: '/inventory.webp',
+    stack: ['Django', 'PostgreSQL', 'Bootstrap', 'JavaScript'],
+    updated: '2026-08-31',
+  },
+  cinemascore: {
+    name: 'CinemaScore',
+    image: '/cinemascore.webp',
+    liveUrl: 'https://movies-app-react-project-mocha.vercel.app/',
+    stack: ['React', 'Bootstrap', 'TMDB API'],
+    updated: '2026-08-31',
+  },
+  movieweb: {
+    name: 'Movie Web App',
+    image: '/movies.webp',
+    liveUrl: 'https://movieswebsiteproject.vercel.app/',
+    stack: ['HTML', 'CSS', 'JavaScript', 'jQuery', 'Tailwind'],
+    updated: '2026-08-31',
+  },
+  hms_odoo: {
+    name: 'Hospital Management',
+    image: '/HMS.webp',
+    stack: ['Odoo', 'Python', 'PostgreSQL'],
+    updated: '2026-08-31',
+  },
+  bookstore: {
+    name: 'Bookstore Web App',
+    image: '/book.webp',
+    liveUrl: 'https://bookstoredeploytest.vercel.app/',
+    stack: ['HTML', 'CSS', 'JavaScript', 'jQuery', 'Bootstrap'],
+    updated: '2026-08-31',
+  },
+  library: {
+    name: 'Library Management',
+    image: '/library.webp',
+    stack: ['Django', 'PostgreSQL', 'Python'],
+    updated: '2026-08-31',
   },
 };
 

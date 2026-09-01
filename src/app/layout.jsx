@@ -120,9 +120,12 @@ const PERSON_JSON_LD = {
   url: SITE_URL,
   image: `${SITE_URL}/hero.webp`,
   jobTitle: 'Software Engineer & Full-Stack Developer',
+  description:
+    'Full-stack developer in Alexandria, Egypt. Software Engineer at ezSec Inc (Canada, remote) and co-founder of Indstrz. 31 projects for 27 clients across Egypt and the Gulf: Next.js, Laravel, NestJS, Node.js, Django, PostgreSQL, with Arabic and RTL support in every project.',
   worksFor: {
     '@type': 'Organization',
     name: 'ezSec Inc',
+    url: 'https://web.ezsec.org/',
   },
   alumniOf: {
     '@type': 'CollegeOrUniversity',
@@ -134,6 +137,23 @@ const PERSON_JSON_LD = {
     addressCountry: 'EG',
   },
   knowsLanguage: ['en', 'ar'],
+  knowsAbout: [
+    'Next.js',
+    'React',
+    'Laravel',
+    'NestJS',
+    'Node.js',
+    'Django',
+    'Flask',
+    'PostgreSQL',
+    'TypeScript',
+    'Python',
+    'Multi-tenant architecture',
+    'Learning management systems',
+    'Arabic RTL web development',
+    'Legacy code takeover',
+    'DevOps deployment',
+  ],
   sameAs: [
     'https://github.com/Belalnajy',
     'https://linkedin.com/in/belalnajy',

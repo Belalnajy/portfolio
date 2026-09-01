@@ -62,6 +62,7 @@ import ProjectModal from './ProjectModal';
 import { useTranslation } from 'react-i18next';
 import { brandColor } from '../lib/brand-colors';
 import { coverMeta } from '../lib/cover-meta';
+import { CASE_STUDY_SLUGS } from '../lib/case-studies';
 
 export const TECH_ICONS = {
   'HTML': FaHtml5,
@@ -836,7 +837,14 @@ const Projects = () => {
         live: '#',
         category: 'Full Stack',
       },
-    ],
+    ].map((project) => ({
+      ...project,
+      // Every project in the case-study registry gets its long-form page,
+      // driven by the same source that builds the routes and the sitemap.
+      caseStudy: CASE_STUDY_SLUGS.includes(project.slug)
+        ? `/case-study/${project.slug}`
+        : project.caseStudy,
+    })),
     [t],
   );
 

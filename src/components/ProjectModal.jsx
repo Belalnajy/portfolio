@@ -34,7 +34,7 @@ const useIsMobile = () => {
 };
 
 const ProjectModal = ({ project, isOpen, onClose }) => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const isMobile = useIsMobile();
   const dragControls = useDragControls();
   const dialogRef = useRef(null);
@@ -260,7 +260,7 @@ const ProjectModal = ({ project, isOpen, onClose }) => {
                 <div className="shrink-0 flex flex-col sm:flex-row gap-3 px-4 sm:px-8 py-4 border-t border-[rgb(var(--border))]/40 bg-[rgb(var(--background))]/95 backdrop-blur-xl pb-[max(1rem,env(safe-area-inset-bottom))]">
                   {project.caseStudy && (
                     <a
-                      href={project.caseStudy}
+                      href={i18n.language === 'ar' ? `/ar${project.caseStudy}` : project.caseStudy}
                       className="flex items-center justify-center gap-2 flex-1 min-h-[48px] px-4 bg-[rgb(var(--primary))]/10 text-[rgb(var(--primary))] border border-[rgb(var(--primary))]/30 hover:bg-[rgb(var(--primary))]/20 rounded-xl font-semibold transition-all active:scale-[0.98]"
                     >
                       <FaBookOpen /> {t('projects.modal.case_study')}
