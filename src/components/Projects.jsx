@@ -960,6 +960,8 @@ const Projects = ({ variant = 'full' }) => {
   const hasMoreGrid = isGridView && visibleProjects.length > gridLimit;
 
   // Load the next grid page when the sentinel scrolls near the viewport.
+  // Re-observes after every page load: the re-render can replace the sentinel
+  // node, and an observer on a detached node never fires again.
   useEffect(() => {
     if (!hasMoreGrid || !sentinelRef.current) return;
     const observer = new IntersectionObserver(
@@ -972,7 +974,7 @@ const Projects = ({ variant = 'full' }) => {
     );
     observer.observe(sentinelRef.current);
     return () => observer.disconnect();
-  }, [hasMoreGrid]);
+  }, [hasMoreGrid, gridLimit]);
 
   return (
     <section id="projects" className="py-20 relative min-h-screen">
