@@ -10,7 +10,7 @@ const logos = [
   '21-secondary-logo.webp', 'CME-logo.webp', 'DiaMonitor-logo.webp',
   'KMBC-logo.webp', 'amarna-logo.webp', 'baserah-logo.webp',
   'dmagni-logo.webp', 'indstrz-logo.webp', 'manqla-logo.webp',
-  'nextstop-logo.webp', 'profleet-logo.webp', 'quotemate-logo.webp',
+  'nextstop-logo.webp', 'opptmakers-logo.webp', 'profleet-logo.webp', 'quotemate-logo.webp',
   'rabzan-logo.svg', 'sf-logo.webp', 'sonomedix-logo.webp',
   'uduipa-logo.webp', 'upafa-edu-logo.webp', 'waferlee.webp'
 ];

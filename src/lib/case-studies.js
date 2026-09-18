@@ -7,6 +7,13 @@
  * never drift.
  */
 export const CASE_STUDIES = {
+  opptmakers: {
+    name: 'Opportunities Makers',
+    image: '/opptmakers.webp',
+    liveUrl: 'https://opptmakers.cloud/login',
+    stack: ['Next.js', 'React', 'Tailwind'],
+    updated: '2026-09-18',
+  },
   bilqalam: {
     name: 'Bilqalam Institute',
     image: '/bilqalam.webp',

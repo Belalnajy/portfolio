@@ -16,6 +16,7 @@ const InteractiveTimeline = () => {
     // reordering or inserting entries can never mis-assign a logo.
     const metadata = {
       ezsec: { type: 'work', icon: <FaBriefcase />, logo: '/logos/ezsec-logo.webp' },
+      opptmakers: { type: 'work', icon: <FaBriefcase />, logo: '/logos/opptmakers-logo.webp' },
       indstrz: { type: 'work', icon: <FaBriefcase />, logo: '/logos/indstrz-logo.webp' },
       sf: { type: 'work', icon: <FaBriefcase />, logo: '/logos/sf-logo.webp' },
       iti_instructor: { type: 'work', icon: <FaLaptopCode />, logo: '/logos/iti-logo.webp' },

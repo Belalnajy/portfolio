@@ -388,6 +388,21 @@ const Projects = ({ variant = 'full' }) => {
   const projectsData = useMemo(
     () => [
       {
+        slug: 'opptmakers',
+        featured: true,
+        title: t('projects.items.opptmakers.title'),
+        impact: t('projects.items.opptmakers.impact', { defaultValue: '' }),
+        description: t('projects.items.opptmakers.desc'),
+        image: '/opptmakers.webp',
+        tags: ['Next.js', 'React', 'Tailwind'],
+        features: t('projects.items.opptmakers.features', {
+          returnObjects: true,
+        }),
+        github: '#',
+        live: 'https://opptmakers.cloud/login',
+        category: 'Full Stack',
+      },
+      {
         slug: 'bilqalam',
         featured: true,
         title: t('projects.items.bilqalam.title'),

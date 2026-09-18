@@ -103,6 +103,19 @@ const en = {
           suite_desc: 'This platform is one deployment of a shared LMS engine I built and maintain. Each client runs its own branded instance — distinct visual identity, accreditation and content — on top of the same accredited training, payment and certification core.'
         },
         items: {
+          opptmakers: {
+            impact: 'Role-based access per employee',
+            title: 'Opportunities Makers — Client & Transaction CRM',
+            desc: 'An internal platform for a Saudi consultancy that sets up companies for foreign investors. It holds the client files and tracks every company-formation case step by step, with access scoped per employee so each one only reaches the transactions they are cleared for. Arabic-first and fully RTL.',
+            features: [
+              'Client and transaction management for company-formation cases',
+              'Step-by-step tracking of each case from first request to issued documents',
+              'Role-based access, scoped per employee',
+              'Arabic-first interface, fully RTL',
+              'Light and dark themes',
+              'Built with Next.js, React and Tailwind CSS'
+            ]
+          },
           bilqalam: {
             impact: 'Thousands of enrolled students',
             title: 'Bilqalam Institute, Online Qur’an & Arabic Academy',
@@ -560,6 +573,20 @@ const en = {
               'Working remotely as a Software Engineer at a Canadian cybersecurity company specializing in easy-to-use cyber security solutions',
               'Building, maintaining, and shipping software products end-to-end within a fully remote team',
               'Handling DevOps tasks: deploying finished software to production servers, configuring environments, and keeping services running'
+            ]
+          },
+          {
+            key: 'opptmakers',
+            title: 'Software Developer',
+            company: 'Opportunities Makers Co. (Saudi Arabia)',
+            location: 'Remote, Saudi Arabia',
+            period: '07/2026 - Present',
+            employment: 'Part-time',
+            description: [
+              'Building the internal client and transaction management platform for a consultancy that handles company formation for foreign investors in Saudi Arabia',
+              'Arabic-first, fully RTL interface with access scoped per employee',
+              'Step-by-step tracking of each formation case from first request to issued documents',
+              'Built with Next.js, React and Tailwind CSS'
             ]
           },
           {

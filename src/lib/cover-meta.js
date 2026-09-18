@@ -32,6 +32,7 @@ export const COVER_META = {
   '/mutlq.webp': { w: 1200, h: 490, blur: 'data:image/webp;base64,UklGRkoAAABXRUJQVlA4ID4AAADwAQCdASoQAAcAA4BaJQBOgCPtljlpt4AA/vMwccXj5v+GUjIP3js5s8RmZ6TgTzSAFc2wCLQd+TNHKRTAAA==' },
   '/nafzly.webp': { w: 236, h: 188, blur: 'data:image/webp;base64,UklGRooAAABXRUJQVlA4IH4AAABQAwCdASoQAA0AA4BaJbACdLoBEgNsBNBhEQFAyfXgDPnwAAD52HChctRoRVPHc45J3PBqub6j4WKOzSbdOsa6hLJ2v5VbIR8QpgVYaJ+TKOHBUFz/8R5WrtgKZVr6+kPSZNy2O+Cj/5EoYkPV/ZI1FGPPxF1xaxf2DhAsIAA=' },
   '/nextstop.webp': { w: 1200, h: 626, blur: 'data:image/webp;base64,UklGRkYAAABXRUJQVlA4IDoAAADQAQCdASoQAAgAA4BaJZACdAEPBFyBQAD+qhjDxMhALJQImeQyntgzTwpFy/gZkkC+6OgfZ8Iwt8AA' },
+  '/opptmakers.webp': { w: 1920, h: 1000, blur: 'data:image/webp;base64,UklGRjIAAABXRUJQVlA4ICYAAAAwAQCdASoQAAgAA4BaJZwAA3AA/vEf+7rbYS2tuAr7RWXEioAgAA==' },
   '/orca.webp': { w: 1200, h: 605, blur: 'data:image/webp;base64,UklGRlgAAABXRUJQVlA4IEwAAAAQAgCdASoQAAgAA4BaJYwCdAEXe+HJPBqwAP7zJk/Sv330BLzItPzy9tlMKFydE40Vtnto0329r/8HbV2Vy/gXJWG7XkGqgRy/TgAA' },
   '/profleet.webp': { w: 1200, h: 606, blur: 'data:image/webp;base64,UklGRj4AAABXRUJQVlA4IDIAAADQAQCdASoQAAgAA4BaJZwAAvc8e84JoAD+9/KbbgHK9Pq6CeEc/xM92HcneMrUmwqAAA==' },
   '/quotemate.webp': { w: 1200, h: 626, blur: 'data:image/webp;base64,UklGRkwAAABXRUJQVlA4IEAAAADQAQCdASoQAAgAA4BaJZgCdAEOurfmAAD+wHvwraXOjK24XEklYf534+bfbXElR9QKtCEbE1t9E4aNEi8TQAAA' },
