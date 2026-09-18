@@ -169,6 +169,32 @@ export const LMS_SUITE = {
   ],
 };
 
+/**
+ * The featured run is editorial, not chronological: the two projects that
+ * should be read first, then the strongest work that is actually running in
+ * production. The home page shows the first four of these, so the order here
+ * decides what most visitors ever see. Anything featured but unlisted sorts
+ * to the end rather than jumping to the front.
+ */
+const FEATURED_ORDER = [
+  'indstrz',
+  'bilqalam',
+  'injaz',
+  'opptmakers',
+  'toyo228',
+  'uduipa',
+  'profleet',
+  'medicta',
+  'motors',
+];
+
+const featuredRank = (slug) => {
+  const index = FEATURED_ORDER.indexOf(slug);
+  return index === -1 ? Number.MAX_SAFE_INTEGER : index;
+};
+
+const byFeaturedOrder = (a, b) => featuredRank(a.slug) - featuredRank(b.slug);
+
 const ProjectCard = ({ project, index, onClick }) => {
   const { t } = useTranslation();
   const cover = coverMeta(project.image);
@@ -963,9 +989,9 @@ const Projects = ({ variant = 'full' }) => {
   // looks through the complete archive so nothing becomes unreachable.
   const isDefaultView = filter === 'All' && searchTerm.trim() === '';
   const visibleProjects = isHome
-    ? projectsData.filter((project) => project.featured).slice(0, 4)
+    ? projectsData.filter((project) => project.featured).sort(byFeaturedOrder).slice(0, 4)
     : isDefaultView && !showArchive
-      ? filteredProjects.filter((project) => project.featured)
+      ? filteredProjects.filter((project) => project.featured).sort(byFeaturedOrder)
       : filteredProjects;
 
   const isGridView = !isHome && !(isDefaultView && !showArchive);
