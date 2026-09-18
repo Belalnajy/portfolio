@@ -9,7 +9,7 @@ const en = {
         name: 'Belal Nagy',
         i_am_a: 'I\'m a ',
         description_1: 'I build web platforms from zero, and take over existing codebases that need fixing. ',
-        description_2: '31 projects',
+        description_2: '36 projects',
         description_3: ' for ',
         description_4: '27 clients',
         description_5: ' across Egypt and the Gulf.',
@@ -18,7 +18,7 @@ const en = {
         download_cv: 'Download CV',
         freelance_title: 'Verified freelancer',
         freelance_rating: '100% positive client reviews',
-        freelance_platforms: 'Khamsat · Mostaql · Nafezly',
+        freelance_platforms: 'Khamsat · Nafezly',
         hire_me: 'Hire me for a project',
         hire_me_b: 'Get a free project estimate',
         role_line: 'Software Engineer — Full-Stack Developer',
@@ -911,7 +911,7 @@ const en = {
           },
           aseel_a: {
             text: 'Brother Belal, thank you for your effort. I am honored to work with you in other future projects for your good treatment and I advise everyone to deal with you. His work is perfect and excellent.',
-            role: 'Project Owner - Mostaql'
+            role: 'Project Owner'
           },
           abo_m: {
             text: 'Thank you for your efforts.',
@@ -1018,16 +1018,14 @@ const en = {
         byline: 'Belal Nagy',
       },
       footer: {
-        build_line: 'Designed & engineered by Belal Nagy — Next.js 16 · Tailwind 4 · Vercel',
         about_title: 'Belal Nagy',
-        about_text: 'I build web platforms from zero, and take over existing codebases that need fixing. 31 projects for 27 clients across Egypt and the Gulf.',
+        about_text: 'I build web platforms from zero, and take over existing codebases that need fixing. 36 projects for 27 clients across Egypt and the Gulf.',
         quick_links: 'Quick Links',
         services: 'Services',
         get_in_touch: 'Get in Touch',
         follow_me: 'Follow me on platforms',
         back_to_top: 'Back to Top',
         connect: 'Connect',
-        freelance_notice: 'Designed & Developed by Belal Nagy | Open for freelance opportunities'
       },
       notifications: {
         cv_success: 'CV downloaded successfully!',
@@ -1036,6 +1034,12 @@ const en = {
       whatsapp: {
         aria: 'Chat on WhatsApp',
         message: "Hi Belal, I found you through your portfolio and I'd like to discuss a project."
+      },
+      theme: {
+        toggle: 'Switch light or dark mode'
+      },
+      actions: {
+        contact_menu: 'Contact options'
       },
       faq: {
         title: 'Quick FAQ',

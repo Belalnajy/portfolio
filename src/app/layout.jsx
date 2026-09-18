@@ -18,13 +18,14 @@ export const OG_IMAGE = {
   url: '/og.png',
   width: 1200,
   height: 630,
-  alt: 'Belal Nagy, Full-Stack Developer. 31 projects for 27 clients.',
+  alt: 'Belal Nagy, Full-Stack Developer. 36 projects for 27 clients.',
   type: 'image/png',
 };
 
 export const metadata = {
   metadataBase: new URL(SITE_URL),
   alternates: {
+    types: { 'application/rss+xml': [{ url: '/feed.xml', title: 'Belal Nagy — Writing' }] },
     canonical: '/',
     languages: {
       en: '/',
@@ -37,7 +38,7 @@ export const metadata = {
     template: '%s | Belal Nagy',
   },
   description:
-    'I build web platforms from zero, and take over existing codebases that need fixing. 31 projects for 27 clients across Egypt and the Gulf. Full-stack developer in Alexandria: Next.js, Laravel, NestJS, Node.js, Django, PostgreSQL, with Arabic and RTL across every project.',
+    'I build web platforms from zero, and take over existing codebases that need fixing. 36 projects for 27 clients across Egypt and the Gulf. Full-stack developer in Alexandria: Next.js, Laravel, NestJS, Node.js, Django, PostgreSQL, with Arabic and RTL across every project.',
   keywords: [
     'Belal Nagy',
     'Full Stack Developer',
@@ -71,7 +72,7 @@ export const metadata = {
     alternateLocale: 'ar_SA',
     title: 'Belal Nagy | Full Stack Developer Portfolio',
     description:
-      'I build web platforms from zero, and take over existing codebases that need fixing. 31 projects for 27 clients across Egypt and the Gulf. Next.js, Laravel, NestJS, Node.js, Django, PostgreSQL.',
+      'I build web platforms from zero, and take over existing codebases that need fixing. 36 projects for 27 clients across Egypt and the Gulf. Next.js, Laravel, NestJS, Node.js, Django, PostgreSQL.',
     siteName: 'Belal Nagy Portfolio',
     images: [OG_IMAGE],
   },
@@ -124,7 +125,7 @@ const PERSON_JSON_LD = {
   image: `${SITE_URL}/hero.webp`,
   jobTitle: 'Software Engineer & Full-Stack Developer',
   description:
-    'Full-stack developer in Alexandria, Egypt. Software Engineer at ezSec Inc (Canada, remote) and co-founder of Indstrz. 31 projects for 27 clients across Egypt and the Gulf: Next.js, Laravel, NestJS, Node.js, Django, PostgreSQL, with Arabic and RTL support in every project.',
+    'Full-stack developer in Alexandria, Egypt. Software Engineer at ezSec Inc (Canada, remote) and co-founder of Indstrz. 36 projects for 27 clients across Egypt and the Gulf: Next.js, Laravel, NestJS, Node.js, Django, PostgreSQL, with Arabic and RTL support in every project.',
   worksFor: {
     '@type': 'Organization',
     name: 'ezSec Inc',
@@ -161,7 +162,6 @@ const PERSON_JSON_LD = {
     'https://github.com/Belalnajy',
     'https://linkedin.com/in/belalnajy',
     'https://khamsat.com/user/belalnajy',
-    'https://mostaql.com/u/belalnagy',
     'https://www.nafezly.com/u/belalnajy',
   ],
 };

@@ -213,19 +213,7 @@ const Footer = () => {
 
         {/* Bottom Footer Section */}
         <div className="pt-8 border-t border-[rgb(var(--border))]/30">
-          <div className="flex flex-col md:flex-row justify-between items-center gap-6">
-            <motion.div
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
-              viewport={REVEAL_VIEWPORT}
-              transition={{ duration: 0.5, delay: 0.4 }}
-              className="text-[rgb(var(--muted-foreground))] text-sm font-medium">
-              <p>{t('footer.freelance_notice')}</p>
-              <p className="mt-2 font-mono text-xs text-[rgb(var(--muted-foreground))]/70" dir="ltr">
-                {t('footer.build_line')}
-              </p>
-            </motion.div>
-
+          <div className="flex justify-center items-center">
             {/* Back to Top Button */}
             <motion.button
               onClick={scrollToTop}

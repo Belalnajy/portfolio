@@ -163,8 +163,16 @@
   --text: 232 237 242;               /* #E8EDF2 */
   --muted-text: 147 161 176;         /* #93A1B0 */
   /* Copper, the house accent. Each theme carries its own value so the pair
-     stays contrast-correct on ink and on paper. */
+     stays contrast-correct on ink and on paper.
+
+     Two steps, because one colour cannot do both jobs on a light background:
+     --accent is dark enough for body-size text and for white text on a fill
+     (4.5:1), which on paper forces it towards brown. --accent-vivid is the
+     real copper, reserved for things that only need 3:1 — display type,
+     icons, decorative marks. Never put small text or a white-on-fill label on
+     --accent-vivid. */
   --accent: 200 127 30;              /* #C87F1E copper */
+  --accent-vivid: 224 160 60;        /* #E0A03C  display type, icons */
   --accent-hover: 210 150 70;
   --accent-subtle: 56 36 8;
   --accent-contrast: 16 23 31;       /* #10171F  ink text on an accent fill */
@@ -215,14 +223,18 @@
 
 /* Light Mode Colors */
 :root[data-theme='light'] {
-  --bg: 244 246 248;                 /* #F4F6F8 */
+  /* A warm off-white rather than a cool grey: it sits under copper without
+     fighting it, and it puts real separation between the page and the white
+     cards, which a near-white grey never did. */
+  --bg: 245 242 237;                 /* #F5F2ED */
   --surface: 255 255 255;            /* #FFFFFF */
   --surface-raised: 255 255 255;
-  --border-subtle: 221 227 233;      /* #DDE3E9 */
-  --border-control: 139 143 147;     /* #8B8F93  inputs and controls, 3:1 */
+  --border-subtle: 227 221 212;      /* #E3DDD4  warm to match the page */
+  --border-control: 128 131 135;     /* #808387  inputs and controls, 3:1 */
   --text: 16 23 31;                  /* #10171F */
   --muted-text: 86 101 117;          /* #566575 */
-  --accent: 158 100 24;              /* #9E6418 copper on a light bg */
+  --accent: 152 96 22;               /* #986016  text and fills, 4.5:1 */
+  --accent-vivid: 184 115 51;        /* #B87333  true copper, 3:1 uses only */
   --accent-hover: 130 82 20;
   --accent-subtle: 249 246 241;
   --accent-contrast: 255 255 255;    /* white text on an accent fill */
@@ -235,7 +247,7 @@
 
 /* Light Mode Specific Styles */
 :root[data-theme='light'] body {
-  background: linear-gradient(to bottom, rgb(var(--bg)), rgb(var(--surface)));
+  background: rgb(var(--bg));
 }
 
 @layer base {
@@ -525,8 +537,8 @@
     background: linear-gradient(
       100deg,
       rgb(var(--foreground)) 0%,
-      rgb(var(--accent-hover)) 40%,
-      rgb(var(--accent)) 85%
+      rgb(var(--accent-vivid)) 45%,
+      rgb(var(--accent)) 90%
     );
     -webkit-background-clip: text;
     background-clip: text;

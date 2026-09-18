@@ -6,7 +6,7 @@
  */
 export const BLOG_POSTS = {
   'one-engine-three-platforms': {
-    date: '2026-09-01',
+    date: '2026-07-14',
     minutes: 9,
     tags: ['Django', 'PostgreSQL', 'Architecture', 'LMS'],
     en: {
@@ -21,7 +21,7 @@ export const BLOG_POSTS = {
     },
   },
   'legacy-takeover-playbook': {
-    date: '2026-09-01',
+    date: '2026-08-11',
     minutes: 8,
     tags: ['Legacy Code', 'React Native', 'Refactoring'],
     en: {
@@ -52,7 +52,10 @@ export const BLOG_POSTS = {
   },
 };
 
-export const BLOG_SLUGS = Object.keys(BLOG_POSTS);
+// Newest first, so the index and the feed agree without either sorting again.
+export const BLOG_SLUGS = Object.keys(BLOG_POSTS).sort(
+  (a, b) => BLOG_POSTS[b].date.localeCompare(BLOG_POSTS[a].date),
+);
 
 /**
  * Loads one article's full bilingual body. Server-side only in practice

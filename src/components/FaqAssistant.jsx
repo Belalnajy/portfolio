@@ -19,6 +19,14 @@ import { useTranslation } from 'react-i18next';
 const FaqAssistant = () => {
   const { t } = useTranslation();
   const [isOpen, setIsOpen] = useState(false);
+
+  // The phone dock owns the only visible launcher on small screens; it asks
+  // for the panel with an event so neither component has to know the other.
+  useEffect(() => {
+    const open = () => setIsOpen(true);
+    window.addEventListener('faq:open', open);
+    return () => window.removeEventListener('faq:open', open);
+  }, []);
   const [language, setLanguage] = useState(null); // 'en' or 'ar'
   const [messages, setMessages] = useState([
     {
@@ -427,7 +435,7 @@ const FaqAssistant = () => {
   };
 
   return (
-    <div className="fixed bottom-[calc(max(1rem,env(safe-area-inset-bottom))+8.25rem)] md:bottom-24 right-4 md:right-6 z-[9999]">
+    <div className="fixed bottom-[calc(max(1rem,env(safe-area-inset-bottom))+4.5rem)] md:bottom-24 right-4 md:right-6 z-[9999]">
       <AnimatePresence>
         {isOpen && (
           <motion.div
@@ -622,7 +630,7 @@ const FaqAssistant = () => {
         whileTap={{ scale: 0.9 }}
         onClick={() => setIsOpen(!isOpen)}
         aria-label={t('faq.tooltip')}
-        className="w-14 h-14 bg-gradient-to-r from-[rgb(var(--accent))] to-[rgb(var(--accent-hover))] rounded-full flex items-center justify-center text-[rgb(var(--accent-contrast))] shadow-lg shadow-[rgb(var(--accent))]/40 relative group">
+        className="hidden md:flex w-14 h-14 bg-gradient-to-r from-[rgb(var(--accent))] to-[rgb(var(--accent-hover))] rounded-full items-center justify-center text-[rgb(var(--accent-contrast))] shadow-lg shadow-[rgb(var(--accent))]/40 relative group">
         <AnimatePresence mode="wait">
           {isOpen ? (
             <motion.div

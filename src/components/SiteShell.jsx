@@ -13,7 +13,9 @@ import Navbar from './Navbar';
 import Footer from './Footer';
 import ScrollProgress from './ScrollProgress';
 import Notification from './Notification';
+import { track } from '@vercel/analytics';
 import WhatsAppButton from './WhatsAppButton';
+import FloatingActions from './FloatingActions';
 import CommandPalette from './CommandPalette';
 import DarkModeToggle from './DarkModeToggle';
 import FaqAssistant from './FaqAssistant';
@@ -95,6 +97,7 @@ const ShellContent = ({ pageLang, children }) => {
       const a = document.createElement('a');
       a.href = url;
       a.download = 'Belal_Nagy_CV.pdf';
+      track('cv_download');
       document.body.appendChild(a);
       a.click();
       window.URL.revokeObjectURL(url);
@@ -136,6 +139,7 @@ const ShellContent = ({ pageLang, children }) => {
           <Footer />
           {/* Keeps the footer's last line clear of the phone tab bar. */}
           <div className="h-16 md:hidden" aria-hidden="true" />
+          <FloatingActions />
           <MobileTabBar />
         </div>
       </SiteContext.Provider>

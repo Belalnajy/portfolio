@@ -15,7 +15,7 @@ import { useTranslation } from 'react-i18next';
 const SERVICE_TITLE = "تصميم وتطوير موقع ويب كامل واحترافي | Full Stack Web";
 const KHAMSAT_CATEGORIES = ["جودة الخدمة", "التواصل والمتابعة", "التسليم بالموعد"];
 
-// The rating chips come from Khamsat/Mostaql in Arabic; the English UI shows
+// The rating chips come from the freelance platforms in Arabic; the English UI shows
 // their meaning rather than a script most visitors there cannot read.
 const CATEGORY_EN = {
   'جودة الخدمة': 'Service quality',
@@ -45,8 +45,10 @@ const TESTIMONIALS_CONFIG = [
     key: 'aseel_a',
     name: "أصيل ا.",
     date: '2026-04-18',
-    platform: "Mostaql",
-    link: "https://mostaql.com/u/Belalnagy/reviews/9112354",
+    // The Mostaql account is closed, so this one keeps the review and drops
+    // the profile link rather than pointing at a dead page.
+    platform: null,
+    link: null,
     categories: ["الاحترافية بالتعامل", "التواصل والمتابعة", "جودة العمل المسلّم", "الخبرة بمجال المشروع", "التسليم في الموعد", "التعامل معه مرّة أخرى"],
   },
   { key: 'amal_a', name: "أمل ا.", date: '2026-03-18', platform: "Khamsat", link: "https://khamsat.com/user/belalnajy/reviews/1087342" },
@@ -250,9 +252,11 @@ const Testimonials = () => {
                     </div>
 
                     <div className={`flex items-center gap-4 ${isArabic ? 'flex-row-reverse' : 'flex-row'}`}>
-                      <span className="px-5 py-2 rounded-xl bg-[rgb(var(--card))]/5 text-[rgb(var(--primary))] text-sm font-bold border border-[rgb(var(--primary))]/20 tracking-wide uppercase">
-                        {testimonials[activeIndex].platform}
-                      </span>
+                      {testimonials[activeIndex].platform && (
+                        <span className="px-5 py-2 rounded-xl bg-[rgb(var(--card))]/5 text-[rgb(var(--primary))] text-sm font-bold border border-[rgb(var(--primary))]/20 tracking-wide uppercase">
+                          {testimonials[activeIndex].platform}
+                        </span>
+                      )}
                       <span className="text-[rgb(var(--muted-foreground))] text-sm font-medium whitespace-nowrap">
                         {testimonials[activeIndex].date}
                       </span>
@@ -319,7 +323,7 @@ const Testimonials = () => {
                   {testimonial.name}
                 </p>
                 <p className="text-[10px] text-[rgb(var(--muted-foreground))] text-center truncate uppercase tracking-tighter">
-                  {testimonial.platform}
+                  {testimonial.platform || '\u00A0'}
                 </p>
               </motion.button>
             )}

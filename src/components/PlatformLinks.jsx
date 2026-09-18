@@ -1,13 +1,18 @@
 "use client";
 import { motion } from 'framer-motion';
+import { FaLinkedin } from 'react-icons/fa';
 import { useTranslation } from 'react-i18next';
 
+/**
+ * A platform is either a logo file or an icon component. LinkedIn ships as an
+ * icon so it inherits the palette instead of needing another logo asset.
+ */
 const PLATFORMS = [
   {
-    nameAr: 'مستقل',
-    nameEn: 'Mostaql',
-    url: 'https://mostaql.com/u/belalnagy',
-    logo: '/mostqal.webp'
+    nameAr: 'لينكد إن',
+    nameEn: 'LinkedIn',
+    url: 'https://linkedin.com/in/belalnajy',
+    icon: <FaLinkedin className="w-full h-full" />
   },
   {
     nameAr: 'خمسات',
@@ -22,6 +27,18 @@ const PLATFORMS = [
     logo: '/nafzly.webp'
   }
 ];
+
+const Mark = ({ platform, className }) =>
+  platform.icon ? (
+    <span className={`text-[rgb(var(--foreground))] ${className}`}>{platform.icon}</span>
+  ) : (
+    <img
+      src={platform.logo}
+      alt={platform.name}
+      loading="lazy"
+      className={`logo-mark object-contain ${className}`}
+    />
+  );
 
 const PlatformLinks = ({ variant = 'default' }) => {
   const { i18n } = useTranslation();
@@ -48,7 +65,7 @@ const PlatformLinks = ({ variant = 'default' }) => {
             whileTap={{ scale: 0.95 }}
             className="group flex items-center gap-2 px-4 py-2 rounded-lg bg-[rgb(var(--card))] border-2 border-[rgb(var(--border))] hover:border-[rgb(var(--primary))] transition-all shadow-md hover:shadow-lg">
             <div className="w-8 h-8 flex items-center justify-center">
-              <img src={platform.logo} alt={platform.name} loading="lazy" className="logo-mark w-full h-full object-contain" />
+              <Mark platform={platform} className="w-full h-full" />
             </div>
             <span className="text-sm font-medium text-[rgb(var(--foreground))]">{platform.name}</span>
           </motion.a>
@@ -71,7 +88,7 @@ const PlatformLinks = ({ variant = 'default' }) => {
             whileTap={{ scale: 0.95 }}
             className="flex items-center gap-2 text-[rgb(var(--foreground))] hover:text-[rgb(var(--primary))] transition-all">
             <div className="w-6 h-6 flex items-center justify-center">
-              <img src={platform.logo} alt={platform.name} loading="lazy" className="logo-mark w-full h-full object-contain" />
+              <Mark platform={platform} className="w-full h-full" />
             </div>
             <span className="text-sm font-medium">{platform.name}</span>
           </motion.a>
@@ -93,7 +110,7 @@ const PlatformLinks = ({ variant = 'default' }) => {
           whileTap={{ scale: 0.95 }}
           className="group flex items-center gap-3 px-6 py-3 rounded-xl bg-[rgb(var(--card))] border-2 border-[rgb(var(--border))] hover:border-[rgb(var(--primary))] transition-all shadow-lg hover:shadow-xl">
           <div className="w-12 h-12 flex items-center justify-center bg-[rgb(var(--card))] rounded-lg p-2">
-            <img src={platform.logo} alt={platform.name} loading="lazy" className="logo-mark w-full h-full object-contain" />
+            <Mark platform={platform} className="w-full h-full" />
           </div>
           <div className="text-left">
             <p className="font-bold text-[rgb(var(--foreground))] text-sm">

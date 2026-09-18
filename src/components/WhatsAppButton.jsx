@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { FaWhatsapp } from 'react-icons/fa';
 import { useTranslation } from 'react-i18next';
+import { track } from '@vercel/analytics';
 import { brandColor } from '../lib/brand-colors';
 
 // Same number the contact card reveals on click; kept in one place.
@@ -33,7 +34,8 @@ const WhatsAppButton = () => {
       whileHover={{ scale: 1.1 }}
       whileTap={{ scale: 0.9 }}
       style={{ backgroundColor: brandColor('WhatsApp') }}
-      className="fixed right-4 md:right-6 bottom-[calc(max(1rem,env(safe-area-inset-bottom))+4.5rem)] md:bottom-6 z-[9999] w-14 h-14 rounded-full flex items-center justify-center text-[rgb(var(--scrim))] shadow-lg shadow-[#25D366]/40 group">
+      onClick={() => track('whatsapp_click', { placement: 'desktop_fab' })}
+      className="hidden md:flex fixed right-6 bottom-6 z-[9999] w-14 h-14 rounded-full items-center justify-center text-[rgb(var(--scrim))] shadow-lg shadow-[#25D366]/40 group">
       <FaWhatsapp size={30} />
 
       {/* Tooltip */}

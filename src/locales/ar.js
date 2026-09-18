@@ -9,7 +9,7 @@ const ar = {
         name: 'بلال ناجي',
         i_am_a: 'أنا ',
         description_1: 'أبني منصات ويب من الصفر، وأستلم الأكواد القائمة اللي محتاجة إصلاح. ',
-        description_2: '٣١ مشروعاً',
+        description_2: '٣٦ مشروعاً',
         description_3: ' لـ ',
         description_4: '٢٧ عميلاً',
         description_5: ' في مصر والخليج.',
@@ -18,7 +18,7 @@ const ar = {
         download_cv: 'تحميل CV',
         freelance_title: 'فريلانسر موثّق',
         freelance_rating: '١٠٠٪ تقييمات إيجابية من العملاء',
-        freelance_platforms: 'خمسات · مستقل · نفذلي',
+        freelance_platforms: 'خمسات · نفذلي',
         hire_me: 'اشتغل معايا في مشروعك',
         hire_me_b: 'اطلب تقييم مجاني لمشروعك',
         role_line: 'مهندس برمجيات — مطور Full-Stack',
@@ -1018,16 +1018,14 @@ const ar = {
         byline: 'بلال ناجي',
       },
       footer: {
-        build_line: 'تصميم وهندسة بلال ناجي — Next.js 16 · Tailwind 4 · Vercel',
         about_title: 'بلال ناجي',
-        about_text: 'أبني منصات ويب من الصفر، وأستلم الأكواد القائمة اللي محتاجة إصلاح. ٣١ مشروعاً لـ ٢٧ عميلاً في مصر والخليج.',
+        about_text: 'أبني منصات ويب من الصفر، وأستلم الأكواد القائمة اللي محتاجة إصلاح. ٣٦ مشروعاً لـ ٢٧ عميلاً في مصر والخليج.',
         quick_links: 'روابط سريعة',
         services: 'الخدمات',
         get_in_touch: 'تواصل معي',
         follow_me: 'تابعني على المنصات الرقمية',
         back_to_top: 'العودة للأعلى',
         connect: 'تواصل',
-        freelance_notice: 'تصميم وتطوير بلال ناجي | متاح لعروض العمل الحر'
       },
       notifications: {
         cv_success: 'تم تحميل السيرة الذاتية بنجاح!',
@@ -1036,6 +1034,12 @@ const ar = {
       whatsapp: {
         aria: 'راسلني على واتساب',
         message: 'أهلاً بلال، وصلتلك من موقعك وحابب أناقش معاك مشروع.'
+      },
+      theme: {
+        toggle: 'تبديل الوضع الفاتح والداكن'
+      },
+      actions: {
+        contact_menu: 'خيارات التواصل'
       },
       faq: {
         title: 'أسئلة سريعة',

@@ -23,7 +23,7 @@ export async function GET() {
 > Belal Nagy is a full-stack developer based in Alexandria, Egypt, currently a
 > Software Engineer at ezSec Inc (a cybersecurity company in Kitchener,
 > Canada, remote) and co-founder of Indstrz. He builds web platforms from
-> zero and takes over existing codebases that need fixing: 31 projects for 27
+> zero and takes over existing codebases that need fixing: 36 projects for 27
 > clients across Egypt and the Gulf, in Next.js, Laravel, NestJS, Node.js,
 > Django and PostgreSQL, with Arabic/RTL support in every project.
 

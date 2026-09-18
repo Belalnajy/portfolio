@@ -82,7 +82,7 @@ const About = () => {
   const portrait = coverMeta(PORTRAIT);
 
   const stats = [
-    { value: 31, label: t('stats.projects') },
+    { value: 36, label: t('stats.projects') },
     { value: 27, label: t('stats.clients') },
     { value: 240, label: t('stats.students') },
     { value: 20, label: t('stats.technologies') },
@@ -185,7 +185,7 @@ const About = () => {
             <Cell key={stat.label} span="sm:col-span-1 lg:col-span-3" index={i} className="text-center sm:text-start">
               <p className="font-display text-4xl md:text-5xl font-bold text-[rgb(var(--foreground))]">
                 <Counter end={stat.value} />
-                <span className="text-[rgb(var(--primary))]">+</span>
+                <span className="text-[rgb(var(--accent-vivid))]">+</span>
               </p>
               <p className="text-sm text-[rgb(var(--muted-foreground))] mt-2">{stat.label}</p>
             </Cell>

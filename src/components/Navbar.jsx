@@ -4,6 +4,8 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { revealDelay } from '../lib/motion';
 import { FaDownload, FaGlobe } from 'react-icons/fa';
 import { FiMenu, FiX } from 'react-icons/fi';
+import { FaSun, FaMoon } from 'react-icons/fa';
+import { useTheme } from '../lib/useTheme';
 import { HiSparkles } from 'react-icons/hi';
 import MagneticButton from './MagneticButton';
 import { useTranslation } from 'react-i18next';
@@ -11,6 +13,7 @@ import { loadLanguage } from '../i18n';
 import { useSite } from './SiteShell';
 
 const Navbar = () => {
+  const { isDark, toggle: toggleTheme } = useTheme();
   const { t, i18n } = useTranslation();
   const { downloadCV } = useSite();
   const [isOpen, setIsOpen] = useState(false);
@@ -246,7 +249,16 @@ const Navbar = () => {
           </div>
 
           {/* Mobile Navigation Button - Enhanced */}
-          <div className="xl:hidden flex items-center">
+          <div className="xl:hidden flex items-center gap-2">
+            {/* Theme lives here on phones; the floating toggle is desktop only. */}
+            <motion.button
+              whileTap={{ scale: 0.9 }}
+              onClick={toggleTheme}
+              className="w-11 h-11 flex items-center justify-center rounded-xl bg-[rgb(var(--card))]/80 border border-[rgb(var(--border))] text-[rgb(var(--accent))] hover:bg-[rgb(var(--muted))] transition-all duration-200"
+              aria-label={t('theme.toggle')}>
+              {isDark ? <FaMoon size={18} /> : <FaSun size={18} />}
+            </motion.button>
+
             <motion.button
               whileTap={{ scale: 0.9 }}
               onClick={() => setIsOpen(!isOpen)}

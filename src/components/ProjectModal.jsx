@@ -13,6 +13,7 @@ import {
 } from 'react-icons/fa';
 import { getTechIcon } from './Projects';
 import { useTranslation } from 'react-i18next';
+import { track } from '@vercel/analytics';
 import { coverMeta } from '../lib/cover-meta';
 import { useFocusTrap } from '../lib/useFocusTrap';
 
@@ -261,6 +262,7 @@ const ProjectModal = ({ project, isOpen, onClose }) => {
                   {project.caseStudy && (
                     <a
                       href={i18n.language === 'ar' ? `/ar${project.caseStudy}` : project.caseStudy}
+                      onClick={() => track('case_study_open', { project: project.slug })}
                       className="flex items-center justify-center gap-2 flex-1 min-h-[48px] px-4 bg-[rgb(var(--primary))]/10 text-[rgb(var(--primary))] border border-[rgb(var(--primary))]/30 hover:bg-[rgb(var(--primary))]/20 rounded-xl font-semibold transition-all active:scale-[0.98]"
                     >
                       <FaBookOpen /> {t('projects.modal.case_study')}

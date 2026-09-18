@@ -9,7 +9,7 @@ export const FAQ_ITEMS = {
     {
       question: 'Who is Belal Nagy?',
       answer:
-        'Belal Nagy is a full-stack developer based in Alexandria, Egypt. He is currently a Software Engineer at ezSec Inc, a cybersecurity company in Kitchener, Canada (working remotely), and co-founder of Indstrz, a B2B industrial procurement platform. He has delivered 31 projects for 27 clients across Egypt and the Gulf.',
+        'Belal Nagy is a full-stack developer based in Alexandria, Egypt. He is currently a Software Engineer at ezSec Inc, a cybersecurity company in Kitchener, Canada (working remotely), and co-founder of Indstrz, a B2B industrial procurement platform. He has delivered 36 projects for 27 clients across Egypt and the Gulf.',
     },
     {
       question: 'What technologies does Belal Nagy work with?',
@@ -46,7 +46,7 @@ export const FAQ_ITEMS = {
     {
       question: 'مين بلال ناجي؟',
       answer:
-        'بلال ناجي مطور Full-Stack من الإسكندرية، مصر. بيشتغل حالياً مهندس برمجيات في ezSec Inc، شركة أمن سيبراني في كيتشنر بكندا (عن بُعد)، وشريك مؤسس في Indstrz، منصة مشتريات صناعية B2B. سلّم 31 مشروعاً لـ 27 عميلاً في مصر والخليج.',
+        'بلال ناجي مطور Full-Stack من الإسكندرية، مصر. بيشتغل حالياً مهندس برمجيات في ezSec Inc، شركة أمن سيبراني في كيتشنر بكندا (عن بُعد)، وشريك مؤسس في Indstrz، منصة مشتريات صناعية B2B. سلّم 36 مشروعاً لـ 27 عميلاً في مصر والخليج.',
     },
     {
       question: 'بلال ناجي بيشتغل بأنهي تقنيات؟',
