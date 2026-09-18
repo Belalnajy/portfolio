@@ -11,7 +11,7 @@ export const CASE_STUDIES = {
     name: 'Opportunities Makers',
     image: '/opptmakers.webp',
     liveUrl: 'https://opptmakers.cloud/login',
-    stack: ['Next.js', 'React', 'Tailwind'],
+    stack: ['Next.js', 'NestJS', 'PostgreSQL', 'React', 'Tailwind'],
     updated: '2026-09-18',
   },
   bilqalam: {

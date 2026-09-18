@@ -22,7 +22,7 @@ const content = {
         "Client and transaction records with an explicit state per case",
         "Access scoped per employee rather than one shared login",
         "Arabic-first, fully RTL layout across tables, forms and document views",
-        "Next.js and React with a Tailwind design system, light and dark themes"
+        "Next.js and React on the front, a NestJS API on PostgreSQL behind it, Tailwind design system, light and dark themes"
       ]
     },
     "delivered": {
@@ -66,7 +66,7 @@ const content = {
         "سجلات عملاء ومعاملات بحالة واضحة لكل معاملة",
         "صلاحيات لكل موظف بدل حساب واحد مشترك",
         "تخطيط عربي أولاً بدعم RTL كامل في الجداول والفورمات وعرض المستندات",
-        "Next.js و React مع نظام تصميم Tailwind، ووضع فاتح وداكن"
+        "Next.js و React في الواجهة، و NestJS API على PostgreSQL في الخلفية، ونظام تصميم Tailwind، ووضع فاتح وداكن"
       ]
     },
     "delivered": {

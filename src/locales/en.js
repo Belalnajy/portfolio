@@ -113,7 +113,7 @@ const en = {
               'Role-based access, scoped per employee',
               'Arabic-first interface, fully RTL',
               'Light and dark themes',
-              'Built with Next.js, React and Tailwind CSS'
+              'Next.js and React on the front, NestJS and PostgreSQL behind it, Tailwind CSS throughout'
             ]
           },
           bilqalam: {
@@ -586,7 +586,7 @@ const en = {
               'Building the internal client and transaction management platform for a consultancy that handles company formation for foreign investors in Saudi Arabia',
               'Arabic-first, fully RTL interface with access scoped per employee',
               'Step-by-step tracking of each formation case from first request to issued documents',
-              'Built with Next.js, React and Tailwind CSS'
+              'Next.js and React on the front, NestJS and PostgreSQL behind it, Tailwind CSS throughout'
             ]
           },
           {
@@ -848,7 +848,6 @@ const en = {
         }
       },
       case_studies: {
-        next: 'Next case study',
         previous: 'Previous case study',
         label: 'Case Study',
         back: 'Back to Projects',
@@ -1017,7 +1016,6 @@ const en = {
         read: 'Read the article',
         minutes: '{{count}} min read',
         back: 'All articles',
-        next: 'Next article',
         byline: 'Belal Nagy',
       },
       footer: {
@@ -1037,6 +1035,40 @@ const en = {
       whatsapp: {
         aria: 'Chat on WhatsApp',
         message: "Hi Belal, I found you through your portfolio and I'd like to discuss a project."
+      },
+      rtl_demo: {
+        label: 'Live demo',
+        title: 'What actually breaks in Arabic',
+        subtitle: 'Flipping a landing page to RTL is easy. This is an invoice — a table, a foreign product code, a currency pair. Switch the direction, then switch the treatment, and watch four real failures appear and disappear.',
+        direction: 'Direction',
+        treatment: 'Treatment',
+        naive: 'Naive flip',
+        correct: 'Done right',
+        breaking: 'Four things are wrong right now',
+        holding: 'All four hold',
+        checks: {
+          alignment: {
+            title: 'Alignment follows the reader',
+            broken: 'text-align: left is a physical direction, so the flipped layout keeps its text pinned to the old side.',
+            fixed: 'Logical properties (text-start / text-end) follow the direction, so one stylesheet serves both.'
+          },
+          icons: {
+            title: 'Directional icons mirror',
+            broken: 'The "next" arrow still points right, which in an RTL reading order means backwards.',
+            fixed: 'Icons that carry direction are mirrored; logos and play buttons are left alone.'
+          },
+          bidi: {
+            title: 'Foreign runs stay intact',
+            broken: 'The quantity and the product code end up side by side and read as one token — 1ADM-2041 — because neither run is isolated.',
+            fixed: 'A <bdi> isolates each foreign run, so the code and the number stay separate and readable.'
+          },
+          numerals: {
+            title: 'Numbers read as numbers',
+            broken: 'The columns mirror but the alignment does not, so the price column hangs off the wrong edge of the table.',
+            fixed: 'Numeric cells are explicitly LTR and tabular, so the digits and the decimal never move.'
+          }
+        },
+        footnote: 'This is the same treatment that goes into the dashboards, invoices and reports on every project I ship — not just the landing page.'
       },
       uses: {
         title: 'Uses',

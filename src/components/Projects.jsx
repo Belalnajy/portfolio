@@ -420,7 +420,7 @@ const Projects = ({ variant = 'full' }) => {
         impact: t('projects.items.opptmakers.impact', { defaultValue: '' }),
         description: t('projects.items.opptmakers.desc'),
         image: '/opptmakers.webp',
-        tags: ['Next.js', 'React', 'Tailwind'],
+        tags: ['Next.js', 'NestJS', 'PostgreSQL', 'React', 'Tailwind'],
         features: t('projects.items.opptmakers.features', {
           returnObjects: true,
         }),
