@@ -19,7 +19,7 @@ import { useTranslation } from 'react-i18next';
  *   2. Directional icons have to mirror. An arrow that means "next" points the
  *      wrong way in RTL unless it is flipped.
  *   3. Two unisolated runs that sit in neighbouring cells read as one token:
- *      the quantity and the product code collide into "1ADM-2041".
+ *      the quantity and the product code collide into "12OIL-4471".
  *   4. Table columns mirror with the direction, but physical alignment leaves
  *      the numeric column hanging off the wrong edge.
  *
@@ -27,13 +27,26 @@ import { useTranslation } from 'react-i18next';
  * <bdi> around foreign runs, and dir="ltr" on numeric cells.
  */
 
+/**
+ * Deliberately car parts, not web work.
+ *
+ * The first draft billed for an admin dashboard, a payment integration and
+ * monthly support — which on the services page, directly above the packages,
+ * read as a published rate card. It is not one, and the packages quote per
+ * project on purpose. Spare parts carry the same demo payload (Arabic names,
+ * Latin SKUs, a two-digit quantity, decimal prices) with nothing to mistake
+ * for a price list, and they match the kind of catalogue these platforms
+ * actually hold.
+ *
+ * The arithmetic is real: 12x85 + 2x420 + 1x610 = 2,470.
+ */
 const ROWS = [
-  { item: 'لوحة تحكم المشرف', sku: 'ADM-2041', qty: 1, price: '4,500.00' },
-  { item: 'تكامل بوابة الدفع', sku: 'PAY-7715', qty: 2, price: '1,250.00' },
-  { item: 'دعم فني شهري', sku: 'SUP-0093', qty: 12, price: '300.00' },
+  { item: 'فلتر زيت', sku: 'OIL-4471', qty: 12, price: '85.00' },
+  { item: 'طقم فرامل أمامي', sku: 'BRK-2208', qty: 2, price: '420.00' },
+  { item: 'بطارية 70 أمبير', sku: 'BAT-7015', qty: 1, price: '610.00' },
 ];
 
-const TOTAL = '10,600.00';
+const TOTAL = '2,470.00';
 const CURRENCY = 'SAR';
 
 /**
@@ -261,6 +274,9 @@ const RtlDemo = () => {
           </ul>
           <p className="text-xs text-[rgb(var(--muted-foreground))] leading-relaxed mt-5 pt-4 border-t border-[rgb(var(--border))]/60">
             {t('rtl_demo.footnote')}
+          </p>
+          <p className="text-[11px] text-[rgb(var(--muted-foreground))]/70 mt-3">
+            {t('rtl_demo.sample_note')}
           </p>
         </aside>
       </div>

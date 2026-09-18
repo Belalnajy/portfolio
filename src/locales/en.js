@@ -1059,7 +1059,7 @@ const en = {
           },
           bidi: {
             title: 'Foreign runs stay intact',
-            broken: 'The quantity and the product code end up side by side and read as one token — 1ADM-2041 — because neither run is isolated.',
+            broken: 'The quantity and the product code end up side by side and read as one token — 12OIL-4471 — because neither run is isolated.',
             fixed: 'A <bdi> isolates each foreign run, so the code and the number stay separate and readable.'
           },
           numerals: {
@@ -1068,6 +1068,7 @@ const en = {
             fixed: 'Numeric cells are explicitly LTR and tabular, so the digits and the decimal never move.'
           }
         },
+        sample_note: 'Sample data — a parts invoice, not a price list.',
         footnote: 'This is the same treatment that goes into the dashboards, invoices and reports on every project I ship — not just the landing page.'
       },
       uses: {
