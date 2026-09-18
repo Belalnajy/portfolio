@@ -34,7 +34,7 @@ export const FAQ_ITEMS = {
     {
       question: 'What is Belal Nagy’s education?',
       answer:
-        'A Bachelor of Business (English Section) in Business Information Systems (BIS) from Alexandria University (2019–2023), graduating with Very Good (GPA 3.265). He also completed the ITI Full Stack Development with Python program and later taught front-end development to more than 240 students as an external ITI instructor.',
+        'A Bachelor of Business (English Section) in Business Information Systems (BIS) from Alexandria University (2019–2023), graduating with Very Good (GPA 3.265). He also completed the ITI Full Stack Development with Python program and later taught front-end development to more than 440 students as an external ITI instructor.',
     },
     {
       question: 'Does Belal Nagy build Arabic and RTL websites?',
@@ -71,7 +71,7 @@ export const FAQ_ITEMS = {
     {
       question: 'إيه مؤهل بلال ناجي الدراسي؟',
       answer:
-        'بكالوريوس الأعمال (القسم الإنجليزي) تخصص نظم معلومات الأعمال (BIS) من جامعة الإسكندرية (2019–2023) بتقدير جيد جداً (3.265). وأتم برنامج ITI للتطوير المتكامل ببايثون، ودرّس بعدها تطوير الواجهات لأكتر من 240 طالباً كمحاضر خارجي في ITI.',
+        'بكالوريوس الأعمال (القسم الإنجليزي) تخصص نظم معلومات الأعمال (BIS) من جامعة الإسكندرية (2019–2023) بتقدير جيد جداً (3.265). وأتم برنامج ITI للتطوير المتكامل ببايثون، ودرّس بعدها تطوير الواجهات لأكتر من 440 طالباً كمحاضر خارجي في ITI.',
     },
     {
       question: 'بيبني مواقع عربية بتدعم RTL؟',

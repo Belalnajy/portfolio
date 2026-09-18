@@ -58,7 +58,7 @@ const en = {
         },
         summary_p1: 'Full-stack developer based in <1>Alexandria, Egypt</1>. I work in Next.js, Laravel, NestJS, Node.js, Django and PostgreSQL. I am currently a Software Engineer at <3>ezSec Inc in Canada</3>, working remotely.',
         summary_p2: 'I am the sole developer on <1>Bilqalam Institute</1>, a production learning platform serving thousands of enrolled students. It handles student enrollment and management, billing and invoicing, and the admin reporting dashboards the institute runs on. I built it and I maintain it alone, in <3>Next.js and Laravel</3>.',
-        summary_p3: 'I also built a multi-tenant LMS engine that runs as <1>three separately branded accredited platforms</1>, Injaz, HC Holding and Mada Education, on one hardened Django and PostgreSQL core. I co-founded Indstrz, a B2B industrial platform, and taught front-end development to <3>240+ students</3> as an external instructor at ITI. Arabic and RTL work goes into every project I ship, including the financial and data-heavy interfaces.',
+        summary_p3: 'I also built a multi-tenant LMS engine that runs as <1>three separately branded accredited platforms</1>, Injaz, HC Holding and Mada Education, on one hardened Django and PostgreSQL core. I co-founded Indstrz, a B2B industrial platform, and taught front-end development to <3>440+ students</3> as an external instructor at ITI. Arabic and RTL work goes into every project I ship, including the financial and data-heavy interfaces.',
         highlights: {
           sole_developer: {
             title: 'Sole developer on production systems',
@@ -621,10 +621,10 @@ const en = {
             title: 'External Instructor - Front-End Development',
             company: 'Information Technology Institute (ITI)',
             location: 'Remote, Egypt',
-            period: '07/2025 - 10/2025',
+            period: '07/2025 - Present',
             employment: 'Contract',
             description: [
-              'Taught Front-End Development (HTML, CSS, JavaScript) to more than 240 students',
+              'Taught Front-End Development (HTML, CSS, JavaScript) to more than 440 students',
               'Designed and delivered practical coding sessions and real-world project guidance'
             ]
           },

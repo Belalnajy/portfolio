@@ -32,7 +32,7 @@ Key facts:
 - Current role: Software Engineer at ezSec Inc, Canada (remote, full-time, since 01/2026), including DevOps deployment work
 - Also: Full Stack Developer at S&F, Saudi Arabia (part-time); co-founder of Indstrz, a B2B industrial procurement platform selected for the Venture Ready Program by Plug and Play
 - Education: Bachelor of Business (English Section), Business Information Systems (BIS), Alexandria University, 2019–2023, GPA 3.265
-- Taught front-end development to 240+ students as an external instructor at ITI
+- Taught front-end development to 440+ students as an external instructor at ITI
 - Specialties: multi-tenant platforms (one LMS engine running three accredited brands), Arabic-first/RTL interfaces, legacy-code takeover, real-time systems
 - Languages: Arabic (native), English
 - Contact and profiles: [GitHub](https://github.com/Belalnajy), [LinkedIn](https://linkedin.com/in/belalnajy)

@@ -84,7 +84,7 @@ const About = () => {
   const stats = [
     { value: 36, label: t('stats.projects') },
     { value: 27, label: t('stats.clients') },
-    { value: 240, label: t('stats.students') },
+    { value: 440, label: t('stats.students') },
     { value: 20, label: t('stats.technologies') },
   ];
 

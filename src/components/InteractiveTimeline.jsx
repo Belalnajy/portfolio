@@ -123,7 +123,7 @@ const InteractiveTimeline = () => {
       opptmakers: { type: 'work', icon: <FaBriefcase />, logo: '/logos/opptmakers-logo.webp', span: 'lg:col-span-5', current: true },
       indstrz: { type: 'work', icon: <FaBriefcase />, logo: '/logos/indstrz-logo.webp', span: 'lg:col-span-6', current: true },
       sf: { type: 'work', icon: <FaBriefcase />, logo: '/logos/sf-logo.webp', span: 'lg:col-span-6', current: true },
-      iti_instructor: { type: 'work', icon: <FaLaptopCode />, logo: '/logos/iti-logo.webp', span: 'lg:col-span-6' },
+      iti_instructor: { type: 'work', icon: <FaLaptopCode />, logo: '/logos/iti-logo.webp', span: 'lg:col-span-6', current: true },
       freelance: { type: 'work', icon: <FaLaptopCode />, span: 'lg:col-span-6', current: true },
       iti_intern: { type: 'education', icon: <FaGraduationCap />, logo: '/logos/iti-logo.webp', span: 'lg:col-span-6' },
       ezdk: { type: 'work', icon: <FaBriefcase />, logo: '/logos/ezzsteel-logo.webp', span: 'lg:col-span-6' },
