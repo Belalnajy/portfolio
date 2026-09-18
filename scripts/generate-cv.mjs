@@ -22,59 +22,26 @@ import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 import en from '../src/locales/en.js';
-import { CASE_STUDIES } from '../src/lib/case-studies.js';
+import { buildCv } from '../src/lib/cv.js';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const OUT_PDF = join(ROOT, 'public', 'Belal_Nagy_CV.pdf');
 
-const t = en.translation;
-
 /* ------------------------------------------------------------------ data */
 
-const CONTACT = {
-  name: 'Belal Nagy',
-  role: t.hero.role_line,
-  location: 'Alexandria, Egypt',
-  email: 'belalnajy9@gmail.com',
-  site: 'belalnagy.com',
-  github: 'github.com/Belalnajy',
-  linkedin: 'linkedin.com/in/belalnajy',
-};
+// One model, shared with the /cv page, so the PDF and the page cannot drift.
+// This file used to keep its own copy and ended up citing 31 projects and 240
+// students long after the site had moved on.
+const cv = buildCv(en);
 
-// <1>…</1> markers are Trans-component islands on the site; plain text here.
-const strip = (s) => s.replace(/<\/?\d+>/g, '');
-const SUMMARY = [t.about.summary_p1, t.about.summary_p2, t.about.summary_p3].map(strip);
-
-const TIMELINE = t.timeline.items;
-const EXPERIENCE = TIMELINE.filter((item) => item.employment);
-const EDUCATION = TIMELINE.filter((item) => !item.employment);
-
-// The projects worth a recruiter's minute, in order. One line each, taken
-// from the same copy the site's project cards use.
-const PROJECT_SLUGS = ['bilqalam', 'injaz', 'indstrz', 'medicta', 'toyo228', 'uduipa'];
-const PROJECTS = PROJECT_SLUGS.map((slug) => ({
-  slug,
-  ...CASE_STUDIES[slug],
-  desc: t.projects.items[slug].desc,
-}));
-
-// Mirrors the categories in src/components/Skills.jsx, kept to CV depth.
-const SKILLS = [
-  ['Languages', 'Python · JavaScript · TypeScript · PHP · SQL · HTML · CSS'],
-  ['Frameworks', 'Django · Flask · Laravel · Next.js · React · Node.js · Express · NestJS · Tailwind CSS'],
-  ['Databases & APIs', 'PostgreSQL · MongoDB · MySQL · Redis · REST APIs · WebSockets'],
-  ['DevOps & Infra', 'Docker · Git · Linux · Nginx · CI/CD · production deployment'],
-  ['Languages (spoken)', 'Arabic (native) · English (professional)'],
-];
-
-const HIGHLIGHTS = [
-  '31+ projects delivered for 27+ clients across Egypt and the Gulf',
-  '100% positive freelance reviews on Khamsat, Mostaql and Nafezly',
-  'Taught front-end development to 240+ students at ITI',
-  'Arabic/RTL support shipped in every project',
-];
-
-const CERTIFICATIONS = Object.values(t.certifications.items);
+const CONTACT = { ...cv.contact, github: cv.contact.github, linkedin: cv.contact.linkedin };
+const SUMMARY = cv.summary;
+const EXPERIENCE = cv.experience;
+const EDUCATION = cv.education;
+const PROJECTS = cv.projects;
+const SKILLS = cv.skills;
+const HIGHLIGHTS = cv.highlights;
+const CERTIFICATIONS = cv.certifications;
 
 /* ------------------------------------------------------------------ html */
 
@@ -202,13 +169,42 @@ const findChromium = () => {
   return null;
 };
 
-const main = async () => {
-  const { chromium } = await import('playwright-core');
+/**
+ * Either driver will do — whichever the machine already has. Playwright is
+ * preferred because it can supply its own browser; puppeteer-core is what this
+ * repo happens to carry, and it needs the executable path findChromium()
+ * resolves.
+ */
+const launchBrowser = async () => {
   const executablePath = findChromium();
 
-  const browser = await chromium.launch(
-    executablePath ? { executablePath } : {},
-  );
+  try {
+    const { chromium } = await import('playwright-core');
+    return await chromium.launch(executablePath ? { executablePath } : {});
+  } catch (error) {
+    if (error.code !== 'ERR_MODULE_NOT_FOUND') throw error;
+  }
+
+  const puppeteer = await import('puppeteer-core').catch(() => null);
+  if (!puppeteer) {
+    throw new Error(
+      'Needs a browser driver. Install one: npm i -D playwright-core (or puppeteer-core).',
+    );
+  }
+  if (!executablePath) {
+    throw new Error(
+      'puppeteer-core needs a browser. Set CHROME_PATH or install chromium/google-chrome.',
+    );
+  }
+  return puppeteer.default.launch({
+    executablePath,
+    headless: 'new',
+    args: ['--no-sandbox'],
+  });
+};
+
+const main = async () => {
+  const browser = await launchBrowser();
   try {
     const page = await browser.newPage();
     await page.setContent(html, { waitUntil: 'load' });

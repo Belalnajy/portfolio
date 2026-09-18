@@ -21,8 +21,12 @@ const entry = (path, lastModified, priority, alternates) => ({
 const STATIC_PAGES = [
   { path: '/work', priority: 0.9 },
   { path: '/services', priority: 0.9 },
+  { path: '/cv', priority: 0.8 },
+  { path: '/testimonials', priority: 0.7 },
   { path: '/blog', priority: 0.7 },
   { path: '/now', priority: 0.6 },
+  { path: '/uses', priority: 0.5 },
+  { path: '/privacy', priority: 0.3 },
 ];
 
 export default function sitemap() {

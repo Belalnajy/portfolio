@@ -973,6 +973,9 @@ const en = {
         testimonials: 'Testimonials',
         now: 'Now',
         blog: 'Blog',
+        cv: 'CV',
+        uses: 'Uses',
+        privacy: 'Privacy',
         contact: 'Contact',
         download_cv: 'Download CV'
       },
@@ -1034,6 +1037,112 @@ const en = {
       whatsapp: {
         aria: 'Chat on WhatsApp',
         message: "Hi Belal, I found you through your portfolio and I'd like to discuss a project."
+      },
+      uses: {
+        title: 'Uses',
+        subtitle: 'The tools I actually open every day — not a wishlist.',
+        groups: [
+          {
+            heading: 'Editor & terminal',
+            items: [
+              'VS Code, with Vim keybindings and a dark theme that matches this site',
+              'Zsh on Linux, tmux for long-running sessions',
+              'Git from the command line; GitHub for review and CI'
+            ]
+          },
+          {
+            heading: 'Building',
+            items: [
+              'Next.js and React for anything with a front end',
+              'Django and Laravel for the platforms that carry money and accreditation',
+              'NestJS and Express where a Node service fits the team better',
+              'Tailwind CSS, with design tokens rather than raw values'
+            ]
+          },
+          {
+            heading: 'Data & infrastructure',
+            items: [
+              'PostgreSQL by default; MongoDB where documents genuinely fit',
+              'Redis and Celery for background work and scheduled jobs',
+              'Docker for parity between my machine and production',
+              'Nginx on a Linux VPS, or Vercel when the shape suits it'
+            ]
+          },
+          {
+            heading: 'Working',
+            items: [
+              'Notion for specs and client-facing scope',
+              'Trello for milestone tracking on fixed-scope projects',
+              'Figma to read designs; I build from tokens, not screenshots',
+              'WhatsApp for client contact — it is what Gulf clients actually answer'
+            ]
+          }
+        ],
+        note: 'This page changes as the work changes. If something here is out of date, the site is wrong and I want to know.'
+      },
+      testimonials_page: {
+        title: 'Client Reviews',
+        subtitle: 'Every review, in full, from the freelance platforms I work through.'
+      },
+      privacy: {
+        title: 'Privacy',
+        subtitle: 'What this site collects, what it does not, and who else sees it.',
+        updated: 'Last updated: September 2026',
+        sections: [
+          {
+            heading: 'The short version',
+            body: 'This is a portfolio, not a product. There is no account to create, no tracking cookie, no advertising network and nothing sold or shared. The only personal data that reaches me is what you type into the contact form or send over WhatsApp.'
+          },
+          {
+            heading: 'The contact form',
+            body: 'The form sends your name, email address and message straight to my inbox through EmailJS, which delivers it and does not use it for anything else. I keep the email so I can reply and so I have a record of the conversation. I do not add you to any mailing list.'
+          },
+          {
+            heading: 'WhatsApp',
+            body: 'The WhatsApp button opens a chat in your own WhatsApp with a message already typed. Nothing is sent until you send it, and the conversation lives in WhatsApp under their terms, not mine.'
+          },
+          {
+            heading: 'Analytics',
+            body: 'Vercel Web Analytics counts page views and a few actions — a WhatsApp click, a CV download, a case study opened — so I can tell which parts of the site are useful. It is cookie-less and aggregated: it records that something happened, not who did it. There is no session recording, no heatmap and no cross-site profile.'
+          },
+          {
+            heading: 'What stays in your browser',
+            body: 'Your language and light/dark choice are stored in this site\'s own localStorage so the next visit looks the way you left it. They never leave your device and I cannot read them. Clearing site data removes them.'
+          },
+          {
+            heading: 'Where it is hosted',
+            body: 'The site runs on Vercel, which processes standard request data such as IP address and user agent in order to serve pages and protect against abuse. Fonts are served from Google Fonts.'
+          },
+          {
+            heading: 'Your choices',
+            body: 'You can ask me what I hold about you, ask for a copy, or ask me to delete it — by email, at any time, and I will act on it. Since the only record is usually an email thread, deleting it is genuinely just deleting it.'
+          }
+        ],
+        contact_line: 'Questions about any of this: {{email}}'
+      },
+      cv: {
+        title: 'Curriculum Vitae',
+        subtitle: 'The same facts as the site, on one printable page.',
+        download: 'Download PDF',
+        print: 'Print',
+        updated: 'Updated {{date}}',
+        sections: {
+          summary: 'Profile',
+          highlights: 'Highlights',
+          experience: 'Experience',
+          education: 'Education',
+          projects: 'Selected Projects',
+          skills: 'Skills',
+          certifications: 'Certifications'
+        },
+        highlights: {
+          delivered: '{{projects}}+ projects delivered for {{clients}}+ clients across Egypt and the Gulf',
+          reviews: '100% positive client reviews on Khamsat and Nafezly',
+          teaching: 'Taught front-end development to {{students}}+ students at ITI',
+          rtl: 'Arabic and RTL shipped in every project, including financial and data-heavy interfaces'
+        },
+        spoken_languages_label: 'Languages',
+        spoken_languages: 'Arabic (native) · English (professional)'
       },
       theme: {
         toggle: 'Switch light or dark mode'

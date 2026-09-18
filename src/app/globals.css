@@ -586,3 +586,58 @@
     animation-duration: 0.22s;
   }
 }
+
+/* ============================================================================
+   PRINT  ·  the /cv sheet on A4
+   Everything that is navigation, decoration or chrome is dropped, the palette
+   is forced to ink on white regardless of the visitor's theme, and entries are
+   kept from splitting across a page break.
+   ========================================================================== */
+@media print {
+  /* Ink on paper: the dark theme would otherwise print a black rectangle. */
+  :root,
+  :root[data-theme='light'] {
+    --bg: 255 255 255;
+    --surface: 255 255 255;
+    --surface-raised: 255 255 255;
+    --text: 17 17 17;
+    --muted-text: 68 68 68;
+    --border-subtle: 200 200 200;
+    --accent: 140 88 20;
+  }
+
+  body {
+    background: #fff !important;
+  }
+
+  /* Chrome and decoration have no business on a printed page. */
+  nav,
+  footer,
+  .grain-overlay,
+  [class*='fixed'] {
+    display: none !important;
+  }
+
+  .cv-sheet {
+    border: 0 !important;
+    box-shadow: none !important;
+    background: transparent !important;
+    backdrop-filter: none !important;
+    padding: 0 !important;
+  }
+
+  .cv-section {
+    break-inside: avoid;
+    margin-bottom: 1.1rem;
+  }
+
+  a {
+    text-decoration: none;
+    color: inherit;
+  }
+
+  @page {
+    size: A4;
+    margin: 14mm 14mm 16mm;
+  }
+}

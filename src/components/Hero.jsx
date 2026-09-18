@@ -5,6 +5,7 @@ import PlatformLinks from './PlatformLinks';
 import { useTranslation } from 'react-i18next';
 import { useSite } from './SiteShell';
 import { useCtaVariant } from '../lib/use-cta-variant';
+import { FACTS } from '../lib/facts';
 
 /**
  * Type-first hero with a freelance proof panel. The name is the artwork
@@ -150,13 +151,13 @@ const Hero = () => {
               <div className="grid grid-cols-2 gap-3 mb-5">
                 <div className="rounded-xl bg-[rgb(var(--muted))]/30 border border-[rgb(var(--border))]/60 p-3">
                   <p className="font-display text-2xl font-bold text-[rgb(var(--foreground))]" dir="ltr">
-                    36<span className="text-[rgb(var(--accent-vivid))]">+</span>
+                    {FACTS.projects}<span className="text-[rgb(var(--accent-vivid))]">+</span>
                   </p>
                   <p className="text-xs text-[rgb(var(--muted-foreground))] mt-0.5">{t('stats.projects')}</p>
                 </div>
                 <div className="rounded-xl bg-[rgb(var(--muted))]/30 border border-[rgb(var(--border))]/60 p-3">
                   <p className="font-display text-2xl font-bold text-[rgb(var(--foreground))]" dir="ltr">
-                    27<span className="text-[rgb(var(--accent-vivid))]">+</span>
+                    {FACTS.clients}<span className="text-[rgb(var(--accent-vivid))]">+</span>
                   </p>
                   <p className="text-xs text-[rgb(var(--muted-foreground))] mt-0.5">{t('stats.clients')}</p>
                 </div>

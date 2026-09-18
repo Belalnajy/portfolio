@@ -3,6 +3,7 @@ import { useState, useEffect, useRef } from 'react';
 import Image from 'next/image';
 import { motion, useInView, useReducedMotion } from 'framer-motion';
 import { REVEAL_VIEWPORT, revealDelay, REVEAL_DURATION } from '../lib/motion';
+import { FACTS } from '../lib/facts';
 import {
   FaBriefcase,
   FaGraduationCap,
@@ -82,10 +83,10 @@ const About = () => {
   const portrait = coverMeta(PORTRAIT);
 
   const stats = [
-    { value: 36, label: t('stats.projects') },
-    { value: 27, label: t('stats.clients') },
-    { value: 440, label: t('stats.students') },
-    { value: 20, label: t('stats.technologies') },
+    { value: FACTS.projects, label: t('stats.projects') },
+    { value: FACTS.clients, label: t('stats.clients') },
+    { value: FACTS.students, label: t('stats.students') },
+    { value: FACTS.technologies, label: t('stats.technologies') },
   ];
 
   const highlights = [
