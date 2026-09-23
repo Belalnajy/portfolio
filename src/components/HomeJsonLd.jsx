@@ -15,9 +15,12 @@ const HomeJsonLd = ({ lang = 'en' }) => {
     '@type': 'ProfilePage',
     url,
     inLanguage: lang,
+    // The Arabic page names the entity in Arabic; alternateName ties both
+    // pages to the same person for engines answering «من هو بلال ناجي».
     mainEntity: {
       '@type': 'Person',
-      name: 'Belal Nagy',
+      name: lang === 'ar' ? 'بلال ناجي' : 'Belal Nagy',
+      alternateName: lang === 'ar' ? 'Belal Nagy' : 'بلال ناجي',
       url: SITE_URL,
     },
   };

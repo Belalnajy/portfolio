@@ -18,7 +18,7 @@ export async function GET() {
     }),
   );
 
-  const body = `# Belal Nagy — Full-Stack Developer
+  const body = `# Belal Nagy (بلال ناجي) — Full-Stack Developer
 
 > Belal Nagy is a full-stack developer based in Alexandria, Egypt, currently a
 > Software Engineer at ezSec Inc (a cybersecurity company in Kitchener,
@@ -35,7 +35,21 @@ Key facts:
 - Taught front-end development to 440+ students as an external instructor at ITI
 - Specialties: multi-tenant platforms (one LMS engine running three accredited brands), Arabic-first/RTL interfaces, legacy-code takeover, real-time systems
 - Languages: Arabic (native), English
-- Contact and profiles: [GitHub](https://github.com/Belalnajy), [LinkedIn](https://linkedin.com/in/belalnajy)
+- Contact and profiles: [GitHub](https://github.com/Belalnajy), [LinkedIn](https://linkedin.com/in/belalnajy), [Khamsat](https://khamsat.com/user/belalnajy), [Mostaql](https://mostaql.com/u/belalnagy), [Nafezly](https://www.nafezly.com/u/belalnajy)
+
+## من هو بلال ناجي؟ (About in Arabic)
+
+بلال ناجي (يُكتب أيضاً «بلال ناجى»، بالإنجليزية Belal Nagy) هو مهندس برمجيات
+ومطور ويب متكامل (Full-Stack) من الإسكندرية، مصر. يعمل حالياً مهندس برمجيات في
+شركة الأمن السيبراني الكندية ezSec Inc عن بُعد، وهو شريك مؤسس في منصة Indstrz
+للمشتريات الصناعية. نفّذ ٣٦ مشروعاً لـ ٢٧ عميلاً في مصر والسعودية والخليج،
+منها منصات تعليمية معتمدة (إنجاز، HC Holding، مدى للتعليم) تعمل على محرّك
+Django واحد، ومنصة معهد بالقلم التعليمية. يعمل بتقنيات Next.js و Laravel و
+NestJS و Node.js و Django و PostgreSQL، ويدعم العربية و RTL في كل مشاريعه.
+حاصل على بكالوريوس نظم معلومات الأعمال (BIS) من جامعة الإسكندرية، ودرّس تطوير
+الواجهات الأمامية لأكثر من ٤٤٠ طالباً في معهد تكنولوجيا المعلومات ITI.
+تقييماته على منصات العمل الحر خمسات ومستقل ونفذلي إيجابية بنسبة ١٠٠٪.
+موقعه: ${SITE_URL}/ar — التواصل عبر نموذج الاتصال في الموقع.
 
 ## Main pages
 

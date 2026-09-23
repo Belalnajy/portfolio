@@ -1,7 +1,13 @@
 import { OG_IMAGE } from '../../layout';
 
 export const metadata = {
-  title: 'المقالات',
+  // A plain-string title here would break the template chain and leave the
+  // article pages without the Arabic name suffix; the object re-declares it.
+  title: {
+    absolute: 'المقالات | بلال ناجي',
+    default: 'المقالات | بلال ناجي',
+    template: '%s | بلال ناجي',
+  },
   description:
     'مقالات هندسية من مشاريع حقيقية: بنية Django متعددة العملاء، واستلام المشاريع القديمة بدون إعادة كتابة، وواجهات عربية RTL تصمد أمام لوحات التحكم والفواتير.',
   alternates: {

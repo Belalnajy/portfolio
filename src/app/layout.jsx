@@ -120,7 +120,9 @@ const PERSON_JSON_LD = {
   '@context': 'https://schema.org',
   '@type': 'Person',
   name: 'Belal Nagy',
-  alternateName: 'بلال ناجي',
+  // Both Arabic spellings of the surname (ي / ى) plus the transliteration his
+  // freelance handles use, so every way people type the name maps to one entity.
+  alternateName: ['بلال ناجي', 'بلال ناجى', 'Belal Najy'],
   url: SITE_URL,
   image: `${SITE_URL}/hero.webp`,
   jobTitle: 'Software Engineer & Full-Stack Developer',
