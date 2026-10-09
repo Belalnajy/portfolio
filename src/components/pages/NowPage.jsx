@@ -15,7 +15,7 @@ const NowSection = ({ icon, title, items, index }) => (
     transition={{ duration: REVEAL_DURATION, delay: revealDelay(index) }}
     className="glass-card rounded-2xl border border-[rgb(var(--border))]/60 p-6 sm:p-8 text-start">
     <h2 className="flex items-center gap-3 font-display text-xl font-bold text-[rgb(var(--foreground))] mb-5">
-      <span className="inline-flex items-center justify-center w-10 h-10 rounded-xl bg-[rgb(var(--primary))]/10 border border-[rgb(var(--primary))]/25 text-[rgb(var(--primary))]">
+      <span className="inline-flex items-center justify-center w-10 h-10 rounded-xl bg-[rgb(var(--muted))]/40 border border-[rgb(var(--border))] text-[rgb(var(--muted-foreground))]">
         {icon}
       </span>
       {title}
@@ -23,7 +23,7 @@ const NowSection = ({ icon, title, items, index }) => (
     <ul className="space-y-3">
       {items.map((item, i) => (
         <li key={i} className="flex items-start gap-3 text-[rgb(var(--foreground))] leading-relaxed">
-          <FaCircle className="text-[5px] mt-2.5 text-[rgb(var(--primary))] shrink-0" />
+          <FaCircle className="text-[5px] mt-2.5 text-[rgb(var(--muted-foreground))] shrink-0" />
           <span>{item}</span>
         </li>
       ))}
@@ -75,9 +75,9 @@ const NowContent = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={REVEAL_VIEWPORT}
           transition={{ duration: REVEAL_DURATION, delay: revealDelay(2) }}
-          className="glass-card rounded-2xl border border-[rgb(var(--primary))]/25 p-6 sm:p-8 text-start">
+          className="glass-card rounded-2xl border border-[rgb(var(--border))] p-6 sm:p-8 text-start">
           <h2 className="flex items-center gap-3 font-display text-xl font-bold text-[rgb(var(--foreground))] mb-3">
-            <span className="inline-flex items-center justify-center w-10 h-10 rounded-xl bg-[rgb(var(--primary))]/10 border border-[rgb(var(--primary))]/25 text-[rgb(var(--primary))]">
+            <span className="inline-flex items-center justify-center w-10 h-10 rounded-xl bg-[rgb(var(--muted))]/40 border border-[rgb(var(--border))] text-[rgb(var(--muted-foreground))]">
               <FaHandshake />
             </span>
             {t('now_page.availability_title')}

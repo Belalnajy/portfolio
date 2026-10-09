@@ -35,11 +35,11 @@ const Services = () => {
   const services = useMemo(() => {
     const list = t('services.list', { returnObjects: true });
     const config = [
-      { icon: <FaLaptopCode />, color: "from-[rgb(var(--accent))] to-[rgb(var(--accent-hover))]" },
-      { icon: <FaServer />, color: "from-[rgb(var(--accent))] to-[rgb(var(--accent-hover))]" },
-      { icon: <FaGlobe />, color: "from-[rgb(var(--accent))] to-[rgb(var(--accent-hover))]" },
-      { icon: <FaShieldAlt />, color: "from-[rgb(var(--accent))] to-[rgb(var(--accent-hover))]" },
-      { icon: <FaWrench />, color: "from-[rgb(var(--accent))] to-[rgb(var(--accent-hover))]" },
+      { icon: <FaLaptopCode /> },
+      { icon: <FaServer /> },
+      { icon: <FaGlobe /> },
+      { icon: <FaShieldAlt /> },
+      { icon: <FaWrench /> },
     ];
 
     return list.map((item, index) => ({
@@ -78,7 +78,7 @@ const Services = () => {
               {/* Icon */}
               <div className="mb-6 flex justify-start">
                 <div
-                  className={`inline-flex items-center justify-center w-16 h-16 rounded-xl bg-gradient-to-r ${service.color} text-[rgb(var(--on-scrim))] text-3xl shadow-lg group-hover:scale-110 transition-transform duration-300`}>
+                  className={`inline-flex items-center justify-center w-16 h-16 rounded-xl bg-[rgb(var(--muted))]/50 border border-[rgb(var(--border))] text-[rgb(var(--foreground))] text-3xl shadow-lg group-hover:scale-110 transition-transform duration-300`}>
                   {service.icon}
                 </div>
               </div>
@@ -99,7 +99,7 @@ const Services = () => {
                   <li
                     key={i}
                     className="text-sm text-[rgb(var(--foreground))] flex items-start text-start">
-                    <span className={`text-[rgb(var(--primary))] ${isArabic ? 'ml-2' : 'mr-2'} mt-1`}>
+                    <span className={`text-[rgb(var(--muted-foreground))] ${isArabic ? 'ml-2' : 'mr-2'} mt-1`}>
                       ✓
                     </span>
                     {feature}
@@ -109,7 +109,7 @@ const Services = () => {
 
               {/* Hover Effect Line */}
               <div
-                className={`mt-6 h-1 w-0 group-hover:w-full bg-gradient-to-r ${service.color} rounded-full transition-all duration-500`}
+                className={`mt-6 h-1 w-0 group-hover:w-full bg-[rgb(var(--primary))] rounded-full transition-all duration-500`}
               />
             </motion.div>
           ))}
@@ -144,7 +144,7 @@ const Services = () => {
                 viewport={REVEAL_VIEWPORT}
                 transition={{ duration: REVEAL_DURATION, delay: revealDelay(index) }}
                 className="relative flex gap-4 p-5 rounded-xl bg-[rgb(var(--muted))]/10 border border-[rgb(var(--border))]/50 hover:border-[rgb(var(--primary))]/40 transition-colors">
-                <span className="shrink-0 inline-flex items-center justify-center w-11 h-11 rounded-lg bg-[rgb(var(--primary))]/10 text-[rgb(var(--primary))] border border-[rgb(var(--primary))]/20 text-lg">
+                <span className="shrink-0 inline-flex items-center justify-center w-11 h-11 rounded-lg bg-[rgb(var(--muted))]/40 text-[rgb(var(--muted-foreground))] border border-[rgb(var(--border))] text-lg">
                   {step.icon}
                 </span>
                 <div className="min-w-0">

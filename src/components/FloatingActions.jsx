@@ -76,7 +76,7 @@ const FloatingActions = () => {
         onClick={() => setOpen((wasOpen) => !wasOpen)}
         aria-expanded={open}
         aria-label={t('actions.contact_menu')}
-        className="w-14 h-14 rounded-full bg-gradient-to-r from-[rgb(var(--accent))] to-[rgb(var(--accent-hover))] text-[rgb(var(--accent-contrast))] shadow-lg shadow-[rgb(var(--accent))]/40 flex items-center justify-center">
+        className="w-14 h-14 rounded-full bg-gradient-to-r from-[rgb(var(--accent))] to-[rgb(var(--accent-hover))] text-[rgb(var(--accent-contrast))] shadow-lg flex items-center justify-center">
         <AnimatePresence mode="wait">
           <motion.span
             key={open ? 'close' : 'open'}

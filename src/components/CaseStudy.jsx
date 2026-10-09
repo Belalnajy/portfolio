@@ -99,7 +99,7 @@ const CaseStudyContent = ({ slug, narrative, image, liveUrl, stack, nav, pageLan
               href={liveUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 min-h-[44px] px-4 rounded-xl text-sm font-semibold bg-[rgb(var(--primary))]/10 text-[rgb(var(--primary))] border border-[rgb(var(--primary))]/25 hover:bg-[rgb(var(--primary))]/20 transition-colors"
+              className="inline-flex items-center gap-2 min-h-[44px] px-4 rounded-xl text-sm font-semibold bg-[rgb(var(--muted))]/40 text-[rgb(var(--muted-foreground))] border border-[rgb(var(--border))] hover:bg-[rgb(var(--primary))]/20 transition-colors"
             >
               <FaExternalLinkAlt className="text-xs" />
               <span className="hidden sm:inline">{t('case_studies.visit')}</span>
@@ -117,7 +117,7 @@ const CaseStudyContent = ({ slug, narrative, image, liveUrl, stack, nav, pageLan
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
-            className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-bold tracking-widest uppercase bg-[rgb(var(--primary))]/10 text-[rgb(var(--primary))] border border-[rgb(var(--primary))]/25 mb-5"
+            className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-bold tracking-widest uppercase bg-[rgb(var(--muted))]/40 text-[rgb(var(--muted-foreground))] border border-[rgb(var(--border))] mb-5"
           >
             <FaLayerGroup className="text-[10px]" />
             {t('case_studies.label')}
@@ -230,7 +230,7 @@ const CaseStudyContent = ({ slug, narrative, image, liveUrl, stack, nav, pageLan
                       key={i}
                       className="flex items-start gap-3 glass-card rounded-xl border border-[rgb(var(--border))]/50 p-4 text-sm text-[rgb(var(--muted-foreground))]"
                     >
-                      <FaCheckCircle className="mt-0.5 text-[rgb(var(--primary))] shrink-0" />
+                      <FaCheckCircle className="mt-0.5 text-[rgb(var(--muted-foreground))] shrink-0" />
                       <span>{point}</span>
                     </li>
                   ))}

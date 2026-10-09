@@ -33,7 +33,7 @@ const Entry = ({ item }) => (
       <ul className="mt-2 space-y-1">
         {item.description.map((line, i) => (
           <li key={i} className="text-sm text-[rgb(var(--foreground))] leading-relaxed ps-4 relative">
-            <span className="absolute start-0 top-[0.55em] w-1 h-1 rounded-full bg-[rgb(var(--primary))]" />
+            <span className="absolute start-0 top-[0.55em] w-1 h-1 rounded-full bg-[rgb(var(--muted-foreground))]" />
             {line}
           </li>
         ))}
@@ -117,7 +117,7 @@ const CvContent = ({ bundle }) => {
           <ul className="grid sm:grid-cols-2 gap-x-6 gap-y-2">
             {cv.highlights.map((line, i) => (
               <li key={i} className="text-sm text-[rgb(var(--foreground))] leading-relaxed ps-4 relative">
-                <span className="absolute start-0 top-[0.55em] w-1 h-1 rounded-full bg-[rgb(var(--primary))]" />
+                <span className="absolute start-0 top-[0.55em] w-1 h-1 rounded-full bg-[rgb(var(--muted-foreground))]" />
                 {line}
               </li>
             ))}
@@ -171,7 +171,7 @@ const CvContent = ({ bundle }) => {
           <ul className="grid sm:grid-cols-2 gap-x-6 gap-y-1.5">
             {cv.certifications.map((name, i) => (
               <li key={i} className="text-sm text-[rgb(var(--muted-foreground))] ps-4 relative">
-                <span className="absolute start-0 top-[0.55em] w-1 h-1 rounded-full bg-[rgb(var(--primary))]" />
+                <span className="absolute start-0 top-[0.55em] w-1 h-1 rounded-full bg-[rgb(var(--muted-foreground))]" />
                 {name}
               </li>
             ))}

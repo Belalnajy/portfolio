@@ -9,11 +9,11 @@ import { useTranslation } from 'react-i18next';
 const MetaPills = ({ exp, compact = false }) => (
   <div className="flex flex-wrap gap-2 text-xs text-[rgb(var(--muted-foreground))]">
     <span className="flex items-center gap-1.5 bg-[rgb(var(--muted))]/50 px-3 py-1.5 rounded-full whitespace-nowrap">
-      <FaCalendarAlt className="text-[rgb(var(--primary))]" /> {exp.period}
+      <FaCalendarAlt className="text-[rgb(var(--muted-foreground))]" /> {exp.period}
     </span>
     {!compact && (
       <span className="flex items-center gap-1.5 bg-[rgb(var(--muted))]/50 px-3 py-1.5 rounded-full whitespace-nowrap">
-        <FaMapMarkerAlt className="text-[rgb(var(--primary))]" /> {exp.location}
+        <FaMapMarkerAlt className="text-[rgb(var(--muted-foreground))]" /> {exp.location}
       </span>
     )}
     {exp.employment && (
@@ -57,7 +57,7 @@ const Bullets = ({ exp, isArabic }) => (
         key={i}
         className="flex items-start text-[rgb(var(--foreground))] leading-relaxed text-start">
         <FaChevronRight
-          className={`text-[rgb(var(--primary))] ${isArabic ? 'ml-2.5 rotate-180' : 'mr-2.5'} mt-1.5 text-[10px] shrink-0`}
+          className={`text-[rgb(var(--muted-foreground))] ${isArabic ? 'ml-2.5 rotate-180' : 'mr-2.5'} mt-1.5 text-[10px] shrink-0`}
         />
         <span>{desc}</span>
       </li>

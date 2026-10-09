@@ -88,7 +88,7 @@ const BrandLogos = () => {
       </style>
 
       {/* Background ambiance */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-4xl h-96 bg-[rgb(var(--primary))]/5 blur-[120px] rounded-full pointer-events-none z-0" />
+      
       
       <div className="container mx-auto px-0 md:px-4 relative z-10 w-full max-w-[100vw]">
         <motion.div

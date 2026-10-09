@@ -60,7 +60,7 @@ const EngineStory = () => {
       {/* The core */}
       <motion.div
         style={{ opacity: still(coreOpacity), scale: still(coreScale) }}
-        className="mx-auto w-fit px-5 py-2.5 rounded-xl bg-[rgb(var(--primary))]/10 border border-[rgb(var(--primary))]/35 text-[rgb(var(--primary))] font-mono text-sm font-semibold shadow-[0_0_30px_rgb(var(--accent)/0.15)]">
+        className="mx-auto w-fit px-5 py-2.5 rounded-xl bg-[rgb(var(--primary))]/10 border border-[rgb(var(--border))] text-[rgb(var(--primary))] font-mono text-sm font-semibold shadow-[0_0_30px_rgb(var(--accent)/0.15)]">
         Django + PostgreSQL core
       </motion.div>
 
@@ -105,7 +105,7 @@ const PlatformSuite = () => {
   return (
     <section id="platform-suite" className="py-16 md:py-24 relative overflow-hidden">
       {/* Background ambiance */}
-      <div className="absolute top-1/3 left-1/2 -translate-x-1/2 w-full max-w-4xl h-96 bg-[rgb(var(--primary))]/5 blur-[120px] rounded-full pointer-events-none z-0" />
+      
 
       <div className="container mx-auto px-4 relative z-10">
         <motion.div
@@ -151,7 +151,7 @@ const PlatformSuite = () => {
                 transition={{ duration: REVEAL_DURATION, delay: revealDelay(index) }}
                 className="flex flex-col items-center text-center gap-3 p-4 rounded-xl bg-[rgb(var(--muted))]/10 border border-[rgb(var(--border))]/40"
               >
-                <span className="w-10 h-10 rounded-lg flex items-center justify-center bg-[rgb(var(--primary))]/10 text-[rgb(var(--primary))] border border-[rgb(var(--primary))]/20">
+                <span className="w-10 h-10 rounded-lg flex items-center justify-center bg-[rgb(var(--muted))]/40 text-[rgb(var(--muted-foreground))] border border-[rgb(var(--border))]">
                   {cap.icon}
                 </span>
                 <span className="text-xs font-semibold text-[rgb(var(--foreground))] leading-snug">

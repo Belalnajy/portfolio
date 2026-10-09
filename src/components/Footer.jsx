@@ -189,7 +189,7 @@ const Footer = () => {
                 href="#contact"
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
-                className="block w-full text-center bg-gradient-to-r from-[rgb(var(--accent))] to-[rgb(var(--accent-hover))] text-[rgb(var(--accent-contrast))] px-6 py-4 rounded-xl font-bold transition-all shadow-lg shadow-[rgb(var(--accent))]/10 hover:shadow-[rgb(var(--accent))]/20">
+                className="block w-full text-center bg-gradient-to-r from-[rgb(var(--accent))] to-[rgb(var(--accent-hover))] text-[rgb(var(--accent-contrast))] px-6 py-4 rounded-xl font-bold transition-all shadow-lg hover:shadow-[rgb(var(--accent))]/20">
                 {t('contact.title')}
               </motion.a>
             </div>
@@ -236,8 +236,8 @@ const Footer = () => {
       </div>
       
       {/* Decorative pulse circles */}
-      <div className="absolute -bottom-20 -left-20 w-80 h-80 bg-[rgb(var(--primary))]/5 rounded-full blur-[100px]" />
-      <div className="absolute -bottom-20 -right-20 w-80 h-80 bg-[rgb(var(--accent-hover))]/5 rounded-full blur-[100px]" />
+      
+      
     </footer>
   );
 };

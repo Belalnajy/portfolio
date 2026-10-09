@@ -211,7 +211,7 @@ const Testimonials = () => {
                       {testimonials[activeIndex].categories.map((category, idx) =>
                         <span
                           key={idx}
-                          className="px-3 py-1 rounded-full bg-[rgb(var(--primary))]/5 text-[rgb(var(--foreground))] text-xs border border-[rgb(var(--primary))]/10">
+                          className="px-3 py-1 rounded-full bg-[rgb(var(--primary))]/5 text-[rgb(var(--foreground))] text-xs border border-[rgb(var(--border))]">
                           ⭐ {category}
                         </span>
                       )}
@@ -225,7 +225,7 @@ const Testimonials = () => {
                       rel="noopener noreferrer"
                       whileHover={{ scale: 1.02, y: -2 }}
                       whileTap={{ scale: 0.98 }}
-                      className={`flex items-center justify-center gap-2 w-full md:w-auto px-6 py-3 mb-10 rounded-xl bg-[rgb(var(--primary))] text-[rgb(var(--accent-contrast))] font-semibold hover:shadow-xl hover:shadow-[rgb(var(--primary))]/40 transition-all`}>
+                      className={`flex items-center justify-center gap-2 w-full md:w-auto px-6 py-3 mb-10 rounded-xl bg-[rgb(var(--primary))] text-[rgb(var(--accent-contrast))] font-semibold hover:shadow-xl transition-all`}>
                       <FaExternalLinkAlt />
                       <span>
                         {t('testimonials.view_review', { platform: testimonials[activeIndex].platform })}
@@ -253,7 +253,7 @@ const Testimonials = () => {
 
                     <div className={`flex items-center gap-4 ${isArabic ? 'flex-row-reverse' : 'flex-row'}`}>
                       {testimonials[activeIndex].platform && (
-                        <span className="px-5 py-2 rounded-xl bg-[rgb(var(--card))]/5 text-[rgb(var(--primary))] text-sm font-bold border border-[rgb(var(--primary))]/20 tracking-wide uppercase">
+                        <span className="px-5 py-2 rounded-xl bg-[rgb(var(--card))]/5 text-[rgb(var(--primary))] text-sm font-bold border border-[rgb(var(--border))] tracking-wide uppercase">
                           {testimonials[activeIndex].platform}
                         </span>
                       )}
@@ -286,7 +286,7 @@ const Testimonials = () => {
                   >
                     <span
                       className={`block h-2 rounded-full transition-all duration-300 ${index === activeIndex
-                        ? "bg-[rgb(var(--primary))] w-10 shadow-lg shadow-[rgb(var(--primary))]/40"
+                        ? "bg-[rgb(var(--primary))] w-10 shadow-lg"
                         : "bg-[rgb(var(--muted))] w-2 group-hover/dot:bg-[rgb(var(--muted-foreground))]"}`}
                     />
                   </button>

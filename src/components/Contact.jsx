@@ -147,7 +147,7 @@ const Contact = () => {
                   className={`p-4 rounded-xl border flex-shrink-0 group-hover:scale-110 transition-transform duration-300 ${
                     item.highlight
                       ? 'bg-[#25D366]/15 border-[#25D366]/40'
-                      : 'bg-[rgb(var(--primary))]/10 border-[rgb(var(--primary))]/25'
+                      : 'bg-[rgb(var(--primary))]/10 border-[rgb(var(--border))]'
                   }`}>
                   <div className={`text-3xl ${item.highlight ? 'text-[#25D366]' : 'text-[rgb(var(--primary))]'}`}>{item.icon}</div>
                 </div>

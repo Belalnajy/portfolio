@@ -210,7 +210,7 @@ const About = () => {
           {/* Highlights */}
           {highlights.map((item, i) => (
             <Cell key={item.title} span="sm:col-span-2 lg:col-span-4" index={i}>
-              <div className="inline-flex items-center justify-center w-11 h-11 rounded-xl bg-[rgb(var(--primary))]/10 border border-[rgb(var(--primary))]/25 text-[rgb(var(--primary))] text-lg mb-4">
+              <div className="inline-flex items-center justify-center w-11 h-11 rounded-xl bg-[rgb(var(--muted))]/40 border border-[rgb(var(--border))] text-[rgb(var(--muted-foreground))] text-lg mb-4">
                 {item.icon}
               </div>
               <h3 className="font-bold text-[rgb(var(--foreground))] mb-1.5">{item.title}</h3>

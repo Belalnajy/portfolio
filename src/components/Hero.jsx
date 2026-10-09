@@ -27,7 +27,7 @@ const Hero = () => {
       {/* Backdrop: quiet dot grid + two fixed copper glows. No canvas, no JS. */}
       <div className="absolute inset-0 dot-grid [mask-image:radial-gradient(ellipse_70%_60%_at_50%_40%,black,transparent)]" aria-hidden="true" />
       <div className="absolute -top-40 start-1/4 w-[36rem] h-[36rem] bg-[rgb(var(--accent))]/8 rounded-full blur-[140px] pointer-events-none" aria-hidden="true" />
-      <div className="absolute bottom-0 end-0 w-[28rem] h-[28rem] bg-[rgb(var(--accent))]/6 rounded-full blur-[120px] pointer-events-none" aria-hidden="true" />
+      
 
       <div className="container mx-auto px-6 relative z-10 flex-1 flex flex-col justify-center pt-28 pb-12">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-8 items-center">
@@ -122,9 +122,9 @@ const Hero = () => {
             className="lg:col-span-4 animate-fadeInUp"
             style={{ animationDelay: '0.2s' }}
             aria-label={t('hero.freelance_title')}>
-            <div className="relative glass-card rounded-2xl border border-[rgb(var(--primary))]/25 p-6 sm:p-7 text-start overflow-hidden">
+            <div className="relative glass-card rounded-2xl border border-[rgb(var(--border))] p-6 sm:p-7 text-start overflow-hidden">
               {/* Copper wash in the corner */}
-              <div className="absolute -top-16 -end-16 w-48 h-48 bg-[rgb(var(--accent))]/12 rounded-full blur-3xl pointer-events-none" aria-hidden="true" />
+              
 
               <p className="text-[11px] font-bold uppercase tracking-[0.25em] text-[rgb(var(--primary))] mb-4 flex items-center gap-2">
                 <FaCheckCircle />

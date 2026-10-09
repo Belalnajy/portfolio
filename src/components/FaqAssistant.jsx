@@ -630,7 +630,7 @@ const FaqAssistant = () => {
         whileTap={{ scale: 0.9 }}
         onClick={() => setIsOpen(!isOpen)}
         aria-label={t('faq.tooltip')}
-        className="hidden md:flex w-14 h-14 bg-gradient-to-r from-[rgb(var(--accent))] to-[rgb(var(--accent-hover))] rounded-full items-center justify-center text-[rgb(var(--accent-contrast))] shadow-lg shadow-[rgb(var(--accent))]/40 relative group">
+        className="hidden md:flex w-14 h-14 bg-gradient-to-r from-[rgb(var(--accent))] to-[rgb(var(--accent-hover))] rounded-full items-center justify-center text-[rgb(var(--accent-contrast))] shadow-lg relative group">
         <AnimatePresence mode="wait">
           {isOpen ? (
             <motion.div

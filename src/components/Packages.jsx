@@ -61,7 +61,7 @@ const Packages = () => {
                 transition={{ duration: REVEAL_DURATION, delay: revealDelay(index) }}
                 className={`relative glass-card rounded-2xl p-6 sm:p-8 flex flex-col h-full text-start transition-colors ${
                   tier.featured
-                    ? 'border-2 border-[rgb(var(--primary))] shadow-2xl shadow-[rgb(var(--primary))]/10 lg:-translate-y-3'
+                    ? 'border-2 border-[rgb(var(--primary))] shadow-2xl lg:-translate-y-3'
                     : 'border border-[rgb(var(--border))]/50 hover:border-[rgb(var(--primary))]/40'
                 }`}
               >
@@ -95,7 +95,7 @@ const Packages = () => {
                       key={i}
                       className="flex items-start gap-3 text-sm text-[rgb(var(--muted-foreground))]"
                     >
-                      <FaCheck className="mt-1 text-[rgb(var(--primary))] shrink-0 text-xs" />
+                      <FaCheck className="mt-1 text-[rgb(var(--muted-foreground))] shrink-0 text-xs" />
                       <span>{feature}</span>
                     </li>
                   ))}

@@ -121,7 +121,7 @@ const ProjectModal = ({ project, isOpen, onClose }) => {
                 </div>
 
                 <div className="flex items-center gap-3 px-4 sm:px-6 py-3">
-                  <span className="shrink-0 px-3 py-1 rounded-full text-[11px] sm:text-xs font-semibold bg-[rgb(var(--primary))]/10 text-[rgb(var(--primary))] border border-[rgb(var(--primary))]/25">
+                  <span className="shrink-0 px-3 py-1 rounded-full text-[11px] sm:text-xs font-semibold bg-[rgb(var(--muted))]/40 text-[rgb(var(--muted-foreground))] border border-[rgb(var(--border))]">
                     {project.category}
                   </span>
                   <h2 className="flex-1 min-w-0 truncate text-sm sm:text-base font-bold text-[rgb(var(--foreground))] text-start">

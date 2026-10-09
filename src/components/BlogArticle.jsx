@@ -55,7 +55,7 @@ const ArticleContent = ({ slug, article, nextSlug }) => {
           {facts.tags.map((tag) => (
             <span
               key={tag}
-              className="px-2.5 py-1 rounded-full text-[11px] font-semibold bg-[rgb(var(--primary))]/10 border border-[rgb(var(--primary))]/25 text-[rgb(var(--primary))]"
+              className="px-2.5 py-1 rounded-full text-[11px] font-semibold bg-[rgb(var(--muted))]/40 border border-[rgb(var(--border))] text-[rgb(var(--muted-foreground))]"
               dir="ltr">
               {tag}
             </span>
@@ -109,7 +109,7 @@ const ArticleContent = ({ slug, article, nextSlug }) => {
         whileInView={{ opacity: 1, y: 0 }}
         viewport={REVEAL_VIEWPORT}
         transition={{ duration: 0.5 }}
-        className="glass-card rounded-2xl border border-[rgb(var(--primary))]/25 p-6 sm:p-8 mb-14">
+        className="glass-card rounded-2xl border border-[rgb(var(--border))] p-6 sm:p-8 mb-14">
         <h2 className="font-display text-xl font-bold text-[rgb(var(--primary))] mb-4">
           {copy.takeaway.heading}
         </h2>

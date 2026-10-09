@@ -320,7 +320,7 @@ const FeaturedRow = ({ project, index, onClick, isArabic }) => {
           {String(index + 1).padStart(2, '0')}
         </p>
         {project.impact && (
-          <span className="inline-block px-3 py-1 rounded-full text-xs font-semibold bg-[rgb(var(--primary))]/10 text-[rgb(var(--primary))] border border-[rgb(var(--primary))]/25 mb-3">
+          <span className="inline-block px-3 py-1 rounded-full text-xs font-semibold bg-[rgb(var(--muted))]/40 text-[rgb(var(--muted-foreground))] border border-[rgb(var(--border))] mb-3">
             {project.impact}
           </span>
         )}

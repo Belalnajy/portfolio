@@ -152,19 +152,6 @@ const Navbar = () => {
             whileTap={{ scale: 0.95 }}
             className="flex items-center cursor-pointer group relative">
               <div className="relative">
-                {/* Glow effect behind logo */}
-                <motion.div
-                  className="absolute -inset-2 bg-[rgb(var(--primary))]/8 rounded-lg blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-                  animate={{
-                    scale: [1, 1.1, 1],
-                  }}
-                  transition={{
-                    duration: 2,
-                    repeat: Infinity,
-                    ease: 'easeInOut',
-                  }}
-                />
-
                 <span className="relative text-2xl font-bold text-[rgb(var(--foreground))] tracking-tight flex items-center gap-2">
                   <span className="bg-gradient-to-r from-[rgb(var(--foreground))] via-[rgb(var(--primary))] to-[rgb(var(--foreground))] bg-clip-text text-transparent">
                     Belal Nagy
@@ -213,7 +200,7 @@ const Navbar = () => {
                     {isActive(item) && (
                       <motion.div
                         layoutId="activeSection"
-                        className="absolute inset-0 bg-gradient-to-r from-[rgb(var(--primary))]/10 to-[rgb(var(--primary))]/5 rounded-full border border-[rgb(var(--primary))]/20"
+                        className="absolute inset-0 bg-gradient-to-r from-[rgb(var(--primary))]/10 to-[rgb(var(--primary))]/5 rounded-full border border-[rgb(var(--border))]"
                         transition={{
                           type: 'spring',
                           bounce: 0.2,
@@ -240,7 +227,7 @@ const Navbar = () => {
             {/* Resume Button */}
             <MagneticButton
               onClick={downloadCV}
-              className="group relative px-6 py-2 rounded-full bg-[rgb(var(--primary))] text-[rgb(var(--accent-contrast))] font-semibold overflow-hidden transition-all duration-300 hover:shadow-xl hover:shadow-[rgb(var(--primary))]/30 flex items-center gap-2">
+              className="group relative px-6 py-2 rounded-full bg-[rgb(var(--primary))] text-[rgb(var(--accent-contrast))] font-semibold overflow-hidden transition-all duration-300 hover:shadow-xl flex items-center gap-2">
               <span className="relative z-10 flex items-center gap-2">
                 <FaDownload className="text-sm" />
                 {t('nav.download_cv')}
