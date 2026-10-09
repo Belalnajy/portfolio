@@ -1,7 +1,7 @@
 const content = {
   "en": {
     "title": "UDUIPA, the Official Digital Platform of a University Union",
-    "summary": "The official academic union platform at uduipa.com: centralized membership management, automated verification workflows, and document generation, delivered as a high-performance monorepo in three languages.",
+    "summary": "The official academic union platform: centralized membership management, automated verification workflows, and document generation, delivered as a high-performance monorepo in three languages.",
     "facts": {
       "role": "Full-stack developer",
       "scope": "Membership management, automated verification, document pipelines",
@@ -36,9 +36,9 @@ const content = {
       ]
     },
     "outcome": {
-      "body": "The platform is live at uduipa.com as the union's official system. It is my reference project for reliable, large-scale production systems built for academic institutions.",
+      "body": "The platform was delivered to production as the union's official system. It is my reference project for reliable, large-scale production systems built for academic institutions.",
       "points": [
-        "Live in production at uduipa.com",
+        "Delivered to production as the union's official system",
         "The union's official digital platform",
         "Verification and document issuing fully automated"
       ]
@@ -46,7 +46,7 @@ const content = {
   },
   "ar": {
     "title": "UDUIPA، المنصة الرقمية الرسمية لاتحاد جامعي",
-    "summary": "المنصة الرسمية للاتحاد الأكاديمي على uduipa.com: إدارة مركزية للعضويات، ودورات تحقق مؤتمتة، وتوليد مستندات رسمية — مبنية كـ Monorepo عالي الأداء بثلاث لغات.",
+    "summary": "المنصة الرسمية للاتحاد الأكاديمي: إدارة مركزية للعضويات، ودورات تحقق مؤتمتة، وتوليد مستندات رسمية — مبنية كـ Monorepo عالي الأداء بثلاث لغات.",
     "facts": {
       "role": "مطور Full-Stack",
       "scope": "إدارة العضويات، التحقق المؤتمت، دورات معالجة المستندات",
@@ -81,9 +81,9 @@ const content = {
       ]
     },
     "outcome": {
-      "body": "المنصة شغالة فعلياً على uduipa.com كالنظام الرسمي للاتحاد، وهي مشروعي المرجعي للأنظمة الإنتاجية الكبيرة الموثوقة المبنية للمؤسسات الأكاديمية.",
+      "body": "المنصة اتسلّمت للإنتاج كالنظام الرسمي للاتحاد، وهي مشروعي المرجعي للأنظمة الإنتاجية الكبيرة الموثوقة المبنية للمؤسسات الأكاديمية.",
       "points": [
-        "تعمل فعلياً على uduipa.com",
+        "اتسلّمت للإنتاج كنظام رسمي للاتحاد",
         "المنصة الرقمية الرسمية للاتحاد",
         "التحقق وإصدار المستندات مؤتمت بالكامل"
       ]

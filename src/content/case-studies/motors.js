@@ -35,9 +35,9 @@ const content = {
       ]
     },
     "outcome": {
-      "body": "Motors is live at motorksa.org, an Arabic-first marketplace where the entire experience — from filters to the final WhatsApp message — matches how the Saudi market actually buys cars.",
+      "body": "Motors shipped to production as an Arabic-first marketplace where the entire experience — from filters to the final WhatsApp message — matches how the Saudi market actually buys cars.",
       "points": [
-        "Live at motorksa.org",
+        "Shipped to production",
         "Covers new, used and damaged vehicle segments",
         "Buyer-to-seller contact built around WhatsApp"
       ]
@@ -79,9 +79,9 @@ const content = {
       ]
     },
     "outcome": {
-      "body": "Motors شغالة على motorksa.org — سوق عربي أولاً، التجربة فيه كلها من الفلاتر لرسالة الـ WhatsApp الأخيرة ماشية مع الطريقة اللي السوق السعودي فعلاً بيشتري بيها عربيات.",
+      "body": "Motors اتسلّمت للإنتاج كسوق عربي أولاً — التجربة فيه كلها من الفلاتر لرسالة الـ WhatsApp الأخيرة ماشية مع الطريقة اللي السوق السعودي فعلاً بيشتري بيها عربيات.",
       "points": [
-        "شغال على motorksa.org",
+        "اتسلّم للإنتاج",
         "بيغطي الجديد والمستعمل والمصدوم",
         "التواصل مبني حوالين WhatsApp"
       ]

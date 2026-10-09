@@ -56,7 +56,7 @@ const FaqAssistant = () => {
         category: 'Projects',
         icon: <FaProjectDiagram />,
         answer:
-          'UDUIPA (uduipa.com) is an official platform built with Turborepo. It manages thousands of memberships and automates PDF/QR generation. It demonstrates my ability to build reliable, large-scale production systems for academic institutions.',
+          'UDUIPA is an official platform built with Turborepo, made to manage thousands of memberships and automate PDF/QR generation. It demonstrates my ability to build reliable, large-scale production systems for academic institutions.',
       },
       {
         question: 'Inventory Management System?',
@@ -105,7 +105,7 @@ const FaqAssistant = () => {
         category: 'Projects',
         icon: <FaGraduationCap />,
         answer:
-          'An official platform (uduipa.com) managing thousands of memberships. I used a Turborepo monorepo (Next.js/NestJS) to automate document generation and QR verification, demonstrating enterprise-grade reliability.',
+          'An official platform managing thousands of memberships. I used a Turborepo monorepo (Next.js/NestJS) to automate document generation and QR verification, demonstrating enterprise-grade reliability.',
       },
       {
         question: 'Orca - Premium E-commerce',
@@ -260,7 +260,7 @@ const FaqAssistant = () => {
         category: 'Projects',
         icon: <FaGraduationCap />,
         answer:
-          'منصة رسمية (uduipa.com) بتدير آلاف العضويات. استخدمت Turborepo لأتمتة إصدار الشهادات والـ QR Codes، وده بيثبت قدرتي على بناء أنظمة Enterprise موثوقة وشغالة فعلاً.',
+          'منصة رسمية بتدير آلاف العضويات. استخدمت Turborepo لأتمتة إصدار الشهادات والـ QR Codes، وده بيثبت قدرتي على بناء أنظمة Enterprise موثوقة وشغالة فعلاً.',
       },
       {
         question: 'متجر Orca (براند ملابس)',

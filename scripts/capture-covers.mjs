@@ -45,12 +45,10 @@ const TARGETS = [
 
   // Existing covers are real; recapture only if the site has changed.
   { slug: 'toyo228', file: 'toyo228.png', url: 'http://toyo228.com/en', group: 'refresh' },
-  { slug: 'motors', file: 'motors.png', url: 'https://motorksa.org/', group: 'refresh' },
   { slug: 'sonomedix', file: 'sonomedix.png', url: 'https://sonomedix.cloud/', group: 'refresh' },
   { slug: 'kmbc', file: 'kmbc.png', url: 'https://www.kmbc-kw.com/', group: 'refresh' },
   { slug: 'rabzan', file: 'rabzan.png', url: 'https://www.rabzan.com/', group: 'refresh' },
   { slug: 'manqla', file: 'manqla.png', url: 'https://www.manqla.com/', group: 'refresh' },
-  { slug: 'uduipa', file: 'uduipa.png', url: 'https://uduipa.com', group: 'refresh' },
   { slug: 'waferlee', file: 'waferlee.png', url: 'https://waferlee.ae', group: 'refresh' },
   { slug: 'journal', file: 'journal.png', url: 'https://upafa-edu.net/', group: 'refresh' },
   { slug: 'cme', file: 'cme.png', url: 'https://cmehours.online/', group: 'refresh' },

@@ -36,7 +36,6 @@ export const CASE_STUDIES = {
   uduipa: {
     name: 'UDUIPA',
     image: '/uduipa.webp',
-    liveUrl: 'https://uduipa.com',
     stack: ['Next.js', 'NestJS', 'TypeScript', 'PostgreSQL', 'Turborepo', 'Puppeteer'],
     updated: '2026-08-30',
   },
@@ -97,7 +96,6 @@ export const CASE_STUDIES = {
   motors: {
     name: 'Motors',
     image: '/motors.webp',
-    liveUrl: 'https://motorksa.org/',
     stack: ['Next.js', 'NestJS', 'TypeORM', 'PostgreSQL', 'TypeScript', 'Multer'],
     updated: '2026-08-31',
   },

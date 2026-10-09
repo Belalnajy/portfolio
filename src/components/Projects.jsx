@@ -719,7 +719,7 @@ const Projects = ({ variant = 'full' }) => {
         ],
         features: t('projects.items.motors.features', { returnObjects: true }),
         github: '#',
-        live: 'https://motorksa.org/',
+        live: '#',
         category: 'Full Stack',
       },
       {
@@ -742,7 +742,7 @@ const Projects = ({ variant = 'full' }) => {
         ],
         features: t('projects.items.uduipa.features', { returnObjects: true }),
         github: '#',
-        live: 'https://uduipa.com',
+        live: '#',
         category: 'Full Stack',
       },
       {
