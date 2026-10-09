@@ -58,14 +58,14 @@ const Hero = () => {
 
             {/* Role line */}
             <p
-              className="animate-fadeInUp text-sm sm:text-base font-semibold tracking-[0.25em] uppercase text-[rgb(var(--primary))] mb-6"
+              className="animate-riseIn text-sm sm:text-base font-semibold tracking-[0.25em] uppercase text-[rgb(var(--primary))] mb-6"
               style={{ animationDelay: '0.18s' }}>
               {t('hero.role_line')}
             </p>
 
             {/* Value proposition */}
             <p
-              className="animate-fadeInUp text-lg sm:text-xl text-[rgb(var(--foreground))] leading-relaxed max-w-2xl mb-10"
+              className="animate-riseIn text-lg sm:text-xl text-[rgb(var(--foreground))] leading-relaxed max-w-2xl mb-10"
               style={{ animationDelay: '0.24s' }}>
               {t('hero.description_1')}
               <span className="text-[rgb(var(--primary))] font-semibold">{t('hero.description_2')}</span>

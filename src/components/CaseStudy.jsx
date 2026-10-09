@@ -18,6 +18,7 @@ import {
 import { getTechIcon } from './Projects';
 import IconDefaults from './IconDefaults';
 import { coverMeta } from '../lib/cover-meta';
+import { CASE_STUDIES } from '../lib/case-studies';
 import {
   createI18nInstance,
   resolvePreferredLanguage,
@@ -46,7 +47,7 @@ const CaseStudy = ({ lang = DEFAULT_LANGUAGE, bundle, ...props }) => {
   );
 };
 
-const CaseStudyContent = ({ slug, narrative, image, liveUrl, stack, nav, pageLang }) => {
+const CaseStudyContent = ({ slug, narrative, image, liveUrl, stack, gallery, nav, pageLang }) => {
   const { t, i18n } = useTranslation();
   const isArabic = i18n.language === 'ar';
   const Back = isArabic ? FaArrowRight : FaArrowLeft;
@@ -99,6 +100,7 @@ const CaseStudyContent = ({ slug, narrative, image, liveUrl, stack, nav, pageLan
               href={liveUrl}
               target="_blank"
               rel="noopener noreferrer"
+              aria-label={t('case_studies.visit')}
               className="inline-flex items-center gap-2 min-h-[44px] px-4 rounded-xl text-sm font-semibold bg-[rgb(var(--muted))]/40 text-[rgb(var(--muted-foreground))] border border-[rgb(var(--border))] hover:bg-[rgb(var(--primary))]/20 transition-colors"
             >
               <FaExternalLinkAlt className="text-xs" />
@@ -266,6 +268,70 @@ const CaseStudyContent = ({ slug, narrative, image, liveUrl, stack, nav, pageLan
           </motion.article>
         )}
       </section>
+
+      {/* Screens from the live product. Desktop views run down the main
+          column; the phone view sits beside them in a device frame, so the
+          responsive claim in the narrative is something you can see. */}
+      {gallery?.length > 0 && (() => {
+        const name = CASE_STUDIES[slug]?.name || copy.title;
+        const desktop = gallery.filter((src) => !src.endsWith('-m.webp'));
+        const phone = gallery.find((src) => src.endsWith('-m.webp'));
+        const Shot = ({ src, alt, sizes, className = '' }) => {
+          const meta = coverMeta(src);
+          return (
+            <a
+              href={src}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={`block rounded-xl overflow-hidden border border-[rgb(var(--border))]/60 bg-[rgb(var(--scrim))] hover:border-[rgb(var(--primary))]/50 transition-colors ${className}`}>
+              <Image
+                src={src}
+                alt={alt}
+                width={meta.w}
+                height={meta.h}
+                sizes={sizes}
+                placeholder={meta.blur ? 'blur' : 'empty'}
+                blurDataURL={meta.blur}
+                className="w-full h-auto"
+              />
+            </a>
+          );
+        };
+        return (
+          <section className="container mx-auto px-4 sm:px-6 max-w-5xl pb-16 md:pb-20">
+            <div className="flex items-end justify-between gap-4 mb-6">
+              <h2 className="font-display text-xl sm:text-2xl md:text-3xl font-bold tracking-tight text-start">
+                {t('case_studies.screens_title')}
+              </h2>
+              <p className="text-xs text-[rgb(var(--muted-foreground))]">{t('case_studies.screens_note')}</p>
+            </div>
+            <div className={`grid gap-4 ${phone ? 'md:grid-cols-3' : ''} items-start`}>
+              <div className={`grid gap-4 ${phone ? 'md:col-span-2' : 'sm:grid-cols-2'}`}>
+                {desktop.map((src, i) => (
+                  <Shot
+                    key={src}
+                    src={src}
+                    alt={t('case_studies.screen_alt', { name, n: i + 1 })}
+                    sizes="(min-width: 1024px) 640px, 100vw"
+                  />
+                ))}
+              </div>
+              {phone && (
+                <div className="md:sticky md:top-24 max-w-[280px] w-full mx-auto">
+                  <div className="rounded-[2rem] border-[6px] border-[rgb(var(--surface-raised))] shadow-xl overflow-hidden">
+                    <Shot
+                      src={phone}
+                      alt={t('case_studies.screen_mobile_alt', { name })}
+                      sizes="280px"
+                      className="rounded-none border-0"
+                    />
+                  </div>
+                </div>
+              )}
+            </div>
+          </section>
+        );
+      })()}
 
       {/* Closing CTA */}
       <section className="container mx-auto px-4 sm:px-6 max-w-4xl pb-20">

@@ -16,10 +16,15 @@ import Notification from './Notification';
 import { track } from '@vercel/analytics';
 import WhatsAppButton from './WhatsAppButton';
 import FloatingActions from './FloatingActions';
-import CommandPalette from './CommandPalette';
 import DarkModeToggle from './DarkModeToggle';
-import FaqAssistant from './FaqAssistant';
 import MobileTabBar from './MobileTabBar';
+import dynamic from 'next/dynamic';
+
+// Neither is needed to paint or to hydrate the page: the FAQ panel carries a
+// large bilingual knowledge base and the palette only matters once someone
+// presses Ctrl+K. Both load after hydration in their own chunks.
+const FaqAssistant = dynamic(() => import('./FaqAssistant'), { ssr: false });
+const CommandPalette = dynamic(() => import('./CommandPalette'), { ssr: false });
 
 /**
  * Everything a page needs from the shell: toasts and the CV download, without

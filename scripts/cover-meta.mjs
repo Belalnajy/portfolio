@@ -1,7 +1,11 @@
 import sharp from 'sharp';
 import { readdirSync } from 'node:fs';
 import { writeFileSync } from 'node:fs';
-const files = readdirSync('public').filter(f => f.endsWith('.webp')).sort();
+// Covers live at the root of public/, case-study screens under public/gallery/.
+const files = [
+  ...readdirSync('public').filter(f => f.endsWith('.webp')),
+  ...readdirSync('public/gallery').filter(f => f.endsWith('.webp')).map(f => 'gallery/' + f),
+].sort();
 const out = {};
 for (const f of files) {
   const img = sharp('public/' + f);

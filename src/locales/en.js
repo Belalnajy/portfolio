@@ -855,6 +855,10 @@ const en = {
         cta_title: 'Have a project like this in mind?',
         cta_subtitle: 'Tell me what you are building and I will come back with a recommended scope, timeline and price.',
         cta_button: 'Start a Conversation',
+        screens_title: 'The product',
+        screens_note: 'Captured from the live site.',
+        screen_alt: '{{name}} — screen {{n}}',
+        screen_mobile_alt: '{{name}} on a phone',
         facts: {
           role: 'My Role',
           scope: 'Scope',

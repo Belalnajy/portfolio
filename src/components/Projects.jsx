@@ -58,8 +58,11 @@ import {
   FaBug,
 } from 'react-icons/fa';
 import ProjectSkeleton from './skeletons/ProjectSkeleton';
-import ProjectModal from './ProjectModal';
 import { useTranslation } from 'react-i18next';
+import dynamic from 'next/dynamic';
+
+// Only needed once a card is opened, so it stays out of the first load.
+const ProjectModal = dynamic(() => import('./ProjectModal'), { ssr: false });
 import { brandColor } from '../lib/brand-colors';
 import { coverMeta } from '../lib/cover-meta';
 import { CASE_STUDY_SLUGS } from '../lib/case-studies';

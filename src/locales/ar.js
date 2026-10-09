@@ -855,6 +855,10 @@ const ar = {
         cta_title: 'عندك مشروع شبه ده؟',
         cta_subtitle: 'قوللي إنت بتبني إيه وهرجع لك بنطاق مقترح وجدول زمني وسعر.',
         cta_button: 'ابدأ الحديث',
+        screens_title: 'المنتج',
+        screens_note: 'ملتقطة من الموقع الحي.',
+        screen_alt: '{{name}} — شاشة {{n}}',
+        screen_mobile_alt: '{{name}} على الموبايل',
         facts: {
           role: 'دوري في المشروع',
           scope: 'نطاق العمل',

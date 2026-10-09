@@ -5,6 +5,9 @@
  * the project-card links need — small enough to import from client code.
  * Both /case-study/<slug> and /ar/case-study/<slug> read from here so the two
  * never drift.
+ *
+ * `gallery` lists extra screens captured from the live product: `-dN` are
+ * desktop views further down the page, `-m` is the phone view.
  */
 export const CASE_STUDIES = {
   opptmakers: {
@@ -20,6 +23,7 @@ export const CASE_STUDIES = {
     liveUrl: 'https://bilqalaminstitute.net/',
     stack: ['Next.js', 'React', 'Laravel', 'PHP', 'Tailwind'],
     updated: '2026-08-30',
+    gallery: ['/gallery/bilqalam-d1.webp', '/gallery/bilqalam-d2.webp', '/gallery/bilqalam-d3.webp', '/gallery/bilqalam-m.webp'],
   },
   indstrz: {
     name: 'Indstrz',
@@ -27,6 +31,7 @@ export const CASE_STUDIES = {
     liveUrl: 'https://indstrz.com/en',
     stack: ['Next.js', 'React', 'Flask', 'PostgreSQL', 'Socket.io', 'SQLAlchemy'],
     updated: '2026-08-30',
+    gallery: ['/gallery/indstrz-d1.webp', '/gallery/indstrz-d2.webp', '/gallery/indstrz-d3.webp', '/gallery/indstrz-m.webp'],
   },
   uduipa: {
     name: 'UDUIPA',
@@ -41,6 +46,7 @@ export const CASE_STUDIES = {
     liveUrl: 'https://pro-fleet.vercel.app/',
     stack: ['Next.js', 'TypeScript', 'Prisma', 'Socket.io', 'PostgreSQL', 'Leaflet'],
     updated: '2026-08-30',
+    gallery: ['/gallery/profleet-d1.webp', '/gallery/profleet-d2.webp', '/gallery/profleet-m.webp'],
   },
   medicta: {
     name: 'Medicta',
@@ -55,6 +61,7 @@ export const CASE_STUDIES = {
     liveUrl: 'http://toyo228.com/en',
     stack: ['Next.js', 'NestJS', 'TypeORM', 'PostgreSQL', 'TypeScript', 'Turborepo'],
     updated: '2026-08-31',
+    gallery: ['/gallery/toyo228-d1.webp', '/gallery/toyo228-d2.webp', '/gallery/toyo228-m.webp'],
   },
   injaz: {
     name: 'Injaz',
@@ -62,6 +69,7 @@ export const CASE_STUDIES = {
     liveUrl: 'https://lms-injaz.com/',
     stack: ['Django', 'PostgreSQL', 'Python', 'Celery', 'Redis', 'MyFatoorah'],
     updated: '2026-08-31',
+    gallery: ['/gallery/injaz-d1.webp', '/gallery/injaz-d3.webp'],
   },
   hcholding: {
     name: 'HC Holding',
@@ -69,6 +77,7 @@ export const CASE_STUDIES = {
     liveUrl: 'https://lms-hcholding.org/',
     stack: ['Django', 'PostgreSQL', 'Python', 'Celery', 'Redis', 'MyFatoorah'],
     updated: '2026-08-31',
+    gallery: ['/gallery/hcholding-d1.webp', '/gallery/hcholding-d3.webp', '/gallery/hcholding-m.webp'],
   },
   mada: {
     name: 'Mada Education',
@@ -76,6 +85,7 @@ export const CASE_STUDIES = {
     liveUrl: 'https://mada-education.com/',
     stack: ['Django', 'PostgreSQL', 'Python', 'Celery', 'Redis', 'Tailwind'],
     updated: '2026-08-31',
+    gallery: ['/gallery/mada-d1.webp', '/gallery/mada-d2.webp', '/gallery/mada-m.webp'],
   },
   mutlq: {
     name: 'Mutlq',
