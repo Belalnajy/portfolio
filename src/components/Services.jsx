@@ -39,7 +39,8 @@ const Services = () => {
       { icon: <FaServer /> },
       { icon: <FaGlobe /> },
       { icon: <FaShieldAlt /> },
-      { icon: <FaWrench /> },
+      // The takeover service has its own landing page selling it properly.
+      { icon: <FaWrench />, href: '/rescue' },
     ];
 
     return list.map((item, index) => ({
@@ -106,6 +107,14 @@ const Services = () => {
                   </li>
                 ))}
               </ul>
+
+              {service.href && (
+                <a
+                  href={`${isArabic ? '/ar' : ''}${service.href}`}
+                  className="inline-flex items-center gap-2 mt-5 text-sm font-semibold text-[rgb(var(--primary))] hover:underline underline-offset-4">
+                  {t('services.rescue_cta')}
+                </a>
+              )}
 
               {/* Hover Effect Line */}
               <div
