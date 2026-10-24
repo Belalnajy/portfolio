@@ -6,8 +6,8 @@ import { FaDownload, FaGlobe } from 'react-icons/fa';
 import { FiMenu, FiX } from 'react-icons/fi';
 import { FaSun, FaMoon } from 'react-icons/fa';
 import { useTheme } from '../lib/useTheme';
-import { HiSparkles } from 'react-icons/hi';
 import MagneticButton from './MagneticButton';
+import Logo from './Logo';
 import { useTranslation } from 'react-i18next';
 import { loadLanguage } from '../i18n';
 import { useSite } from './SiteShell';
@@ -150,22 +150,15 @@ const Navbar = () => {
             href={`${home}/`}
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
-            className="flex items-center cursor-pointer group relative">
+            aria-label="Belal Nagy — home"
+            className="flex items-center gap-3 cursor-pointer group relative">
+              {/* The mark spells B at rest and rearranges into N on hover. */}
+              <Logo size={34} className="shrink-0" />
               <div className="relative">
-                <span className="relative text-2xl font-bold text-[rgb(var(--foreground))] tracking-tight flex items-center gap-2">
+                <span className="relative text-2xl font-bold text-[rgb(var(--foreground))] tracking-tight flex items-center">
                   <span className="bg-gradient-to-r from-[rgb(var(--foreground))] via-[rgb(var(--primary))] to-[rgb(var(--foreground))] bg-clip-text text-transparent">
                     Belal Nagy
                   </span>
-                  <motion.span
-                    animate={{ rotate: [0, 10, -10, 0] }}
-                    transition={{
-                      duration: 2,
-                      repeat: Infinity,
-                      ease: 'easeInOut',
-                    }}
-                    className="text-[rgb(var(--primary))] opacity-0 group-hover:opacity-100 transition-opacity">
-                    <HiSparkles className="w-4 h-4" />
-                  </motion.span>
                 </span>
 
                 {/* Animated underline */}
