@@ -3,7 +3,7 @@ import { OG_IMAGE, SITE_URL } from '../layout';
 export const metadata = {
   title: 'Services & Packages',
   description:
-    'Full-stack development services: builds from zero, AI and backend engineering, Arabic/RTL localization, legacy-code takeover — with a clear process and transparent packages.',
+    'Full-stack development services: builds from zero, AI and backend engineering, Arabic/RTL localization, legacy-code takeover, with a clear process and transparent packages.',
   alternates: {
     canonical: '/services',
     languages: { en: '/services', ar: '/ar/services', 'x-default': '/services' },
@@ -11,14 +11,14 @@ export const metadata = {
   openGraph: {
     type: 'website',
     url: '/services',
-    title: 'Services & Packages — Belal Nagy',
+    title: 'Services & Packages | Belal Nagy',
     description:
       'Full-stack development services with a clear process and transparent packages.',
     images: [OG_IMAGE],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Services & Packages — Belal Nagy',
+    title: 'Services & Packages | Belal Nagy',
     description:
       'Full-stack development services with a clear process and transparent packages.',
     images: [OG_IMAGE],
@@ -31,7 +31,7 @@ export const metadata = {
 const PROFESSIONAL_SERVICE_JSON_LD = {
   '@context': 'https://schema.org',
   '@type': 'ProfessionalService',
-  name: 'Belal Nagy — Full-Stack Development Services',
+  name: 'Belal Nagy | Full-Stack Development Services',
   url: `${SITE_URL}/services`,
   image: `${SITE_URL}/hero.webp`,
   description:

@@ -21,11 +21,11 @@ const en = {
         freelance_platforms: 'Khamsat · Nafezly',
         hire_me: 'Hire me for a project',
         hire_me_b: 'Get a free project estimate',
-        role_line: 'Software Engineer — Full-Stack Developer',
+        role_line: 'Software Engineer · Full-Stack Developer',
         now_label: 'Now',
         now_value: 'Software Engineer @ ezSec Inc',
-        location: 'Alexandria, Egypt — working worldwide',
-        now_meta: 'Remote — Kitchener, Canada',
+        location: 'Alexandria, Egypt · working worldwide',
+        now_meta: 'Remote · Kitchener, Canada',
         scroll: 'Scroll',
         follow_me: 'Follow me on Arabic platforms'
       },
@@ -33,10 +33,10 @@ const en = {
         bento: {
           now: 'Now',
           now_value: 'Software Engineer @ ezSec Inc',
-          now_meta: 'Remote — Kitchener, Canada',
+          now_meta: 'Remote · Kitchener, Canada',
           base: 'Based in',
           base_value: 'Alexandria, Egypt',
-          base_meta: '31.2°N 29.9°E — working worldwide',
+          base_meta: '31.2°N 29.9°E · working worldwide',
           langs: 'Languages',
           langs_value: 'Arabic (native) · English',
           stack_title: 'Core stack',
@@ -85,7 +85,7 @@ const en = {
         show_all: 'Show the full archive ({{count}} projects)',
         show_featured: 'Show featured only',
         load_more: 'Load more ({{count}} remaining)',
-        featured_note: 'A hand-picked selection — the full archive is one click away.',
+        featured_note: 'A hand-picked selection. The full archive is one click away.',
         categories: {
           all: 'All',
           fullstack: 'Full Stack',
@@ -101,12 +101,12 @@ const en = {
           case_study: 'Read the Case Study',
           close: 'Close',
           suite_title: 'Same Engine, Different Brands',
-          suite_desc: 'This platform is one deployment of a shared LMS engine I built and maintain. Each client runs its own branded instance — distinct visual identity, accreditation and content — on top of the same accredited training, payment and certification core.'
+          suite_desc: 'This platform is one deployment of a shared LMS engine I built and maintain. Each client runs its own branded instance, with its own visual identity, accreditation and content, on top of the same accredited training, payment and certification core.'
         },
         items: {
           opptmakers: {
             impact: 'Role-based access per employee',
-            title: 'Opportunities Makers — Client & Transaction CRM',
+            title: 'Opportunities Makers: Client & Transaction CRM',
             desc: 'An internal platform for a Saudi consultancy that sets up companies for foreign investors. It holds the client files and tracks every company-formation case step by step, with access scoped per employee so each one only reaches the transactions they are cleared for. Arabic-first and fully RTL.',
             features: [
               'Client and transaction management for company-formation cases',
@@ -134,7 +134,7 @@ const en = {
           medicta: {
             impact: 'Live on Google Play',
             title: 'Medicta – Healthcare Booking App (Code Redesign)',
-            desc: 'An Android app for booking doctor appointments and browsing clinic services, published on Google Play. I re-architected the existing codebase and worked through its functional defects — refactoring the app structure while fixing broken flows across booking, authentication and data handling.',
+            desc: 'An Android app for booking doctor appointments and browsing clinic services, published on Google Play. I re-architected the existing codebase and worked through its functional defects, refactoring the app structure while fixing broken flows across booking, authentication and data handling.',
             features: [
               'Full code redesign: restructured the app into clear, maintainable layers',
               'Systematic fixing of functional bugs across booking, auth and data flows',
@@ -514,7 +514,7 @@ const en = {
       platform_suite: {
         label: 'Product Suite',
         title: 'One Engine, Many Brands',
-        subtitle: 'Instead of rebuilding an LMS for every client, I built one accredited training engine and deploy it as separate branded platforms — each with its own visual identity, content and accreditation, sharing a single hardened core.',
+        subtitle: 'Instead of rebuilding an LMS for every client, I built one accredited training engine and deploy it as separate branded platforms, each with its own visual identity, content and accreditation, sharing a single hardened core.',
         shared_title: 'What Every Deployment Inherits',
         capabilities: {
           engine: 'Shared Django + PostgreSQL Core',
@@ -526,10 +526,10 @@ const en = {
         },
         members: {
           injaz: 'Continuing medical education for the Saudi healthcare sector, SCFHS-accredited with NELC integration.',
-          hcholding: 'Health Cluster Holding training centre in Makkah — CPR, BLS, First Aid and nursing programmes.',
+          hcholding: 'Health Cluster Holding training centre in Makkah: CPR, BLS, First Aid and nursing programmes.',
           mada: 'Accredited general training and e-learning platform with its own catalogue and brand identity.'
         },
-        footnote: 'One codebase, one deployment pipeline, one security model — three products. New clients launch in days instead of months, and every fix or feature lands across the whole suite at once.'
+        footnote: 'One codebase, one deployment pipeline, one security model, three products. New clients launch in days instead of months, and every fix or feature lands across the whole suite at once.'
       },
       brands: {
         label: 'Partners in Growth',
@@ -765,7 +765,7 @@ const en = {
         steps: {
           discovery: {
             title: '1. Discovery Call',
-            desc: 'We talk through the goal, the users and the constraints. I ask the awkward questions early — budget, deadlines, integrations — so nothing surprises us later.',
+            desc: 'We talk through the goal, the users and the constraints. I ask the awkward questions early (budget, deadlines, integrations) so nothing surprises us later.',
             deliverable: 'Deliverable: written scope summary'
           },
           blueprint: {
@@ -780,7 +780,7 @@ const en = {
           },
           review: {
             title: '4. Review & Hardening',
-            desc: 'Your feedback on each milestone gets folded in, then I test the flows end to end — validation, permissions, edge cases, mobile, and RTL.',
+            desc: 'Your feedback on each milestone gets folded in, then I test the flows end to end: validation, permissions, edge cases, mobile, and RTL.',
             deliverable: 'Deliverable: tested, fixed build'
           },
           launch: {
@@ -798,11 +798,11 @@ const en = {
       packages: {
         label: 'Packages',
         title: 'Ways We Can Work Together',
-        subtitle: 'Three common shapes for a project. Every engagement is scoped to what you actually need — these are starting points, not boxes.',
+        subtitle: 'Three common shapes for a project. Every engagement is scoped to what you actually need; these are starting points, not boxes.',
         most_popular: 'Most Popular',
         on_request: 'Quote on request',
         cta: 'Request a Quote',
-        footnote: 'Not sure which fits? Send me a short description of your project and I will reply with a recommended scope, timeline and price — no obligation.',
+        footnote: 'Not sure which fits? Send me a short description of your project and I will reply with a recommended scope, timeline and price, with no obligation.',
         tiers: {
           landing: {
             name: 'Website & Landing Page',
@@ -810,7 +810,7 @@ const en = {
             price: '',
             timeline: 'Typically 1–2 weeks',
             features: [
-              'Custom design — no recycled templates',
+              'Custom design, no recycled templates',
               'Fully responsive, mobile-first build',
               'Bilingual Arabic/English with full RTL',
               'SEO fundamentals and performance tuning',
@@ -820,7 +820,7 @@ const en = {
           },
           platform: {
             name: 'Full-Stack Platform',
-            tagline: 'A complete product with accounts, dashboards, payments and an admin panel — built to grow.',
+            tagline: 'A complete product with accounts, dashboards, payments and an admin panel, built to grow.',
             price: '',
             timeline: 'Typically 4–10 weeks',
             features: [
@@ -859,7 +859,7 @@ const en = {
         cta_button: 'Start a Conversation',
         screens_title: 'The product',
         screens_note: 'Captured from the live site.',
-        screen_alt: '{{name}} — screen {{n}}',
+        screen_alt: '{{name}}, screen {{n}}',
         screen_mobile_alt: '{{name}} on a phone',
         facts: {
           role: 'My Role',
@@ -891,7 +891,7 @@ const en = {
         },
         items: {
           salman_a: {
-            text: 'Creative and respectful — it was a pleasure working together.',
+            text: 'Creative and respectful. It was a pleasure working together.',
             role: 'Client - Khamsat'
           },
           amsb_a: {
@@ -899,7 +899,7 @@ const en = {
             role: 'Client - Khamsat'
           },
           abu_w: {
-            text: 'I want to express my complete satisfaction with the delivered work. Belal has high competence and clear expertise, executing exactly what was required with precision and professionalism. The service quality was excellent and exceeded expectations, with great attention to the finest details. Communication was fast and clear throughout the project, with continuous follow-up and care to explain every step. He also met the delivery deadline — in fact he finished in record time without compromising quality. A professional developer you can rely on, delivering outstanding results with full confidence.',
+            text: 'I want to express my complete satisfaction with the delivered work. Belal has high competence and clear expertise, executing exactly what was required with precision and professionalism. The service quality was excellent and exceeded expectations, with great attention to the finest details. Communication was fast and clear throughout the project, with continuous follow-up and care to explain every step. He also met the delivery deadline; in fact he finished in record time without compromising quality. A professional developer you can rely on, delivering outstanding results with full confidence.',
             role: 'Client - Khamsat'
           },
           ahmed_e: {
@@ -998,11 +998,11 @@ const en = {
       },
       now_page: {
         title: 'Now',
-        subtitle: 'What I am focused on these days — updated as life changes.',
+        subtitle: 'What I am focused on these days, updated as life changes.',
         updated: 'Last updated: September 2026',
         focus_title: 'Working on',
         focus: [
-          'Software Engineer at ezSec Inc (Canada, remote): building and shipping cybersecurity software, plus the DevOps side — deploying releases to production servers and keeping them running',
+          'Software Engineer at ezSec Inc (Canada, remote): building and shipping cybersecurity software, plus the DevOps side: deploying releases to production servers and keeping them running',
           'Indstrz, the B2B industrial procurement platform I co-founded: RFQ workflows and the real-time negotiation engine',
           'Freelance projects for clients in Egypt and the Gulf, with a focus on Arabic-first platforms',
         ],
@@ -1013,18 +1013,18 @@ const en = {
           'AI-assisted development workflows, used with review discipline',
         ],
         availability_title: 'Availability',
-        availability_body: 'Full-time at ezSec. Open to freelance projects with a clear scope — the fastest way to start is the contact form.',
+        availability_body: 'Full-time at ezSec. Open to freelance projects with a clear scope. The fastest way to start is the contact form.',
         availability_cta: 'Start a conversation',
       },
       rescue_page: {
         badge: 'Legacy Code Rescue',
         title: 'Project stuck? I take it from here.',
         subtitle:
-          'The developer disappeared, the bugs are piling up, and nobody dares to touch the code. I take over inherited and abandoned codebases, stabilize them, and get them moving again — without the "rewrite from scratch" that costs you six months and the product you already paid for.',
+          'The developer disappeared, the bugs are piling up, and nobody dares to touch the code. I take over inherited and abandoned codebases, stabilize them, and get them moving again, without the "rewrite from scratch" that costs you six months and the product you already paid for.',
         signs_title: 'This page is for you if…',
         signs: [
-          'The previous developer vanished mid-project — or handed over code with no documentation',
-          'The site or app is live, earning, and breaking — and every fix seems to break something else',
+          'The previous developer vanished mid-project, or handed over code with no documentation',
+          'The site or app is live, earning, and breaking, and every fix seems to break something else',
           'You got a quote for a full rewrite and it felt like paying twice for the same product',
           'Nobody on your side knows how to deploy it, or where the credentials even are',
           'An agency built it, the contract ended, and now every small change takes weeks',
@@ -1032,30 +1032,30 @@ const en = {
         process_title: 'How a rescue actually works',
         steps: [
           {
-            title: 'Audit first — you pay for clarity before any fix',
+            title: 'Audit first: you pay for clarity before any fix',
             desc: 'I get the project building and running from scratch, map what exists, and hand you a written report: what is broken, what is risky, what it costs to fix. You decide with real information.',
           },
           {
             title: 'Stop the bleeding',
-            desc: 'The bugs that lose you money or users get fixed first — payment failures, crashes, broken flows. You see visible progress in the first week, not after a quarter.',
+            desc: 'The bugs that lose you money or users get fixed first: payment failures, crashes, broken flows. You see visible progress in the first week, not after a quarter.',
           },
           {
             title: 'Stabilize without breaking what works',
-            desc: 'Small, reviewable changes — no drive-by rewrites. The app keeps serving your users the whole time; every release is small enough to roll back safely.',
+            desc: 'Small, reviewable changes, no drive-by rewrites. The app keeps serving your users the whole time; every release is small enough to roll back safely.',
           },
           {
             title: 'Hand over properly',
-            desc: 'Documented setup, credentials in your hands, a clear map of the codebase — so you are never hostage to a single developer again. Ongoing maintenance only if you want it.',
+            desc: 'Documented setup, credentials in your hands, a clear map of the codebase, so you are never hostage to a single developer again. Ongoing maintenance only if you want it.',
           },
         ],
-        proof_title: 'Not theory — shipped work',
+        proof_title: 'Not theory. Shipped work.',
         proof_medicta:
-          'Medicta: a live React Native app on Google Play — real users, real bugs, no access to the original developers. Taken over, stabilized, redesigned and shipped back without a day of downtime.',
+          'Medicta: a live React Native app on Google Play with real users, real bugs and no access to the original developers. Taken over, stabilized, redesigned and shipped back without a day of downtime.',
         proof_medicta_cta: 'Read the Medicta case study',
         proof_article_cta: 'My full takeover playbook (article)',
         cta_title: 'Tell me where it hurts',
         cta_body:
-          'Send a short description of the project and its current state. I will reply with what an audit covers, what it costs, and how fast I can start — no obligation.',
+          'Send a short description of the project and its current state. I will reply with what an audit covers, what it costs, and how fast I can start, with no obligation.',
         cta_whatsapp: 'WhatsApp me now',
         cta_contact: 'Or use the contact form',
         whatsapp_message:
@@ -1064,7 +1064,7 @@ const en = {
       blog_page: {
         title: 'Writing',
         subtitle:
-          'Engineering write-ups from shipped projects — the decisions, the costs, and what I would do again.',
+          'Engineering write-ups from shipped projects: the decisions, the costs, and what I would do again.',
         read: 'Read the article',
         minutes: '{{count}} min read',
         back: 'All articles',
@@ -1091,7 +1091,7 @@ const en = {
       rtl_demo: {
         label: 'Live demo',
         title: 'What actually breaks in Arabic',
-        subtitle: 'Flipping a landing page to RTL is easy. This is an invoice — a table, a foreign product code, a currency pair. Switch the direction, then switch the treatment, and watch four real failures appear and disappear.',
+        subtitle: 'Flipping a landing page to RTL is easy. This is an invoice: a table, a foreign product code, a currency pair. Switch the direction, then switch the treatment, and watch four real failures appear and disappear.',
         direction: 'Direction',
         treatment: 'Treatment',
         naive: 'Naive flip',
@@ -1111,7 +1111,7 @@ const en = {
           },
           bidi: {
             title: 'Foreign runs stay intact',
-            broken: 'The quantity and the product code end up side by side and read as one token — 12OIL-4471 — because neither run is isolated.',
+            broken: 'The quantity and the product code end up side by side and read as one token, 12OIL-4471, because neither run is isolated.',
             fixed: 'A <bdi> isolates each foreign run, so the code and the number stay separate and readable.'
           },
           numerals: {
@@ -1120,12 +1120,12 @@ const en = {
             fixed: 'Numeric cells are explicitly LTR and tabular, so the digits and the decimal never move.'
           }
         },
-        sample_note: 'Sample data — a parts invoice, not a price list.',
-        footnote: 'This is the same treatment that goes into the dashboards, invoices and reports on every project I ship — not just the landing page.'
+        sample_note: 'Sample data: a parts invoice, not a price list.',
+        footnote: 'This is the same treatment that goes into the dashboards, invoices and reports on every project I ship, not just the landing page.'
       },
       uses: {
         title: 'Uses',
-        subtitle: 'The tools I actually open every day — not a wishlist.',
+        subtitle: 'The tools I actually open every day, not a wishlist.',
         groups: [
           {
             heading: 'Editor & terminal',
@@ -1159,7 +1159,7 @@ const en = {
               'Notion for specs and client-facing scope',
               'Trello for milestone tracking on fixed-scope projects',
               'Figma to read designs; I build from tokens, not screenshots',
-              'WhatsApp for client contact — it is what Gulf clients actually answer'
+              'WhatsApp for client contact, because it is what Gulf clients actually answer'
             ]
           }
         ],
@@ -1188,7 +1188,7 @@ const en = {
           },
           {
             heading: 'Analytics',
-            body: 'Vercel Web Analytics counts page views and a few actions — a WhatsApp click, a CV download, a case study opened — so I can tell which parts of the site are useful. It is cookie-less and aggregated: it records that something happened, not who did it. There is no session recording, no heatmap and no cross-site profile.'
+            body: 'Vercel Web Analytics counts page views and a few actions (a WhatsApp click, a CV download, a case study opened) so I can tell which parts of the site are useful. It is cookie-less and aggregated: it records that something happened, not who did it. There is no session recording, no heatmap and no cross-site profile.'
           },
           {
             heading: 'What stays in your browser',
@@ -1200,7 +1200,7 @@ const en = {
           },
           {
             heading: 'Your choices',
-            body: 'You can ask me what I hold about you, ask for a copy, or ask me to delete it — by email, at any time, and I will act on it. Since the only record is usually an email thread, deleting it is genuinely just deleting it.'
+            body: 'You can ask me what I hold about you, ask for a copy, or ask me to delete it, by email, at any time, and I will act on it. Since the only record is usually an email thread, deleting it is genuinely just deleting it.'
           }
         ],
         contact_line: 'Questions about any of this: {{email}}'

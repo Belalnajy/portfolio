@@ -71,7 +71,7 @@ export const pageOgImage = (title, subtitle) =>
             <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end' }}>
               <div style={{ fontSize: 30, fontWeight: 700, display: 'flex' }}>Belal Nagy</div>
               <div style={{ fontSize: 22, color: MUTED, display: 'flex' }}>
-                Software Engineer — Full-Stack Developer
+                Software Engineer · Full-Stack Developer
               </div>
             </div>
           </div>

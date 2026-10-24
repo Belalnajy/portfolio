@@ -35,9 +35,9 @@ ${post.tags.map((tag) => `      <category>${escape(tag)}</category>`).join('\n')
   const body = `<?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Belal Nagy — Writing</title>
+    <title>Belal Nagy | Writing</title>
     <link>${SITE_URL}/blog</link>
-    <description>Engineering write-ups from shipped projects — the decisions, the costs, and what I would do again.</description>
+    <description>Engineering write-ups from shipped projects: the decisions, the costs, and what I would do again.</description>
     <language>en</language>
     <atom:link href="${SITE_URL}/feed.xml" rel="self" type="application/rss+xml" />
 ${items}

@@ -1,7 +1,7 @@
 import { OG_IMAGE, SITE_URL } from '../layout';
 
 export const metadata = {
-  // The template puts the Arabic name on every /ar/* page title — the Arabic
+  // The template puts the Arabic name on every /ar/* page title, so the Arabic
   // SERP shows «… | بلال ناجي», not the Latin brand inherited from the root.
   title: {
     // absolute keeps the root's '%s | Belal Nagy' template off this page.
@@ -10,7 +10,7 @@ export const metadata = {
     template: '%s | بلال ناجي',
   },
   description:
-    'بلال ناجي — مهندس برمجيات ومطور ويب متكامل من الإسكندرية، مصر. أبني منصات ويب من الصفر وأستلم الأكواد القائمة اللي محتاجة إصلاح. ٣٦ مشروعاً لـ ٢٧ عميلاً في مصر والخليج: Next.js و Laravel و NestJS و Node.js و Django و PostgreSQL، مع دعم كامل للعربية و RTL في كل مشروع.',
+    'بلال ناجي مهندس برمجيات ومطور ويب متكامل من الإسكندرية، مصر. أبني منصات ويب من الصفر وأستلم الأكواد القائمة اللي محتاجة إصلاح. ٣٦ مشروعاً لـ ٢٧ عميلاً في مصر والخليج: Next.js و Laravel و NestJS و Node.js و Django و PostgreSQL، مع دعم كامل للعربية و RTL في كل مشروع.',
   keywords: [
     'بلال ناجي',
     'بلال ناجى',

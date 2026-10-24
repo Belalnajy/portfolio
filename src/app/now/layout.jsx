@@ -11,13 +11,13 @@ export const metadata = {
   openGraph: {
     type: 'website',
     url: '/now',
-    title: 'Now — Belal Nagy',
+    title: 'Now | Belal Nagy',
     description: 'What Belal Nagy is focused on right now. Updated regularly.',
     images: [OG_IMAGE],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Now — Belal Nagy',
+    title: 'Now | Belal Nagy',
     description: 'What Belal Nagy is focused on right now. Updated regularly.',
     images: [OG_IMAGE],
   },

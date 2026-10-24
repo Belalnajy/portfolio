@@ -25,7 +25,7 @@ export const OG_IMAGE = {
 export const metadata = {
   metadataBase: new URL(SITE_URL),
   alternates: {
-    types: { 'application/rss+xml': [{ url: '/feed.xml', title: 'Belal Nagy — Writing' }] },
+    types: { 'application/rss+xml': [{ url: '/feed.xml', title: 'Belal Nagy | Writing' }] },
     canonical: '/',
     languages: {
       en: '/',
