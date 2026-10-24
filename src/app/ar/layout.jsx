@@ -5,8 +5,8 @@ export const metadata = {
   // SERP shows «… | بلال ناجي», not the Latin brand inherited from the root.
   title: {
     // absolute keeps the root's '%s | Belal Nagy' template off this page.
-    absolute: 'بلال ناجي | مطور ويب متكامل (Full Stack)',
-    default: 'بلال ناجي | مطور ويب متكامل (Full Stack)',
+    absolute: 'بلال ناجي | مطور ويب متكامل من الإسكندرية، مصر',
+    default: 'بلال ناجي | مطور ويب متكامل من الإسكندرية، مصر',
     template: '%s | بلال ناجي',
   },
   description:
@@ -39,7 +39,7 @@ export const metadata = {
     url: `${SITE_URL}/ar`,
     locale: 'ar_SA',
     alternateLocale: 'en_US',
-    title: 'بلال ناجي | مطور ويب متكامل (Full Stack)',
+    title: 'بلال ناجي | مطور ويب متكامل من الإسكندرية، مصر',
     description:
       'أبني منصات ويب من الصفر وأستلم الأكواد القائمة اللي محتاجة إصلاح. ٣٦ مشروعاً لـ ٢٧ عميلاً في مصر والخليج.',
     siteName: 'Belal Nagy Portfolio',
@@ -47,7 +47,7 @@ export const metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'بلال ناجي | مطور ويب متكامل (Full Stack)',
+    title: 'بلال ناجي | مطور ويب متكامل من الإسكندرية، مصر',
     description:
       'أبني منصات ويب من الصفر وأستلم الأكواد القائمة اللي محتاجة إصلاح. ٣٦ مشروعاً لـ ٢٧ عميلاً في مصر والخليج.',
     creator: '@belalnajy',

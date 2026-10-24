@@ -24,6 +24,7 @@ const ar = {
         role_line: 'مهندس برمجيات — مطور Full-Stack',
         now_label: 'حالياً',
         now_value: 'مهندس برمجيات @ ezSec Inc',
+        location: 'الإسكندرية، مصر — شغال مع عملاء في كل مكان',
         now_meta: 'عن بُعد — كيتشنر، كندا',
         scroll: 'اسكرول',
         follow_me: 'تابعني على المنصات العربية'

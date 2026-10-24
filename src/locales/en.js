@@ -24,6 +24,7 @@ const en = {
         role_line: 'Software Engineer — Full-Stack Developer',
         now_label: 'Now',
         now_value: 'Software Engineer @ ezSec Inc',
+        location: 'Alexandria, Egypt — working worldwide',
         now_meta: 'Remote — Kitchener, Canada',
         scroll: 'Scroll',
         follow_me: 'Follow me on Arabic platforms'

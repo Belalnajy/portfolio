@@ -34,11 +34,13 @@ export const metadata = {
     },
   },
   title: {
-    default: 'Belal Nagy | Full Stack Developer Portfolio',
+    // The city lives in the title on purpose: it is the strongest signal for
+    // "developer in Alexandria/Egypt" queries, which is where clients search.
+    default: 'Belal Nagy | Full-Stack Developer in Alexandria, Egypt',
     template: '%s | Belal Nagy',
   },
   description:
-    'I build web platforms from zero, and take over existing codebases that need fixing. 36 projects for 27 clients across Egypt and the Gulf. Full-stack developer in Alexandria: Next.js, Laravel, NestJS, Node.js, Django, PostgreSQL, with Arabic and RTL across every project.',
+    'Full-stack developer based in Alexandria, Egypt. I build web platforms from zero, and take over existing codebases that need fixing: 36 projects for 27 clients across Egypt and the Gulf, in Next.js, Laravel, NestJS, Node.js, Django and PostgreSQL, with Arabic and RTL across every project.',
   keywords: [
     'Belal Nagy',
     'Full Stack Developer',
@@ -70,17 +72,17 @@ export const metadata = {
     url: SITE_URL,
     locale: 'en_US',
     alternateLocale: 'ar_SA',
-    title: 'Belal Nagy | Full Stack Developer Portfolio',
+    title: 'Belal Nagy | Full-Stack Developer in Alexandria, Egypt',
     description:
-      'I build web platforms from zero, and take over existing codebases that need fixing. 36 projects for 27 clients across Egypt and the Gulf. Next.js, Laravel, NestJS, Node.js, Django, PostgreSQL.',
+      'Full-stack developer based in Alexandria, Egypt. I build web platforms from zero, and take over existing codebases that need fixing: 36 projects for 27 clients across Egypt and the Gulf.',
     siteName: 'Belal Nagy Portfolio',
     images: [OG_IMAGE],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Belal Nagy | Full Stack Developer Portfolio',
+    title: 'Belal Nagy | Full-Stack Developer in Alexandria, Egypt',
     description:
-      'I build web platforms from zero, and take over existing codebases that need fixing. Next.js, Laravel, NestJS, Node.js, Django, PostgreSQL.',
+      'Full-stack developer based in Alexandria, Egypt. I build web platforms from zero, and take over existing codebases that need fixing.',
     creator: '@belalnajy',
     images: [OG_IMAGE],
   },
