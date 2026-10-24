@@ -35,7 +35,7 @@ const content = {
       ]
     },
     "outcome": {
-      "body": "The project added ERP-platform development to my toolbox: extending a large existing system on its own terms — the same skill behind my legacy-takeover work.",
+      "body": "The project added ERP-platform development to my toolbox: extending a large existing system on its own terms, the same skill behind my legacy-takeover work.",
       "points": [
         "Working HMS module on Odoo",
         "ERP development within platform conventions",
@@ -79,7 +79,7 @@ const content = {
       ]
     },
     "outcome": {
-      "body": "المشروع ضاف تطوير منصات الـ ERP لعدة أدواتي: تمديد نظام كبير موجود بشروطه هو — نفس المهارة اللي ورا شغلي في استلام الأكواد القديمة.",
+      "body": "المشروع ضاف تطوير منصات الـ ERP لعدة أدواتي: تمديد نظام كبير موجود بشروطه هو، وهي نفس المهارة اللي ورا شغلي في استلام الأكواد القديمة.",
       "points": [
         "موديول HMS شغال على Odoo",
         "تطوير ERP جوه أعراف المنصة",

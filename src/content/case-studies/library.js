@@ -8,7 +8,7 @@ const content = {
       "audience": "Library staff managing a collection"
     },
     "challenge": {
-      "body": "A library system stands on its data model: books, categories and their relationships must be structured so that cataloging stays consistent and search actually finds things. The operations themselves — add, update, categorize, retire — need to be safe and fast for daily staff use.",
+      "body": "A library system stands on its data model: books, categories and their relationships must be structured so that cataloging stays consistent and search actually finds things. The operations themselves (add, update, categorize, retire) need to be safe and fast for daily staff use.",
       "points": [
         "A data model that keeps cataloging consistent",
         "Search that finds books reliably",
@@ -35,7 +35,7 @@ const content = {
       ]
     },
     "outcome": {
-      "body": "One of my early Django systems — the ORM-and-relational-modeling foundation that later carried platforms like the LMS engine.",
+      "body": "One of my early Django systems: the ORM-and-relational-modeling foundation that later carried platforms like the LMS engine.",
       "points": [
         "Complete working system",
         "Early Django and PostgreSQL practice",
@@ -52,7 +52,7 @@ const content = {
       "audience": "موظفو مكتبة بيديروا مجموعة"
     },
     "challenge": {
-      "body": "نظام المكتبة واقف على نموذج بياناته: الكتب والتصنيفات وعلاقاتهم لازم يتهيكلوا بشكل يخلي الفهرسة متسقة والبحث فعلاً يلاقي. والعمليات نفسها — إضافة وتحديث وتصنيف وسحب — لازم تكون آمنة وسريعة للاستخدام اليومي.",
+      "body": "نظام المكتبة واقف على نموذج بياناته: الكتب والتصنيفات وعلاقاتهم لازم يتهيكلوا بشكل يخلي الفهرسة متسقة والبحث فعلاً يلاقي. والعمليات نفسها (إضافة وتحديث وتصنيف وسحب) لازم تكون آمنة وسريعة للاستخدام اليومي.",
       "points": [
         "نموذج بيانات يحافظ على اتساق الفهرسة",
         "بحث بيلاقي الكتب باستمرار",
@@ -79,7 +79,7 @@ const content = {
       ]
     },
     "outcome": {
-      "body": "واحد من أنظمتي المبكرة بـ Django — أساس الـ ORM والنمذجة العلائقية اللي شال بعدين منصات زي محرك الـ LMS.",
+      "body": "واحد من أنظمتي المبكرة بـ Django، وهو أساس الـ ORM والنمذجة العلائقية اللي شال بعدين منصات زي محرك الـ LMS.",
       "points": [
         "نظام كامل شغال",
         "تمرين مبكر على Django و PostgreSQL",

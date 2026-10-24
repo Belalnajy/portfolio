@@ -35,7 +35,7 @@ const content = {
       ]
     },
     "outcome": {
-      "body": "The platform turns a confusing bureaucratic process into a guided flow — eligibility, application, tracking — with a live demo available online.",
+      "body": "The platform turns a confusing bureaucratic process into a guided flow (eligibility, application, tracking), with a live demo available online.",
       "points": [
         "Live demo online",
         "Applicants self-serve from eligibility to status",
@@ -79,7 +79,7 @@ const content = {
       ]
     },
     "outcome": {
-      "body": "المنصة بتحوّل عملية بيروقراطية ملخبطة لمسار موجّه — أهلية فتقديم فتتبع — وديمو مباشر متاح أونلاين.",
+      "body": "المنصة بتحوّل عملية بيروقراطية ملخبطة لمسار موجّه: أهلية فتقديم فتتبع، وديمو مباشر متاح أونلاين.",
       "points": [
         "ديمو مباشر أونلاين",
         "المتقدم بيخدم نفسه من الأهلية للحالة",

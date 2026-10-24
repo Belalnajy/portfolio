@@ -8,7 +8,7 @@ const content = {
       "audience": "Medical practitioners and health-sector readers"
     },
     "challenge": {
-      "body": "Medical readers do not browse — they look for their specialty. The portal needed serious categorization and tagging so clinical content stays findable, an editorial flow for publishing at pace, and a clean interface that reads professionally rather than like a general news site.",
+      "body": "Medical readers do not browse; they look for their specialty. The portal needed serious categorization and tagging so clinical content stays findable, an editorial flow for publishing at pace, and a clean interface that reads professionally rather than like a general news site.",
       "points": [
         "Specialty-level categories and semantic tagging",
         "Editors publish at news pace",
@@ -17,7 +17,7 @@ const content = {
       ]
     },
     "approach": {
-      "body": "React and Tailwind on the front, Node.js and Express on MongoDB behind — a high-performance news engine with real-time updates, advanced healthcare categories and semantic tags, and dynamic content management for the editorial team.",
+      "body": "React and Tailwind on the front, Node.js and Express on MongoDB behind: a high-performance news engine with real-time updates, advanced healthcare categories and semantic tags, and dynamic content management for the editorial team.",
       "points": [
         "React + Tailwind reading experience",
         "Node.js + Express + MongoDB news engine",
@@ -52,7 +52,7 @@ const content = {
       "audience": "ممارسون طبيون وقراء القطاع الصحي"
     },
     "challenge": {
-      "body": "القارئ الطبي مش بيتصفح — بيدور على تخصصه. البوابة كانت محتاجة تصنيف ووسوم جادة عشان المحتوى الإكلينيكي يفضل قابل للوصول، ومسار تحريري للنشر بسرعة الأخبار، وواجهة نضيفة تتقري باحترافية مش زي موقع أخبار عام.",
+      "body": "القارئ الطبي مش بيتصفح، هو بيدور على تخصصه. البوابة كانت محتاجة تصنيف ووسوم جادة عشان المحتوى الإكلينيكي يفضل قابل للوصول، ومسار تحريري للنشر بسرعة الأخبار، وواجهة نضيفة تتقري باحترافية مش زي موقع أخبار عام.",
       "points": [
         "تصنيفات بمستوى التخصص ووسوم دلالية",
         "المحررون بينشروا بإيقاع الأخبار",
@@ -61,7 +61,7 @@ const content = {
       ]
     },
     "approach": {
-      "body": "React و Tailwind في الواجهة، و Node.js و Express على MongoDB ورا — محرك أخبار عالي الأداء بتحديثات لحظية، وتصنيفات صحية متقدمة بوسوم دلالية، وإدارة محتوى ديناميكية للفريق التحريري.",
+      "body": "React و Tailwind في الواجهة، و Node.js و Express على MongoDB ورا: محرك أخبار عالي الأداء بتحديثات لحظية، وتصنيفات صحية متقدمة بوسوم دلالية، وإدارة محتوى ديناميكية للفريق التحريري.",
       "points": [
         "تجربة قراءة React + Tailwind",
         "محرك أخبار Node.js + Express + MongoDB",

@@ -8,7 +8,7 @@ const content = {
       "audience": "Car buyers and sellers in the Saudi market"
     },
     "challenge": {
-      "body": "Car shoppers filter hard — brand, price, fuel type, condition — and a listing lives or dies by its photos. Sellers need to manage their own listings without support tickets, and in the Saudi market the deal usually closes on WhatsApp, so the platform had to lead buyers straight there.",
+      "body": "Car shoppers filter hard (brand, price, fuel type, condition), and a listing lives or dies by its photos. Sellers need to manage their own listings without support tickets, and in the Saudi market the deal usually closes on WhatsApp, so the platform had to lead buyers straight there.",
       "points": [
         "Search that handles brand, price, fuel type and condition",
         "Sellers manage their own listings end to end",
@@ -35,7 +35,7 @@ const content = {
       ]
     },
     "outcome": {
-      "body": "Motors shipped to production as an Arabic-first marketplace where the entire experience — from filters to the final WhatsApp message — matches how the Saudi market actually buys cars.",
+      "body": "Motors shipped to production as an Arabic-first marketplace where the entire experience, from filters to the final WhatsApp message, matches how the Saudi market actually buys cars.",
       "points": [
         "Shipped to production",
         "Covers new, used and damaged vehicle segments",
@@ -52,7 +52,7 @@ const content = {
       "audience": "مشترو وبايعو السيارات في السوق السعودي"
     },
     "challenge": {
-      "body": "مشتري العربيات بيفلتر بقوة — ماركة وسعر ونوع وقود وحالة — والإعلان بيعيش أو يموت بصوره. البايع محتاج يدير إعلاناته بنفسه من غير تذاكر دعم، وفي السوق السعودي الصفقة غالباً بتقفل على WhatsApp، فالمنصة كان لازم توصّل المشتري هناك على طول.",
+      "body": "مشتري العربيات بيفلتر بقوة: ماركة وسعر ونوع وقود وحالة، والإعلان بيعيش أو يموت بصوره. البايع محتاج يدير إعلاناته بنفسه من غير تذاكر دعم، وفي السوق السعودي الصفقة غالباً بتقفل على WhatsApp، فالمنصة كان لازم توصّل المشتري هناك على طول.",
       "points": [
         "بحث بيتعامل مع الماركة والسعر ونوع الوقود والحالة",
         "البايع بيدير إعلاناته بنفسه من الأول للآخر",
@@ -79,7 +79,7 @@ const content = {
       ]
     },
     "outcome": {
-      "body": "Motors اتسلّمت للإنتاج كسوق عربي أولاً — التجربة فيه كلها من الفلاتر لرسالة الـ WhatsApp الأخيرة ماشية مع الطريقة اللي السوق السعودي فعلاً بيشتري بيها عربيات.",
+      "body": "Motors اتسلّمت للإنتاج كسوق عربي أولاً، التجربة فيه كلها من الفلاتر لرسالة الـ WhatsApp الأخيرة ماشية مع الطريقة اللي السوق السعودي فعلاً بيشتري بيها عربيات.",
       "points": [
         "اتسلّم للإنتاج",
         "بيغطي الجديد والمستعمل والمصدوم",

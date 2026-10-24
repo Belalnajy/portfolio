@@ -36,7 +36,7 @@ const content = {
       ]
     },
     "outcome": {
-      "body": "Delivered for a Saudi startup as a complete, multilingual fleet platform — one of the data-heavy, real-time systems I build for Gulf clients.",
+      "body": "Delivered for a Saudi startup as a complete, multilingual fleet platform: one of the data-heavy, real-time systems I build for Gulf clients.",
       "points": [
         "Built end-to-end for a Saudi startup",
         "Real-time from GPS to notifications",
@@ -81,7 +81,7 @@ const content = {
       ]
     },
     "outcome": {
-      "body": "اتسلّمت لشركة ناشئة سعودية كمنصة أسطول متكاملة متعددة اللغات — واحدة من الأنظمة اللحظية الغنية بالبيانات اللي ببنيها لعملاء الخليج.",
+      "body": "اتسلّمت لشركة ناشئة سعودية كمنصة أسطول متكاملة متعددة اللغات، وهي واحدة من الأنظمة اللحظية الغنية بالبيانات اللي ببنيها لعملاء الخليج.",
       "points": [
         "مبنية بالكامل لشركة ناشئة سعودية",
         "لحظية من الـ GPS للإشعارات",

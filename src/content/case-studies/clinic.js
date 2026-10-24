@@ -1,9 +1,9 @@
 const content = {
   "en": {
     "title": "A Clinic Management System with an AI Assistant (ITI Graduation Project)",
-    "summary": "My ITI graduation project: a comprehensive clinic management system with smart appointment scheduling, role-based dashboards, prescription and billing management, real-time analytics — and an AI chatbot built on Hugging Face.",
+    "summary": "My ITI graduation project: a comprehensive clinic management system with smart appointment scheduling, role-based dashboards, prescription and billing management, real-time analytics, plus an AI chatbot built on Hugging Face.",
     "facts": {
-      "role": "Full-stack developer — ITI graduation project",
+      "role": "Full-stack developer · ITI graduation project",
       "scope": "Scheduling, role dashboards, prescriptions and billing, AI chatbot",
       "audience": "Doctors, clinic staff and patients"
     },
@@ -35,7 +35,7 @@ const content = {
       ]
     },
     "outcome": {
-      "body": "The project graduated me from ITI's intensive program and stands as the first complete multi-role system I designed end to end — the pattern I have since repeated in production platforms.",
+      "body": "The project graduated me from ITI's intensive program and stands as the first complete multi-role system I designed end to end: the pattern I have since repeated in production platforms.",
       "points": [
         "ITI graduation project, delivered complete",
         "First end-to-end multi-role system of my own design",
@@ -45,9 +45,9 @@ const content = {
   },
   "ar": {
     "title": "نظام إدارة عيادات بمساعد ذكاء اصطناعي (مشروع تخرج ITI)",
-    "summary": "مشروع تخرجي من ITI: نظام شامل لإدارة العيادات بجدولة مواعيد ذكية، لوحات تحكم بالأدوار، إدارة روشتات وفواتير، تحليلات لحظية — ومساعد ذكاء اصطناعي مبني على Hugging Face.",
+    "summary": "مشروع تخرجي من ITI: نظام شامل لإدارة العيادات بجدولة مواعيد ذكية، لوحات تحكم بالأدوار، إدارة روشتات وفواتير، تحليلات لحظية، بالإضافة لمساعد ذكاء اصطناعي مبني على Hugging Face.",
     "facts": {
-      "role": "مطور Full-Stack — مشروع تخرج ITI",
+      "role": "مطور Full-Stack · مشروع تخرج ITI",
       "scope": "جدولة، لوحات أدوار، روشتات وفواتير، شات بوت AI",
       "audience": "أطباء وموظفو عيادات ومرضى"
     },
@@ -79,7 +79,7 @@ const content = {
       ]
     },
     "outcome": {
-      "body": "المشروع خرّجني من برنامج ITI المكثف، وهو أول نظام متكامل متعدد الأدوار صممته من الأول للآخر — النمط اللي بقيت بكرره بعدها في منصات الإنتاج.",
+      "body": "المشروع خرّجني من برنامج ITI المكثف، وهو أول نظام متكامل متعدد الأدوار صممته من الأول للآخر، وهو النمط اللي بقيت بكرره بعدها في منصات الإنتاج.",
       "points": [
         "مشروع تخرج ITI اتسلّم كامل",
         "أول نظام متعدد الأدوار من تصميمي بالكامل",

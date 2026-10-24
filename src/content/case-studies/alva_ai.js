@@ -1,14 +1,14 @@
 const content = {
   "en": {
     "title": "Alva AI, Marketing Content That Sounds Saudi",
-    "summary": "An AI-powered marketing automation platform generating localized content for Saudi social media markets — TikTok, Instagram, X, Snapchat and WhatsApp — using GPT-4o-mini with real-time hashtag enrichment.",
+    "summary": "An AI-powered marketing automation platform generating localized content for Saudi social media markets (TikTok, Instagram, X, Snapchat and WhatsApp) using GPT-4o-mini with real-time hashtag enrichment.",
     "facts": {
       "role": "Full-stack developer",
       "scope": "AI content pipeline, localization prompts, enrichment, subscriptions",
       "audience": "Marketers targeting Saudi social audiences"
     },
     "challenge": {
-      "body": "Generic AI content is instantly recognizable in Saudi feeds — the dialect is wrong, the references are wrong, the hashtags are stale. The platform had to generate content that sounds genuinely Saudi, per platform, and stay current with what is actually trending — while metering usage per subscription.",
+      "body": "Generic AI content is instantly recognizable in Saudi feeds: the dialect is wrong, the references are wrong, the hashtags are stale. The platform had to generate content that sounds genuinely Saudi, per platform, and stay current with what is actually trending, all while metering usage per subscription.",
       "points": [
         "Saudi colloquial Arabic, not textbook Arabic",
         "Five platforms with different content norms",
@@ -45,14 +45,14 @@ const content = {
   },
   "ar": {
     "title": "Alva AI، محتوى تسويقي بيتكلم سعودي بجد",
-    "summary": "منصة أتمتة تسويق بالذكاء الاصطناعي بتولّد محتوى معرّب للسوق السعودي على السوشيال — TikTok و Instagram و X و Snapchat و WhatsApp — باستخدام GPT-4o-mini مع إثراء هاشتاجات لحظي.",
+    "summary": "منصة أتمتة تسويق بالذكاء الاصطناعي بتولّد محتوى معرّب للسوق السعودي على السوشيال (TikTok و Instagram و X و Snapchat و WhatsApp) باستخدام GPT-4o-mini مع إثراء هاشتاجات لحظي.",
     "facts": {
       "role": "مطور Full-Stack",
       "scope": "خط محتوى AI، برومبتات تعريب، إثراء، اشتراكات",
       "audience": "مسوّقون بيستهدفوا الجمهور السعودي"
     },
     "challenge": {
-      "body": "محتوى الـ AI العام بيتعرف فوراً في الفيدات السعودية — اللهجة غلط والمراجع غلط والهاشتاجات بايتة. المنصة كان لازم تولّد محتوى فعلاً بيحس سعودي، لكل منصة بمعاييرها، ويفضل مواكب للرائج فعلياً — مع تقنين الاستخدام حسب الاشتراك.",
+      "body": "محتوى الـ AI العام بيتعرف فوراً في الفيدات السعودية: اللهجة غلط والمراجع غلط والهاشتاجات بايتة. المنصة كان لازم تولّد محتوى فعلاً بيحس سعودي، لكل منصة بمعاييرها، ويفضل مواكب للرائج فعلياً، وكل ده مع تقنين الاستخدام حسب الاشتراك.",
       "points": [
         "عامية سعودية مش عربي كتب",
         "خمس منصات بأعراف محتوى مختلفة",

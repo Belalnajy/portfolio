@@ -8,7 +8,7 @@ const content = {
       "audience": "Healthcare staff of the Makkah Health Cluster"
     },
     "challenge": {
-      "body": "Life-support training — CPR, BLS, First Aid — is training people rely on in emergencies, so the accreditation and the certificate behind it have to be beyond question. The platform needed per-video assessment, verifiable certification, and payment flows that include bank transfers with receipt upload, all reported through NELC.",
+      "body": "Life-support training (CPR, BLS, First Aid) is training people rely on in emergencies, so the accreditation and the certificate behind it have to be beyond question. The platform needed per-video assessment, verifiable certification, and payment flows that include bank transfers with receipt upload, all reported through NELC.",
       "points": [
         "SCFHS-accredited life-support and nursing curricula",
         "Certificates verifiable by QR code",
@@ -17,7 +17,7 @@ const content = {
       ]
     },
     "approach": {
-      "body": "Rather than building from zero, I deployed the accredited LMS engine I built for this family of platforms — Django and PostgreSQL at the core, Celery and Redis for async work — and layered HC Holding's own brand, catalogue and payment configuration on top. Per-video quizzes gate progress, and certificates are issued automatically with QR verification.",
+      "body": "Rather than building from zero, I deployed the accredited LMS engine I built for this family of platforms (Django and PostgreSQL at the core, Celery and Redis for async work) and layered HC Holding's own brand, catalogue and payment configuration on top. Per-video quizzes gate progress, and certificates are issued automatically with QR verification.",
       "points": [
         "Shared accredited engine, independent brand and catalogue",
         "Video learning with per-video quiz gates",
@@ -53,7 +53,7 @@ const content = {
       "audience": "الكوادر الصحية في تجمع مكة الصحي"
     },
     "challenge": {
-      "body": "تدريب دعم الحياة — CPR و BLS والإسعافات الأولية — ده تدريب الناس بتعتمد عليه في الطوارئ، فالاعتماد والشهادة اللي وراه لازم يكونوا فوق الشك. المنصة كانت محتاجة تقييم بعد كل فيديو، وشهادات قابلة للتحقق، ومسارات دفع تشمل التحويل البنكي برفع الإيصال، وكل ده بيترفع لـ NELC.",
+      "body": "تدريب دعم الحياة (CPR و BLS والإسعافات الأولية) ده تدريب الناس بتعتمد عليه في الطوارئ، فالاعتماد والشهادة اللي وراه لازم يكونوا فوق الشك. المنصة كانت محتاجة تقييم بعد كل فيديو، وشهادات قابلة للتحقق، ومسارات دفع تشمل التحويل البنكي برفع الإيصال، وكل ده بيترفع لـ NELC.",
       "points": [
         "مناهج دعم حياة وتمريض معتمدة من SCFHS",
         "شهادات قابلة للتحقق برمز QR",
@@ -62,7 +62,7 @@ const content = {
       ]
     },
     "approach": {
-      "body": "بدل البناء من الصفر، نشرت محرك الـ LMS المعتمد اللي بنيته لعيلة المنصات دي — Django و PostgreSQL في النواة، و Celery و Redis للشغل غير المتزامن — وركّبت فوقه هوية التجمع الصحي وكتالوجه وإعدادات الدفع بتاعته. الاختبارات بعد كل فيديو بتتحكم في التقدم، والشهادات بتصدر أوتوماتيكياً بتحقق QR.",
+      "body": "بدل البناء من الصفر، نشرت محرك الـ LMS المعتمد اللي بنيته لعيلة المنصات دي (Django و PostgreSQL في النواة، و Celery و Redis للشغل غير المتزامن)، وركّبت فوقه هوية التجمع الصحي وكتالوجه وإعدادات الدفع بتاعته. الاختبارات بعد كل فيديو بتتحكم في التقدم، والشهادات بتصدر أوتوماتيكياً بتحقق QR.",
       "points": [
         "محرك معتمد مشترك، وهوية وكتالوج مستقلين",
         "تعلم بالفيديو مع بوابات اختبار لكل فيديو",

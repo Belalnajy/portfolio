@@ -35,7 +35,7 @@ const content = {
       ]
     },
     "outcome": {
-      "body": "A live educational product for the Saudi market where preparation is measurable instead of guessed — demo available online.",
+      "body": "A live educational product for the Saudi market where preparation is measurable instead of guessed, with a demo available online.",
       "points": [
         "Live demo online",
         "Preparation turned into a measurable loop",
@@ -79,7 +79,7 @@ const content = {
       ]
     },
     "outcome": {
-      "body": "منتج تعليمي مباشر للسوق السعودي، الاستعداد فيه بيتقاس بدل ما يتخمّن — والديمو متاح أونلاين.",
+      "body": "منتج تعليمي مباشر للسوق السعودي، الاستعداد فيه بيتقاس بدل ما يتخمّن، والديمو متاح أونلاين.",
       "points": [
         "ديمو مباشر أونلاين",
         "الاستعداد بقى دورة قابلة للقياس",

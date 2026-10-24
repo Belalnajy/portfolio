@@ -8,7 +8,7 @@ const content = {
       "audience": "Toyota parts wholesalers and retail shops"
     },
     "challenge": {
-      "body": "A retail shop does not order one part at a time — it arrives with a list of hundreds of part numbers and wants prices and availability for all of them. And a marketplace with wholesalers, shops and admins needs each side to see exactly its own world, nothing more.",
+      "body": "A retail shop does not order one part at a time; it arrives with a list of hundreds of part numbers and wants prices and availability for all of them. And a marketplace with wholesalers, shops and admins needs each side to see exactly its own world, nothing more.",
       "points": [
         "Bulk ordering: hundreds of part numbers per request",
         "Three very different user types on one platform",
@@ -17,7 +17,7 @@ const content = {
       ]
     },
     "approach": {
-      "body": "I built it as a Turborepo monorepo — Next.js frontend, NestJS backend on PostgreSQL — so frontend and backend share the same TypeScript interfaces and cannot drift apart. Bulk search works by uploading an Excel file against a downloadable template. Authentication uses JWT in httpOnly cookies, with ownership guards on every resource.",
+      "body": "I built it as a Turborepo monorepo (Next.js frontend, NestJS backend on PostgreSQL) so frontend and backend share the same TypeScript interfaces and cannot drift apart. Bulk search works by uploading an Excel file against a downloadable template. Authentication uses JWT in httpOnly cookies, with ownership guards on every resource.",
       "points": [
         "Turborepo monorepo with shared TypeScript interfaces",
         "Excel upload pipeline with template downloads",
@@ -45,14 +45,14 @@ const content = {
   },
   "ar": {
     "title": "Toyo228، سوق B2B لقطع غيار تويوتا",
-    "summary": "منصة تجارة إلكترونية B2B بتربط تجار جملة قطع غيار تويوتا بمحلات التجزئة. المحل بيدور على مئات القطع مرة واحدة برفع ملف Excel، وكل طرف — أدمن وتاجر جملة ومحل — ليه لوحة تحكم خاصة بيه.",
+    "summary": "منصة تجارة إلكترونية B2B بتربط تجار جملة قطع غيار تويوتا بمحلات التجزئة. المحل بيدور على مئات القطع مرة واحدة برفع ملف Excel، وكل طرف، أدمن وتاجر جملة ومحل، ليه لوحة تحكم خاصة بيه.",
     "facts": {
       "role": "مطور Full-Stack",
       "scope": "لوحات متعددة الأدوار، بحث جماعي بالإكسل، معمارية Monorepo، مصادقة",
       "audience": "تجار جملة قطع غيار تويوتا ومحلات التجزئة"
     },
     "challenge": {
-      "body": "محل قطع الغيار مش بيطلب قطعة قطعة — بييجي بقايمة فيها مئات أرقام القطع وعايز الأسعار والتوافر ليهم كلهم. وسوق فيه تجار جملة ومحلات وأدمن محتاج كل طرف يشوف عالمه هو بس، ولا حاجة زيادة.",
+      "body": "محل قطع الغيار مش بيطلب قطعة قطعة، هو بييجي بقايمة فيها مئات أرقام القطع وعايز الأسعار والتوافر ليهم كلهم. وسوق فيه تجار جملة ومحلات وأدمن محتاج كل طرف يشوف عالمه هو بس، ولا حاجة زيادة.",
       "points": [
         "طلبات جماعية: مئات أرقام القطع في الطلب الواحد",
         "ثلاث أنواع مستخدمين مختلفين تماماً على منصة واحدة",
@@ -61,7 +61,7 @@ const content = {
       ]
     },
     "approach": {
-      "body": "بنيتها كـ Monorepo بـ Turborepo — واجهة Next.js وخلفية NestJS على PostgreSQL — فالواجهة والخلفية بيتشاركوا نفس أنواع TypeScript ومش ممكن يبعدوا عن بعض. البحث الجماعي بيشتغل برفع ملف Excel على قالب جاهز للتحميل. المصادقة بـ JWT في httpOnly cookies، مع حراس ملكية على كل مورد.",
+      "body": "بنيتها كـ Monorepo بـ Turborepo، واجهة Next.js وخلفية NestJS على PostgreSQL، فالواجهة والخلفية بيتشاركوا نفس أنواع TypeScript ومش ممكن يبعدوا عن بعض. البحث الجماعي بيشتغل برفع ملف Excel على قالب جاهز للتحميل. المصادقة بـ JWT في httpOnly cookies، مع حراس ملكية على كل مورد.",
       "points": [
         "Turborepo Monorepo بواجهات TypeScript مشتركة",
         "خط معالجة Excel مع قوالب جاهزة للتحميل",

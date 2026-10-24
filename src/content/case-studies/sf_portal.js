@@ -8,7 +8,7 @@ const content = {
       "audience": "Investors, partners and applicants across S&F verticals"
     },
     "challenge": {
-      "body": "A group with several business verticals collects the same kinds of requests — investments, store openings, jobs — through scattered channels, and things get lost. The portal had to gather all of it into one place, with long multi-part forms that people actually finish, and a look that matches a premium brand.",
+      "body": "A group with several business verticals collects the same kinds of requests (investments, store openings, jobs) through scattered channels, and things get lost. The portal had to gather all of it into one place, with long multi-part forms that people actually finish, and a look that matches a premium brand.",
       "points": [
         "Multiple verticals, one entry point",
         "Long multi-part forms with real-time validation",
@@ -35,7 +35,7 @@ const content = {
       ]
     },
     "outcome": {
-      "body": "The portal consolidated multi-vertical request intake into one tracked pipeline — part of my ongoing full-stack work with S&F in Saudi Arabia.",
+      "body": "The portal consolidated multi-vertical request intake into one tracked pipeline: part of my ongoing full-stack work with S&F in Saudi Arabia.",
       "points": [
         "One platform for every request type",
         "Requests tracked instead of lost across channels",
@@ -52,7 +52,7 @@ const content = {
       "audience": "مستثمرون وشركاء ومتقدمون عبر قطاعات S&F"
     },
     "challenge": {
-      "body": "مجموعة عندها كذا قطاع أعمال بتستقبل نفس أنواع الطلبات — استثمار وفتح متاجر وتوظيف — من قنوات متفرقة، والحاجات بتضيع. البوابة كان لازم تلم ده كله في مكان واحد، بنماذج طويلة متعددة الأجزاء الناس فعلاً بتكملها، وبمظهر يليق بعلامة فاخرة.",
+      "body": "مجموعة عندها كذا قطاع أعمال بتستقبل نفس أنواع الطلبات، استثمار وفتح متاجر وتوظيف، من قنوات متفرقة، والحاجات بتضيع. البوابة كان لازم تلم ده كله في مكان واحد، بنماذج طويلة متعددة الأجزاء الناس فعلاً بتكملها، وبمظهر يليق بعلامة فاخرة.",
       "points": [
         "قطاعات متعددة ونقطة دخول واحدة",
         "نماذج طويلة متعددة الأجزاء بتحقق لحظي",
@@ -79,7 +79,7 @@ const content = {
       ]
     },
     "outcome": {
-      "body": "البوابة وحّدت استقبال الطلبات متعددة القطاعات في خط واحد متتبع — جزء من شغلي المستمر كـ Full-Stack مع S&F في السعودية.",
+      "body": "البوابة وحّدت استقبال الطلبات متعددة القطاعات في خط واحد متتبع، وده جزء من شغلي المستمر كـ Full-Stack مع S&F في السعودية.",
       "points": [
         "منصة واحدة لكل أنواع الطلبات",
         "طلبات متتبعة بدل ما تضيع بين القنوات",

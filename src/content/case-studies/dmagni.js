@@ -8,7 +8,7 @@ const content = {
       "audience": "Fashion shoppers and the retailers serving them"
     },
     "challenge": {
-      "body": "The biggest question in online fashion is \"how will this look on me?\" — and it drives both abandoned carts and returns. A try-on has to look believable across body types, come back fast enough to keep the shopper engaged, and plug into stores that already exist.",
+      "body": "The biggest question in online fashion is \"how will this look on me?\" That question drives both abandoned carts and returns. A try-on has to look believable across body types, come back fast enough to keep the shopper engaged, and plug into stores that already exist.",
       "points": [
         "Try-on results must look believable",
         "Speed keeps shoppers in the flow",
@@ -17,7 +17,7 @@ const content = {
       ]
     },
     "approach": {
-      "body": "Built on Next.js with an AI-powered fitting simulation that renders a realistic try-on in around 15 seconds — fast enough for high-volume retail use. The product is structured as a SaaS so e-commerce sites integrate it modularly instead of rebuilding their stores around it.",
+      "body": "Built on Next.js with an AI-powered fitting simulation that renders a realistic try-on in around 15 seconds, fast enough for high-volume retail use. The product is structured as a SaaS so e-commerce sites integrate it modularly instead of rebuilding their stores around it.",
       "points": [
         "Realistic AI-powered clothes-fitting simulation",
         "~15-second simulation for high-volume retail",
@@ -35,7 +35,7 @@ const content = {
       ]
     },
     "outcome": {
-      "body": "Dmagni demonstrates AI applied where fashion e-commerce actually bleeds — uncertainty before purchase — with a live demo online.",
+      "body": "Dmagni demonstrates AI applied where fashion e-commerce actually bleeds (uncertainty before purchase), with a live demo online.",
       "points": [
         "Live demo online",
         "The \"how will it look on me\" gap addressed",
@@ -52,7 +52,7 @@ const content = {
       "audience": "متسوقو الموضة والمتاجر اللي بتخدمهم"
     },
     "challenge": {
-      "body": "أكبر سؤال في الموضة أونلاين هو \"ده هيبان عليّا إزاي؟\" — وهو اللي بيسبب السلات المهجورة والمرتجعات. القياس الافتراضي لازم يبان مقنع على أنواع أجسام مختلفة، ويرجع بسرعة تخلي المتسوق مكمّل، ويتركب على متاجر موجودة أصلاً.",
+      "body": "أكبر سؤال في الموضة أونلاين هو \"ده هيبان عليّا إزاي؟\" والسؤال ده هو اللي بيسبب السلات المهجورة والمرتجعات. القياس الافتراضي لازم يبان مقنع على أنواع أجسام مختلفة، ويرجع بسرعة تخلي المتسوق مكمّل، ويتركب على متاجر موجودة أصلاً.",
       "points": [
         "نتايج القياس لازم تبان مقنعة",
         "السرعة بتخلي المتسوق في السياق",
@@ -61,7 +61,7 @@ const content = {
       ]
     },
     "approach": {
-      "body": "مبنية على Next.js بمحاكاة قياس مدعومة بالـ AI بترندر قياس واقعي في حوالي 15 ثانية — سرعة تكفي الاستخدام التجاري عالي الحجم. والمنتج مهيكل كـ SaaS فمواقع التجارة بتدمجه بشكل معياري بدل ما تعيد بناء متاجرها حواليه.",
+      "body": "مبنية على Next.js بمحاكاة قياس مدعومة بالـ AI بترندر قياس واقعي في حوالي 15 ثانية، وهي سرعة تكفي الاستخدام التجاري عالي الحجم. والمنتج مهيكل كـ SaaS فمواقع التجارة بتدمجه بشكل معياري بدل ما تعيد بناء متاجرها حواليه.",
       "points": [
         "محاكاة قياس ملابس واقعية بالـ AI",
         "محاكاة في ~15 ثانية للتجزئة عالية الحجم",
@@ -79,7 +79,7 @@ const content = {
       ]
     },
     "outcome": {
-      "body": "Dmagni بيوضح الـ AI متطبق في المكان اللي تجارة الموضة فعلاً بتنزف فيه — عدم اليقين قبل الشراء — وديمو مباشر أونلاين.",
+      "body": "Dmagni بيوضح الـ AI متطبق في المكان اللي تجارة الموضة فعلاً بتنزف فيه (عدم اليقين قبل الشراء)، وديمو مباشر أونلاين.",
       "points": [
         "ديمو مباشر أونلاين",
         "فجوة \"هيبان عليّا إزاي\" اتعالجت",

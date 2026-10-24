@@ -8,7 +8,7 @@ const content = {
       "audience": "Clinicians maintaining SCFHS-accredited CME hours"
     },
     "challenge": {
-      "body": "Clinicians in Saudi Arabia must keep earning accredited CME hours to keep their licenses — and tracking those hours across courses, exams and certificates is exactly the kind of bookkeeping busy doctors drop. The platform had to make the hours themselves a first-class object: earned, tracked, certified, synchronized.",
+      "body": "Clinicians in Saudi Arabia must keep earning accredited CME hours to keep their licenses, and tracking those hours across courses, exams and certificates is exactly the kind of bookkeeping busy doctors drop. The platform had to make the hours themselves a first-class object: earned, tracked, certified, synchronized.",
       "points": [
         "License renewal depends on accredited hours",
         "Hours scattered across courses and providers",
@@ -35,7 +35,7 @@ const content = {
       ]
     },
     "outcome": {
-      "body": "Live at cmehours.online — another platform in the Saudi accredited medical-education space I have repeatedly delivered into, this time centered on the hours ledger itself.",
+      "body": "Live at cmehours.online: another platform in the Saudi accredited medical-education space I have repeatedly delivered into, this time centered on the hours ledger itself.",
       "points": [
         "Live at cmehours.online",
         "CME hours tracked instead of reconstructed",
@@ -52,7 +52,7 @@ const content = {
       "audience": "ممارسون صحيون بيحافظوا على ساعات CME معتمدة"
     },
     "challenge": {
-      "body": "الممارس الصحي في السعودية لازم يفضل يحصّل ساعات CME معتمدة عشان يحافظ على ترخيصه — وتتبع الساعات دي عبر دورات واختبارات وشهادات هو بالظبط نوع المحاسبة اللي الدكاترة المشغولين بيسقّطوه. المنصة كان لازم تخلي الساعات نفسها كيان أساسي: بتتكسب وتتتبع وتتشهد وتتزامن.",
+      "body": "الممارس الصحي في السعودية لازم يفضل يحصّل ساعات CME معتمدة عشان يحافظ على ترخيصه، وتتبع الساعات دي عبر دورات واختبارات وشهادات هو بالظبط نوع المحاسبة اللي الدكاترة المشغولين بيسقّطوه. المنصة كان لازم تخلي الساعات نفسها كيان أساسي: بتتكسب وتتتبع وتتشهد وتتزامن.",
       "points": [
         "تجديد الترخيص معتمد على الساعات المعتمدة",
         "الساعات متبعثرة بين دورات وجهات",
@@ -79,7 +79,7 @@ const content = {
       ]
     },
     "outcome": {
-      "body": "شغالة على cmehours.online — منصة تانية في مجال التعليم الطبي المعتمد السعودي اللي سلّمت فيه أكتر من مرة، والمرة دي متمركزة حوالين دفتر الساعات نفسه.",
+      "body": "شغالة على cmehours.online، وهي منصة تانية في مجال التعليم الطبي المعتمد السعودي اللي سلّمت فيه أكتر من مرة، والمرة دي متمركزة حوالين دفتر الساعات نفسه.",
       "points": [
         "شغالة على cmehours.online",
         "ساعات CME بتتتبع بدل ما تتجمّع بأثر رجعي",
