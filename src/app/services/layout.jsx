@@ -1,4 +1,4 @@
-import { OG_IMAGE } from '../layout';
+import { OG_IMAGE, SITE_URL } from '../layout';
 
 export const metadata = {
   title: 'Services & Packages',
@@ -25,6 +25,56 @@ export const metadata = {
   },
 };
 
+// ProfessionalService entity: tells search and answer engines this is a
+// hireable service with a real location and a concrete catalog, not just a
+// personal page. Mirrors the service cards rendered below.
+const PROFESSIONAL_SERVICE_JSON_LD = {
+  '@context': 'https://schema.org',
+  '@type': 'ProfessionalService',
+  name: 'Belal Nagy — Full-Stack Development Services',
+  url: `${SITE_URL}/services`,
+  image: `${SITE_URL}/hero.webp`,
+  description:
+    'Full-stack web development services by Belal Nagy: platforms built from zero, backend and AI engineering, Arabic/RTL localization, legacy-code takeover and technical audits, security and DevOps.',
+  address: {
+    '@type': 'PostalAddress',
+    addressLocality: 'Alexandria',
+    addressCountry: 'EG',
+  },
+  areaServed: ['Egypt', 'Saudi Arabia', 'United Arab Emirates', 'Kuwait', 'Qatar', 'Worldwide (remote)'],
+  priceRange: '$$',
+  founder: {
+    '@type': 'Person',
+    name: 'Belal Nagy',
+    alternateName: 'بلال ناجي',
+    url: SITE_URL,
+  },
+  hasOfferCatalog: {
+    '@type': 'OfferCatalog',
+    name: 'Development services',
+    itemListElement: [
+      'Full-stack custom development (SaaS, LMS, e-commerce)',
+      'AI & backend engineering',
+      'Arabic/RTL localization and multilingual interfaces',
+      'Security & DevOps',
+      'Legacy code takeover & technical audit',
+    ].map((name) => ({
+      '@type': 'Offer',
+      itemOffered: { '@type': 'Service', name },
+    })),
+  },
+};
+
 export default function ServicesLayout({ children }) {
-  return children;
+  return (
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(PROFESSIONAL_SERVICE_JSON_LD),
+        }}
+      />
+      {children}
+    </>
+  );
 }

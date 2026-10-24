@@ -1,5 +1,5 @@
 'use client';
-import { FaGithub, FaLinkedin, FaDownload, FaArrowDown, FaStar, FaCheckCircle } from 'react-icons/fa';
+import { FaGithub, FaLinkedin, FaDownload, FaArrowDown, FaStar, FaCheckCircle, FaMapMarkerAlt } from 'react-icons/fa';
 import MagneticButton from './MagneticButton';
 import PlatformLinks from './PlatformLinks';
 import { useTranslation } from 'react-i18next';
@@ -45,6 +45,12 @@ const Hero = () => {
               <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[rgb(var(--muted))]/40 border border-[rgb(var(--border))] text-sm text-[rgb(var(--muted-foreground))]">
                 <span className="font-semibold text-[rgb(var(--primary))]">{t('hero.now_label')}</span>
                 {t('hero.now_value')}
+              </span>
+              {/* The city in visible text, not only metadata: local-intent
+                  searches weigh what the page says above the fold. */}
+              <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[rgb(var(--muted))]/40 border border-[rgb(var(--border))] text-sm text-[rgb(var(--muted-foreground))]">
+                <FaMapMarkerAlt className="text-[rgb(var(--primary))] text-xs" />
+                {t('hero.location')}
               </span>
             </div>
 

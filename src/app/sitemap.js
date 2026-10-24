@@ -21,6 +21,7 @@ const entry = (path, lastModified, priority, alternates) => ({
 const STATIC_PAGES = [
   { path: '/work', priority: 0.9 },
   { path: '/services', priority: 0.9 },
+  { path: '/rescue', priority: 0.8 },
   { path: '/cv', priority: 0.8 },
   { path: '/testimonials', priority: 0.7 },
   { path: '/blog', priority: 0.7 },

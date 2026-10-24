@@ -24,6 +24,7 @@ const en = {
         role_line: 'Software Engineer — Full-Stack Developer',
         now_label: 'Now',
         now_value: 'Software Engineer @ ezSec Inc',
+        location: 'Alexandria, Egypt — working worldwide',
         now_meta: 'Remote — Kitchener, Canada',
         scroll: 'Scroll',
         follow_me: 'Follow me on Arabic platforms'
@@ -703,6 +704,7 @@ const en = {
         subtitle: 'Comprehensive web development services tailored to bring your ideas to life',
         ready: 'Ready to start your project?',
         get_in_touch: 'Get in Touch',
+        rescue_cta: 'Project stuck? See how a rescue works →',
         list: [
           {
             title: 'Full-Stack Custom Development',
@@ -976,6 +978,7 @@ const en = {
         testimonials: 'Testimonials',
         now: 'Now',
         blog: 'Blog',
+        rescue: 'Legacy Rescue',
         cv: 'CV',
         uses: 'Uses',
         privacy: 'Privacy',
@@ -1012,6 +1015,51 @@ const en = {
         availability_title: 'Availability',
         availability_body: 'Full-time at ezSec. Open to freelance projects with a clear scope — the fastest way to start is the contact form.',
         availability_cta: 'Start a conversation',
+      },
+      rescue_page: {
+        badge: 'Legacy Code Rescue',
+        title: 'Project stuck? I take it from here.',
+        subtitle:
+          'The developer disappeared, the bugs are piling up, and nobody dares to touch the code. I take over inherited and abandoned codebases, stabilize them, and get them moving again — without the "rewrite from scratch" that costs you six months and the product you already paid for.',
+        signs_title: 'This page is for you if…',
+        signs: [
+          'The previous developer vanished mid-project — or handed over code with no documentation',
+          'The site or app is live, earning, and breaking — and every fix seems to break something else',
+          'You got a quote for a full rewrite and it felt like paying twice for the same product',
+          'Nobody on your side knows how to deploy it, or where the credentials even are',
+          'An agency built it, the contract ended, and now every small change takes weeks',
+        ],
+        process_title: 'How a rescue actually works',
+        steps: [
+          {
+            title: 'Audit first — you pay for clarity before any fix',
+            desc: 'I get the project building and running from scratch, map what exists, and hand you a written report: what is broken, what is risky, what it costs to fix. You decide with real information.',
+          },
+          {
+            title: 'Stop the bleeding',
+            desc: 'The bugs that lose you money or users get fixed first — payment failures, crashes, broken flows. You see visible progress in the first week, not after a quarter.',
+          },
+          {
+            title: 'Stabilize without breaking what works',
+            desc: 'Small, reviewable changes — no drive-by rewrites. The app keeps serving your users the whole time; every release is small enough to roll back safely.',
+          },
+          {
+            title: 'Hand over properly',
+            desc: 'Documented setup, credentials in your hands, a clear map of the codebase — so you are never hostage to a single developer again. Ongoing maintenance only if you want it.',
+          },
+        ],
+        proof_title: 'Not theory — shipped work',
+        proof_medicta:
+          'Medicta: a live React Native app on Google Play — real users, real bugs, no access to the original developers. Taken over, stabilized, redesigned and shipped back without a day of downtime.',
+        proof_medicta_cta: 'Read the Medicta case study',
+        proof_article_cta: 'My full takeover playbook (article)',
+        cta_title: 'Tell me where it hurts',
+        cta_body:
+          'Send a short description of the project and its current state. I will reply with what an audit covers, what it costs, and how fast I can start — no obligation.',
+        cta_whatsapp: 'WhatsApp me now',
+        cta_contact: 'Or use the contact form',
+        whatsapp_message:
+          'Hi Belal, I have a stuck/inherited project and I need a rescue. Can we talk?',
       },
       blog_page: {
         title: 'Writing',

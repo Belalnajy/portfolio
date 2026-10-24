@@ -57,6 +57,7 @@ NestJS و Node.js و Django و PostgreSQL، ويدعم العربية و RTL ف�
 - [Home (Arabic)](${SITE_URL}/ar): the same site, fully in Arabic (every page also exists under /ar)
 - [Work](${SITE_URL}/work): the complete archive of 35 projects with skills and certifications
 - [Services & packages](${SITE_URL}/services): what Belal offers, the delivery process and pricing packages
+- [Legacy Code Rescue](${SITE_URL}/rescue): the dedicated page for taking over stuck or abandoned projects — audit first, stabilize, no forced rewrite
 - [Now](${SITE_URL}/now): what he is focused on right now, updated regularly
 - [Blog](${SITE_URL}/blog): engineering write-ups from shipped projects
 - [CV (PDF)](${SITE_URL}/Belal_Nagy_CV.pdf)
