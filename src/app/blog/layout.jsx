@@ -17,14 +17,14 @@ export const metadata = {
   openGraph: {
     type: 'website',
     url: '/blog',
-    title: 'Blog — Belal Nagy',
+    title: 'Blog | Belal Nagy',
     description:
       'Engineering write-ups from shipped projects: architecture, legacy takeovers and Arabic RTL.',
     images: [OG_IMAGE],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Blog — Belal Nagy',
+    title: 'Blog | Belal Nagy',
     description:
       'Engineering write-ups from shipped projects: architecture, legacy takeovers and Arabic RTL.',
     images: [OG_IMAGE],

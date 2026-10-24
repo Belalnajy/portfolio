@@ -8,7 +8,7 @@ const content = {
       "audience": "Healthcare professionals earning SCFHS-accredited hours"
     },
     "challenge": {
-      "body": "Medical education in Saudi Arabia is regulated: courses must be SCFHS-accredited, reported through NELC, and certificates must be verifiable. That means an LMS here is not videos and quizzes — it is compliance infrastructure with learning on top, and payments have to work with the local gateway ecosystem.",
+      "body": "Medical education in Saudi Arabia is regulated: courses must be SCFHS-accredited, reported through NELC, and certificates must be verifiable. That means an LMS here is not videos and quizzes; it is compliance infrastructure with learning on top, and payments have to work with the local gateway ecosystem.",
       "points": [
         "SCFHS accreditation requirements built into the product",
         "NELC integration for national e-learning compliance",
@@ -17,7 +17,7 @@ const content = {
       ]
     },
     "approach": {
-      "body": "I built it on a hardened Django and PostgreSQL core with Celery and Redis handling the async work — notifications, report generation, exports — so the learning experience never waits on background jobs. Certificates are generated automatically with unique IDs and an online verification system. The same engine powers HC Holding and Mada Education under their own brands.",
+      "body": "I built it on a hardened Django and PostgreSQL core with Celery and Redis handling the async work (notifications, report generation, exports), so the learning experience never waits on background jobs. Certificates are generated automatically with unique IDs and an online verification system. The same engine powers HC Holding and Mada Education under their own brands.",
       "points": [
         "Django + PostgreSQL core, Celery + Redis async processing",
         "Automated certificates with unique IDs and verification",
@@ -53,7 +53,7 @@ const content = {
       "audience": "ممارسون صحيون بيحصّلوا ساعات معتمدة من SCFHS"
     },
     "challenge": {
-      "body": "التعليم الطبي في السعودية منظّم بقوانين: الدورات لازم تكون معتمدة من SCFHS، وبيتم رفع تقاريرها عبر NELC، والشهادات لازم تكون قابلة للتحقق. يعني الـ LMS هنا مش فيديوهات واختبارات — ده بنية امتثال تنظيمي وفوقها تعليم، والمدفوعات لازم تشتغل مع بوابات الدفع المحلية.",
+      "body": "التعليم الطبي في السعودية منظّم بقوانين: الدورات لازم تكون معتمدة من SCFHS، وبيتم رفع تقاريرها عبر NELC، والشهادات لازم تكون قابلة للتحقق. يعني الـ LMS هنا مش فيديوهات واختبارات، ده بنية امتثال تنظيمي وفوقها تعليم، والمدفوعات لازم تشتغل مع بوابات الدفع المحلية.",
       "points": [
         "متطلبات اعتماد SCFHS مبنية جوه المنتج",
         "تكامل NELC للامتثال الوطني للتعلم الإلكتروني",
@@ -62,7 +62,7 @@ const content = {
       ]
     },
     "approach": {
-      "body": "بنيتها على نواة Django و PostgreSQL محصّنة، مع Celery و Redis بيتولوا الشغل غير المتزامن — الإشعارات وتوليد التقارير والتصدير — فتجربة التعلم عمرها ما بتستنى مهام الخلفية. الشهادات بتتولد أوتوماتيكياً بأرقام فريدة ونظام تحقق أونلاين. ونفس المحرك بيشغّل التجمع الصحي ومدى التعليمية بهوياتهم الخاصة.",
+      "body": "بنيتها على نواة Django و PostgreSQL محصّنة، مع Celery و Redis بيتولوا الشغل غير المتزامن (الإشعارات وتوليد التقارير والتصدير)، فتجربة التعلم عمرها ما بتستنى مهام الخلفية. الشهادات بتتولد أوتوماتيكياً بأرقام فريدة ونظام تحقق أونلاين. ونفس المحرك بيشغّل التجمع الصحي ومدى التعليمية بهوياتهم الخاصة.",
       "points": [
         "نواة Django + PostgreSQL مع معالجة غير متزامنة بـ Celery + Redis",
         "شهادات مؤتمتة بأرقام فريدة ونظام تحقق",

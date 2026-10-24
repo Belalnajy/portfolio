@@ -24,7 +24,7 @@ export const FAQ_ITEMS = {
     {
       question: 'Does Belal Nagy take over existing codebases?',
       answer:
-        'Yes — legacy takeover is one of his services. Examples include Medicta, an Android healthcare booking app on Google Play that he re-architected and stabilized, and CMS customization work delivered within locked-down platforms.',
+        'Yes, legacy takeover is one of his services. Examples include Medicta, an Android healthcare booking app on Google Play that he re-architected and stabilized, and CMS customization work delivered within locked-down platforms.',
     },
     {
       question: 'Is Belal Nagy available for hire?',
@@ -39,7 +39,7 @@ export const FAQ_ITEMS = {
     {
       question: 'Does Belal Nagy build Arabic and RTL websites?',
       answer:
-        'Yes — Arabic-first work is a specialty. Every project ships with full RTL support, designed in from the start rather than retrofitted, including the dashboards, invoices and report views where right-to-left layouts usually break.',
+        'Yes, Arabic-first work is a specialty. Every project ships with full RTL support, designed in from the start rather than retrofitted, including the dashboards, invoices and report views where right-to-left layouts usually break.',
     },
   ],
   ar: [
@@ -61,7 +61,7 @@ export const FAQ_ITEMS = {
     {
       question: 'بلال بيستلم أكواد قائمة محتاجة إصلاح؟',
       answer:
-        'أيوه — استلام الأكواد القديمة من خدماته الأساسية. من الأمثلة: Medicta، تطبيق أندرويد لحجز المواعيد الطبية على Google Play أعاد هيكلته وثبّته، وشغل تخصيص CMS متسلّم جوه منصات مقفولة.',
+        'أيوه، استلام الأكواد القديمة من خدماته الأساسية. من الأمثلة: Medicta، تطبيق أندرويد لحجز المواعيد الطبية على Google Play أعاد هيكلته وثبّته، وشغل تخصيص CMS متسلّم جوه منصات مقفولة.',
     },
     {
       question: 'أقدر أتعامل مع بلال ناجي إزاي؟',
@@ -76,7 +76,7 @@ export const FAQ_ITEMS = {
     {
       question: 'بيبني مواقع عربية بتدعم RTL؟',
       answer:
-        'أيوه — الشغل العربي أولاً تخصص أساسي. كل مشروع بيتسلم بدعم RTL كامل متصمم من البداية مش مضاف لاحقاً، بما في ذلك لوحات التحكم والفواتير وشاشات التقارير اللي التخطيط من اليمين لليسار بيتكسر فيها عادة.',
+        'أيوه، الشغل العربي أولاً تخصص أساسي. كل مشروع بيتسلم بدعم RTL كامل متصمم من البداية مش مضاف لاحقاً، بما في ذلك لوحات التحكم والفواتير وشاشات التقارير اللي التخطيط من اليمين لليسار بيتكسر فيها عادة.',
     },
   ],
 };

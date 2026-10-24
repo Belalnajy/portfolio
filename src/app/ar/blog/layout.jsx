@@ -18,14 +18,14 @@ export const metadata = {
     type: 'website',
     url: '/ar/blog',
     locale: 'ar_SA',
-    title: 'المقالات — بلال ناجي',
+    title: 'المقالات | بلال ناجي',
     description:
       'مقالات هندسية من مشاريع حقيقية: البنية، واستلام المشاريع القديمة، والعربية RTL.',
     images: [OG_IMAGE],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'المقالات — بلال ناجي',
+    title: 'المقالات | بلال ناجي',
     description:
       'مقالات هندسية من مشاريع حقيقية: البنية، واستلام المشاريع القديمة، والعربية RTL.',
     images: [OG_IMAGE],

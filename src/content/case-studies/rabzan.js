@@ -1,14 +1,14 @@
 const content = {
   "en": {
     "title": "Rabzan Trading, a Premium Face for Global Logistics",
-    "summary": "A premium logistics platform presenting Rabzan's global trade and China-sourcing services: sourcing and verification, quality-control inspection, and end-to-end supply-chain management — in a dark, premium industrial UI.",
+    "summary": "A premium logistics platform presenting Rabzan's global trade and China-sourcing services: sourcing and verification, quality-control inspection, and end-to-end supply-chain management, in a dark, premium industrial UI.",
     "facts": {
       "role": "Front-end developer",
       "scope": "Service platform, brand presentation, premium UI",
       "audience": "Importers sourcing goods from China"
     },
     "challenge": {
-      "body": "Sourcing from China is a trust business: clients hand over money for goods they have not seen, in factories they will never visit. The site had to communicate rigor — verification, inspection, audits — and look like a company you would trust a container with.",
+      "body": "Sourcing from China is a trust business: clients hand over money for goods they have not seen, in factories they will never visit. The site had to communicate rigor (verification, inspection, audits) and look like a company you would trust a container with.",
       "points": [
         "Trust is the product being sold",
         "Services must read as a rigorous process",
@@ -45,14 +45,14 @@ const content = {
   },
   "ar": {
     "title": "ربزان للتجارة، واجهة فاخرة للوجستيات العالمية",
-    "summary": "منصة لوجستية فاخرة بتعرض خدمات ربزان في التجارة العالمية والتوريد من الصين: توريد وتحقق، فحص جودة، وإدارة سلسلة إمداد من الأول للآخر — بواجهة صناعية داكنة فاخرة.",
+    "summary": "منصة لوجستية فاخرة بتعرض خدمات ربزان في التجارة العالمية والتوريد من الصين: توريد وتحقق، فحص جودة، وإدارة سلسلة إمداد من الأول للآخر، بواجهة صناعية داكنة فاخرة.",
     "facts": {
       "role": "مطور واجهات أمامية",
       "scope": "منصة خدمات، عرض علامة، واجهة فاخرة",
       "audience": "مستوردون بيورّدوا بضائع من الصين"
     },
     "challenge": {
-      "body": "التوريد من الصين شغل ثقة: العميل بيدفع فلوس في بضاعة ماشفهاش، من مصانع عمره ما هيزورها. الموقع كان لازم يوصّل الصرامة — تحقق وفحص وتدقيق — ويبان كشركة تأمنها على كونتينر.",
+      "body": "التوريد من الصين شغل ثقة: العميل بيدفع فلوس في بضاعة ماشفهاش، من مصانع عمره ما هيزورها. الموقع كان لازم يوصّل الصرامة: تحقق وفحص وتدقيق، ويبان كشركة تأمنها على كونتينر.",
       "points": [
         "الثقة هي المنتج اللي بيتباع",
         "الخدمات لازم تتقري كعملية صارمة",

@@ -3,7 +3,7 @@ const content = {
     "title": "An Inventory System Covering the Whole Stock Lifecycle",
     "summary": "A role-based inventory management system built with Django, PostgreSQL and Bootstrap during my ITI training, as a team project: stock, orders, shipments, suppliers, customers and reporting in one system.",
     "facts": {
-      "role": "Full-stack developer — ITI team project",
+      "role": "Full-stack developer · ITI team project",
       "scope": "Stock management, orders and shipments, suppliers, reporting",
       "audience": "Warehouse and operations staff"
     },
@@ -35,7 +35,7 @@ const content = {
       ]
     },
     "outcome": {
-      "body": "Delivered as a team project during ITI training — early practice in the multi-role, data-integrity-heavy systems I now build in production.",
+      "body": "Delivered as a team project during ITI training: early practice in the multi-role, data-integrity-heavy systems I now build in production.",
       "points": [
         "Complete team delivery during ITI",
         "Team collaboration on a shared codebase",
@@ -47,7 +47,7 @@ const content = {
     "title": "نظام مخازن بيغطي دورة حياة المخزون كلها",
     "summary": "نظام إدارة مخازن قائم على الأدوار مبني بـ Django و PostgreSQL و Bootstrap أثناء تدريبي في ITI كمشروع جماعي: مخزون وطلبات وشحنات وموردين وعملاء وتقارير في نظام واحد.",
     "facts": {
-      "role": "مطور Full-Stack — مشروع جماعي في ITI",
+      "role": "مطور Full-Stack · مشروع جماعي في ITI",
       "scope": "إدارة مخزون، طلبات وشحنات، موردين، تقارير",
       "audience": "موظفو المخازن والعمليات"
     },
@@ -79,7 +79,7 @@ const content = {
       ]
     },
     "outcome": {
-      "body": "اتسلّم كمشروع جماعي أثناء تدريب ITI — تمرين مبكر على الأنظمة متعددة الأدوار الثقيلة في سلامة البيانات اللي بقيت ببنيها في الإنتاج.",
+      "body": "اتسلّم كمشروع جماعي أثناء تدريب ITI: تمرين مبكر على الأنظمة متعددة الأدوار الثقيلة في سلامة البيانات اللي بقيت ببنيها في الإنتاج.",
       "points": [
         "تسليم جماعي كامل أثناء ITI",
         "شغل فريق على كود مشترك",

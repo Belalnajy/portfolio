@@ -8,9 +8,9 @@ const content = {
       "audience": "Clients and partners of a major Kuwaiti engineering firm"
     },
     "challenge": {
-      "body": "A construction firm is judged by what it has built, so the site's job is to show the portfolio with the same seriousness as the projects themselves — technical capability, service breadth and corporate credibility, presented at the standard a major engineering firm expects.",
+      "body": "A construction firm is judged by what it has built, so the site's job is to show the portfolio with the same seriousness as the projects themselves: technical capability, service breadth and corporate credibility, presented at the standard a major engineering firm expects.",
       "points": [
-        "The portfolio is the argument — present it properly",
+        "The portfolio is the argument, so present it properly",
         "Technical capabilities must read clearly",
         "Corporate credibility in every detail",
         "Modern motion without losing gravitas"
@@ -35,7 +35,7 @@ const content = {
       ]
     },
     "outcome": {
-      "body": "Live at kmbc-kw.com as the company's digital front door — corporate web work for the Gulf construction sector.",
+      "body": "Live at kmbc-kw.com as the company's digital front door: corporate web work for the Gulf construction sector.",
       "points": [
         "Live at kmbc-kw.com",
         "The portfolio presented at firm standard",
@@ -52,9 +52,9 @@ const content = {
       "audience": "عملاء وشركاء شركة هندسية كويتية كبرى"
     },
     "challenge": {
-      "body": "شركة الإنشاءات بيتحكم عليها بما بنته، فشغل الموقع إنه يعرض البورتفوليو بنفس جدية المشاريع نفسها — قدرة تقنية واتساع خدمات ومصداقية مؤسسية، معروضين بالمستوى اللي شركة هندسية كبرى بتتوقعه.",
+      "body": "شركة الإنشاءات بيتحكم عليها بما بنته، فشغل الموقع إنه يعرض البورتفوليو بنفس جدية المشاريع نفسها: قدرة تقنية واتساع خدمات ومصداقية مؤسسية، معروضين بالمستوى اللي شركة هندسية كبرى بتتوقعه.",
       "points": [
-        "البورتفوليو هو الحجة — اعرضه صح",
+        "البورتفوليو هو الحجة، فاعرضه صح",
         "القدرات التقنية لازم تتقري بوضوح",
         "مصداقية مؤسسية في كل تفصيلة",
         "حركة عصرية من غير فقدان الهيبة"
@@ -79,7 +79,7 @@ const content = {
       ]
     },
     "outcome": {
-      "body": "شغال على kmbc-kw.com كالباب الرقمي للشركة — شغل ويب مؤسسي لقطاع الإنشاءات الخليجي.",
+      "body": "شغال على kmbc-kw.com كالباب الرقمي للشركة: شغل ويب مؤسسي لقطاع الإنشاءات الخليجي.",
       "points": [
         "شغال على kmbc-kw.com",
         "البورتفوليو معروض بمستوى الشركة",

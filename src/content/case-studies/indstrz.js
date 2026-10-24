@@ -8,7 +8,7 @@ const content = {
       "audience": "Industrial buyers and verified vendors"
     },
     "challenge": {
-      "body": "Industrial procurement still runs on phone calls, spreadsheets and long email chains. Requesting quotes is slow, comparing offers is manual, and negotiations leave no trail. The platform had to move that whole cycle online — RFQs, vendor responses and live negotiation — and stay responsive with many conversations running at once.",
+      "body": "Industrial procurement still runs on phone calls, spreadsheets and long email chains. Requesting quotes is slow, comparing offers is manual, and negotiations leave no trail. The platform had to move that whole cycle online (RFQs, vendor responses and live negotiation) and stay responsive with many conversations running at once.",
       "points": [
         "Traditional RFQ cycles are slow and untracked",
         "Negotiation needed to happen live, not over email",
@@ -35,7 +35,7 @@ const content = {
       ]
     },
     "outcome": {
-      "body": "Indstrz was selected for the Venture Ready Program, implemented by Plug and Play with support from GIZ Egypt and ITIDA, and hosted at Creativa Innovation Hubs in Alexandria — external validation of both the product and the build.",
+      "body": "Indstrz was selected for the Venture Ready Program, implemented by Plug and Play with support from GIZ Egypt and ITIDA, and hosted at Creativa Innovation Hubs in Alexandria: external validation of both the product and the build.",
       "points": [
         "Selected for the Venture Ready Program by Plug and Play",
         "Supported by GIZ Egypt and ITIDA",
@@ -52,7 +52,7 @@ const content = {
       "audience": "مشترون صناعيون وموردون معتمدون"
     },
     "challenge": {
-      "body": "المشتريات الصناعية لسه شغالة بالتليفونات والشيتات وسلاسل الإيميلات الطويلة. طلب عروض الأسعار بطيء، ومقارنة العروض يدوية، والمفاوضات مبيتسجلش منها حاجة. المنصة كان لازم تنقل الدورة دي كلها أونلاين — طلبات العروض وردود الموردين والتفاوض المباشر — وتفضل سريعة مع محادثات كتير شغالة في نفس الوقت.",
+      "body": "المشتريات الصناعية لسه شغالة بالتليفونات والشيتات وسلاسل الإيميلات الطويلة. طلب عروض الأسعار بطيء، ومقارنة العروض يدوية، والمفاوضات مبيتسجلش منها حاجة. المنصة كان لازم تنقل الدورة دي كلها أونلاين (طلبات العروض وردود الموردين والتفاوض المباشر)، وتفضل سريعة مع محادثات كتير شغالة في نفس الوقت.",
       "points": [
         "دورات RFQ التقليدية بطيئة وغير موثقة",
         "التفاوض لازم يحصل لحظياً مش على الإيميل",
@@ -79,7 +79,7 @@ const content = {
       ]
     },
     "outcome": {
-      "body": "تم اختيار Indstrz ضمن برنامج Venture Ready، المنفَّذ بواسطة Plug and Play بدعم من GIZ Egypt و ITIDA، ومستضاف في مراكز Creativa للابتكار بالإسكندرية — اعتراف خارجي بالمنتج وطريقة بنائه.",
+      "body": "تم اختيار Indstrz ضمن برنامج Venture Ready، المنفَّذ بواسطة Plug and Play بدعم من GIZ Egypt و ITIDA، ومستضاف في مراكز Creativa للابتكار بالإسكندرية، وهو اعتراف خارجي بالمنتج وطريقة بنائه.",
       "points": [
         "مختارة ضمن برنامج Venture Ready من Plug and Play",
         "بدعم من GIZ Egypt و ITIDA",

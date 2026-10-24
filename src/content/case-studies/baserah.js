@@ -1,14 +1,14 @@
 const content = {
   "en": {
     "title": "Baserah AI, Turning Unstructured HR Data into Evaluations",
-    "summary": "A full-stack AI HR platform that automates competency and KPI extraction from job descriptions, generates assessments, and evaluates talent in a structured way — bilingual for large organizations.",
+    "summary": "A full-stack AI HR platform that automates competency and KPI extraction from job descriptions, generates assessments, and evaluates talent in a structured way, bilingual for large organizations.",
     "facts": {
       "role": "Full-stack developer",
       "scope": "AI extraction pipelines, assessment generation, evaluation workflows",
       "audience": "HR teams in large Arabic/English organizations"
     },
     "challenge": {
-      "body": "HR teams sit on piles of unstructured text — job descriptions, requirements, evaluation notes — and turning that into measurable competencies and fair assessments is slow manual work. The platform had to extract structure reliably from that text and produce assessments an HR team can actually defend.",
+      "body": "HR teams sit on piles of unstructured text (job descriptions, requirements, evaluation notes), and turning that into measurable competencies and fair assessments is slow manual work. The platform had to extract structure reliably from that text and produce assessments an HR team can actually defend.",
       "points": [
         "Job descriptions arrive as unstructured text",
         "Competencies and KPIs extracted consistently, not ad hoc",
@@ -35,7 +35,7 @@ const content = {
       ]
     },
     "outcome": {
-      "body": "Baserah turns days of manual HR analysis into an automated pipeline — an example of the applied-AI backend work I build beyond classic CRUD platforms.",
+      "body": "Baserah turns days of manual HR analysis into an automated pipeline: an example of the applied-AI backend work I build beyond classic CRUD platforms.",
       "points": [
         "Manual extraction work automated end to end",
         "Consistent, structured evaluations",
@@ -45,14 +45,14 @@ const content = {
   },
   "ar": {
     "title": "Baserah AI، تحويل بيانات HR غير المنظمة لتقييمات",
-    "summary": "منصة ذكاء اصطناعي متكاملة للموارد البشرية بتؤتمت استخراج الجدارات ومؤشرات الأداء من الوصف الوظيفي، وبتولّد التقييمات، وبتقيّم المواهب بشكل منظم — ثنائية اللغة للمؤسسات الكبيرة.",
+    "summary": "منصة ذكاء اصطناعي متكاملة للموارد البشرية بتؤتمت استخراج الجدارات ومؤشرات الأداء من الوصف الوظيفي، وبتولّد التقييمات، وبتقيّم المواهب بشكل منظم، وهي ثنائية اللغة للمؤسسات الكبيرة.",
     "facts": {
       "role": "مطور Full-Stack",
       "scope": "خطوط استخراج بالذكاء الاصطناعي، توليد تقييمات، دورات تقييم",
       "audience": "فرق الموارد البشرية في مؤسسات كبيرة عربية/إنجليزية"
     },
     "challenge": {
-      "body": "فرق الـ HR قاعدة على أكوام نصوص غير منظمة — أوصاف وظيفية ومتطلبات وملاحظات تقييم — وتحويل ده لجدارات قابلة للقياس وتقييمات عادلة شغل يدوي بطيء. المنصة كان لازم تستخرج البنية من النص ده بشكل موثوق وتنتج تقييمات فريق الـ HR يقدر يدافع عنها.",
+      "body": "فرق الـ HR قاعدة على أكوام نصوص غير منظمة (أوصاف وظيفية ومتطلبات وملاحظات تقييم)، وتحويل ده لجدارات قابلة للقياس وتقييمات عادلة شغل يدوي بطيء. المنصة كان لازم تستخرج البنية من النص ده بشكل موثوق وتنتج تقييمات فريق الـ HR يقدر يدافع عنها.",
       "points": [
         "الأوصاف الوظيفية بتوصل كنص غير منظم",
         "استخراج الجدارات والـ KPIs بشكل متسق مش عشوائي",
@@ -79,7 +79,7 @@ const content = {
       ]
     },
     "outcome": {
-      "body": "بصيرة بتحوّل أيام من التحليل اليدوي لخط مؤتمت — نموذج لشغل الـ AI التطبيقي في الباك إند اللي ببنيه أبعد من منصات الـ CRUD التقليدية.",
+      "body": "بصيرة بتحوّل أيام من التحليل اليدوي لخط مؤتمت، وده نموذج لشغل الـ AI التطبيقي في الباك إند اللي ببنيه أبعد من منصات الـ CRUD التقليدية.",
       "points": [
         "شغل الاستخراج اليدوي اتأتمت بالكامل",
         "تقييمات متسقة ومنظمة",

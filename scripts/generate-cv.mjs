@@ -59,7 +59,7 @@ const experienceHtml = EXPERIENCE.map(
   <div class="entry">
     <div class="entry-head">
       <div>
-        <strong>${esc(item.title)}</strong> — ${esc(item.company)}
+        <strong>${esc(item.title)}</strong> · ${esc(item.company)}
         <span class="tag">${esc(item.employment)}</span>
       </div>
       <div class="meta">${esc(item.period)} · ${esc(item.location)}</div>
@@ -72,7 +72,7 @@ const educationHtml = EDUCATION.map(
   (item) => `
   <div class="entry">
     <div class="entry-head">
-      <div><strong>${esc(item.title)}</strong> — ${esc(item.company)}</div>
+      <div><strong>${esc(item.title)}</strong> · ${esc(item.company)}</div>
       <div class="meta">${esc(item.period)} · ${esc(item.location)}</div>
     </div>
     <ul>${item.description.map((d) => `<li>${esc(d)}</li>`).join('')}</ul>
@@ -85,7 +85,7 @@ const projectsHtml = PROJECTS.map(
     <strong>${esc(p.name)}</strong>
     <span class="meta">${esc(p.stack.join(' · '))}</span><br/>
     ${esc(p.desc)}
-    ${p.liveUrl && p.liveUrl !== '#' ? `<span class="meta"> — ${esc(p.liveUrl.replace(/^https?:\/\/|\/$/g, ''))}</span>` : ''}
+    ${p.liveUrl && p.liveUrl !== '#' ? `<span class="meta"> · ${esc(p.liveUrl.replace(/^https?:\/\/|\/$/g, ''))}</span>` : ''}
   </div>`,
 ).join('');
 

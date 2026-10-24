@@ -157,7 +157,7 @@ const FaqAssistant = () => {
         category: 'Approach',
         icon: <FaLightbulb />,
         answer:
-          "I prioritize business value. I don't just write code; I identify bottlenecks—like negotiation latency in Indstrz—and architect logical solutions like automated RFQ pipelines to solve them.",
+          "I prioritize business value. I don't just write code; I identify bottlenecks, like negotiation latency in Indstrz, and architect logical solutions like automated RFQ pipelines to solve them.",
       },
       {
         question: 'Ensuring Code Quality?',
@@ -207,7 +207,7 @@ const FaqAssistant = () => {
         category: 'Tech',
         icon: <FaCode />,
         answer:
-          'This FAQ widget is hand-built with React 19, Framer Motion, and Tailwind CSS — curated answers, not an AI chatbot. It demonstrates my ability to handle complex state, bilingual RTL logic, and premium UI animations without heavy external libraries.',
+          'This FAQ widget is hand-built with React 19, Framer Motion, and Tailwind CSS: curated answers, not an AI chatbot. It demonstrates my ability to handle complex state, bilingual RTL logic, and premium UI animations without heavy external libraries.',
       },
 
       // --- HR & General ---
@@ -217,7 +217,7 @@ const FaqAssistant = () => {
         category: 'HR',
         icon: <FaCheckCircle />,
         answer:
-          "I bring technical mastery, a business-first mindset, and production experience. I build tools that don't just work—they provide ROI and solve real human problems efficiently.",
+          "I bring technical mastery, a business-first mindset, and production experience. I build tools that don't just work; they provide ROI and solve real human problems efficiently.",
       },
       {
         question: 'Can you show me projects?',

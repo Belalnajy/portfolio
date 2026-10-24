@@ -1,7 +1,7 @@
 const content = {
   "en": {
     "title": "QuoteMate, From Messy RFQs to Professional Quotes in Seconds",
-    "summary": "An intelligent platform that uses AI to transform unstructured RFQ requests — PDFs, images, free text — into structured, professional quote documents, built to speed up industrial sales teams.",
+    "summary": "An intelligent platform that uses AI to transform unstructured RFQ requests (PDFs, images, free text) into structured, professional quote documents, built to speed up industrial sales teams.",
     "facts": {
       "role": "Full-stack developer",
       "scope": "AI extraction, quote generation, document archiving, sales workflow",
@@ -35,7 +35,7 @@ const content = {
       ]
     },
     "outcome": {
-      "body": "QuoteMate collapses the RFQ-to-quote cycle from hours of retyping to seconds of review — applied AI on a real industrial workflow, with a live demo online.",
+      "body": "QuoteMate collapses the RFQ-to-quote cycle from hours of retyping to seconds of review: applied AI on a real industrial workflow, with a live demo online.",
       "points": [
         "Live demo online",
         "Hours of manual work per quote removed",
@@ -45,7 +45,7 @@ const content = {
   },
   "ar": {
     "title": "QuoteMate، من RFQ مبعثر لعرض سعر احترافي في ثواني",
-    "summary": "منصة ذكية بتستخدم الذكاء الاصطناعي لتحويل طلبات الـ RFQ غير المنظمة — PDF وصور ونص حر — لوثائق عروض أسعار منظمة واحترافية، مبنية لتسريع فرق المبيعات الصناعية.",
+    "summary": "منصة ذكية بتستخدم الذكاء الاصطناعي لتحويل طلبات الـ RFQ غير المنظمة (PDF وصور ونص حر) لوثائق عروض أسعار منظمة واحترافية، مبنية لتسريع فرق المبيعات الصناعية.",
     "facts": {
       "role": "مطور Full-Stack",
       "scope": "استخراج بالـ AI، توليد عروض، أرشفة مستندات، دورة عمل مبيعات",
@@ -79,7 +79,7 @@ const content = {
       ]
     },
     "outcome": {
-      "body": "QuoteMate بيضغط دورة الـ RFQ-لعرض-السعر من ساعات إعادة كتابة لثواني مراجعة — ذكاء اصطناعي تطبيقي على دورة عمل صناعية حقيقية، وديمو مباشر أونلاين.",
+      "body": "QuoteMate بيضغط دورة الـ RFQ-لعرض-السعر من ساعات إعادة كتابة لثواني مراجعة: ذكاء اصطناعي تطبيقي على دورة عمل صناعية حقيقية، وديمو مباشر أونلاين.",
       "points": [
         "ديمو مباشر أونلاين",
         "ساعات شغل يدوي اتشالت من كل عرض",

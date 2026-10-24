@@ -6,7 +6,7 @@ import { SITE_URL } from '../../lib/site';
 export const dynamic = 'force-static';
 
 /**
- * llms.txt — a concise, plain-markdown map of the site for AI assistants and
+ * llms.txt: a concise, plain-markdown map of the site for AI assistants and
  * answer engines (https://llmstxt.org). Generated from the same case-study
  * registry as the routes and sitemap, so it never goes stale.
  */
@@ -18,7 +18,7 @@ export async function GET() {
     }),
   );
 
-  const body = `# Belal Nagy (بلال ناجي) — Full-Stack Developer
+  const body = `# Belal Nagy (بلال ناجي), Full-Stack Developer
 
 > Belal Nagy is a full-stack developer based in Alexandria, Egypt, currently a
 > Software Engineer at ezSec Inc (a cybersecurity company in Kitchener,
@@ -49,7 +49,7 @@ NestJS و Node.js و Django و PostgreSQL، ويدعم العربية و RTL ف�
 حاصل على بكالوريوس نظم معلومات الأعمال (BIS) من جامعة الإسكندرية، ودرّس تطوير
 الواجهات الأمامية لأكثر من ٤٤٠ طالباً في معهد تكنولوجيا المعلومات ITI.
 تقييماته على منصات العمل الحر خمسات ومستقل ونفذلي إيجابية بنسبة ١٠٠٪.
-موقعه: ${SITE_URL}/ar — التواصل عبر نموذج الاتصال في الموقع.
+موقعه: ${SITE_URL}/ar، والتواصل عبر نموذج الاتصال في الموقع.
 
 ## Main pages
 
@@ -57,7 +57,7 @@ NestJS و Node.js و Django و PostgreSQL، ويدعم العربية و RTL ف�
 - [Home (Arabic)](${SITE_URL}/ar): the same site, fully in Arabic (every page also exists under /ar)
 - [Work](${SITE_URL}/work): the complete archive of 35 projects with skills and certifications
 - [Services & packages](${SITE_URL}/services): what Belal offers, the delivery process and pricing packages
-- [Legacy Code Rescue](${SITE_URL}/rescue): the dedicated page for taking over stuck or abandoned projects — audit first, stabilize, no forced rewrite
+- [Legacy Code Rescue](${SITE_URL}/rescue): the dedicated page for taking over stuck or abandoned projects: audit first, stabilize, no forced rewrite
 - [Now](${SITE_URL}/now): what he is focused on right now, updated regularly
 - [Blog](${SITE_URL}/blog): engineering write-ups from shipped projects
 - [CV (PDF)](${SITE_URL}/Belal_Nagy_CV.pdf)

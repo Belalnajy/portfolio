@@ -12,12 +12,12 @@ export const BLOG_POSTS = {
     en: {
       title: 'One Django Engine, Three Accredited Platforms',
       description:
-        'How I run Injaz, HC Holding and Mada Education — three separately branded, separately accredited learning platforms — on a single hardened Django and PostgreSQL core, and what that architecture costs and buys.',
+        'How I run Injaz, HC Holding and Mada Education, three separately branded, separately accredited learning platforms, on a single hardened Django and PostgreSQL core, and what that architecture costs and buys.',
     },
     ar: {
       title: 'محرّك Django واحد… ثلاث منصات معتمدة',
       description:
-        'كيف أُشغّل إنجاز وHC Holding ومدى للتعليم — ثلاث منصات تعليمية بهويات واعتمادات منفصلة — على نواة واحدة من Django وPostgreSQL، وما الذي تكلّفه هذه البنية وما الذي توفّره.',
+        'كيف أُشغّل إنجاز وHC Holding ومدى للتعليم، وهي ثلاث منصات تعليمية بهويات واعتمادات منفصلة، على نواة واحدة من Django وPostgreSQL، وما الذي تكلّفه هذه البنية وما الذي توفّره.',
     },
   },
   'legacy-takeover-playbook': {
@@ -27,12 +27,12 @@ export const BLOG_POSTS = {
     en: {
       title: 'Taking Over a Legacy Codebase Without Rewriting It',
       description:
-        'The playbook I used to take over Medicta — a live React Native app on Google Play with real users and real bugs — stabilize it, redesign its UI and ship updates, without the rewrite everyone reaches for first.',
+        'The playbook I used to take over Medicta, a live React Native app on Google Play with real users and real bugs, stabilize it, redesign its UI and ship updates, without the rewrite everyone reaches for first.',
     },
     ar: {
       title: 'استلام مشروع قديم بدون إعادة كتابته من الصفر',
       description:
-        'الخطة التي استخدمتها لاستلام Medicta — تطبيق React Native حي على Google Play بمستخدمين حقيقيين وأخطاء حقيقية — وتثبيته وإعادة تصميم واجهته وإطلاق التحديثات، بدون "إعادة الكتابة من الصفر" التي يبدأ بها الجميع.',
+        'الخطة التي استخدمتها لاستلام Medicta، وهو تطبيق React Native حي على Google Play بمستخدمين حقيقيين وأخطاء حقيقية، وتثبيته وإعادة تصميم واجهته وإطلاق التحديثات، بدون "إعادة الكتابة من الصفر" التي يبدأ بها الجميع.',
     },
   },
   'rtl-beyond-the-landing-page': {
@@ -42,12 +42,12 @@ export const BLOG_POSTS = {
     en: {
       title: 'Arabic RTL That Survives Dashboards and Invoices',
       description:
-        'Flipping a landing page to RTL is easy. Keeping Arabic correct through data tables, financial documents, charts and mixed-direction text is engineering — here is what shipping RTL in every one of my projects has taught me.',
+        'Flipping a landing page to RTL is easy. Keeping Arabic correct through data tables, financial documents, charts and mixed-direction text is engineering. Here is what shipping RTL in every one of my projects has taught me.',
     },
     ar: {
       title: 'واجهات عربية RTL تصمد أمام لوحات التحكم والفواتير',
       description:
-        'قلب صفحة هبوط إلى RTL أمرٌ سهل. أما بقاء العربية صحيحة عبر جداول البيانات والمستندات المالية والرسوم البيانية والنصوص مختلطة الاتجاه فهو هندسة — هذا ما علّمني إياه شحن RTL في كل مشروع عملت عليه.',
+        'قلب صفحة هبوط إلى RTL أمرٌ سهل. أما بقاء العربية صحيحة عبر جداول البيانات والمستندات المالية والرسوم البيانية والنصوص مختلطة الاتجاه فهو هندسة. هذا ما علّمني إياه شحن RTL في كل مشروع عملت عليه.',
     },
   },
 };

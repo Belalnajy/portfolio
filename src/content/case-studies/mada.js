@@ -8,7 +8,7 @@ const content = {
       "audience": "Trainees on accredited professional courses"
     },
     "challenge": {
-      "body": "Every training provider wants its own platform, but rebuilding an LMS per client multiplies cost and bugs. The challenge Mada represents is productizing: give the client a platform that is genuinely theirs — brand, catalogue, pricing — without forking the accredited core that makes the whole thing trustworthy.",
+      "body": "Every training provider wants its own platform, but rebuilding an LMS per client multiplies cost and bugs. The challenge Mada represents is productizing: give the client a platform that is genuinely theirs (brand, catalogue, pricing) without forking the accredited core that makes the whole thing trustworthy.",
       "points": [
         "A real brand of its own, not a reskin that leaks",
         "Independent catalogue and pricing",
@@ -35,7 +35,7 @@ const content = {
       ]
     },
     "outcome": {
-      "body": "Mada Education is live at mada-education.com — the third branded deployment proving the multi-tenant engine works as a product line, not a one-off.",
+      "body": "Mada Education is live at mada-education.com: the third branded deployment proving the multi-tenant engine works as a product line, not a one-off.",
       "points": [
         "Live at mada-education.com",
         "Third branded platform on one hardened core",
@@ -52,7 +52,7 @@ const content = {
       "audience": "متدربون في دورات مهنية معتمدة"
     },
     "challenge": {
-      "body": "كل جهة تدريب عايزة منصة خاصة بيها، لكن إعادة بناء LMS لكل عميل بتضاعف التكلفة والأخطاء. التحدي اللي مدى بتمثله هو التحويل لمنتج: تدي العميل منصة فعلاً بتاعته — هوية وكتالوج وتسعير — من غير ما تعمل fork للنواة المعتمدة اللي هي أساس الثقة كلها.",
+      "body": "كل جهة تدريب عايزة منصة خاصة بيها، لكن إعادة بناء LMS لكل عميل بتضاعف التكلفة والأخطاء. التحدي اللي مدى بتمثله هو التحويل لمنتج: تدي العميل منصة فعلاً بتاعته: هوية وكتالوج وتسعير، من غير ما تعمل fork للنواة المعتمدة اللي هي أساس الثقة كلها.",
       "points": [
         "هوية حقيقية خاصة، مش قشرة بتسرّب",
         "كتالوج وتسعير مستقلين",
@@ -79,7 +79,7 @@ const content = {
       ]
     },
     "outcome": {
-      "body": "مدى التعليمية شغالة على mada-education.com — النشرة الثالثة بهوية مستقلة اللي بتثبت إن المحرك متعدد المستأجرين خط إنتاج، مش مشروع لمرة واحدة.",
+      "body": "مدى التعليمية شغالة على mada-education.com، وهي النشرة الثالثة بهوية مستقلة اللي بتثبت إن المحرك متعدد المستأجرين خط إنتاج، مش مشروع لمرة واحدة.",
       "points": [
         "تعمل على mada-education.com",
         "ثالث منصة بهوية مستقلة على نواة واحدة محصّنة",

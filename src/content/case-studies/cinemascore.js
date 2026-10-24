@@ -1,14 +1,14 @@
 const content = {
   "en": {
     "title": "CinemaScore, a Movie Discovery App on Live API Data",
-    "summary": "A dynamic web app for browsing movies and TV shows through the TMDB API: discovery, watchlists, advanced search and language switching — built as a team project during ITI training.",
+    "summary": "A dynamic web app for browsing movies and TV shows through the TMDB API: discovery, watchlists, advanced search and language switching, built as a team project during ITI training.",
     "facts": {
-      "role": "Front-end developer — ITI team project",
+      "role": "Front-end developer · ITI team project",
       "scope": "API integration, browsing, watchlist, search, i18n",
       "audience": "Movie and TV fans"
     },
     "challenge": {
-      "body": "The app is only as good as its handling of someone else's data: TMDB's catalogue is huge, paginated and always changing. Browsing had to stay fast, search had to narrow millions of titles usefully, and personal state — the watchlist — had to persist across the experience, in more than one language.",
+      "body": "The app is only as good as its handling of someone else's data: TMDB's catalogue is huge, paginated and always changing. Browsing had to stay fast, search had to narrow millions of titles usefully, and personal state (the watchlist) had to persist across the experience, in more than one language.",
       "points": [
         "A huge, live, third-party catalogue",
         "Search across millions of titles",
@@ -35,7 +35,7 @@ const content = {
       ]
     },
     "outcome": {
-      "body": "Delivered as an ITI team project with a live demo online — API-driven state management practiced early, as a team.",
+      "body": "Delivered as an ITI team project with a live demo online: API-driven state management practiced early, as a team.",
       "points": [
         "Live demo online",
         "Team delivery during ITI training",
@@ -45,14 +45,14 @@ const content = {
   },
   "ar": {
     "title": "CinemaScore، تطبيق اكتشاف أفلام على بيانات API حية",
-    "summary": "تطبيق ويب ديناميكي لتصفح الأفلام والمسلسلات عبر TMDB API: اكتشاف وقوائم مشاهدة وبحث متقدم وتبديل لغات — مبني كمشروع جماعي أثناء تدريب ITI.",
+    "summary": "تطبيق ويب ديناميكي لتصفح الأفلام والمسلسلات عبر TMDB API: اكتشاف وقوائم مشاهدة وبحث متقدم وتبديل لغات، مبني كمشروع جماعي أثناء تدريب ITI.",
     "facts": {
-      "role": "مطور واجهات — مشروع جماعي في ITI",
+      "role": "مطور واجهات · مشروع جماعي في ITI",
       "scope": "تكامل API، تصفح، قائمة مشاهدة، بحث، تعدد لغات",
       "audience": "عشاق الأفلام والمسلسلات"
     },
     "challenge": {
-      "body": "التطبيق كويس على قد تعامله مع بيانات غيره: كتالوج TMDB ضخم ومقسّم صفحات وبيتغير طول الوقت. التصفح لازم يفضل سريع، والبحث لازم يضيّق ملايين العناوين بشكل مفيد، والحالة الشخصية — قايمة المشاهدة — لازم تثبت عبر التجربة، وبأكتر من لغة.",
+      "body": "التطبيق كويس على قد تعامله مع بيانات غيره: كتالوج TMDB ضخم ومقسّم صفحات وبيتغير طول الوقت. التصفح لازم يفضل سريع، والبحث لازم يضيّق ملايين العناوين بشكل مفيد، والحالة الشخصية (قايمة المشاهدة) لازم تثبت عبر التجربة، وبأكتر من لغة.",
       "points": [
         "كتالوج طرف تالت ضخم وحي",
         "بحث في ملايين العناوين",
@@ -79,7 +79,7 @@ const content = {
       ]
     },
     "outcome": {
-      "body": "اتسلّم كمشروع جماعي في ITI بديمو مباشر أونلاين — تمرين مبكر على إدارة الحالة المبنية على API، وبشغل فريق.",
+      "body": "اتسلّم كمشروع جماعي في ITI بديمو مباشر أونلاين: تمرين مبكر على إدارة الحالة المبنية على API، وبشغل فريق.",
       "points": [
         "ديمو مباشر أونلاين",
         "تسليم جماعي أثناء تدريب ITI",

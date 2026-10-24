@@ -1,14 +1,14 @@
 const content = {
   "en": {
     "title": "Amarna Travel, Making a CMS Behave in Arabic",
-    "summary": "Enhancement of Amarna Travel's official website, built on the TrekkSoft CMS, for a better Arabic user experience and visual consistency — working within the constraints of a hosted platform.",
+    "summary": "Enhancement of Amarna Travel's official website, built on the TrekkSoft CMS, for a better Arabic user experience and visual consistency, working within the constraints of a hosted platform.",
     "facts": {
       "role": "Front-end customization",
       "scope": "RTL adjustments, layout restructuring, UI consistency",
       "audience": "The agency's Arabic-speaking travellers"
     },
     "challenge": {
-      "body": "The site ran on TrekkSoft, a hosted booking CMS that was never designed RTL-first. Arabic content rendered awkwardly — alignment, section flow, mixed-direction text — and there was no framework rewrite to hide behind: the fixes had to work inside the CMS's customization boundaries.",
+      "body": "The site ran on TrekkSoft, a hosted booking CMS that was never designed RTL-first. Arabic content rendered awkwardly (alignment, section flow, mixed-direction text), and there was no framework rewrite to hide behind: the fixes had to work inside the CMS's customization boundaries.",
       "points": [
         "A hosted CMS with limited customization surface",
         "Arabic rendering broken in alignment and flow",
@@ -43,14 +43,14 @@ const content = {
   },
   "ar": {
     "title": "Amarna Travel، تخلّي CMS يتصرف كويس بالعربي",
-    "summary": "تحسين الموقع الرسمي لشركة Amarna Travel المبني على TrekkSoft CMS لتجربة عربية أفضل واتساق بصري — بالشغل جوه حدود منصة مستضافة.",
+    "summary": "تحسين الموقع الرسمي لشركة Amarna Travel المبني على TrekkSoft CMS لتجربة عربية أفضل واتساق بصري، بالشغل جوه حدود منصة مستضافة.",
     "facts": {
       "role": "تخصيص واجهات أمامية",
       "scope": "تعديلات RTL، إعادة هيكلة التخطيط، اتساق الواجهة",
       "audience": "مسافرو الوكالة الناطقون بالعربية"
     },
     "challenge": {
-      "body": "الموقع شغال على TrekkSoft، وهو CMS حجوزات مستضاف ما اتصممش بالـ RTL من الأساس. المحتوى العربي كان بيظهر بشكل مكسور — محاذاة وتدفق أقسام ونصوص مختلطة الاتجاه — ومفيش إعادة كتابة framework نستخبى وراها: الإصلاحات لازم تشتغل جوه حدود تخصيص الـ CMS.",
+      "body": "الموقع شغال على TrekkSoft، وهو CMS حجوزات مستضاف ما اتصممش بالـ RTL من الأساس. المحتوى العربي كان بيظهر بشكل مكسور، من محاذاة وتدفق أقسام لنصوص مختلطة الاتجاه، ومفيش إعادة كتابة framework نستخبى وراها: الإصلاحات لازم تشتغل جوه حدود تخصيص الـ CMS.",
       "points": [
         "CMS مستضاف بمساحة تخصيص محدودة",
         "العرض العربي مكسور في المحاذاة والتدفق",

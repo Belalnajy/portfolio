@@ -1,14 +1,14 @@
 const content = {
   "en": {
     "title": "Waferlee, a Community-Powered Deals Platform",
-    "summary": "A discovery platform where the community submits and votes on deals and coupons, with a custom 'Temperature' algorithm surfacing what is genuinely trending — plus the moderation and anti-abuse layer a voting product needs.",
+    "summary": "A discovery platform where the community submits and votes on deals and coupons, with a custom 'Temperature' algorithm surfacing what is genuinely trending, plus the moderation and anti-abuse layer a voting product needs.",
     "facts": {
       "role": "Full-stack developer",
       "scope": "Voting engine, trending algorithm, submissions, moderation, notifications",
       "audience": "Deal hunters and the community submitting offers"
     },
     "challenge": {
-      "body": "A deals site ranked by raw votes gets gamed on day one. The ranking needed to reflect momentum, not just totals — and every community feature (submission, voting, comments) invites abuse, so moderation and bot protection had to be part of the core design, not patches.",
+      "body": "A deals site ranked by raw votes gets gamed on day one. The ranking needed to reflect momentum, not just totals. And every community feature (submission, voting, comments) invites abuse, so moderation and bot protection had to be part of the core design, not patches.",
       "points": [
         "Trending must reflect momentum, not raw vote counts",
         "Community submissions need a moderation pipeline",
@@ -35,7 +35,7 @@ const content = {
       ]
     },
     "outcome": {
-      "body": "Waferlee is live at waferlee.ae — a community platform where the ranking stays honest because the algorithm, moderation and anti-abuse were designed together.",
+      "body": "Waferlee is live at waferlee.ae: a community platform where the ranking stays honest because the algorithm, moderation and anti-abuse were designed together.",
       "points": [
         "Live at waferlee.ae",
         "Trending feed driven by the Temperature algorithm",
@@ -45,14 +45,14 @@ const content = {
   },
   "ar": {
     "title": "Waferlee، منصة عروض بتحركها المجتمع",
-    "summary": "منصة اكتشاف بيقدّم فيها المجتمع العروض والكوبونات ويصوّت عليها، مع خوارزمية \"Temperature\" مخصصة بتطلّع الرائج فعلاً — ومعاها طبقة الإشراف ومنع التلاعب اللي أي منتج تصويت محتاجها.",
+    "summary": "منصة اكتشاف بيقدّم فيها المجتمع العروض والكوبونات ويصوّت عليها، مع خوارزمية \"Temperature\" مخصصة بتطلّع الرائج فعلاً، ومعاها طبقة الإشراف ومنع التلاعب اللي أي منتج تصويت محتاجها.",
     "facts": {
       "role": "مطور Full-Stack",
       "scope": "محرك تصويت، خوارزمية رواج، تقديم عروض، إشراف، إشعارات",
       "audience": "صايدو العروض والمجتمع اللي بيقدّمها"
     },
     "challenge": {
-      "body": "موقع عروض بيترتب بعدد الأصوات الخام بيتلاعب بيه من أول يوم. الترتيب كان لازم يعكس الزخم مش المجاميع — وكل ميزة مجتمعية (تقديم، تصويت، تعليقات) بتفتح باب إساءة استخدام، فالإشراف وحماية البوتات كان لازم يكونوا جزء من التصميم الأساسي مش ترقيعات.",
+      "body": "موقع عروض بيترتب بعدد الأصوات الخام بيتلاعب بيه من أول يوم. الترتيب كان لازم يعكس الزخم مش المجاميع. وكل ميزة مجتمعية (تقديم، تصويت، تعليقات) بتفتح باب إساءة استخدام، فالإشراف وحماية البوتات كان لازم يكونوا جزء من التصميم الأساسي مش ترقيعات.",
       "points": [
         "الرواج لازم يعكس الزخم مش عدد الأصوات الخام",
         "تقديمات المجتمع محتاجة خط إشراف",
@@ -79,7 +79,7 @@ const content = {
       ]
     },
     "outcome": {
-      "body": "Waferlee شغالة على waferlee.ae — منصة مجتمعية الترتيب فيها بيفضل نضيف لأن الخوارزمية والإشراف ومنع التلاعب اتصمموا مع بعض.",
+      "body": "Waferlee شغالة على waferlee.ae، وهي منصة مجتمعية الترتيب فيها بيفضل نضيف لأن الخوارزمية والإشراف ومنع التلاعب اتصمموا مع بعض.",
       "points": [
         "شغالة على waferlee.ae",
         "خلاصة رائجة بتحركها خوارزمية Temperature",

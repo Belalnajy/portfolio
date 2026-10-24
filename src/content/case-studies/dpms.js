@@ -17,7 +17,7 @@ const content = {
       ]
     },
     "approach": {
-      "body": "Built on Next.js and PostgreSQL: real-time synchronization with CGM and IoT devices feeds interactive health portals — one for doctors, one for patients — while predictive analytics watch glucose trends and raise health alerts before problems peak.",
+      "body": "Built on Next.js and PostgreSQL: real-time synchronization with CGM and IoT devices feeds interactive health portals (one for doctors, one for patients), while predictive analytics watch glucose trends and raise health alerts before problems peak.",
       "points": [
         "Real-time CGM and IoT data synchronization",
         "Dedicated doctor and patient portals",
@@ -35,7 +35,7 @@ const content = {
       ]
     },
     "outcome": {
-      "body": "DiaMonitor shows chronic-care monitoring done as a modern SaaS — real-time data, prediction, and two audiences served from one platform. Live demo online.",
+      "body": "DiaMonitor shows chronic-care monitoring done as a modern SaaS: real-time data, prediction, and two audiences served from one platform. Live demo online.",
       "points": [
         "Live demo online",
         "Device-to-doctor data loop closed",
@@ -61,7 +61,7 @@ const content = {
       ]
     },
     "approach": {
-      "body": "مبنية على Next.js و PostgreSQL: تزامن لحظي مع أجهزة الـ CGM والـ IoT بيغذي بوابات صحية تفاعلية — واحدة للدكتور وواحدة للمريض — بينما تحليلات تنبؤية بتراقب اتجاهات الجلوكوز وبترفع تنبيهات صحية قبل ما المشكلة توصل لذروتها.",
+      "body": "مبنية على Next.js و PostgreSQL: تزامن لحظي مع أجهزة الـ CGM والـ IoT بيغذي بوابات صحية تفاعلية (واحدة للدكتور وواحدة للمريض)، بينما تحليلات تنبؤية بتراقب اتجاهات الجلوكوز وبترفع تنبيهات صحية قبل ما المشكلة توصل لذروتها.",
       "points": [
         "تزامن لحظي لبيانات CGM و IoT",
         "بوابتان مخصصتان للدكتور والمريض",
@@ -79,7 +79,7 @@ const content = {
       ]
     },
     "outcome": {
-      "body": "DiaMonitor بيوضح مراقبة الأمراض المزمنة كـ SaaS عصري — بيانات لحظية وتنبؤ وجمهورين متخدمين من منصة واحدة. الديمو المباشر أونلاين.",
+      "body": "DiaMonitor بيوضح مراقبة الأمراض المزمنة كـ SaaS عصري: بيانات لحظية وتنبؤ وجمهورين متخدمين من منصة واحدة. الديمو المباشر أونلاين.",
       "points": [
         "ديمو مباشر أونلاين",
         "حلقة البيانات من الجهاز للدكتور اتقفلت",

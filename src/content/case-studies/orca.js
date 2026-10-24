@@ -8,7 +8,7 @@ const content = {
       "audience": "The brand's online shoppers"
     },
     "challenge": {
-      "body": "A premium clothing brand needs its store to feel as considered as its garments — and still do the unglamorous things right: filtering that helps people find their size and style, a cart that never loses state, accounts that stay secure, and payments that clear locally through Paymob.",
+      "body": "A premium clothing brand needs its store to feel as considered as its garments, and still do the unglamorous things right: filtering that helps people find their size and style, a cart that never loses state, accounts that stay secure, and payments that clear locally through Paymob.",
       "points": [
         "Premium look with dark/light modes",
         "Catalog filtering that actually narrows choices",
@@ -35,7 +35,7 @@ const content = {
       ]
     },
     "outcome": {
-      "body": "A production-grade e-commerce build for a startup brand — the full commerce loop, designed to look premium and behave reliably.",
+      "body": "A production-grade e-commerce build for a startup brand: the full commerce loop, designed to look premium and behave reliably.",
       "points": [
         "Full commerce loop implemented",
         "Brand-level visual polish",
@@ -52,7 +52,7 @@ const content = {
       "audience": "متسوقو البراند أونلاين"
     },
     "challenge": {
-      "body": "براند ملابس فاخر محتاج متجره يحس بنفس عناية قطعه — وفي نفس الوقت يظبط الحاجات غير اللامعة: فلترة بتساعد الناس تلاقي مقاسها وستايلها، سلة عمرها ما تضيّع حالتها، حسابات تفضل آمنة، ومدفوعات بتعدي محلياً عبر Paymob.",
+      "body": "براند ملابس فاخر محتاج متجره يحس بنفس عناية قطعه، وفي نفس الوقت يظبط الحاجات غير اللامعة: فلترة بتساعد الناس تلاقي مقاسها وستايلها، سلة عمرها ما تضيّع حالتها، حسابات تفضل آمنة، ومدفوعات بتعدي محلياً عبر Paymob.",
       "points": [
         "مظهر فاخر بوضعي داكن وفاتح",
         "فلترة كتالوج بتضيّق الاختيارات فعلاً",
@@ -79,7 +79,7 @@ const content = {
       ]
     },
     "outcome": {
-      "body": "بناء تجارة إلكترونية بمستوى إنتاجي لبراند ناشئ — دورة الشراء كاملة، متصممة تبان فاخرة وتتصرف باستقرار.",
+      "body": "بناء تجارة إلكترونية بمستوى إنتاجي لبراند ناشئ: دورة الشراء كاملة، متصممة تبان فاخرة وتتصرف باستقرار.",
       "points": [
         "دورة تجارة كاملة منفذة",
         "صقل بصري بمستوى البراند",

@@ -8,7 +8,7 @@ const content = {
       "audience": "The company's Saudi clientele"
     },
     "challenge": {
-      "body": "An interior design company sells taste, so its own site is the first product the client judges. It had to feel designed — motion, rhythm, polish — while staying fast and reading naturally in Arabic RTL.",
+      "body": "An interior design company sells taste, so its own site is the first product the client judges. It had to feel designed, with motion, rhythm and polish, while staying fast and reading naturally in Arabic RTL.",
       "points": [
         "The site itself is proof of the company's aesthetic",
         "Motion that enhances rather than distracts",
@@ -35,7 +35,7 @@ const content = {
       ]
     },
     "outcome": {
-      "body": "Live at manqla.com as the company's digital storefront — front-end craft in service of a design brand.",
+      "body": "Live at manqla.com as the company's digital storefront: front-end craft in service of a design brand.",
       "points": [
         "Live at manqla.com",
         "The brand's aesthetic carried into the web",
@@ -52,7 +52,7 @@ const content = {
       "audience": "عملاء الشركة في السعودية"
     },
     "challenge": {
-      "body": "شركة التصميم الداخلي بتبيع ذوق، فموقعها نفسه هو أول منتج العميل بيحكم عليه. كان لازم يحس إنه متصمم — حركة وإيقاع ولمسة نهائية — مع إنه يفضل سريع ويتقري بالعربي RTL بشكل طبيعي.",
+      "body": "شركة التصميم الداخلي بتبيع ذوق، فموقعها نفسه هو أول منتج العميل بيحكم عليه. كان لازم يحس إنه متصمم: حركة وإيقاع ولمسة نهائية، مع إنه يفضل سريع ويتقري بالعربي RTL بشكل طبيعي.",
       "points": [
         "الموقع نفسه دليل على ذوق الشركة",
         "حركة بتضيف مش بتشتت",
@@ -79,7 +79,7 @@ const content = {
       ]
     },
     "outcome": {
-      "body": "شغال على manqla.com كالواجهة الرقمية للشركة — حرفية فرونت إند في خدمة علامة تصميم.",
+      "body": "شغال على manqla.com كالواجهة الرقمية للشركة: حرفية فرونت إند في خدمة علامة تصميم.",
       "points": [
         "شغال على manqla.com",
         "ذوق العلامة متنقل للويب",

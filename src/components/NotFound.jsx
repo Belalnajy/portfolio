@@ -25,7 +25,7 @@ const NotFound = () => {
           This page doesn&apos;t exist
         </h1>
         <p className="text-lg text-[rgb(var(--muted-foreground))] mb-1" dir="rtl" lang="ar">
-          الصفحة دي مش موجودة — بس الشغل الحقيقي موجود تحت 👇
+          الصفحة دي مش موجودة، بس الشغل الحقيقي موجود تحت 👇
         </p>
         <p className="text-[rgb(var(--muted-foreground))] mb-10">
           The work, however, very much does.

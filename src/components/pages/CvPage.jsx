@@ -19,7 +19,7 @@ const Entry = ({ item }) => (
     <div className="flex flex-wrap items-baseline justify-between gap-x-3 gap-y-1">
       <p className="font-bold text-[rgb(var(--foreground))]">
         {item.title}
-        <span className="font-normal text-[rgb(var(--muted-foreground))]"> — {item.company}</span>
+        <span className="font-normal text-[rgb(var(--muted-foreground))]"> · {item.company}</span>
       </p>
       <p className="text-xs text-[rgb(var(--muted-foreground))] whitespace-nowrap" dir="ltr">
         {item.period}

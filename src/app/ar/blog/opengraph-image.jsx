@@ -1,6 +1,6 @@
 import { pageOgImage, OG_SIZE, OG_CONTENT_TYPE } from '../../../lib/og';
 
-export const alt = 'Blog — engineering write-ups by Belal Nagy';
+export const alt = 'Blog: engineering write-ups by Belal Nagy';
 export const size = OG_SIZE;
 export const contentType = OG_CONTENT_TYPE;
 
