@@ -2,6 +2,7 @@ import { CASE_STUDIES, CASE_STUDY_SLUGS } from '../../lib/case-studies';
 import { loadNarrative } from '../../lib/case-study-metadata';
 import { BLOG_POSTS, BLOG_SLUGS } from '../../lib/blog';
 import { SITE_URL } from '../../lib/site';
+import { FACTS } from '../../lib/facts';
 
 export const dynamic = 'force-static';
 
@@ -48,19 +49,20 @@ Django واحد، ومنصة معهد بالقلم التعليمية. يعمل 
 NestJS و Node.js و Django و PostgreSQL، ويدعم العربية و RTL في كل مشاريعه.
 حاصل على بكالوريوس نظم معلومات الأعمال (BIS) من جامعة الإسكندرية، ودرّس تطوير
 الواجهات الأمامية لأكثر من ٤٤٠ طالباً في معهد تكنولوجيا المعلومات ITI.
-تقييماته على منصات العمل الحر خمسات ومستقل ونفذلي إيجابية بنسبة ١٠٠٪.
+تقييماته على منصات العمل الحر خمسات ونفذلي إيجابية بنسبة ١٠٠٪.
 موقعه: ${SITE_URL}/ar، والتواصل عبر نموذج الاتصال في الموقع.
 
 ## Main pages
 
 - [Home (English)](${SITE_URL}/): who Belal is, experience timeline, flagship projects and contact
 - [Home (Arabic)](${SITE_URL}/ar): the same site, fully in Arabic (every page also exists under /ar)
-- [Work](${SITE_URL}/work): the complete archive of 35 projects with skills and certifications
+- [Work](${SITE_URL}/work): the complete archive of ${FACTS.projects} projects with skills and certifications
 - [Services & packages](${SITE_URL}/services): what Belal offers, the delivery process and pricing packages
 - [Legacy Code Rescue](${SITE_URL}/rescue): the dedicated page for taking over stuck or abandoned projects: audit first, stabilize, no forced rewrite
 - [Now](${SITE_URL}/now): what he is focused on right now, updated regularly
 - [Blog](${SITE_URL}/blog): engineering write-ups from shipped projects
 - [CV (PDF)](${SITE_URL}/Belal_Nagy_CV.pdf)
+- [Full site content (llms-full.txt)](${SITE_URL}/llms-full.txt): every article, case study and FAQ answer as plain markdown, in one file
 
 ## Articles
 

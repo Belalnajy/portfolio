@@ -1,8 +1,8 @@
 /**
- * Question/answer pairs used for the FAQPage structured data on the home
- * pages. Curated from content that is visible on the site (the About section
- * and the Quick FAQ widget), phrased the way people actually ask answer
- * engines. Keep answers factual and consistent with the page copy.
+ * Question/answer pairs for the home pages, phrased the way people actually
+ * ask answer engines. Rendered visibly by HomeFaq and as FAQPage structured
+ * data by HomeJsonLd from this one list, so the two cannot drift. Keep
+ * answers factual and consistent with the page copy.
  */
 export const FAQ_ITEMS = {
   en: [

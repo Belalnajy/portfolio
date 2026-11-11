@@ -1,5 +1,6 @@
 import { ImageResponse } from 'next/og';
 import { CASE_STUDIES } from './case-studies';
+import { BLOG_POSTS } from './blog';
 import { loadNarrative } from './case-study-metadata';
 
 export const OG_SIZE = { width: 1200, height: 630 };
@@ -18,7 +19,7 @@ const MUTED = '#93A1B0';
  * studies, with the page title doing the talking. Latin copy only — the
  * default OG font carries no Arabic glyphs, so /ar pages reuse these cards.
  */
-export const pageOgImage = (title, subtitle) =>
+export const pageOgImage = (title, subtitle, { eyebrow = 'BELALNAGY.COM', titleSize = 96 } = {}) =>
   new ImageResponse(
     (
       <div
@@ -49,9 +50,9 @@ export const pageOgImage = (title, subtitle) =>
                 marginBottom: 28,
                 display: 'flex',
               }}>
-              BELALNAGY.COM
+              {eyebrow}
             </div>
-            <div style={{ fontSize: 96, fontWeight: 800, lineHeight: 1.05, display: 'flex' }}>
+            <div style={{ fontSize: titleSize, fontWeight: 800, lineHeight: 1.05, display: 'flex' }}>
               {title}
             </div>
             <div
@@ -80,6 +81,18 @@ export const pageOgImage = (title, subtitle) =>
     ),
     OG_SIZE,
   );
+
+/**
+ * Share card for an article: its English title (the card font has no Arabic
+ * glyphs, so /ar articles share it), reading time and tags.
+ */
+export const blogPostOgImage = (slug) => {
+  const post = BLOG_POSTS[slug];
+  return pageOgImage(post.en.title, `${post.minutes} min read · ${post.tags.join(' · ')}`, {
+    eyebrow: 'ARTICLE · BELALNAGY.COM',
+    titleSize: 68,
+  });
+};
 
 export const caseStudyOgImage = async (slug) => {
   const project = CASE_STUDIES[slug];

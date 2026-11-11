@@ -10,11 +10,14 @@ const AI_CRAWLERS = [
   'OAI-SearchBot',
   'ChatGPT-User',
   'ClaudeBot',
+  'Claude-SearchBot',
+  'Claude-User',
   'Claude-Web',
   'anthropic-ai',
   'PerplexityBot',
   'Perplexity-User',
   'Google-Extended',
+  'Applebot',
   'Applebot-Extended',
   'meta-externalagent',
   'cohere-ai',
@@ -22,6 +25,7 @@ const AI_CRAWLERS = [
   'Bytespider',
   'Amazonbot',
   'DuckAssistBot',
+  'MistralAI-User',
 ];
 
 export default function robots() {
@@ -37,5 +41,6 @@ export default function robots() {
       })),
     ],
     sitemap: `${SITE_URL}/sitemap.xml`,
+    host: SITE_URL,
   };
 }

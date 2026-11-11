@@ -7,6 +7,7 @@ import PlatformSuite from '../PlatformSuite';
 import Projects from '../Projects';
 import BrandLogos from '../BrandLogos';
 import Testimonials from '../Testimonials';
+import HomeFaq from '../HomeFaq';
 import Contact from '../Contact';
 
 /**
@@ -23,6 +24,7 @@ const HomePage = ({ lang, bundle }) => (
     <Projects variant="home" />
     <BrandLogos />
     <Testimonials />
+    <HomeFaq lang={lang} />
     <Contact />
   </SiteShell>
 );

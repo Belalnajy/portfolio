@@ -1,4 +1,5 @@
 import { OG_IMAGE, SITE_URL } from '../layout';
+import { PERSON_ID } from '../../lib/site';
 
 export const metadata = {
   title: 'Services & Packages',
@@ -31,6 +32,8 @@ export const metadata = {
 const PROFESSIONAL_SERVICE_JSON_LD = {
   '@context': 'https://schema.org',
   '@type': 'ProfessionalService',
+  // Shared by /services and /ar/services: one business, two languages.
+  '@id': `${SITE_URL}/#service`,
   name: 'Belal Nagy | Full-Stack Development Services',
   url: `${SITE_URL}/services`,
   image: `${SITE_URL}/hero.webp`,
@@ -45,6 +48,7 @@ const PROFESSIONAL_SERVICE_JSON_LD = {
   priceRange: '$$',
   founder: {
     '@type': 'Person',
+    '@id': PERSON_ID,
     name: 'Belal Nagy',
     alternateName: 'بلال ناجي',
     url: SITE_URL,

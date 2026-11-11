@@ -1,6 +1,6 @@
 import { Inter, Cairo, Space_Grotesk } from 'next/font/google';
 import { Analytics } from '@vercel/analytics/next';
-import { SITE_URL } from '../lib/site';
+import { SITE_URL, PERSON_ID, PERSON_REF, WEBSITE_ID, SAME_AS } from '../lib/site';
 import './globals.css';
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-inter' });
@@ -20,6 +20,16 @@ export const OG_IMAGE = {
   height: 630,
   alt: 'Belal Nagy, Full-Stack Developer. 36 projects for 27 clients.',
   type: 'image/png',
+};
+
+// Search Console / Bing Webmaster ownership tokens, read from Vercel env vars
+// so they never need a code change. Unset vars render nothing.
+const SITE_VERIFICATION = {
+  ...(process.env.GOOGLE_SITE_VERIFICATION && { google: process.env.GOOGLE_SITE_VERIFICATION }),
+  ...(process.env.YANDEX_SITE_VERIFICATION && { yandex: process.env.YANDEX_SITE_VERIFICATION }),
+  ...(process.env.BING_SITE_VERIFICATION && {
+    other: { 'msvalidate.01': process.env.BING_SITE_VERIFICATION },
+  }),
 };
 
 export const metadata = {
@@ -105,6 +115,7 @@ export const metadata = {
     apple: [{ url: '/apple-touch-icon.png', sizes: '180x180' }],
   },
   manifest: '/site.webmanifest',
+  verification: SITE_VERIFICATION,
 };
 
 export const viewport = {
@@ -121,6 +132,7 @@ export const viewport = {
 const PERSON_JSON_LD = {
   '@context': 'https://schema.org',
   '@type': 'Person',
+  '@id': PERSON_ID,
   name: 'Belal Nagy',
   // Both Arabic spellings of the surname (ي / ى) plus the transliteration his
   // freelance handles use, so every way people type the name maps to one entity.
@@ -162,21 +174,19 @@ const PERSON_JSON_LD = {
     'Legacy code takeover',
     'DevOps deployment',
   ],
-  sameAs: [
-    'https://github.com/Belalnajy',
-    'https://linkedin.com/in/belalnajy',
-    'https://khamsat.com/user/belalnajy',
-    'https://www.nafezly.com/u/belalnajy',
-  ],
+  sameAs: SAME_AS,
 };
 
 const WEBSITE_JSON_LD = {
   '@context': 'https://schema.org',
   '@type': 'WebSite',
+  '@id': WEBSITE_ID,
   name: 'Belal Nagy Portfolio',
+  alternateName: ['Belal Nagy', 'بلال ناجي'],
   url: SITE_URL,
   inLanguage: ['en', 'ar'],
-  author: { '@type': 'Person', name: 'Belal Nagy' },
+  author: PERSON_REF,
+  publisher: PERSON_REF,
 };
 
 // Runs before first paint so a visitor who chose light mode never sees a dark

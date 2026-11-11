@@ -58,9 +58,10 @@ const Services = () => {
           viewport={REVEAL_VIEWPORT}
           transition={{ duration: 0.5 }}
           className="text-center mb-16">
-          <h2 className="text-5xl font-bold mb-4 text-[rgb(var(--foreground))]">
+          {/* Only rendered on /services, where this is the page heading. */}
+          <h1 className="text-5xl font-bold mb-4 text-[rgb(var(--foreground))]">
             {t('services.title')}
-          </h2>
+          </h1>
           <p className="text-[rgb(var(--muted-foreground))] max-w-2xl mx-auto text-lg leading-relaxed">
             {t('services.subtitle')}
           </p>
@@ -85,9 +86,9 @@ const Services = () => {
               </div>
 
               {/* Title */}
-              <h3 className="text-2xl font-bold mb-3 text-[rgb(var(--foreground))] group-hover:text-[rgb(var(--primary))] transition-colors text-start">
+              <h2 className="text-2xl font-bold mb-3 text-[rgb(var(--foreground))] group-hover:text-[rgb(var(--primary))] transition-colors text-start">
                 {service.title}
-              </h3>
+              </h2>
 
               {/* Description */}
               <p className="text-[rgb(var(--muted-foreground))] mb-4 leading-relaxed text-start">
@@ -136,9 +137,9 @@ const Services = () => {
             <span className="text-[rgb(var(--primary))] font-bold tracking-widest uppercase text-xs sm:text-sm mb-3 block">
               {t('process.label')}
             </span>
-            <h3 className="text-2xl sm:text-3xl font-bold text-[rgb(var(--foreground))] tracking-tight mb-3">
+            <h2 className="text-2xl sm:text-3xl font-bold text-[rgb(var(--foreground))] tracking-tight mb-3">
               {t('process.title')}
-            </h3>
+            </h2>
             <p className="text-[rgb(var(--muted-foreground))] max-w-2xl mx-auto text-base leading-relaxed">
               {t('process.subtitle')}
             </p>
@@ -157,9 +158,9 @@ const Services = () => {
                   {step.icon}
                 </span>
                 <div className="min-w-0">
-                  <h4 className="font-bold text-[rgb(var(--foreground))] leading-snug mb-1">
+                  <h3 className="font-bold text-[rgb(var(--foreground))] leading-snug mb-1">
                     {t(`process.steps.${step.key}.title`)}
-                  </h4>
+                  </h3>
                   <p className="text-xs text-[rgb(var(--muted-foreground))] leading-relaxed mb-2">
                     {t(`process.steps.${step.key}.desc`)}
                   </p>

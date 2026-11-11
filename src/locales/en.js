@@ -77,6 +77,7 @@ const en = {
       },
       projects: {
         title: 'Featured Projects',
+        archive_title: 'Projects & Case Studies',
         subtitle: 'Here are some of my notable projects that showcase my skills and experience',
         search_placeholder: 'Search projects by name...',
         no_results: 'No projects found matching your criteria',

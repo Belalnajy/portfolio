@@ -1,4 +1,5 @@
 import { OG_IMAGE, SITE_URL } from '../layout';
+import { PERSON_ID, SAME_AS } from '../../lib/site';
 
 export const metadata = {
   // The template puts the Arabic name on every /ar/* page title, so the Arabic
@@ -62,13 +63,15 @@ export const metadata = {
 const ARABIC_PERSON_JSON_LD = {
   '@context': 'https://schema.org',
   '@type': 'Person',
+  // Same @id as the English entity in the root layout: one person, two names.
+  '@id': PERSON_ID,
   name: 'بلال ناجي',
   alternateName: ['بلال ناجى', 'Belal Nagy', 'Belal Najy'],
   url: `${SITE_URL}/ar`,
   image: `${SITE_URL}/hero.webp`,
   jobTitle: 'مهندس برمجيات ومطور ويب متكامل (Full-Stack)',
   description:
-    'بلال ناجي مطور ويب متكامل من الإسكندرية، مصر. يعمل حالياً مهندس برمجيات في شركة ezSec Inc الكندية عن بُعد، وشارك في تأسيس منصة Indstrz. نفّذ ٣٦ مشروعاً لـ ٢٧ عميلاً في مصر والخليج بتقنيات Next.js و Laravel و NestJS و Node.js و Django و PostgreSQL، مع دعم العربية و RTL في كل مشروع، وتقييمات إيجابية ١٠٠٪ على منصات العمل الحر خمسات ومستقل ونفذلي.',
+    'بلال ناجي مطور ويب متكامل من الإسكندرية، مصر. يعمل حالياً مهندس برمجيات في شركة ezSec Inc الكندية عن بُعد، وشارك في تأسيس منصة Indstrz. نفّذ ٣٦ مشروعاً لـ ٢٧ عميلاً في مصر والخليج بتقنيات Next.js و Laravel و NestJS و Node.js و Django و PostgreSQL، مع دعم العربية و RTL في كل مشروع، وتقييمات إيجابية ١٠٠٪ على منصات العمل الحر خمسات ونفذلي.',
   worksFor: {
     '@type': 'Organization',
     name: 'ezSec Inc',
@@ -85,13 +88,7 @@ const ARABIC_PERSON_JSON_LD = {
     addressCountry: 'EG',
   },
   knowsLanguage: ['ar', 'en'],
-  sameAs: [
-    'https://github.com/Belalnajy',
-    'https://linkedin.com/in/belalnajy',
-    'https://khamsat.com/user/belalnajy',
-    'https://mostaql.com/u/belalnagy',
-    'https://www.nafezly.com/u/belalnajy',
-  ],
+  sameAs: SAME_AS,
 };
 
 export default function ArabicLayout({ children }) {

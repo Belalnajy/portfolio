@@ -1,3 +1,5 @@
+import { OG_IMAGE } from '../../layout';
+
 export const metadata = {
   title: 'الخصوصية',
   description:
@@ -6,6 +8,7 @@ export const metadata = {
     canonical: '/ar/privacy',
     languages: { en: '/privacy', ar: '/ar/privacy', 'x-default': '/privacy' },
   },
+  openGraph: { type: 'website', url: '/ar/privacy', locale: 'ar_SA', title: 'الخصوصية | بلال ناجي', images: [OG_IMAGE] },
   robots: { index: true, follow: true },
 };
 

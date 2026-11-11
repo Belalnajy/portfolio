@@ -1,10 +1,6 @@
 import { CASE_STUDIES } from '../lib/case-studies';
 import { BLOG_POSTS } from '../lib/blog';
-import { SITE_URL } from '../lib/site';
-
-// Bump when the home page content changes. A fixed date tells crawlers what
-// actually changed, where `new Date()` claimed every page changed on every deploy.
-const HOME_UPDATED = '2026-08-30';
+import { SITE_URL, HOME_UPDATED } from '../lib/site';
 
 const entry = (path, lastModified, priority, alternates) => ({
   url: `${SITE_URL}${path}`,

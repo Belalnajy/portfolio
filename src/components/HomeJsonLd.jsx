@@ -1,5 +1,5 @@
 import { FAQ_ITEMS } from '../content/faq';
-import { SITE_URL } from '../lib/site';
+import { SITE_URL, PERSON_ID, WEBSITE_ID, HOME_UPDATED } from '../lib/site';
 
 /**
  * Page-level structured data for the home routes: a ProfilePage wrapper
@@ -13,12 +13,16 @@ const HomeJsonLd = ({ lang = 'en' }) => {
   const profilePage = {
     '@context': 'https://schema.org',
     '@type': 'ProfilePage',
+    '@id': `${url}#profile`,
     url,
     inLanguage: lang,
+    isPartOf: { '@id': WEBSITE_ID },
+    dateModified: HOME_UPDATED,
     // The Arabic page names the entity in Arabic; alternateName ties both
     // pages to the same person for engines answering «من هو بلال ناجي».
     mainEntity: {
       '@type': 'Person',
+      '@id': PERSON_ID,
       name: lang === 'ar' ? 'بلال ناجي' : 'Belal Nagy',
       alternateName: lang === 'ar' ? 'Belal Nagy' : 'بلال ناجي',
       url: SITE_URL,

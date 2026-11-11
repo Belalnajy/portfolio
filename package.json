@@ -9,7 +9,8 @@
     "start": "next start",
     "lint": "eslint src",
     "lighthouse": "node scripts/lighthouse.mjs",
-    "cover-meta": "node scripts/cover-meta.mjs"
+    "cover-meta": "node scripts/cover-meta.mjs",
+    "indexnow": "node scripts/indexnow.mjs"
   },
   "dependencies": {
     "@emailjs/browser": "^4.4.1",

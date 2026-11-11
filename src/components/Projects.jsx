@@ -198,7 +198,7 @@ const featuredRank = (slug) => {
 
 const byFeaturedOrder = (a, b) => featuredRank(a.slug) - featuredRank(b.slug);
 
-const ProjectCard = ({ project, index, onClick }) => {
+const ProjectCard = ({ project, index, onClick, headingAs: CardHeading = 'h3' }) => {
   const { t } = useTranslation();
   const cover = coverMeta(project.image);
 
@@ -244,9 +244,9 @@ const ProjectCard = ({ project, index, onClick }) => {
       {/* Content */}
       <div className="p-6 flex flex-col flex-grow text-start">
         <div className="flex justify-between items-start mb-2">
-          <h3 className="text-xl font-bold text-[rgb(var(--foreground))] group-hover:text-[rgb(var(--primary))] transition-colors line-clamp-1">
+          <CardHeading className="text-xl font-bold text-[rgb(var(--foreground))] group-hover:text-[rgb(var(--primary))] transition-colors line-clamp-1">
             {project.title}
-          </h3>
+          </CardHeading>
         </div>
 
         <p className="text-[rgb(var(--muted-foreground))] text-sm mb-6 line-clamp-2 leading-relaxed flex-grow">
@@ -279,7 +279,7 @@ const ProjectCard = ({ project, index, onClick }) => {
  * one-line impact and direct routes into the case study. The archive and any
  * filtered view keep the denser card grid.
  */
-const FeaturedRow = ({ project, index, onClick, isArabic }) => {
+const FeaturedRow = ({ project, index, onClick, isArabic, headingAs: RowHeading = 'h3', eager = false }) => {
   const { t } = useTranslation();
   const cover = coverMeta(project.image);
   const flip = index % 2 === 1;
@@ -310,6 +310,9 @@ const FeaturedRow = ({ project, index, onClick, isArabic }) => {
               sizes="(min-width: 1024px) 640px, 100vw"
               placeholder={cover.blur ? 'blur' : 'empty'}
               blurDataURL={cover.blur}
+              // The first row is the LCP element on /work: fetch it with the
+              // document instead of waiting for lazy-load to discover it.
+              {...(eager && { loading: 'eager', fetchPriority: 'high' })}
               style={{ viewTransitionName: `cover-${project.slug}` }}
               className="w-full h-auto rounded-lg transition-transform duration-500 group-hover:scale-[1.015]"
             />
@@ -327,9 +330,9 @@ const FeaturedRow = ({ project, index, onClick, isArabic }) => {
             {project.impact}
           </span>
         )}
-        <h3 className="font-display text-2xl md:text-3xl font-bold text-[rgb(var(--foreground))] mb-3 leading-tight">
+        <RowHeading className="font-display text-2xl md:text-3xl font-bold text-[rgb(var(--foreground))] mb-3 leading-tight">
           {project.title}
-        </h3>
+        </RowHeading>
         <p className="text-[rgb(var(--muted-foreground))] leading-relaxed mb-5">
           {project.description}
         </p>
@@ -383,6 +386,8 @@ const Projects = ({ variant = 'full' }) => {
   const { t, i18n } = useTranslation();
   const isArabic = i18n.language === 'ar';
   const isHome = variant === 'home';
+  const Heading = isHome ? 'h2' : 'h1';
+  const itemHeading = isHome ? 'h3' : 'h2';
   // Content comes from the local i18n bundle, so there is nothing to wait for.
   const [loading] = useState(false);
   const [filter, setFilter] = useState('All');
@@ -1029,9 +1034,10 @@ const Projects = ({ variant = 'full' }) => {
           viewport={REVEAL_VIEWPORT}
           transition={{ duration: 0.5 }}
           className="text-center mb-16">
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 text-[rgb(var(--foreground))]">
-            {t('projects.title')}
-          </h2>
+          {/* The page heading on /work; a section heading under the home hero. */}
+          <Heading className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 text-[rgb(var(--foreground))]">
+            {t(isHome ? 'projects.title' : 'projects.archive_title')}
+          </Heading>
           <p className="text-[rgb(var(--muted-foreground))] max-w-2xl mx-auto text-lg">
             {t('projects.subtitle')}
           </p>
@@ -1054,7 +1060,7 @@ const Projects = ({ variant = 'full' }) => {
                 onClick={() => setFilter(category.id)}
                 className={`relative px-4 sm:px-6 min-h-[44px] rounded-full text-sm font-medium transition-colors z-10 whitespace-nowrap ${
                   filter === category.id
-                    ? 'text-[rgb(var(--on-scrim))]'
+                    ? 'text-[rgb(var(--accent-contrast))]'
                     : 'text-[rgb(var(--muted-foreground))] hover:text-[rgb(var(--foreground))]'
                   }`}>
                 {filter === category.id && (
@@ -1092,6 +1098,8 @@ const Projects = ({ variant = 'full' }) => {
                 index={index}
                 onClick={setSelectedProject}
                 isArabic={isArabic}
+                headingAs={itemHeading}
+                eager={!isHome && index === 0}
               />
             ))}
           </div>
@@ -1110,6 +1118,7 @@ const Projects = ({ variant = 'full' }) => {
                   // Stagger within the freshly loaded page, not the whole list.
                   index={index % GRID_PAGE_SIZE}
                   onClick={setSelectedProject}
+                  headingAs={itemHeading}
                 />
               ))
             ) : (

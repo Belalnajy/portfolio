@@ -1,3 +1,5 @@
+import { OG_IMAGE } from '../layout';
+
 export const metadata = {
   title: 'Privacy',
   description:
@@ -6,6 +8,9 @@ export const metadata = {
     canonical: '/privacy',
     languages: { en: '/privacy', ar: '/ar/privacy', 'x-default': '/privacy' },
   },
+  // Without its own openGraph the page inherited the root's og:url and
+  // shared as the home page.
+  openGraph: { type: 'website', url: '/privacy', title: 'Privacy | Belal Nagy', images: [OG_IMAGE] },
   robots: { index: true, follow: true },
 };
 
