@@ -148,14 +148,14 @@ const en = {
           medicta: {
             impact: 'Live on Google Play and the App Store',
             title: 'Medicta – Healthcare Booking App (Android & iPhone)',
-            desc: 'A React Native app for patients in Saudi Arabia to book doctors, radiology, lab tests and medical offers, then pay online. I took it over from another developer, made it releasable again, redesigned the booking experience and shipped it to both stores. Still developing it with the client.',
+            desc: 'A React Native app for patients in Saudi Arabia to book doctors, radiology, lab tests and medical offers, then pay online. I took it over from another developer in mid-2026, redesigned it screen by screen, rebuilt its booking and payment flows and brought it to both stores. Still developing it with the client.',
             features: [
               'Doctor search with daily time slots and the nearest branch picked by location',
               'Radiology, lab tests and offers with per-branch prices, a cart and online payment',
               'Wallet, statement, refunds to the original payment method and booking for family members',
               'Arabic and English, push notifications, and medicta.com links that open in the app',
-              'iOS builds and App Store submissions from Linux via Codemagic and the App Store Connect API',
-              'Endpoint performance report that took the slowest list from about 12.5 s to under a second'
+              'Full redesign on a shared design system, in rounds of client notes with a test build each time',
+              'Live on Google Play and the App Store, with more than 400 commits since the takeover'
             ]
           },
           mada: {

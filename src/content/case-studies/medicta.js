@@ -1,28 +1,28 @@
 const content = {
   "en": {
-    "title": "Medicta, a Healthcare Booking App Taken Over, Redesigned and Shipped to Both Stores",
-    "summary": "A React Native app for patients in Saudi Arabia to book doctors, radiology and lab tests, and medical offers, then pay online. I took over a live Android app from another developer, recovered what was missing to build it, redesigned the whole booking experience, and shipped it to Google Play and the App Store. I am still developing it with the client.",
+    "title": "Medicta, a Healthcare Booking App I Took Over, Rebuilt and Keep Developing",
+    "summary": "Medicta lets patients in Saudi Arabia book doctors, radiology, lab tests and medical offers, then pay online. I took over its React Native app in mid-2026 from another developer, while it was live on Google Play. Since then I have redesigned it screen by screen, rebuilt its booking and payment flows, brought it to the App Store, and kept shipping new versions with the client in regular rounds of notes.",
     "facts": {
-      "role": "Mobile developer: takeover, redesign and releases",
-      "scope": "React Native app (Android and iOS), store releases, iOS CI, backend coordination",
+      "role": "Lead mobile developer (React Native)",
+      "scope": "Takeover, full redesign, booking and payment flows, Android and iOS releases, ongoing development",
       "audience": "Patients booking doctors, scans, lab tests and offers in Saudi Arabia"
     },
     "challenge": {
-      "body": "The app was live on Google Play with real users, but the handover was incomplete: the iOS project was not in the repository, the key Google Play expected for updates was lost, and Play was blocking releases over a background-location permission the app did not need. On top of that the booking flows were fragile, pages waited on slow services, and the client had a new design to roll out. The work had to happen without taking the product offline.",
+      "body": "The app was already in users' hands, but it came without a proper handover: an old design, fragile flows, and a codebase that made every change risky. The client wanted a completely new look, an iPhone version, and a backend that kept evolving underneath the app, all without ever taking the product offline. The work had to move forward feature by feature while staying shippable every week.",
       "points": [
-        "Live app with real users and no access to the original developer",
-        "No iOS project in the repo and a lost Play upload key",
-        "Store policy blocks on permissions and target API",
-        "Slow screens and broken flows across booking, payment and accounts"
+        "A live app inherited from another developer, with no handover",
+        "A full redesign while real users kept booking",
+        "Android only at the start; iPhone needed too",
+        "A backend changing alongside the app"
       ]
     },
     "approach": {
-      "body": "First I made the app releasable again: a reset Play upload key, the iOS project restored from the client's files, and iOS builds on Codemagic cloud Macs signed through the App Store Connect API, so no Mac or personal Apple ID was needed. Store submissions are scripted through the same API. Then I rebuilt the booking flow from the client's new design, screen by screen, while fixing flows on the live server. For speed, I measured every endpoint the app calls, stopped the home screen waiting on slow ones, cached what rarely changes, and handed the backend team an API inventory and a performance report to fix the rest.",
+      "body": "I started with a design system: theme tokens, an icon set and shared UI components, then redesigned the app on top of it, from splash and login to home, search, booking, cart and account. I work in rounds with the client: they send notes and screenshots, I fix and build a test version on the test server, they try it, and only then it goes to the stores. Test and production builds are kept separate. On the backend side I document every endpoint the app uses and send the backend team clear requests, so the app and the server move together.",
       "points": [
-        "iOS builds and App Store submissions from Linux via Codemagic and the App Store Connect API",
-        "New booking design rolled out across doctors, centres, labs and offers",
-        "Endpoint-by-endpoint performance report shared with the backend team",
-        "Separate test and production builds, every release tested by the client first"
+        "Design system first, then every screen rebuilt on it",
+        "Rounds of client notes, each ending with a test build",
+        "Separate test and production servers and builds",
+        "Close coordination with the backend team, with a full API inventory"
       ]
     },
     "delivered": {
@@ -34,44 +34,44 @@ const content = {
         "Wallet, account statement and refunds back to the original payment method",
         "Booking for family members, modifying or cancelling a booking, and sharing it as a PDF",
         "Push notifications, ratings, favourites and service texts rendered from the admin editor",
-        "Doctor and offer links from medicta.com open straight in the app on Android and iPhone",
-        "In-app prompt to update when a newer version is required"
+        "Doctor and offer links from medicta.com that open straight in the app",
+        "iOS builds and App Store releases from Linux through Codemagic and the App Store Connect API"
       ]
     },
     "outcome": {
-      "body": "Medicta is live on Google Play and the App Store, released from this codebase in regular versions since October 2026. I still work with the client on new rounds of notes and releases, and the app has become my reference for taking over production code and leaving it better than a rewrite would.",
+      "body": "Medicta is live on Google Play and the App Store, released from this codebase since October 2026. Over five months the project has grown to more than 400 commits, and I keep developing it with the client on a monthly basis. It is my reference for taking over production code and growing it instead of rewriting it.",
       "points": [
         "Live on Google Play and the App Store (com.medicta)",
-        "Regular releases on both stores since October 2026",
-        "The slowest list went from about 12.5 s to under a second after the backend fixes from the report",
+        "Fully redesigned, in Arabic and English",
+        "More than 400 commits since the takeover",
         "Ongoing development with the client"
       ]
     }
   },
   "ar": {
-    "title": "Medicta، تطبيق حجز طبي استلمته وعدت تصميمه ونزّلته على المتجرين",
-    "summary": "تطبيق React Native للمرضى في السعودية، بيحجزوا منه دكاترة وأشعة وتحاليل وعروض طبية ويدفعوا أونلاين. استلمت التطبيق وهو شغال على Google Play من مطوّر تاني، ورجّعت الحاجات الناقصة عشان يتبني، وعدت تصميم تجربة الحجز كلها، ونزّلته على Google Play والآب ستور. ولسه شغال معاهم على تطويره.",
+    "title": "Medicta، تطبيق حجز طبي استلمته وعدت بناءه ولسه بطوّره",
+    "summary": "Medicta تطبيق بيحجز منه المرضى في السعودية دكاترة وأشعة وتحاليل وعروض طبية ويدفعوا أونلاين. استلمت كود التطبيق (React Native) في نص 2026 من مطوّر تاني، وهو شغال فعلًا على Google Play. ومن ساعتها عدت تصميمه شاشة شاشة، وبنيت مسارات الحجز والدفع من جديد، ونزّلته على الآب ستور، ولسه بنزّل نسخ جديدة مع العميل في جولات ملاحظات منتظمة.",
     "facts": {
-      "role": "مطوّر موبايل: استلام وإعادة تصميم وإصدارات",
-      "scope": "تطبيق React Native (أندرويد وآيفون)، الرفع على المتجرين، CI للآيفون، تنسيق مع الباك إند",
+      "role": "مطوّر الموبايل الأساسي (React Native)",
+      "scope": "استلام المشروع، إعادة تصميم كاملة، مسارات الحجز والدفع، إصدارات أندرويد وآيفون، تطوير مستمر",
       "audience": "مرضى بيحجزوا دكاترة وأشعة وتحاليل وعروض في السعودية"
     },
     "challenge": {
-      "body": "التطبيق كان شغال على Google Play وعليه مستخدمين، بس التسليم كان ناقص: مشروع الآيفون مش موجود في الـ repo، ومفتاح الرفع اللي جوجل بلاي مستنياه ضايع، وجوجل كانت موقفة أي تحديث بسبب صلاحية موقع في الخلفية التطبيق مش محتاجها أصلًا. وفوق ده، مسارات الحجز كانت هشة، والصفحات بتستنى خدمات بطيئة، والعميل عنده تصميم جديد عايز ينزل. وكل ده لازم يتعمل من غير ما التطبيق يقف.",
+      "body": "التطبيق كان في إيد المستخدمين فعلًا، بس اتسلّم من غير تسليم حقيقي: تصميم قديم، ومسارات هشة، وكود أي تعديل فيه مخاطرة. والعميل كان عايز شكل جديد خالص، ونسخة آيفون، وباك إند بيتطوّر تحت التطبيق في نفس الوقت، وكل ده من غير ما التطبيق يقف. فالشغل لازم يمشي ميزة ميزة، والتطبيق يفضل جاهز للرفع كل أسبوع.",
       "points": [
-        "تطبيق شغال بمستخدمين حقيقيين، ومفيش تواصل مع المطوّر الأصلي",
-        "مفيش مشروع آيفون في الـ repo، ومفتاح الرفع على جوجل ضايع",
-        "سياسات المتجر موقفة الإصدارات بسبب الصلاحيات ونسخة الـ API",
-        "صفحات بطيئة ومسارات بايظة في الحجز والدفع والحسابات"
+        "تطبيق شغال استلمته من مطوّر تاني من غير تسليم",
+        "إعادة تصميم كاملة والمستخدمين بيحجزوا عادي",
+        "أندرويد بس في الأول، والآيفون مطلوب كمان",
+        "باك إند بيتغيّر مع التطبيق"
       ]
     },
     "approach": {
-      "body": "الأول رجّعت التطبيق قابل للرفع: مفتاح رفع جديد على جوجل بلاي، ومشروع الآيفون رجع من ملفات العميل، وبيلد الآيفون بقى على أجهزة ماك في Codemagic وبيتوقّع من خلال App Store Connect API، فمش محتاج ماك ولا Apple ID شخصي. والرفع للمراجعة نفسه بقى سكريبت على نفس الـ API. بعدها بنيت مسار الحجز من التصميم الجديد صفحة صفحة، وأنا بصلّح المسارات على السيرفر الحقيقي. وعشان السرعة، قست كل endpoint التطبيق بيكلمه، وخليت الرئيسية متستناش البطيء منهم، وعملت كاش للحاجات اللي مش بتتغير كتير، وسلّمت فريق الباك إند جرد كامل للـ API وتقرير أداء يصلّحوا بيه الباقي.",
+      "body": "بدأت بـ design system: ألوان ومقاسات موحّدة، ومجموعة أيقونات، ومكوّنات مشتركة، وبعدين عدت تصميم التطبيق عليه، من شاشة البداية وتسجيل الدخول للرئيسية والبحث والحجز والسلة والحساب. والشغل مع العميل ماشي بجولات: يبعت ملاحظات وصور، أصلّح وأعمل نسخة اختبار على سيرفر الاختبار، يجرّبها، وبعدها بس تنزل على المتجر. ونسخ الاختبار والإنتاج منفصلين. ومن ناحية الباك إند بوثّق كل endpoint التطبيق بيستخدمه، وببعت لفريق الباك إند طلبات واضحة، عشان التطبيق والسيرفر يمشوا مع بعض.",
       "points": [
-        "بيلد الآيفون والرفع للآب ستور من لينكس عن طريق Codemagic وApp Store Connect API",
-        "التصميم الجديد للحجز نزل على الدكاترة والمراكز والتحاليل والعروض",
-        "تقرير أداء لكل endpoint اتسلّم لفريق الباك إند",
-        "نسخة اختبار ونسخة إنتاج منفصلين، وكل إصدار العميل بيجرّبه الأول"
+        "design system الأول، وبعدين كل شاشة اتبنت عليه",
+        "جولات ملاحظات من العميل، كل جولة بتخلص بنسخة اختبار",
+        "سيرفر ونسخ اختبار منفصلين عن الإنتاج",
+        "تنسيق قريب مع فريق الباك إند، بجرد كامل للـ API"
       ]
     },
     "delivered": {
@@ -83,16 +83,16 @@ const content = {
         "محفظة وكشف حساب واسترداد المبلغ لنفس طريقة الدفع",
         "الحجز لأفراد العيلة، وتعديل الحجز أو إلغاؤه، ومشاركته PDF",
         "إشعارات وتقييمات ومفضلة، ونصوص الخدمات بتتعرض زي ما بتتكتب في لوحة التحكم",
-        "روابط الدكاترة والعروض من medicta.com بتفتح في التطبيق على الأندرويد والآيفون",
-        "التطبيق بيطلب التحديث لوحده لما تنزل نسخة لازمة"
+        "روابط الدكاترة والعروض من medicta.com بتفتح في التطبيق على طول",
+        "بيلد الآيفون والرفع للآب ستور من لينكس عن طريق Codemagic وApp Store Connect API"
       ]
     },
     "outcome": {
-      "body": "Medicta شغال على Google Play والآب ستور، وبينزل من الكود ده في إصدارات منتظمة من أكتوبر 2026. ولسه شغال مع العميل على جولات ملاحظات وإصدارات جديدة، والتطبيق بقى مشروعي المرجعي في استلام كود شغال فعلًا وإني أسيبه أحسن مما كانت إعادة الكتابة هتعمله.",
+      "body": "Medicta شغال على Google Play والآب ستور، وبينزل من الكود ده من أكتوبر 2026. وفي خمس شهور المشروع وصل لأكتر من 400 commit، ولسه بطوّره مع العميل بشكل شهري. وبقى مشروعي المرجعي في استلام كود شغال فعلًا وتطويره بدل ما يتكتب من الأول.",
       "points": [
         "منشور على Google Play والآب ستور (com.medicta)",
-        "إصدارات منتظمة على المتجرين من أكتوبر 2026",
-        "أبطأ قائمة نزلت من حوالي 12.5 ثانية لأقل من ثانية بعد تصليحات الباك إند من التقرير",
+        "تصميم جديد بالكامل، بالعربي والإنجليزي",
+        "أكتر من 400 commit من ساعة الاستلام",
         "التطوير مستمر مع العميل"
       ]
     }
