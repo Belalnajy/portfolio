@@ -106,16 +106,29 @@ const en = {
         },
         items: {
           opptmakers: {
-            impact: 'Role-based access per employee',
+            impact: 'Permissions per employee, box by box',
             title: 'Opportunities Makers: Client & Transaction CRM',
-            desc: 'An internal platform for a Saudi consultancy that sets up companies for foreign investors. It holds the client files and tracks every company-formation case step by step, with access scoped per employee so each one only reaches the transactions they are cleared for. Arabic-first and fully RTL.',
+            desc: 'An internal system for a Saudi consultancy that sets up companies for foreign investors. It holds the client files, moves every formation case through its stages, measures each employee\'s month and keeps clients informed by SMS, with permissions set per employee. Arabic-first, fully RTL, and built for this one company.',
             features: [
-              'Client and transaction management for company-formation cases',
-              'Step-by-step tracking of each case from first request to issued documents',
-              'Role-based access, scoped per employee',
-              'Arabic-first interface, fully RTL',
-              'Light and dark themes',
-              'Next.js and React on the front, NestJS and PostgreSQL behind it, Tailwind CSS throughout'
+              'Client and transaction management with Excel import and export',
+              'Stages board with an owner per stage and days waited on every card',
+              'Monthly transactions per employee with PDF and Excel statements',
+              'Permissions per employee as checkboxes, with ready templates',
+              'Certificates with QR verification, complaints, archive and returned cases',
+              'SMS to clients: welcome, payment reminders and a closing message'
+            ]
+          },
+          'opptmakers-platforms': {
+            impact: 'A countdown on every government platform',
+            title: 'Opportunities Makers: Platforms & Compliance',
+            desc: 'A second internal system for the same consultancy, for a new service: running its client companies\' government platforms on a subscription. One column per platform with a countdown to expiry, a task board with day counters, alerts before anything lapses and a monthly report per employee. Separate subdomain and database, same accounts as the main CRM.',
+            features: [
+              'One column per platform: Qiwa, Muqeem, Mudad, GOSI, Balady, Zakat and Tax, medical insurance',
+              'Yellow at 10 days, red at 5, and expired subscriptions locked for staff',
+              'Labor contracts and renewals for every client company',
+              'Task board with a counter since creation and another since work started',
+              'Dashboard alerts, a news ticker and an expiry ticker',
+              'Monthly report per employee with Excel export and printing'
             ]
           },
           bilqalam: {

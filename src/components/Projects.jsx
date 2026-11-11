@@ -429,12 +429,27 @@ const Projects = ({ variant = 'full' }) => {
         impact: t('projects.items.opptmakers.impact', { defaultValue: '' }),
         description: t('projects.items.opptmakers.desc'),
         image: '/opptmakers.webp',
-        tags: ['Next.js', 'NestJS', 'PostgreSQL', 'React', 'Tailwind'],
+        tags: ['Next.js', 'NestJS', 'PostgreSQL', 'React', 'Tailwind', 'Docker'],
         features: t('projects.items.opptmakers.features', {
           returnObjects: true,
         }),
         github: '#',
         live: 'https://opptmakers.cloud/login',
+        category: 'Full Stack',
+      },
+      {
+        slug: 'opptmakers-platforms',
+        featured: true,
+        title: t('projects.items.opptmakers-platforms.title'),
+        impact: t('projects.items.opptmakers-platforms.impact', { defaultValue: '' }),
+        description: t('projects.items.opptmakers-platforms.desc'),
+        image: '/opptmakers-platforms.webp',
+        tags: ['Next.js', 'NestJS', 'PostgreSQL', 'React', 'Tailwind', 'Docker'],
+        features: t('projects.items.opptmakers-platforms.features', {
+          returnObjects: true,
+        }),
+        github: '#',
+        live: 'https://platforms.opptmakers.cloud/login',
         category: 'Full Stack',
       },
       {
