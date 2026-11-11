@@ -181,6 +181,7 @@ export const LMS_SUITE = {
  */
 const FEATURED_ORDER = [
   'indstrz',
+  'oxgym',
   'bilqalam',
   'injaz',
   'opptmakers',
