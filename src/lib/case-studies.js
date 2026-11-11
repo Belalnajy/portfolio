@@ -72,8 +72,6 @@ export const CASE_STUDIES = {
     stack: ['React Native', 'React Query', 'Redux', 'Firebase', 'i18next', 'Codemagic', 'App Store Connect API'],
     updated: '2026-11-11',
     gallery: ['/gallery/medicta-d1.webp', '/gallery/medicta-d2.webp', '/gallery/medicta-d3.webp', '/gallery/medicta-d4.webp', '/gallery/medicta-m.webp'],
-    // a mobile app: the screens come from an emulator on the test server, not a live site
-    screensNote: 'screens_note_app',
   },
   toyo228: {
     name: 'Toyo228',

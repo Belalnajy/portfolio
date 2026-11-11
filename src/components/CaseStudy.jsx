@@ -49,7 +49,7 @@ const CaseStudy = ({ lang = DEFAULT_LANGUAGE, bundle, ...props }) => {
   );
 };
 
-const CaseStudyContent = ({ slug, narrative, image, liveUrl, appStoreUrl, stack, gallery, screensNote, nav, pageLang }) => {
+const CaseStudyContent = ({ slug, narrative, image, liveUrl, appStoreUrl, stack, gallery, nav, pageLang }) => {
   const { t, i18n } = useTranslation();
   const isArabic = i18n.language === 'ar';
   const Back = isArabic ? FaArrowRight : FaArrowLeft;
@@ -326,7 +326,6 @@ const CaseStudyContent = ({ slug, narrative, image, liveUrl, appStoreUrl, stack,
               <h2 className="font-display text-xl sm:text-2xl md:text-3xl font-bold tracking-tight text-start">
                 {t('case_studies.screens_title')}
               </h2>
-              <p className="text-xs text-[rgb(var(--muted-foreground))]">{t(`case_studies.${screensNote || 'screens_note'}`)}</p>
             </div>
             <div className={`grid gap-4 ${phone ? 'md:grid-cols-3' : ''} items-start`}>
               <div className={`grid gap-4 ${phone ? 'md:col-span-2' : 'sm:grid-cols-2'}`}>

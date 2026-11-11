@@ -884,8 +884,6 @@ const ar = {
         cta_subtitle: 'قوللي إنت بتبني إيه وهرجع لك بنطاق مقترح وجدول زمني وسعر.',
         cta_button: 'ابدأ الحديث',
         screens_title: 'المنتج',
-        screens_note: 'ملتقطة من الموقع الحي.',
-        screens_note_app: 'ملتقطة من التطبيق على سيرفر الاختبار.',
         screen_alt: '{{name}}، شاشة {{n}}',
         screen_mobile_alt: '{{name}} على الموبايل',
         facts: {
