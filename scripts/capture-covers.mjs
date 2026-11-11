@@ -72,7 +72,7 @@ const TARGETS = [
  *   interface, so export the app's own screenshots instead.
  */
 const MANUAL = [
-  { slug: 'medicta', file: 'medicta.png', note: 'Android app, currently a placeholder' },
+  { slug: 'medicta', file: 'medicta.png', note: 'mobile app: cover and gallery composed from emulator screens (test server, names pixelated)' },
   { slug: 'indstrz', file: 'indstrz.png', note: 'no public URL' },
   { slug: 'baserah', file: 'baserah.png', note: 'no public URL' },
   { slug: 'sf_portal', file: 'smartfast.png', note: 'no public URL' },

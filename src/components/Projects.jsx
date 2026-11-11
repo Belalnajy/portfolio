@@ -182,13 +182,13 @@ export const LMS_SUITE = {
 const FEATURED_ORDER = [
   'indstrz',
   'oxgym',
+  'medicta',
   'bilqalam',
   'injaz',
   'opptmakers',
   'toyo228',
   'uduipa',
   'profleet',
-  'medicta',
   'motors',
 ];
 
@@ -456,6 +456,7 @@ const Projects = ({ variant = 'full' }) => {
       {
         slug: 'medicta',
         featured: true,
+        caseStudy: '/case-study/medicta',
         title: t('projects.items.medicta.title'),
         impact: t('projects.items.medicta.impact', { defaultValue: '' }),
         description: t('projects.items.medicta.desc'),
@@ -463,10 +464,13 @@ const Projects = ({ variant = 'full' }) => {
         tags: [
           'React Native',
           'Android',
-          'REST API',
-          'UI/UX Redesign',
-          'Bug Fixing',
+          'iOS',
+          'React Query',
+          'Redux',
+          'Firebase',
+          'Codemagic',
           'Google Play',
+          'App Store',
         ],
         features: t('projects.items.medicta.features', { returnObjects: true }),
         github: '#',

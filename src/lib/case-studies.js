@@ -59,8 +59,12 @@ export const CASE_STUDIES = {
     name: 'Medicta',
     image: '/medicta.webp',
     liveUrl: 'https://play.google.com/store/apps/details?id=com.medicta',
-    stack: ['React Native', 'Android', 'REST API', 'UI/UX Redesign'],
-    updated: '2026-08-31',
+    appStoreUrl: 'https://apps.apple.com/app/id6743770555',
+    stack: ['React Native', 'React Query', 'Redux', 'Firebase', 'i18next', 'Codemagic', 'App Store Connect API'],
+    updated: '2026-11-11',
+    gallery: ['/gallery/medicta-d1.webp', '/gallery/medicta-d2.webp', '/gallery/medicta-d3.webp', '/gallery/medicta-d4.webp', '/gallery/medicta-m.webp'],
+    // a mobile app: the screens come from an emulator on the test server, not a live site
+    screensNote: 'screens_note_app',
   },
   toyo228: {
     name: 'Toyo228',

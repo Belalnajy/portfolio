@@ -1,89 +1,99 @@
 const content = {
   "en": {
-    "title": "Medicta, Rescuing a Healthcare Booking App Already in Production",
-    "summary": "An Android app for booking doctor appointments and browsing clinic services, published on Google Play. I took over the existing codebase, re-architected it, and worked through its functional defects one by one.",
+    "title": "Medicta, a Healthcare Booking App Taken Over, Redesigned and Shipped to Both Stores",
+    "summary": "A React Native app for patients in Saudi Arabia to book doctors, radiology and lab tests, and medical offers, then pay online. I took over a live Android app from another developer, recovered what was missing to build it, redesigned the whole booking experience, and shipped it to Google Play and the App Store. I am still developing it with the client.",
     "facts": {
-      "role": "Mobile developer: code takeover and redesign",
-      "scope": "Re-architecture, bug fixing across booking, auth and data flows, UI/UX cleanup",
-      "audience": "Patients booking doctor appointments on Android"
+      "role": "Mobile developer: takeover, redesign and releases",
+      "scope": "React Native app (Android and iOS), store releases, iOS CI, backend coordination",
+      "audience": "Patients booking doctors, scans, lab tests and offers in Saudi Arabia"
     },
     "challenge": {
-      "body": "The app was already live with real users, but the codebase underneath it was fragile: broken flows in booking, authentication and data handling, stale-data and race-condition bugs, and a structure that made every fix risky. The job was not to build something new; it was to make an existing product trustworthy without taking it offline.",
+      "body": "The app was live on Google Play with real users, but the handover was incomplete: the iOS project was not in the repository, the key Google Play expected for updates was lost, and Play was blocking releases over a background-location permission the app did not need. On top of that the booking flows were fragile, pages waited on slow services, and the client had a new design to roll out. The work had to happen without taking the product offline.",
       "points": [
-        "Live app with real users: no room for breakage",
-        "Broken flows across booking, auth and data handling",
-        "Stale-data and race-condition bugs in state management",
-        "A structure that made every change risky"
+        "Live app with real users and no access to the original developer",
+        "No iOS project in the repo and a lost Play upload key",
+        "Store policy blocks on permissions and target API",
+        "Slow screens and broken flows across booking, payment and accounts"
       ]
     },
     "approach": {
-      "body": "I restructured the app into clear, maintainable layers first, so fixes would land in one place instead of leaking everywhere. Then I worked through the functional bugs systematically (booking, authentication, then data flows) and refactored the API integration layer to behave consistently under errors and loading.",
+      "body": "First I made the app releasable again: a reset Play upload key, the iOS project restored from the client's files, and iOS builds on Codemagic cloud Macs signed through the App Store Connect API, so no Mac or personal Apple ID was needed. Store submissions are scripted through the same API. Then I rebuilt the booking flow from the client's new design, screen by screen, while fixing flows on the live server. For speed, I measured every endpoint the app calls, stopped the home screen waiting on slow ones, cached what rarely changes, and handed the backend team an API inventory and a performance report to fix the rest.",
       "points": [
-        "Full code redesign into clear, maintainable layers",
-        "Systematic bug-fixing pass over booking, auth and data flows",
-        "Refactored API layer with consistent error and loading states",
-        "State management rework to kill stale-data and race conditions"
+        "iOS builds and App Store submissions from Linux via Codemagic and the App Store Connect API",
+        "New booking design rolled out across doctors, centres, labs and offers",
+        "Endpoint-by-endpoint performance report shared with the backend team",
+        "Separate test and production builds, every release tested by the client first"
       ]
     },
     "delivered": {
-      "body": "A stable, restructured app that behaves predictably, with a cleaner UI on top of it.",
+      "body": "One app, in Arabic and English, that covers the full booking journey from search to payment and follow-up.",
       "points": [
-        "Re-architected codebase in maintainable layers",
-        "Booking, authentication and data flows working reliably",
-        "Consistent API error and loading behaviour",
-        "UI/UX cleanup for smoother navigation and faster perceived performance"
+        "Doctor search by specialty with daily time slots and the nearest branch picked by location",
+        "Radiology and lab test booking, and medical offers with per-branch prices",
+        "Cart with several bookings at once and online card payment",
+        "Wallet, account statement and refunds back to the original payment method",
+        "Booking for family members, modifying or cancelling a booking, and sharing it as a PDF",
+        "Push notifications, ratings, favourites and service texts rendered from the admin editor",
+        "Doctor and offer links from medicta.com open straight in the app on Android and iPhone",
+        "In-app prompt to update when a newer version is required"
       ]
     },
     "outcome": {
-      "body": "The app is live on Google Play under the package com.medicta. It is my reference for legacy takeover work: inheriting someone else's production code and leaving it better than a rewrite would.",
+      "body": "Medicta is live on Google Play and the App Store, released from this codebase in regular versions since October 2026. I still work with the client on new rounds of notes and releases, and the app has become my reference for taking over production code and leaving it better than a rewrite would.",
       "points": [
-        "Live on Google Play (com.medicta)",
-        "Existing product stabilized without a ground-up rewrite",
-        "Proof of legacy-takeover capability"
+        "Live on Google Play and the App Store (com.medicta)",
+        "Regular releases on both stores since October 2026",
+        "The slowest list went from about 12.5 s to under a second after the backend fixes from the report",
+        "Ongoing development with the client"
       ]
     }
   },
   "ar": {
-    "title": "Medicta، إنقاذ تطبيق حجوزات طبية شغال فعلياً",
-    "summary": "تطبيق أندرويد لحجز مواعيد الأطباء واستعراض الخدمات الطبية، منشور على Google Play. استلمت الكود القائم، وأعدت هيكلته، وعالجت أعطاله الوظيفية واحداً واحداً.",
+    "title": "Medicta، تطبيق حجز طبي استلمته وعدت تصميمه ونزّلته على المتجرين",
+    "summary": "تطبيق React Native للمرضى في السعودية، بيحجزوا منه دكاترة وأشعة وتحاليل وعروض طبية ويدفعوا أونلاين. استلمت التطبيق وهو شغال على Google Play من مطوّر تاني، ورجّعت الحاجات الناقصة عشان يتبني، وعدت تصميم تجربة الحجز كلها، ونزّلته على Google Play والآب ستور. ولسه شغال معاهم على تطويره.",
     "facts": {
-      "role": "مطور موبايل: استلام كود وإعادة هيكلة",
-      "scope": "إعادة معمارية، إصلاح أخطاء الحجز والمصادقة والبيانات، تحسين الواجهة",
-      "audience": "مرضى بيحجزوا مواعيد أطباء على أندرويد"
+      "role": "مطوّر موبايل: استلام وإعادة تصميم وإصدارات",
+      "scope": "تطبيق React Native (أندرويد وآيفون)، الرفع على المتجرين، CI للآيفون، تنسيق مع الباك إند",
+      "audience": "مرضى بيحجزوا دكاترة وأشعة وتحاليل وعروض في السعودية"
     },
     "challenge": {
-      "body": "التطبيق كان شغال فعلياً وبمستخدمين حقيقيين، لكن الكود تحته كان هش: مسارات مكسورة في الحجز والمصادقة والتعامل مع البيانات، ومشاكل بيانات قديمة و race conditions، وبنية بتخلي أي تعديل مخاطرة. الشغلانة ماكانتش بناء حاجة جديدة، كانت إن منتج موجود يبقى موثوق من غير ما يقف.",
+      "body": "التطبيق كان شغال على Google Play وعليه مستخدمين، بس التسليم كان ناقص: مشروع الآيفون مش موجود في الـ repo، ومفتاح الرفع اللي جوجل بلاي مستنياه ضايع، وجوجل كانت موقفة أي تحديث بسبب صلاحية موقع في الخلفية التطبيق مش محتاجها أصلًا. وفوق ده، مسارات الحجز كانت هشة، والصفحات بتستنى خدمات بطيئة، والعميل عنده تصميم جديد عايز ينزل. وكل ده لازم يتعمل من غير ما التطبيق يقف.",
       "points": [
-        "تطبيق شغال بمستخدمين حقيقيين: مفيش مجال للكسر",
-        "مسارات مكسورة في الحجز والمصادقة والبيانات",
-        "مشاكل بيانات قديمة و race conditions في إدارة الحالة",
-        "بنية بتخلي أي تغيير مخاطرة"
+        "تطبيق شغال بمستخدمين حقيقيين، ومفيش تواصل مع المطوّر الأصلي",
+        "مفيش مشروع آيفون في الـ repo، ومفتاح الرفع على جوجل ضايع",
+        "سياسات المتجر موقفة الإصدارات بسبب الصلاحيات ونسخة الـ API",
+        "صفحات بطيئة ومسارات بايظة في الحجز والدفع والحسابات"
       ]
     },
     "approach": {
-      "body": "أعدت هيكلة التطبيق لطبقات واضحة وقابلة للصيانة الأول، عشان أي إصلاح ينزل في مكان واحد بدل ما يتسرب في كل حتة. بعدها عالجت الأخطاء الوظيفية بشكل منهجي: الحجز، فالمصادقة، فمسارات البيانات، وأعدت بناء طبقة الـ API عشان تتصرف بشكل متسق مع الأخطاء والتحميل.",
+      "body": "الأول رجّعت التطبيق قابل للرفع: مفتاح رفع جديد على جوجل بلاي، ومشروع الآيفون رجع من ملفات العميل، وبيلد الآيفون بقى على أجهزة ماك في Codemagic وبيتوقّع من خلال App Store Connect API، فمش محتاج ماك ولا Apple ID شخصي. والرفع للمراجعة نفسه بقى سكريبت على نفس الـ API. بعدها بنيت مسار الحجز من التصميم الجديد صفحة صفحة، وأنا بصلّح المسارات على السيرفر الحقيقي. وعشان السرعة، قست كل endpoint التطبيق بيكلمه، وخليت الرئيسية متستناش البطيء منهم، وعملت كاش للحاجات اللي مش بتتغير كتير، وسلّمت فريق الباك إند جرد كامل للـ API وتقرير أداء يصلّحوا بيه الباقي.",
       "points": [
-        "إعادة تصميم كاملة للكود في طبقات واضحة",
-        "معالجة منهجية لأخطاء الحجز والمصادقة والبيانات",
-        "طبقة API معاد بناؤها بحالات خطأ وتحميل متسقة",
-        "إعادة هيكلة إدارة الحالة للتخلص من الـ race conditions"
+        "بيلد الآيفون والرفع للآب ستور من لينكس عن طريق Codemagic وApp Store Connect API",
+        "التصميم الجديد للحجز نزل على الدكاترة والمراكز والتحاليل والعروض",
+        "تقرير أداء لكل endpoint اتسلّم لفريق الباك إند",
+        "نسخة اختبار ونسخة إنتاج منفصلين، وكل إصدار العميل بيجرّبه الأول"
       ]
     },
     "delivered": {
-      "body": "تطبيق مستقر ومعاد هيكلته بيتصرف بشكل متوقع، وفوقه واجهة أنضف.",
+      "body": "تطبيق واحد بالعربي والإنجليزي، بيغطّي رحلة الحجز كلها من البحث للدفع والمتابعة.",
       "points": [
-        "كود معاد بناؤه في طبقات قابلة للصيانة",
-        "الحجز والمصادقة ومسارات البيانات شغالين باستقرار",
-        "سلوك API متسق في الأخطاء والتحميل",
-        "تحسين UI/UX لتنقل أسلس وأداء محسوس أسرع"
+        "البحث عن دكتور بالتخصص بمواعيد كل يوم، وأقرب فرع بيتختار حسب الموقع",
+        "حجز الأشعة والتحاليل، وعروض طبية بسعر كل فرع",
+        "سلة فيها كذا حجز مع بعض ودفع أونلاين بالكارت",
+        "محفظة وكشف حساب واسترداد المبلغ لنفس طريقة الدفع",
+        "الحجز لأفراد العيلة، وتعديل الحجز أو إلغاؤه، ومشاركته PDF",
+        "إشعارات وتقييمات ومفضلة، ونصوص الخدمات بتتعرض زي ما بتتكتب في لوحة التحكم",
+        "روابط الدكاترة والعروض من medicta.com بتفتح في التطبيق على الأندرويد والآيفون",
+        "التطبيق بيطلب التحديث لوحده لما تنزل نسخة لازمة"
       ]
     },
     "outcome": {
-      "body": "التطبيق شغال على Google Play تحت الباكدج com.medicta. ده مشروعي المرجعي في استلام الأكواد القائمة: تستلم كود إنتاج مش بتاعك وتسيبه أحسن من إعادة كتابته من الصفر.",
+      "body": "Medicta شغال على Google Play والآب ستور، وبينزل من الكود ده في إصدارات منتظمة من أكتوبر 2026. ولسه شغال مع العميل على جولات ملاحظات وإصدارات جديدة، والتطبيق بقى مشروعي المرجعي في استلام كود شغال فعلًا وإني أسيبه أحسن مما كانت إعادة الكتابة هتعمله.",
       "points": [
-        "منشور على Google Play (com.medicta)",
-        "منتج قائم اتثبّت من غير إعادة كتابة من الصفر",
-        "دليل عملي على القدرة على استلام الأكواد القديمة"
+        "منشور على Google Play والآب ستور (com.medicta)",
+        "إصدارات منتظمة على المتجرين من أكتوبر 2026",
+        "أبطأ قائمة نزلت من حوالي 12.5 ثانية لأقل من ثانية بعد تصليحات الباك إند من التقرير",
+        "التطوير مستمر مع العميل"
       ]
     }
   }

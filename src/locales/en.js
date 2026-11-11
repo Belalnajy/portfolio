@@ -133,16 +133,16 @@ const en = {
             ]
           },
           medicta: {
-            impact: 'Live on Google Play',
-            title: 'Medicta – Healthcare Booking App (Code Redesign)',
-            desc: 'An Android app for booking doctor appointments and browsing clinic services, published on Google Play. I re-architected the existing codebase and worked through its functional defects, refactoring the app structure while fixing broken flows across booking, authentication and data handling.',
+            impact: 'Live on Google Play and the App Store',
+            title: 'Medicta – Healthcare Booking App (Android & iPhone)',
+            desc: 'A React Native app for patients in Saudi Arabia to book doctors, radiology, lab tests and medical offers, then pay online. I took it over from another developer, made it releasable again, redesigned the booking experience and shipped it to both stores. Still developing it with the client.',
             features: [
-              'Full code redesign: restructured the app into clear, maintainable layers',
-              'Systematic fixing of functional bugs across booking, auth and data flows',
-              'Refactored API integration layer with consistent error and loading states',
-              'Improved state management to remove stale-data and race-condition bugs',
-              'UI/UX cleanup for smoother navigation and faster perceived performance',
-              'Live on Google Play under the package com.medicta'
+              'Doctor search with daily time slots and the nearest branch picked by location',
+              'Radiology, lab tests and offers with per-branch prices, a cart and online payment',
+              'Wallet, statement, refunds to the original payment method and booking for family members',
+              'Arabic and English, push notifications, and medicta.com links that open in the app',
+              'iOS builds and App Store submissions from Linux via Codemagic and the App Store Connect API',
+              'Endpoint performance report that took the slowest list from about 12.5 s to under a second'
             ]
           },
           mada: {
@@ -872,6 +872,7 @@ const en = {
         cta_button: 'Start a Conversation',
         screens_title: 'The product',
         screens_note: 'Captured from the live site.',
+        screens_note_app: 'Captured from the app on the test server.',
         screen_alt: '{{name}}, screen {{n}}',
         screen_mobile_alt: '{{name}} on a phone',
         facts: {

@@ -24,7 +24,7 @@ export const FAQ_ITEMS = {
     {
       question: 'Does Belal Nagy take over existing codebases?',
       answer:
-        'Yes, legacy takeover is one of his services. Examples include Medicta, an Android healthcare booking app on Google Play that he re-architected and stabilized, and CMS customization work delivered within locked-down platforms.',
+        'Yes, legacy takeover is one of his services. Examples include Medicta, a healthcare booking app he took over, stabilized, redesigned and shipped to Google Play and the App Store, and CMS customization work delivered within locked-down platforms.',
     },
     {
       question: 'Is Belal Nagy available for hire?',
@@ -61,7 +61,7 @@ export const FAQ_ITEMS = {
     {
       question: 'بلال بيستلم أكواد قائمة محتاجة إصلاح؟',
       answer:
-        'أيوه، استلام الأكواد القديمة من خدماته الأساسية. من الأمثلة: Medicta، تطبيق أندرويد لحجز المواعيد الطبية على Google Play أعاد هيكلته وثبّته، وشغل تخصيص CMS متسلّم جوه منصات مقفولة.',
+        'أيوه، استلام الأكواد القديمة من خدماته الأساسية. من الأمثلة: Medicta، تطبيق حجز مواعيد طبية استلمه وثبّته وعاد تصميمه ونزّله على Google Play والآب ستور، وشغل تخصيص CMS متسلّم جوه منصات مقفولة.',
     },
     {
       question: 'أقدر أتعامل مع بلال ناجي إزاي؟',

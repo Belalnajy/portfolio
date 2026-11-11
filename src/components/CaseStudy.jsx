@@ -14,6 +14,8 @@ import {
   FaCubes,
   FaCheckCircle,
   FaLayerGroup,
+  FaGooglePlay,
+  FaApple,
 } from 'react-icons/fa';
 import { getTechIcon } from './Projects';
 import IconDefaults from './IconDefaults';
@@ -47,7 +49,7 @@ const CaseStudy = ({ lang = DEFAULT_LANGUAGE, bundle, ...props }) => {
   );
 };
 
-const CaseStudyContent = ({ slug, narrative, image, liveUrl, stack, gallery, nav, pageLang }) => {
+const CaseStudyContent = ({ slug, narrative, image, liveUrl, appStoreUrl, stack, gallery, screensNote, nav, pageLang }) => {
   const { t, i18n } = useTranslation();
   const isArabic = i18n.language === 'ar';
   const Back = isArabic ? FaArrowRight : FaArrowLeft;
@@ -95,7 +97,28 @@ const CaseStudyContent = ({ slug, narrative, image, liveUrl, stack, gallery, nav
             <Back className="text-xs" />
             {t('case_studies.back')}
           </a>
-          {liveUrl && (
+          {/* A mobile app lists both stores: one button each instead of "Visit Live Site". */}
+          {liveUrl && appStoreUrl && (
+            <div className="flex items-center gap-2">
+              {[
+                { href: liveUrl, label: 'Google Play', Icon: FaGooglePlay },
+                { href: appStoreUrl, label: 'App Store', Icon: FaApple },
+              ].map(({ href, label, Icon }) => (
+                <a
+                  key={label}
+                  href={href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={label}
+                  className="inline-flex items-center gap-2 min-h-[44px] px-4 rounded-xl text-sm font-semibold bg-[rgb(var(--muted))]/40 text-[rgb(var(--muted-foreground))] border border-[rgb(var(--border))] hover:bg-[rgb(var(--primary))]/20 transition-colors"
+                >
+                  <Icon className="text-sm" />
+                  <span className="hidden sm:inline">{label}</span>
+                </a>
+              ))}
+            </div>
+          )}
+          {liveUrl && !appStoreUrl && (
             <a
               href={liveUrl}
               target="_blank"
@@ -303,7 +326,7 @@ const CaseStudyContent = ({ slug, narrative, image, liveUrl, stack, gallery, nav
               <h2 className="font-display text-xl sm:text-2xl md:text-3xl font-bold tracking-tight text-start">
                 {t('case_studies.screens_title')}
               </h2>
-              <p className="text-xs text-[rgb(var(--muted-foreground))]">{t('case_studies.screens_note')}</p>
+              <p className="text-xs text-[rgb(var(--muted-foreground))]">{t(`case_studies.${screensNote || 'screens_note'}`)}</p>
             </div>
             <div className={`grid gap-4 ${phone ? 'md:grid-cols-3' : ''} items-start`}>
               <div className={`grid gap-4 ${phone ? 'md:col-span-2' : 'sm:grid-cols-2'}`}>
