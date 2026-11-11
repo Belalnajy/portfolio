@@ -10,7 +10,7 @@
  * two in step when a project is added.
  */
 export const FACTS = {
-  projects: 36,
+  projects: 37,
   clients: 27,
   students: 440,
   technologies: 20,

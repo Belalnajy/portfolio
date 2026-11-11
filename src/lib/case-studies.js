@@ -10,6 +10,14 @@
  * desktop views further down the page, `-m` is the phone view.
  */
 export const CASE_STUDIES = {
+  oxgym: {
+    name: 'OX GYM',
+    image: '/oxgym.webp',
+    liveUrl: 'https://oxgym-eg.com/',
+    stack: ['JavaScript', 'Node.js', 'PostgreSQL', 'PWA', 'Web Push', 'Vercel'],
+    updated: '2026-11-11',
+    gallery: ['/gallery/oxgym-d1.webp', '/gallery/oxgym-d2.webp', '/gallery/oxgym-d3.webp', '/gallery/oxgym-d4.webp', '/gallery/oxgym-m.webp'],
+  },
   opptmakers: {
     name: 'Opportunities Makers',
     image: '/opptmakers.webp',

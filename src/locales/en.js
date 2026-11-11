@@ -168,6 +168,18 @@ const en = {
               'Integrated contact and enquiry flow'
             ]
           },
+          oxgym: {
+            impact: 'Website + system + members app',
+            title: 'OX GYM – Complete Gym Package',
+            desc: 'A complete package for a gym: a bilingual website that books free trials, a management system for the front desk and owner, and an installable members app with a digital card, workouts and push notifications. One live database, ready for any gym.',
+            features: [
+              'Website with live prices from the system and free-trial booking',
+              'Front desk: barcode check-in, subscriptions, freezes, cashier shifts and reports',
+              'Follow-up for expiring and inactive members with WhatsApp templates',
+              'Members PWA: digital card, workouts, progress charts, points and a monthly leaderboard',
+              'Offline mode, Web Push notifications and role-based permissions'
+            ]
+          },
           toyo228: {
             impact: 'Bulk search & Excel import',
             title: 'Toyo228 – B2B Auto Parts Platform',
