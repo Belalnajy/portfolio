@@ -7,14 +7,8 @@ const en = {
         available: 'Open to freelance projects',
         greeting_start: 'Hi, I\'m ',
         name: 'Belal Nagy',
-        description_1: 'I build web platforms from zero, and take over existing codebases that need fixing. ',
-        description_2: '{{projects}} projects',
-        description_3: ' for ',
-        description_4: '{{clients}} clients',
-        description_5: ' across Egypt and the Gulf.',
+        headline: 'I build web platforms from zero, and fix the ones that got stuck.',
         view_projects: 'View Projects',
-        contact_me: 'Contact Me',
-        download_cv: 'Download CV',
         freelance_title: 'Verified freelancer',
         freelance_rating: '100% positive client reviews',
         freelance_platforms: 'Khamsat',
@@ -24,8 +18,7 @@ const en = {
         now_label: 'Now',
         now_value: 'Software Engineer @ ezSec Inc',
         location: 'Alexandria, Egypt · working worldwide',
-        scroll: 'Scroll',
-        follow_me: 'Follow me on Arabic platforms'
+        scroll: 'Scroll'
       },
       about: {
         bento: {
@@ -35,47 +28,25 @@ const en = {
           base: 'Based in',
           base_value: 'Alexandria, Egypt',
           base_meta: 'working worldwide',
-          langs: 'Languages',
-          langs_value: 'Arabic (native) · English',
           stack_title: 'Core stack',
         },
-        title: 'About Me',
+        title: 'About me',
+        portrait_alt: 'Belal Nagy, a black-and-white studio portrait',
+        cv_link: 'The full CV: experience and the platform suite',
         subtitle: 'Full-stack developer in Alexandria, Egypt. I work in Next.js, Laravel, NestJS, Node.js, Django and PostgreSQL.',
-        personal_info: 'Personal Information',
         professional_summary: 'Professional Summary',
-        labels: {
-          name: 'Name',
-          role: 'Role',
-          education: 'Education',
-          location: 'Location'
-        },
         values: {
           name: 'Belal Nagy',
           role: 'Full Stack Developer',
-          education: 'Bachelor of Business (BIS)',
           location: 'Alexandria, Egypt'
         },
         summary_p1: 'Full-stack developer based in <1>Alexandria, Egypt</1>. I work in Next.js, Laravel, NestJS, Node.js, Django and PostgreSQL. I am currently a Software Engineer at <3>ezSec Inc in Canada</3>, working remotely.',
         summary_p2: 'I am the sole developer on <1>Bilqalam Institute</1>, a production learning platform serving thousands of enrolled students. It handles student enrollment and management, billing and invoicing, and the admin reporting dashboards the institute runs on. I built it and I maintain it alone, in <3>Next.js and Laravel</3>.',
-        summary_p3: 'I also built a multi-tenant LMS engine that runs as <1>three separately branded accredited platforms</1>, Injaz, HC Holding and Mada Education, on one hardened Django and PostgreSQL core. I co-founded Indstrz, a B2B industrial platform, and taught front-end development to <3>{{students}}+ students</3> as an external instructor at ITI. Arabic and RTL work goes into every project I ship, including the financial and data-heavy interfaces.',
-        highlights: {
-          sole_developer: {
-            title: 'Sole developer on production systems',
-            desc: 'Bilqalam serves thousands of students on a platform I built and maintain alone.'
-          },
-          multi_tenant: {
-            title: 'Multi-tenant architecture',
-            desc: 'One LMS engine, three accredited client platforms, one deployment pipeline.'
-          },
-          arabic_first: {
-            title: 'Arabic-first',
-            desc: 'Full RTL across dashboards, invoices and reports, not just landing pages.'
-          }
-        }
+        summary_p3: 'I also built a multi-tenant LMS engine that runs as <1>three separately branded accredited platforms</1>, Injaz, HC Holding and Mada Education, on one hardened Django and PostgreSQL core. I co-founded Indstrz, a B2B industrial platform, and taught front-end development to <3>{{students}}+ students</3> as an external instructor at ITI. Arabic and RTL work goes into every project I ship, including the financial and data-heavy interfaces.'
       },
       projects: {
-        title: 'Featured Projects',
-        archive_title: 'Projects & Case Studies',
+        title: 'Featured projects',
+        archive_title: 'Projects & case studies',
         subtitle: 'Selected projects, each with a case study on what I built and why.',
         search_placeholder: 'Search projects by name...',
         no_results: 'No projects found matching your criteria',
@@ -100,12 +71,12 @@ const en = {
         },
         modal: {
           technologies: 'Technologies',
-          features: 'Key Features & Highlights',
+          features: 'Key features & highlights',
           live_link: 'Visit Live Project',
           source_code: 'View Source Code',
           case_study: 'Read the Case Study',
           close: 'Close',
-          suite_title: 'Same Engine, Different Brands',
+          suite_title: 'Same engine, different brands',
           suite_desc: 'This platform is one deployment of a shared LMS engine I built and maintain. Each client runs its own branded instance, with its own visual identity, accreditation and content, on top of the same accredited training, payment and certification core.'
         },
         items: {
@@ -531,10 +502,9 @@ const en = {
         }
       },
       platform_suite: {
-        label: 'Product Suite',
-        title: 'One Engine, Many Brands',
+        title: 'One engine, many brands',
         subtitle: 'Instead of rebuilding an LMS for every client, I built one accredited training engine and deploy it as separate branded platforms, each with its own visual identity, content and accreditation, sharing a single hardened core.',
-        shared_title: 'What Every Deployment Inherits',
+        shared_title: 'What every deployment inherits',
         capabilities: {
           engine: 'Shared Django + PostgreSQL Core',
           accreditation: 'Accreditation & Certificates',
@@ -551,20 +521,19 @@ const en = {
         footnote: 'One codebase, one deployment pipeline, one security model, three products. New clients launch in days instead of months, and every fix or feature lands across the whole suite at once.'
       },
       brands: {
-        label: 'Clients',
-        title: 'Who I Have Built For',
+        title: 'Who I have built for',
         subtitle: 'Companies, institutes and products I have built software for.'
       },
       skills: {
-        title: 'Skills & Expertise',
+        title: 'Skills & expertise',
         subtitle: 'A comprehensive overview of my technical skills and areas of expertise with proficiency levels.',
         categories: {
           all: 'All',
-          languages: 'Programming Languages',
-          frameworks: 'Frameworks & Libraries',
-          devops: 'DevOps, Infra & Security',
+          languages: 'Programming languages',
+          frameworks: 'Frameworks & libraries',
+          devops: 'DevOps, infra & security',
           databases: 'Databases & APIs',
-          soft: 'Workflow & Soft Skills'
+          soft: 'Workflow & soft skills'
         },
         soft_skills: {
           communication: 'Communication',
@@ -575,7 +544,7 @@ const en = {
         }
       },
       timeline: {
-        title: 'Experience & Education',
+        title: 'Experience & education',
         subtitle: 'My professional journey and academic background',
         labels: {
           work: 'Work',
@@ -699,12 +668,10 @@ const en = {
       },
       stats: {
         projects: 'Client Projects',
-        technologies: 'Technologies Mastered',
-        students: 'Students Taught',
         clients: 'Clients Served'
       },
       certifications: {
-        title: 'Courses & Certifications',
+        title: 'Courses & certifications',
         subtitle: 'Professional development and continuous learning journey',
         items: {
           python_django: 'The Python and Django Learning Guide',
@@ -718,14 +685,14 @@ const en = {
         }
       },
       services: {
-        title: 'Services I Offer',
+        title: 'Services I offer',
         subtitle: 'Websites, platforms and internal systems in Arabic and English, built by one developer you deal with directly.',
         ready: 'Ready to start your project?',
         get_in_touch: 'Get in Touch',
         rescue_cta: 'Project stuck? See how a rescue works →',
         list: [
           {
-            title: 'Full-Stack Custom Development',
+            title: 'Full-stack custom development',
             desc: 'End-to-end development of high-performance web applications using modern stacks like React, Next.js, Django, and NestJS.',
             features: [
               'SaaS & Enterprise Solutions',
@@ -735,7 +702,7 @@ const en = {
             ]
           },
           {
-            title: 'AI & Backend Engineering',
+            title: 'AI & backend engineering',
             desc: 'Building robust server-side infrastructures and integrating AI-driven features for automation and intelligent data processing.',
             features: [
               'Secure REST & GraphQL APIs',
@@ -745,7 +712,7 @@ const en = {
             ]
           },
           {
-            title: 'Modern UI/UX & RTL Localization',
+            title: 'Modern UI/UX & RTL localization',
             desc: 'Creating pixel-perfect, accessible, and fast-loading interfaces with specialized support for Arabic (RTL) and multilingual markets.',
             features: [
               'Multilingual & RTL Mastery',
@@ -755,7 +722,7 @@ const en = {
             ]
           },
           {
-            title: 'Security & DevOps Strategy',
+            title: 'Security & DevOps strategy',
             desc: 'Ensuring your applications are secure, stable, and ready for growth with enterprise-grade security and automated deployment lines.',
             features: [
               'JWT & Role-Based Security',
@@ -765,7 +732,7 @@ const en = {
             ]
           },
           {
-            title: 'Legacy Code Takeover & Technical Audit',
+            title: 'Legacy code takeover & technical audit',
             desc: 'I take over inherited and abandoned codebases. The audit comes first, so you know what is wrong and what it costs before any work starts.',
             features: [
               'Full audit of an inherited codebase with a written report',
@@ -777,27 +744,26 @@ const en = {
         ]
       },
       process: {
-        label: 'How I Work',
-        title: 'From First Call to Live Product',
+        title: 'From first call to live product',
         subtitle: 'A predictable process with a clear deliverable at every step, so you always know what is happening and what comes next.',
         steps: {
           discovery: {
-            title: '1. Discovery Call',
+            title: '1. Discovery call',
             desc: 'We talk through the goal, the users and the constraints. I ask the awkward questions early (budget, deadlines, integrations) so nothing surprises us later.',
             deliverable: 'Deliverable: written scope summary'
           },
           blueprint: {
-            title: '2. Scope & Blueprint',
+            title: '2. Scope & blueprint',
             desc: 'I turn the conversation into a concrete plan: features broken into phases, the data model, the stack, and a realistic timeline with milestones.',
             deliverable: 'Deliverable: proposal + timeline'
           },
           build: {
-            title: '3. Build in Milestones',
+            title: '3. Build in milestones',
             desc: 'Development happens in reviewable chunks, not one big reveal. You get a staging link from the first milestone and can follow progress the whole way.',
             deliverable: 'Deliverable: staging link per milestone'
           },
           review: {
-            title: '4. Review & Hardening',
+            title: '4. Review & hardening',
             desc: 'Your feedback on each milestone gets folded in, then I test the flows end to end: validation, permissions, edge cases, mobile, and RTL.',
             deliverable: 'Deliverable: tested, fixed build'
           },
@@ -807,15 +773,14 @@ const en = {
             deliverable: 'Deliverable: live site + handover'
           },
           support: {
-            title: '6. Post-Launch Support',
+            title: '6. Post-launch support',
             desc: 'A warranty window after launch for any defect in what was delivered, plus an optional retainer for ongoing features and maintenance.',
             deliverable: 'Deliverable: warranty + optional retainer'
           }
         }
       },
       packages: {
-        label: 'Packages',
-        title: 'Ways We Can Work Together',
+        title: 'Ways we can work together',
         subtitle: 'Three common shapes for a project. Every engagement is scoped to what you actually need; these are starting points, not boxes.',
         most_popular: 'Most Popular',
         on_request: 'Quote on request',
@@ -823,7 +788,7 @@ const en = {
         footnote: 'Not sure which fits? Send me a short description of your project and I will reply with a recommended scope, timeline and price, with no obligation.',
         tiers: {
           landing: {
-            name: 'Website & Landing Page',
+            name: 'Website & landing page',
             tagline: 'A fast, polished marketing presence that converts visitors and looks right on every screen.',
             price: '',
             timeline: 'Typically 1–2 weeks',
@@ -837,7 +802,7 @@ const en = {
             ]
           },
           platform: {
-            name: 'Full-Stack Platform',
+            name: 'Full-stack platform',
             tagline: 'A complete product with accounts, dashboards, payments and an admin panel, built to grow.',
             price: '',
             timeline: 'Typically 4–10 weeks',
@@ -852,7 +817,7 @@ const en = {
             ]
           },
           retainer: {
-            name: 'Ongoing Partner',
+            name: 'Ongoing partner',
             tagline: 'A monthly arrangement for teams that need continuous development, not a one-off delivery.',
             price: '',
             timeline: 'Monthly, cancel anytime',
@@ -885,20 +850,19 @@ const en = {
           audience: 'Audience'
         },
         sections: {
-          challenge: 'The Challenge',
-          approach: 'The Approach',
-          delivered: 'What I Built',
-          outcome: 'The Outcome',
-          stack: 'Technology Stack'
+          challenge: 'The challenge',
+          approach: 'The approach',
+          delivered: 'What I built',
+          outcome: 'The outcome',
+          stack: 'Technology stack'
         },
       },
       testimonials: {
-        title: 'What People Say',
+        title: 'What people say',
         subtitle: 'Reviews from clients I have worked with through freelance platforms.',
-        positive_reviews: 'Positive Reviews',
+        positive_reviews: 'Positive reviews',
         reviews_count: 'Reviews',
         view_review: 'View Full Review on {{platform}}',
-        follow_me: 'Follow me on platforms',
         time: {
           days: '{{count}} days ago',
           month_one: '1 month ago',
@@ -955,8 +919,10 @@ const en = {
         }
       },
       contact: {
-        title: 'Get In Touch',
+        title: 'Get in touch',
         subtitle: 'Tell me what you are building and where it stands.',
+        reply_time: 'I reply within 24 hours',
+        quote_note: 'Quote on request, no obligation',
         info: {
           email: 'Email',
           phone: 'Phone',
@@ -980,7 +946,7 @@ const en = {
           sending: 'Sending...'
         },
         notifications: {
-          success: "Message sent successfully! I'll get back to you soon.",
+          success: "Message sent successfully! I'll reply within 24 hours.",
           error: 'Failed to send message. Please email me directly at belalnajy9@gmail.com.',
           unavailable: 'The contact form is not available right now. Please email me directly at belalnajy9@gmail.com.'
         }
@@ -996,11 +962,32 @@ const en = {
         now: 'Now',
         blog: 'Blog',
         rescue: 'Legacy Rescue',
+        rescue_short: 'Rescue',
+        rescue_project: 'Rescue a project',
+        contact_short: 'Contact',
         cv: 'CV',
         uses: 'Uses',
         privacy: 'Privacy',
         contact: 'Contact',
         download_cv: 'Download CV'
+      },
+      start: {
+        title: 'How we start',
+        subtitle: 'A short call, a written scope, then work you can follow from the first milestone. No surprises on scope or price.',
+        full_process: 'See all six steps',
+        rescue_title: 'Already have a project that is stuck?',
+        rescue_body: 'The developer left, the bugs pile up, and nobody dares touch the code. I audit it first, then stabilize it, without a rewrite from scratch.',
+        rescue_cta: 'How a rescue works'
+      },
+      cta_band: {
+        proof: {
+          title: 'Want work like this on your project?',
+          body: 'Send a few lines about it. Quote on request, no obligation.'
+        },
+        questions: {
+          title: 'Would you rather ask me directly?',
+          body: 'Not sure what your project needs, or what it would take? Describe it in a few lines and I will tell you where I would start.'
+        }
       },
       cmdk: {
         placeholder: 'Search sections, case studies...',
@@ -1086,6 +1073,7 @@ const en = {
         minutes: '{{count}} min read',
         back: 'All articles',
         byline: 'Belal Nagy',
+        next: 'Next article',
       },
       footer: {
         about_title: 'Belal Nagy',
@@ -1183,7 +1171,7 @@ const en = {
         note: 'This page changes as the work changes. If something here is out of date, the site is wrong and I want to know.'
       },
       testimonials_page: {
-        title: 'Client Reviews',
+        title: 'Client reviews',
         subtitle: 'Every review, in full, from the freelance platforms I work through.'
       },
       privacy: {
@@ -1223,7 +1211,7 @@ const en = {
         contact_line: 'Questions about any of this: {{email}}'
       },
       cv: {
-        title: 'Curriculum Vitae',
+        title: 'Curriculum vitae',
         subtitle: 'The same facts as the site, on one printable page.',
         download: 'Download PDF',
         print: 'Print',
@@ -1233,7 +1221,7 @@ const en = {
           highlights: 'Highlights',
           experience: 'Experience',
           education: 'Education',
-          projects: 'Selected Projects',
+          projects: 'Selected projects',
           skills: 'Skills',
           certifications: 'Certifications'
         },

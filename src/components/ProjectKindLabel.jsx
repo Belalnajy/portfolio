@@ -23,9 +23,11 @@ const ProjectKindLabel = ({ kind, className = '' }) => {
   if (!kind) return null;
   const Icon = KIND_ICONS[kind] ?? FaGraduationCap;
   return (
+    // A small, calm pill: it informs, it should not compete with the title
+    // or the impact badge next to it. Muted text on a hairline, no fill.
     <span
-      className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold bg-[rgb(var(--muted))]/50 text-[rgb(var(--muted-foreground))] border border-[rgb(var(--border))] ${className}`}>
-      <Icon aria-hidden="true" className="shrink-0" />
+      className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[11px] font-medium leading-4 text-[rgb(var(--muted-foreground))] border border-[rgb(var(--border-subtle))] bg-transparent ${className}`}>
+      <Icon aria-hidden="true" className="shrink-0 text-[10px] opacity-70" />
       {t(`projects.kinds.${kind}`)}
     </span>
   );

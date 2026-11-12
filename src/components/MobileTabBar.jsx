@@ -1,12 +1,14 @@
 'use client';
 import { useEffect, useState } from 'react';
-import { FaHome, FaLayerGroup, FaBoxOpen, FaBolt, FaEnvelope } from 'react-icons/fa';
+import { FaHome, FaLayerGroup, FaBoxOpen, FaLifeRing, FaEnvelope } from 'react-icons/fa';
 import { useTranslation } from 'react-i18next';
 
 /**
  * App-style bottom tab bar for phones. The five primary destinations stay one
- * thumb-tap away; the hamburger drawer keeps the long tail. Hidden from md up,
- * where the top navigation takes over.
+ * thumb-tap away; the hamburger drawer keeps the long tail (Now, Blog, the
+ * CV). Rescue has a tab of its own: an owner with a stuck project is the
+ * visitor most likely to act today. Hidden from md up, where the top
+ * navigation takes over.
  */
 const MobileTabBar = () => {
   const { t, i18n } = useTranslation();
@@ -24,8 +26,8 @@ const MobileTabBar = () => {
     { label: t('nav.home'), href: `${home}/`, route: '/', icon: <FaHome /> },
     { label: t('nav.projects'), href: `${home}/work`, route: '/work', icon: <FaLayerGroup /> },
     { label: t('nav.services'), href: `${home}/services`, route: '/services', icon: <FaBoxOpen /> },
-    { label: t('nav.now'), href: `${home}/now`, route: '/now', icon: <FaBolt /> },
-    { label: t('nav.contact'), href: `${home}/#contact`, icon: <FaEnvelope /> },
+    { label: t('nav.rescue_short'), name: t('nav.rescue_project'), href: `${home}/rescue`, route: '/rescue', icon: <FaLifeRing /> },
+    { label: t('nav.contact_short'), name: t('nav.contact'), href: `${home}/#contact`, icon: <FaEnvelope /> },
   ];
 
   return (
@@ -40,6 +42,10 @@ const MobileTabBar = () => {
               key={tab.label}
               href={tab.href}
               aria-current={active ? 'page' : undefined}
+              // A tab is 64px wide at 320px, so some labels are shortened;
+              // the full name, which starts with the visible word, is what
+              // assistive tech reads.
+              aria-label={tab.name && tab.name !== tab.label ? tab.name : undefined}
               className={`relative flex flex-col items-center justify-center gap-1 text-[11px] font-semibold transition-colors ${
                 active
                   ? 'text-[rgb(var(--primary))]'

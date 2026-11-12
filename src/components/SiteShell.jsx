@@ -125,7 +125,7 @@ const ShellContent = ({ children }) => {
           />
           <Navbar />
           {/* tabIndex -1 so the skip link can move focus here, not just scroll. */}
-          <main id="main" tabIndex={-1} className="relative z-10 focus:outline-none">
+          <main id="main" tabIndex={-1} className="site-main relative z-10 focus:outline-none">
             {children}
           </main>
           <Footer />

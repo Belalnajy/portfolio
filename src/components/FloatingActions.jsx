@@ -1,5 +1,5 @@
 "use client";
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { m, AnimatePresence } from 'framer-motion';
 import { FaWhatsapp, FaTimes, FaCommentDots, FaUserAstronaut } from 'react-icons/fa';
 import { useTranslation } from 'react-i18next';
@@ -9,13 +9,14 @@ import { brandColor } from '../lib/brand-colors';
 import { useEscapeLayer } from '../lib/useEscapeLayer';
 
 /**
- * Phones only: one button instead of three.
+ * Below xl: one button instead of three.
  *
  * A 390px screen was carrying a tab bar plus a WhatsApp button, a FAQ button
  * and a theme toggle, and the floating three sat on top of the hero. The theme
  * toggle moved into the header; the other two live behind this single dock and
- * only appear when it is opened. Desktop keeps its own dedicated buttons, where
- * there is room for them.
+ * only appear when it is opened. Tablets and small laptops (768–1279px) get
+ * the dock too: there, two separate buttons sat over project descriptions.
+ * From xl up the page has side room and keeps its own dedicated buttons.
  *
  * The FAQ panel owns its own state, so opening it from here is a DOM event
  * rather than lifted state — nothing else has to know the two are related.
@@ -27,6 +28,25 @@ const FloatingActions = () => {
   const dockRef = useRef(null);
 
   const close = () => setOpen(false);
+
+  // Hidden while the hero's call to action is on screen: the hero has its own
+  // way in, and at 320px the dock sat on top of it. It starts hidden (the
+  // dock does nothing before hydration anyway) and shows on any page without
+  // a hero, or when IntersectionObserver is unavailable.
+  const [overHeroCta, setOverHeroCta] = useState(true);
+  useEffect(() => {
+    const cta = document.querySelector('[data-hero-cta]');
+    if (!cta || typeof IntersectionObserver === 'undefined') {
+      setOverHeroCta(false);
+      return undefined;
+    }
+    const observer = new IntersectionObserver(([entry]) => {
+      setOverHeroCta(entry.isIntersecting);
+      if (entry.isIntersecting) setOpen(false);
+    });
+    observer.observe(cta);
+    return () => observer.disconnect();
+  }, []);
 
   // Escape folds the dock back and returns focus to its button.
   // Focus only comes back from inside the dock (or from nowhere): Escape
@@ -52,7 +72,7 @@ const FloatingActions = () => {
   return (
     // .floating-dock hides while the phone menu or the FAQ panel is open, so
     // the button never covers their last items (globals.css).
-    <div ref={dockRef} id="contact-dock" className="floating-dock md:hidden fixed end-4 bottom-[calc(max(1rem,env(safe-area-inset-bottom))+4.5rem)] z-[9999] flex flex-col items-end gap-3">
+    <div ref={dockRef} id="contact-dock" hidden={overHeroCta} className="floating-dock xl:hidden fixed end-4 bottom-[calc(max(1rem,env(safe-area-inset-bottom))+4.5rem)] md:bottom-6 z-[9999] flex flex-col items-end gap-3">
       <AnimatePresence>
         {open && (
           <>

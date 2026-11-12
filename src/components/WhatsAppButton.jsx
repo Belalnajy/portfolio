@@ -14,6 +14,7 @@ export const whatsappUrl = (message) =>
 
 /**
  * Floating WhatsApp launcher — the first channel Gulf clients reach for.
+ * From xl up only; below that it lives in the contact dock (FloatingActions).
  *
  * The href is attached only after hydration so the number never appears in
  * the prerendered HTML, matching the click-to-reveal treatment the phone
@@ -35,7 +36,7 @@ const WhatsAppButton = () => {
       whileTap={{ scale: 0.9 }}
       style={{ backgroundColor: brandColor('WhatsApp') }}
       onClick={() => track('whatsapp_click', { placement: 'desktop_fab' })}
-      className="hidden md:flex fixed end-6 bottom-6 z-[9999] w-14 h-14 rounded-full items-center justify-center text-[rgb(var(--scrim))] shadow-lg shadow-[#25D366]/40 group">
+      className="hidden xl:flex fixed end-6 bottom-6 z-[9999] w-14 h-14 rounded-full items-center justify-center text-[rgb(var(--scrim))] shadow-lg shadow-[#25D366]/40 group">
       <FaWhatsapp size={30} />
 
       {/* Tooltip */}

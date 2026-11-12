@@ -1,5 +1,6 @@
 "use client";
 import Reveal from './Reveal';
+import SectionHeading from './SectionHeading';
 import { revealDelay } from '../lib/motion';
 import { useTranslation } from 'react-i18next';
 import { FaCheck, FaClock, FaStar, FaArrowRight, FaArrowLeft } from 'react-icons/fa';
@@ -24,20 +25,12 @@ const Packages = () => {
     <section id="packages" className="py-16 md:py-24 relative overflow-hidden">
       <div className="absolute top-1/3 left-1/2 -translate-x-1/2 w-full max-w-4xl h-96 bg-[rgb(var(--primary))]/5 blur-[120px] rounded-full pointer-events-none z-0" />
 
-      <div className="container mx-auto px-4 sm:px-6 relative z-10">
-        <Reveal y={24} duration={0.6}
-          className="text-center mb-12 md:mb-16"
-        >
-          <span className="text-[rgb(var(--primary))] font-bold tracking-widest uppercase text-xs sm:text-sm mb-3 block">
-            {t('packages.label')}
-          </span>
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 text-[rgb(var(--foreground))] tracking-tight">
-            {t('packages.title')}
-          </h2>
-          <p className="text-[rgb(var(--muted-foreground))] max-w-2xl mx-auto text-base sm:text-lg leading-relaxed">
-            {t('packages.subtitle')}
-          </p>
-        </Reveal>
+      <div className="container mx-auto px-6 relative z-10">
+        <SectionHeading
+          className="max-w-6xl mx-auto"
+          title={t('packages.title')}
+          subtitle={t('packages.subtitle')}
+        />
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 max-w-6xl mx-auto items-start">
           {TIERS.map((tier, index) => {
@@ -71,14 +64,16 @@ const Packages = () => {
                   {t(`packages.tiers.${tier.key}.tagline`)}
                 </p>
 
-                <div className="mb-5 pb-5 border-b border-[rgb(var(--border))]/50">
-                  <div className="text-2xl sm:text-3xl font-bold text-[rgb(var(--foreground))]">
+                {/* Price and timeline as one quiet line: the price is quoted
+                    per project, so it should not shout like a number would. */}
+                <div className="mb-5 pb-5 border-b border-[rgb(var(--border))]/50 flex flex-wrap items-center gap-x-4 gap-y-1 text-sm">
+                  <span className="font-semibold text-[rgb(var(--foreground))]">
                     {hasPrice ? price : t('packages.on_request')}
-                  </div>
-                  <div className="flex items-center gap-2 mt-2 text-xs text-[rgb(var(--muted-foreground))]">
-                    <FaClock className="text-[rgb(var(--primary))]" />
+                  </span>
+                  <span className="inline-flex items-center gap-2 text-xs text-[rgb(var(--muted-foreground))]">
+                    <FaClock aria-hidden="true" className="text-[rgb(var(--primary))]" />
                     {t(`packages.tiers.${tier.key}.timeline`)}
-                  </div>
+                  </span>
                 </div>
 
                 <ul className="space-y-3 mb-8 flex-grow">

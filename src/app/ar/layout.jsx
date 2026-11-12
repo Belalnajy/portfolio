@@ -57,7 +57,7 @@ const ARABIC_PERSON_JSON_LD = {
   name: 'بلال ناجي',
   alternateName: ['بلال ناجى', 'Belal Nagy', 'Belal Najy'],
   url: `${SITE_URL}/ar`,
-  image: `${SITE_URL}/hero.webp`,
+  image: `${SITE_URL}/portrait.webp`,
   jobTitle: 'مهندس برمجيات ومطور ويب متكامل (Full-Stack)',
   description:
     `بلال ناجي مطور ويب متكامل من الإسكندرية، مصر. يعمل حالياً مهندس برمجيات في شركة ezSec Inc الكندية عن بُعد، وشارك في تأسيس منصة Indstrz. نفّذ ${FACTS.projects} مشروعاً لـ ${FACTS.clients} عميلاً في مصر والخليج بتقنيات Next.js، Laravel، NestJS، Node.js، Django، PostgreSQL، مع دعم العربية والـ RTL في كل مشروع، وتقييمات إيجابية 100% على منصة العمل الحر خمسات.`,

@@ -24,7 +24,7 @@ const PROFESSIONAL_SERVICE_JSON_LD = {
   '@id': `${SITE_URL}/#service`,
   name: 'Belal Nagy | Full-Stack Development Services',
   url: `${SITE_URL}/services`,
-  image: `${SITE_URL}/hero.webp`,
+  image: `${SITE_URL}/portrait.webp`,
   description:
     'Full-stack web development services by Belal Nagy: platforms built from zero, backend and AI engineering, Arabic/RTL localization, legacy-code takeover and technical audits, security and DevOps.',
   address: {

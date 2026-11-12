@@ -217,7 +217,7 @@ test('security headers are sent', options, async () => {
   assert.match(missing.headers.get('content-security-policy') ?? '', /frame-ancestors 'none'/);
 
   // Assets keep the two small headers and skip the document-only ones.
-  for (const path of ['/hero.webp', '/sw.js']) {
+  for (const path of ['/portrait.webp', '/sw.js']) {
     const asset = await fetch(`${BASE}${path}`);
     await asset.arrayBuffer();
     assert.equal(asset.headers.get('x-content-type-options'), 'nosniff', path);

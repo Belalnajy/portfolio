@@ -9,7 +9,9 @@ import {
   FaMapMarkerAlt,
   FaLinkedin,
   FaWhatsapp,
+  FaRegClock,
 } from 'react-icons/fa';
+import SectionHeading from './SectionHeading';
 import { useTranslation } from 'react-i18next';
 import { useSite } from './SiteShell';
 import { whatsappUrl } from './WhatsAppButton';
@@ -156,17 +158,18 @@ const Contact = () => {
   return (
     <section id="contact" className="py-20 relative text-start">
       <div className="container mx-auto px-6 relative z-10">
-        <Reveal y={20} duration={0.5}
-          className="text-center mb-16">
-          <h2 className="text-5xl font-bold mb-4 text-[rgb(var(--foreground))]">
-            {t('contact.title')}
-          </h2>
-          <p className="text-[rgb(var(--muted-foreground))] max-w-2xl mx-auto text-lg leading-relaxed">
-            {t('contact.subtitle')}
+        <SectionHeading className="max-w-6xl mx-auto" title={t('contact.title')} subtitle={t('contact.subtitle')}>
+          {/* The reply-time promise, next to the way in. Prices are quoted
+              per project, so the line says that too, without a number. */}
+          <p className="mt-4 inline-flex flex-wrap items-center gap-x-2 gap-y-1 text-sm text-[rgb(var(--muted-foreground))]">
+            <FaRegClock aria-hidden="true" className="text-[rgb(var(--primary))]" />
+            <span className="font-semibold text-[rgb(var(--foreground))]">{t('contact.reply_time')}</span>
+            <span aria-hidden="true">·</span>
+            <span>{t('contact.quote_note')}</span>
           </p>
-        </Reveal>
+        </SectionHeading>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-12 max-w-6xl mx-auto">
           {/* Contact Information */}
           <Reveal x={isArabic ? 20 : -20} duration={0.5}
             className="space-y-6">
@@ -323,7 +326,9 @@ const Contact = () => {
                   loading
                     ? 'bg-gradient-to-r from-[rgb(var(--accent))] to-[rgb(var(--accent-hover))] cursor-not-allowed opacity-70'
                     : 'bg-gradient-to-r from-[rgb(var(--accent))] to-[rgb(var(--accent-hover))] hover:shadow-lg hover:shadow-[rgb(var(--accent))]/50'
-                } text-[rgb(var(--on-scrim))]`}>
+                } text-[rgb(var(--primary-foreground))]`}>
+                {/* Ink on copper, as .btn-primary: the light on-scrim text
+                    was 2.2–2.7:1 on this gradient in the dark theme. */}
                 {loading ? t('contact.form.sending') : t('contact.form.submit')}
               </m.button>
             </form>

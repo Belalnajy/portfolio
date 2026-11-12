@@ -1,69 +1,24 @@
 "use client";
-import { useState, useEffect, useRef } from 'react';
 import Image from 'next/image';
-import { useInView, useReducedMotion } from 'framer-motion';
 import Reveal from './Reveal';
+import SectionHeading from './SectionHeading';
 import { revealDelay } from '../lib/motion';
-import { FACTS } from '../lib/facts';
-import {
-  FaBriefcase,
-  FaGraduationCap,
-  FaMapMarkerAlt,
-  FaUserCog,
-  FaLayerGroup,
-  FaLanguage,
-} from 'react-icons/fa';
+import { FaBriefcase, FaMapMarkerAlt, FaLayerGroup, FaArrowRight, FaArrowLeft } from 'react-icons/fa';
 import { useTranslation, Trans } from 'react-i18next';
 import { getTechIcon } from './Projects';
 import { coverMeta } from '../lib/cover-meta';
 
-const PORTRAIT = '/hero.webp';
-
-/**
- * Renders the final value on the server and counts up only as an enhancement,
- * so the prerendered HTML never ships zeros (see the old AnimatedStats notes).
- */
-const Counter = ({ end, duration = 2 }) => {
-  const [count, setCount] = useState(end);
-  const [animating, setAnimating] = useState(false);
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true });
-  const prefersReducedMotion = useReducedMotion();
-
-  useEffect(() => {
-    if (prefersReducedMotion) return;
-    setCount(0);
-    setAnimating(true);
-  }, [prefersReducedMotion]);
-
-  useEffect(() => {
-    if (!animating || !isInView) return;
-    let startTime;
-    let frame;
-    const step = (timestamp) => {
-      if (!startTime) startTime = timestamp;
-      const progress = (timestamp - startTime) / (duration * 1000);
-      if (progress < 1) {
-        setCount(Math.floor(end * progress));
-        frame = requestAnimationFrame(step);
-      } else {
-        setCount(end);
-      }
-    };
-    frame = requestAnimationFrame(step);
-    return () => cancelAnimationFrame(frame);
-  }, [end, duration, isInView, animating]);
-
-  // Fixed locale keeps the digits Latin in both languages, matching the design.
-  return <span ref={ref}>{count.toLocaleString('en-US')}</span>;
-};
+// A black-and-white studio portrait on a dark backdrop. It sits on a mat (the
+// cell's padding) with a hairline ring, so on the light theme's white cards it
+// reads as a framed photo rather than a dark hole in the page.
+const PORTRAIT = '/portrait.webp';
 
 const CORE_STACK = ['Next.js', 'React', 'NestJS', 'Laravel', 'Django', 'PostgreSQL', 'TypeScript', 'Tailwind'];
 
 /** One cell of the bento. `span` carries the lg grid classes. */
-const Cell = ({ span = '', index = 0, className = '', children }) => (
+const Cell = ({ span = '', index = 0, pad = 'p-6', className = '', children }) => (
   <Reveal y={20} delay={revealDelay(index)}
-    className={`glass-card rounded-2xl border border-[rgb(var(--border))]/60 p-6 text-start ${span} ${className}`}>
+    className={`glass-card rounded-2xl border border-[rgb(var(--border))]/60 ${pad} text-start ${span} ${className}`}>
     {children}
   </Reveal>
 );
@@ -76,63 +31,49 @@ const CellLabel = ({ icon, children }) => (
 );
 
 const About = () => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const portrait = coverMeta(PORTRAIT);
-
-  const stats = [
-    { value: FACTS.projects, label: t('stats.projects') },
-    { value: FACTS.clients, label: t('stats.clients') },
-    { value: FACTS.students, label: t('stats.students') },
-    { value: FACTS.technologies, label: t('stats.technologies') },
-  ];
-
-  const highlights = [
-    { icon: <FaUserCog />, title: t('about.highlights.sole_developer.title'), desc: t('about.highlights.sole_developer.desc') },
-    { icon: <FaLayerGroup />, title: t('about.highlights.multi_tenant.title'), desc: t('about.highlights.multi_tenant.desc') },
-    { icon: <FaLanguage />, title: t('about.highlights.arabic_first.title'), desc: t('about.highlights.arabic_first.desc') },
-  ];
+  const home = i18n.language === 'ar' ? '/ar' : '';
+  const Arrow = i18n.language === 'ar' ? FaArrowLeft : FaArrowRight;
 
   const emphasis = {
     1: <span className="text-[rgb(var(--primary))] font-semibold" />,
     3: <span className="text-[rgb(var(--primary))] font-semibold" />,
   };
 
+  // The short version for the home page: who, where, now, the core stack.
+  // The full story (every role, the platform suite, education) is on /cv.
   return (
-    <section id="about" className="py-24 relative">
-      <div className="container mx-auto px-6 relative z-10 max-w-6xl">
-        <Reveal y={20} duration={0.5}
-          className="mb-14 text-start">
-          <h2 className="font-display text-display-lg font-bold text-[rgb(var(--foreground))] mb-3">
-            {t('about.title')}
-          </h2>
-          <p className="text-[rgb(var(--muted-foreground))] max-w-2xl text-lg">
-            {t('about.subtitle')}
-          </p>
-        </Reveal>
+    <section id="about" className="py-20 md:py-24 relative">
+      <div className="shell relative z-10">
+        <SectionHeading title={t('about.title')} subtitle={t('about.subtitle')} />
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-12 gap-4">
-          {/* Portrait */}
-          <Cell span="sm:col-span-1 lg:col-span-4 lg:row-span-2" index={0} className="p-0 overflow-hidden relative min-h-[320px]">
-            <Image
-              src={PORTRAIT}
-              alt={t('about.values.name')}
-              width={portrait.w}
-              height={portrait.h}
-              sizes="(min-width: 1024px) 360px, (min-width: 640px) 50vw, 100vw"
-              placeholder={portrait.blur ? 'blur' : 'empty'}
-              blurDataURL={portrait.blur}
-              className="absolute inset-0 w-full h-full object-cover"
-            />
-            <div className="absolute inset-x-0 bottom-0 scrim-b p-5 pt-16">
-              <p className="text-[rgb(var(--on-scrim))] font-display font-bold text-2xl">
-                {t('about.values.name')}
-              </p>
-              <p className="text-[rgb(var(--on-scrim-muted))] text-sm">{t('about.values.role')}</p>
+          {/* Portrait. The crop favours the top of the frame: a centred crop
+              cut the hair off in the short phone cell. */}
+          <Cell span="sm:col-span-1 lg:col-span-4 lg:row-span-2" index={0} pad="p-2">
+            <div className="relative h-full min-h-[304px] rounded-xl overflow-hidden ring-1 ring-[rgb(var(--border-control))]/25">
+              <Image
+                src={PORTRAIT}
+                alt={t('about.portrait_alt')}
+                width={portrait.w}
+                height={portrait.h}
+                sizes="(min-width: 1024px) 360px, (min-width: 640px) 50vw, 100vw"
+                placeholder={portrait.blur ? 'blur' : 'empty'}
+                blurDataURL={portrait.blur}
+                className="absolute inset-0 w-full h-full object-cover object-[50%_15%]"
+              />
+              <div className="absolute inset-x-0 bottom-0 scrim-b p-5 pt-16">
+                <p className="text-[rgb(var(--on-scrim))] font-display font-bold text-2xl">
+                  {t('about.values.name')}
+                </p>
+                <p className="text-[rgb(var(--on-scrim-muted))] text-sm">{t('about.values.role')}</p>
+              </div>
             </div>
           </Cell>
 
           {/* Professional summary */}
-          <Cell span="sm:col-span-1 lg:col-span-8 lg:row-span-2" index={1} className="space-y-4">
+          <Cell span="sm:col-span-1 lg:col-span-8" index={1} className="space-y-4">
             <CellLabel icon={<FaBriefcase />}>{t('about.professional_summary')}</CellLabel>
             <p className="text-[rgb(var(--foreground))] leading-relaxed">
               <Trans i18nKey="about.summary_p1" components={emphasis} />
@@ -140,9 +81,12 @@ const About = () => {
             <p className="text-[rgb(var(--foreground))] leading-relaxed">
               <Trans i18nKey="about.summary_p2" components={emphasis} />
             </p>
-            <p className="text-[rgb(var(--foreground))] leading-relaxed">
-              <Trans i18nKey="about.summary_p3" components={emphasis} />
-            </p>
+            <a
+              href={`${home}/cv#experience`}
+              className="inline-flex items-center gap-2 min-h-[44px] text-sm font-semibold text-[rgb(var(--primary))] hover:underline underline-offset-4">
+              {t('about.cv_link')}
+              <Arrow aria-hidden="true" className="text-xs" />
+            </a>
           </Cell>
 
           {/* Now */}
@@ -171,26 +115,8 @@ const About = () => {
             </p>
           </Cell>
 
-          {/* Education */}
-          <Cell span="sm:col-span-2 lg:col-span-4" index={4}>
-            <CellLabel icon={<FaGraduationCap />}>{t('about.labels.education')}</CellLabel>
-            <p className="font-semibold text-[rgb(var(--foreground))]">{t('about.values.education')}</p>
-            <p className="text-sm text-[rgb(var(--muted-foreground))] mt-1">{t('about.bento.langs_value')}</p>
-          </Cell>
-
-          {/* Stats */}
-          {stats.map((stat, i) => (
-            <Cell key={stat.label} span="sm:col-span-1 lg:col-span-3" index={i} className="text-center sm:text-start">
-              <p className="font-display text-4xl md:text-5xl font-bold text-[rgb(var(--foreground))]">
-                <Counter end={stat.value} />
-                <span className="text-[rgb(var(--accent-vivid))]">+</span>
-              </p>
-              <p className="text-sm text-[rgb(var(--muted-foreground))] mt-2">{stat.label}</p>
-            </Cell>
-          ))}
-
           {/* Core stack */}
-          <Cell span="sm:col-span-2 lg:col-span-12" index={2}>
+          <Cell span="sm:col-span-2 lg:col-span-12" index={4}>
             <CellLabel icon={<FaLayerGroup />}>{t('about.bento.stack_title')}</CellLabel>
             <div className="flex flex-wrap gap-2">
               {CORE_STACK.map((tech) => (
@@ -203,17 +129,6 @@ const About = () => {
               ))}
             </div>
           </Cell>
-
-          {/* Highlights */}
-          {highlights.map((item, i) => (
-            <Cell key={item.title} span="sm:col-span-2 lg:col-span-4" index={i}>
-              <div className="inline-flex items-center justify-center w-11 h-11 rounded-xl bg-[rgb(var(--muted))]/40 border border-[rgb(var(--border))] text-[rgb(var(--muted-foreground))] text-lg mb-4">
-                {item.icon}
-              </div>
-              <h3 className="font-bold text-[rgb(var(--foreground))] mb-1.5">{item.title}</h3>
-              <p className="text-sm text-[rgb(var(--muted-foreground))] leading-relaxed">{item.desc}</p>
-            </Cell>
-          ))}
         </div>
       </div>
     </section>

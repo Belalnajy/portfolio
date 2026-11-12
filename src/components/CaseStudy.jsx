@@ -159,19 +159,18 @@ const CaseStudyContent = ({ slug, narrative, image, liveUrl, appStoreUrl, stack,
             {copy.summary}
           </Reveal>
 
-          {/* Fact strip */}
+          {/* Fact strip: one panel split by hairlines rather than three
+              floating cards of uneven height. Stacked on phones, a row from
+              sm up; the dividers are logical, so they sit right in RTL. */}
           <Reveal as="dl" immediate y={16} duration={0.6} delay={0.15}
-            className="grid grid-cols-1 sm:grid-cols-3 gap-3 mt-9 text-start"
+            className="grid grid-cols-1 sm:grid-cols-3 mt-9 text-start glass-card rounded-2xl border border-[rgb(var(--border))]/60 divide-y sm:divide-y-0 sm:divide-x divide-[rgb(var(--border))]/60"
           >
             {['role', 'scope', 'audience'].map((fact) => (
-              <div
-                key={fact}
-                className="glass-card rounded-xl border border-[rgb(var(--border))]/50 p-4"
-              >
-                <dt className="text-[11px] font-bold uppercase tracking-wider text-[rgb(var(--muted-foreground))] mb-1">
+              <div key={fact} className="px-5 py-4">
+                <dt className="text-[11px] font-bold uppercase tracking-wider text-[rgb(var(--primary))] mb-1.5">
                   {t(`case_studies.facts.${fact}`)}
                 </dt>
-                <dd className="text-sm font-semibold text-[rgb(var(--foreground))]">
+                <dd className="text-sm font-medium leading-snug text-[rgb(var(--foreground))]">
                   {copy.facts[fact]}
                 </dd>
               </div>

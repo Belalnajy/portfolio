@@ -15,7 +15,7 @@ const PERSON_JSON_LD = {
   // freelance handles use, so every way people type the name maps to one entity.
   alternateName: ['بلال ناجي', 'بلال ناجى', 'Belal Najy'],
   url: SITE_URL,
-  image: `${SITE_URL}/hero.webp`,
+  image: `${SITE_URL}/portrait.webp`,
   jobTitle: 'Software Engineer & Full-Stack Developer',
   description:
     `Full-stack developer in Alexandria, Egypt. Software Engineer at ezSec Inc (Canada, remote) and co-founder of Indstrz. ${FACTS.projects} projects for ${FACTS.clients} clients across Egypt and the Gulf: Next.js, Laravel, NestJS, Node.js, Django, PostgreSQL, with Arabic and RTL support in every project.`,

@@ -267,7 +267,7 @@ const ProjectModal = ({ project, isOpen, onClose }) => {
                               key={i}
                               className="flex items-center gap-2 bg-[rgb(var(--background))] px-3 py-1.5 rounded-lg border border-[rgb(var(--border))]/50 text-xs sm:text-sm font-medium text-[rgb(var(--foreground))]"
                             >
-                              <span>{getTechIcon(tag)}</span>
+                              {getTechIcon(tag)}
                               <span>{tag}</span>
                             </div>
                           ))}

@@ -1,15 +1,15 @@
 'use client';
-import { FaGithub, FaLinkedin, FaDownload, FaArrowDown, FaStar, FaCheckCircle, FaMapMarkerAlt } from 'react-icons/fa';
+import { FaGithub, FaLinkedin, FaArrowDown, FaStar, FaCheckCircle, FaMapMarkerAlt, FaRegClock } from 'react-icons/fa';
 import MagneticButton from './MagneticButton';
-import PlatformLinks from './PlatformLinks';
 import { useTranslation } from 'react-i18next';
-import { useSite } from './SiteShell';
 import { useCtaVariant } from '../lib/use-cta-variant';
 import { FACTS } from '../lib/facts';
 
 /**
- * Type-first hero with a freelance proof panel. The name is the artwork
- * (uppercase display type, so no descenders to clip); the panel answers the
+ * Type-first hero with a freelance proof panel. The H1 is the offer, not the
+ * name: a visitor (and a search engine) reads what Belal does before who he
+ * is. There is one primary action, getting in touch, with the reply-time
+ * promise beside it; everything else is a quieter link. The panel answers the
  * first question a visitor from a freelance platform asks — can I trust this
  * freelancer? Everything animates with CSS keyframes rather than framer
  * `initial` props so the server markup ships visible and the LCP (the
@@ -17,7 +17,6 @@ import { FACTS } from '../lib/facts';
  */
 const Hero = () => {
   const { t } = useTranslation();
-  const { downloadCV } = useSite();
   const { ctaVariant, trackCtaClick } = useCtaVariant();
 
   return (
@@ -29,12 +28,15 @@ const Hero = () => {
       <div className="absolute -top-40 start-1/4 w-[36rem] h-[36rem] bg-[rgb(var(--accent))]/8 rounded-full blur-[140px] pointer-events-none" aria-hidden="true" />
       
 
-      <div className="container mx-auto px-6 relative z-10 flex-1 flex flex-col justify-center pt-28 pb-12">
+      <div className="shell relative z-10 flex-1 flex flex-col justify-center pt-28 pb-24">
+        {/* pb-24: the floating controls sit in the bottom corners (the FAQ
+            launcher at the end from md, the theme toggle at the start from
+            xl), and at 1024px the launcher covered the panel's corner. */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-8 items-center">
           {/* ============ Type column ============ */}
           <div className="lg:col-span-8 text-start">
             {/* Status row */}
-            <div className="animate-fadeInUp flex flex-wrap items-center gap-3 mb-8" style={{ animationDelay: '0.05s' }}>
+            <div className="animate-fadeInUp flex flex-wrap items-center gap-3 mb-7" style={{ animationDelay: '0.05s' }}>
               <span className="inline-flex items-center gap-2.5 px-4 py-2 rounded-full bg-[rgb(var(--success))]/10 border border-[rgb(var(--success))]/30 text-[rgb(var(--foreground))] text-sm font-medium">
                 <span className="relative flex h-2.5 w-2.5">
                   <span className="absolute inline-flex h-full w-full rounded-full bg-[rgb(var(--success))] opacity-75 animate-ping" />
@@ -54,73 +56,91 @@ const Hero = () => {
               </span>
             </div>
 
-            {/* The wordmark. Uppercase Latin display type carries no
-                descenders, so nothing can clip; Arabic keeps its case and
-                gets its own scale/leading from the CSS. */}
-            <h1 className="font-display text-display-xl font-bold uppercase mb-8">
-              <span className="block text-[rgb(var(--foreground))]">{t('hero.greeting_start')}</span>
-              <span className="block text-gradient-copper">{t('hero.name')}</span>
+            {/* Who, as a quiet line above the offer. */}
+            <p className="animate-riseIn font-display text-xl sm:text-2xl font-bold text-[rgb(var(--foreground))] mb-4" style={{ animationDelay: '0.1s' }}>
+              {t('hero.greeting_start')}
+              <span className="text-gradient-copper">{t('hero.name')}</span>
+            </p>
+
+            {/* The offer is the page's heading. */}
+            <h1 className="font-display text-display-lg font-bold text-[rgb(var(--foreground))] mb-6 max-w-3xl">
+              {t('hero.headline')}
             </h1>
 
-            {/* Role line */}
+            {/* Role line. The proof (projects, clients) is the stat card in
+                the panel beside it, so it is not repeated here. */}
             <p
-              className="animate-riseIn text-sm sm:text-base font-semibold tracking-[0.25em] uppercase text-[rgb(var(--primary))] mb-6"
+              className="animate-riseIn text-sm sm:text-base font-semibold tracking-[0.25em] uppercase text-[rgb(var(--primary))] mb-8"
               style={{ animationDelay: '0.18s' }}>
               {t('hero.role_line')}
             </p>
 
-            {/* Value proposition */}
-            <p
-              className="animate-riseIn text-lg sm:text-xl text-[rgb(var(--foreground))] leading-relaxed max-w-2xl mb-10"
-              style={{ animationDelay: '0.24s' }}>
-              {t('hero.description_1')}
-              <span className="text-[rgb(var(--primary))] font-semibold">{t('hero.description_2')}</span>
-              {t('hero.description_3')}
-              <span className="text-[rgb(var(--primary))] font-semibold">{t('hero.description_4')}</span>
-              {t('hero.description_5')}
-            </p>
-
-            {/* CTAs + socials */}
+            {/* One primary action, then quieter links on the same row. The CV
+                download lives in the nav and the drawer. */}
+            {/* data-hero-cta: while this row is on screen the floating
+                contact dock stays hidden (FloatingActions), so it never
+                covers the hero's own call to action. */}
             <div
-              className="animate-fadeInUp flex flex-wrap items-center gap-4"
+              data-hero-cta
+              className="animate-fadeInUp flex flex-wrap items-center gap-x-3 gap-y-2"
               style={{ animationDelay: '0.3s' }}>
-              <MagneticButton
-                href="#projects"
-                className="bg-[rgb(var(--primary))] text-[rgb(var(--accent-contrast))] px-8 py-3.5 rounded-xl font-semibold hover:bg-[rgb(var(--primary))]/90 transition-all inline-flex items-center">
-                {t('hero.view_projects')}
-              </MagneticButton>
+              {/* A/B-tested wording: which framing gets a freelance visitor to
+                  reach out — direct hire vs. project outcome. The cta_click
+                  placement was 'hero_panel' until 2026-11-12, when this button
+                  replaced the panel's; from then on it is 'hero_main'. Compare
+                  the two periods with that in mind. */}
               <MagneticButton
                 href="#contact"
                 onClick={() => trackCtaClick('hero_main')}
-                className="border border-[rgb(var(--border-control))] text-[rgb(var(--foreground))] px-8 py-3.5 rounded-xl font-semibold hover:border-[rgb(var(--primary))] hover:text-[rgb(var(--primary))] transition-all inline-flex items-center">
-                {t('hero.contact_me')}
+                className="bg-gradient-to-r from-[rgb(var(--accent))] to-[rgb(var(--accent-hover))] hover:from-[rgb(var(--accent-hover))] hover:to-[rgb(var(--accent))] text-[rgb(var(--accent-contrast))] px-8 py-2 min-h-[52px] rounded-xl font-semibold leading-snug shadow-lg transition-all inline-flex items-center justify-center me-3">
+                {/* Both wordings share one grid cell, the inactive one
+                    invisible, so the button is as wide as the longer wording
+                    in either language. The server renders A and the stored
+                    arm swaps in after hydration; nothing on the row moves. */}
+                <span className="grid w-full place-items-center text-center">
+                  <span className="col-start-1 row-start-1">
+                    {t(ctaVariant === 'b' ? 'hero.hire_me_b' : 'hero.hire_me')}
+                  </span>
+                  <span aria-hidden="true" className="col-start-1 row-start-1 invisible">
+                    {t(ctaVariant === 'b' ? 'hero.hire_me' : 'hero.hire_me_b')}
+                  </span>
+                </span>
               </MagneticButton>
-              <MagneticButton
-                onClick={downloadCV}
-                className="text-[rgb(var(--muted-foreground))] px-4 py-3.5 rounded-xl font-semibold hover:text-[rgb(var(--foreground))] transition-all inline-flex items-center gap-2">
-                <FaDownload className="text-sm" />
-                {t('hero.download_cv')}
-              </MagneticButton>
-
-              <span className="hidden sm:block w-px h-8 bg-[rgb(var(--border))]" aria-hidden="true" />
-
               <a
-                href="https://github.com/Belalnajy"
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="GitHub"
-                className="p-3 rounded-xl border border-[rgb(var(--border))] text-[rgb(var(--muted-foreground))] hover:text-[rgb(var(--foreground))] hover:border-[rgb(var(--primary))] transition-all">
-                <FaGithub className="w-5 h-5" />
+                href="#projects"
+                className="inline-flex items-center min-h-[44px] px-2 text-sm font-semibold text-[rgb(var(--foreground))] underline decoration-[rgb(var(--border-control))] underline-offset-4 hover:text-[rgb(var(--primary))] hover:decoration-[rgb(var(--primary))] transition-colors">
+                {t('hero.view_projects')}
               </a>
-              <a
-                href="https://linkedin.com/in/belalnajy"
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="LinkedIn"
-                className="p-3 rounded-xl border border-[rgb(var(--border))] text-[rgb(var(--muted-foreground))] hover:text-[#0A66C2] hover:border-[rgb(var(--primary))] transition-all">
-                <FaLinkedin className="w-5 h-5" />
-              </a>
+
+              {/* The profiles stay together: they never wrap apart. */}
+              <span className="inline-flex items-center gap-1 whitespace-nowrap">
+                <span className="hidden sm:block w-px h-6 me-2 bg-[rgb(var(--border))]" aria-hidden="true" />
+                <a
+                  href="https://github.com/Belalnajy"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="GitHub"
+                  className="inline-flex items-center justify-center w-11 h-11 rounded-xl text-[rgb(var(--muted-foreground))] hover:text-[rgb(var(--foreground))] transition-colors">
+                  <FaGithub className="w-5 h-5" />
+                </a>
+                <a
+                  href="https://linkedin.com/in/belalnajy"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="LinkedIn"
+                  className="inline-flex items-center justify-center w-11 h-11 rounded-xl text-[rgb(var(--muted-foreground))] hover:text-[#0A66C2] transition-colors">
+                  <FaLinkedin className="w-5 h-5" />
+                </a>
+              </span>
             </div>
+
+            {/* The reply-time promise, right under the main call to action. */}
+            <p
+              className="animate-fadeInUp mt-3 inline-flex items-center gap-2 text-sm text-[rgb(var(--muted-foreground))]"
+              style={{ animationDelay: '0.36s' }}>
+              <FaRegClock aria-hidden="true" className="text-[rgb(var(--primary))]" />
+              {t('contact.reply_time')}
+            </p>
           </div>
 
           {/* ============ Freelance proof panel ============ */}
@@ -129,9 +149,6 @@ const Hero = () => {
             style={{ animationDelay: '0.2s' }}
             aria-label={t('hero.freelance_title')}>
             <div className="relative glass-card rounded-2xl border border-[rgb(var(--border))] p-6 sm:p-7 text-start overflow-hidden">
-              {/* Copper wash in the corner */}
-              
-
               <p className="text-[11px] font-bold uppercase tracking-[0.25em] text-[rgb(var(--primary))] mb-4 flex items-center gap-2">
                 <FaCheckCircle />
                 {t('hero.freelance_title')}
@@ -154,7 +171,7 @@ const Hero = () => {
               </p>
 
               {/* Mini stats */}
-              <div className="grid grid-cols-2 gap-3 mb-5">
+              <div className="grid grid-cols-2 gap-3">
                 <div className="rounded-xl bg-[rgb(var(--muted))]/30 border border-[rgb(var(--border))]/60 p-3">
                   <p className="font-display text-2xl font-bold text-[rgb(var(--foreground))]" dir="ltr">
                     {FACTS.projects}<span className="text-[rgb(var(--accent-vivid))]">+</span>
@@ -168,19 +185,6 @@ const Hero = () => {
                   <p className="text-xs text-[rgb(var(--muted-foreground))] mt-0.5">{t('stats.clients')}</p>
                 </div>
               </div>
-
-              {/* A/B-tested wording: which framing gets a freelance visitor to
-                  reach out — direct hire vs. project outcome. */}
-              <a
-                href="#contact"
-                onClick={() => trackCtaClick('hero_panel')}
-                className="flex items-center justify-center w-full min-h-[48px] px-5 rounded-xl font-semibold bg-gradient-to-r from-[rgb(var(--accent))] to-[rgb(var(--accent-hover))] hover:from-[rgb(var(--accent-hover))] hover:to-[rgb(var(--accent))] text-[rgb(var(--accent-contrast))] shadow-lg transition-all active:scale-[0.98] mb-5">
-                {t(ctaVariant === 'b' ? 'hero.hire_me_b' : 'hero.hire_me')}
-              </a>
-
-              {/* The platforms themselves, tappable */}
-              <p className="text-[rgb(var(--muted-foreground))] text-xs mb-2">{t('hero.follow_me')}</p>
-              <PlatformLinks variant="compact" />
             </div>
           </aside>
         </div>
@@ -188,7 +192,7 @@ const Hero = () => {
 
       {/* Scroll cue */}
       <a
-        href="#about"
+        href="#projects"
         className="relative z-10 mx-auto mb-6 flex flex-col items-center justify-center gap-2 min-h-[44px] min-w-[44px] px-2 text-[rgb(var(--muted-foreground))] hover:text-[rgb(var(--primary))] transition-colors animate-fadeInUp"
         style={{ animationDelay: '0.5s' }}
         aria-label={t('hero.scroll')}>

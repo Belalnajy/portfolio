@@ -1,11 +1,13 @@
 "use client";
 import { useEffect, useRef, useState } from 'react';
-import Reveal from './Reveal';
+import SectionHeading from './SectionHeading';
 import { useTranslation } from 'react-i18next';
 import { FaPause, FaPlay } from 'react-icons/fa';
 import { CASE_STUDIES } from '../lib/case-studies';
 
-// [file, intrinsic width, intrinsic height]. The size goes on the <img> so the
+// [file, intrinsic width, intrinsic height, flag?]. 'white': a white mark,
+// drawn dark on the light theme; 'dim': a navy or purple mark, drawn light on
+// the dark theme (see .logo-white / .logo-dim in globals.css). The size goes on the <img> so the
 // browser knows each logo's shape before the file arrives; the CSS box still
 // decides how large it is drawn. The files are sized for the largest box they
 // are drawn in (192x80 CSS px on desktop at 2x with the hover zoom, 112x64 on
@@ -13,9 +15,9 @@ import { CASE_STUDIES } from '../lib/case-studies';
 const logos = [
   ['toyo228-logo.webp', 329, 223],
   ['motors-logo.webp', 112, 118],
-  ['injaz-logo.webp', 192, 192],
+  ['injaz-logo.webp', 192, 192, 'dim'],
   ['hcholding-logo.webp', 200, 188],
-  ['mutlq-logo.webp', 192, 192],
+  ['mutlq-logo.webp', 192, 192, 'dim'],
   ['mada-logo.webp', 182, 192],
   ['bilqalam-logo.webp', 400, 151],
   ['medicta-logo.webp', 400, 45],
@@ -24,20 +26,20 @@ const logos = [
   ['DiaMonitor-logo.webp', 194, 59],
   ['KMBC-logo.webp', 243, 192],
   ['amarna-logo.webp', 400, 118],
-  ['baserah-logo.webp', 400, 111],
-  ['dmagni-logo.webp', 192, 192],
+  ['baserah-logo.webp', 400, 111, 'white'],
+  ['dmagni-logo.webp', 192, 192, 'dim'],
   ['indstrz-logo.webp', 384, 154],
-  ['manqla-logo.webp', 166, 46],
-  ['nextstop-logo.webp', 192, 192],
+  ['manqla-logo.webp', 166, 46, 'white'],
+  ['nextstop-logo.webp', 192, 192, 'dim'],
   ['opptmakers-logo.webp', 120, 120],
-  ['profleet-logo.webp', 192, 192],
+  ['profleet-logo.webp', 192, 192, 'dim'],
   ['quotemate-logo.webp', 256, 103],
   ['rabzan-logo.svg', 1920, 1080],
   ['sf-logo.webp', 288, 91],
   ['sonomedix-logo.webp', 195, 192],
   ['uduipa-logo.webp', 100, 100],
   ['upafa-edu-logo.webp', 192, 192],
-  ['waferlee.webp', 261, 80],
+  ['waferlee.webp', 261, 80, 'white'],
 ];
 
 const half = Math.ceil(logos.length / 2);
@@ -96,19 +98,19 @@ const MarqueeRow = ({ items, direction }) => {
       <div className="absolute top-0 right-0 w-20 md:w-40 h-full bg-gradient-to-l from-[rgb(var(--background))] to-transparent z-20 pointer-events-none"></div>
 
       <div className={`flex w-max gap-4 md:gap-8 px-2 md:px-4 ${animationClass}`}>
-        {duplicatedItems.map(([logo, width, height], index) => (
+        {duplicatedItems.map(([logo, width, height, flag], index) => (
           <div
             key={index}
             aria-hidden={index >= items.length ? 'true' : undefined}
-            className="w-40 md:w-64 h-28 md:h-36 flex-shrink-0 relative group glass-card p-6 md:p-8 rounded-2xl flex justify-center items-center hover:bg-[rgb(var(--background))]/50 transition-all duration-300">
+            className={`logo-tile ${flag ? `logo-${flag}` : ''} w-40 md:w-64 h-28 md:h-36 flex-shrink-0 relative group glass-card p-5 md:p-7 rounded-2xl flex justify-center items-center transition-colors duration-300`}>
             <img
               src={`/logos/${logo}`}
               alt={index >= items.length ? '' : logoName(logo)}
               width={width}
               height={height}
               // w-auto/h-auto: the width/height attributes only describe the
-              // file; the box must still hug the logo, because in dark mode
-              // .logo-mark paints a light plate behind exactly that box.
+              // file; the CSS box decides the drawn size. In dark mode the
+              // tile itself is the plate (.logo-tile in globals.css).
               className="logo-mark w-auto h-auto max-w-full max-h-full object-contain group-hover:scale-110"
               loading="lazy"
             />
@@ -147,7 +149,7 @@ const BrandLogos = () => {
       ref={sectionRef}
       data-offscreen={offscreen || undefined}
       data-paused={paused || undefined}
-      className="py-24 relative overflow-hidden"
+      className="py-16 md:py-20 relative overflow-hidden"
       id="brands">
       {/* Injecting CSS Keyframes directly for the Marquee */}
       <style>
@@ -183,22 +185,15 @@ const BrandLogos = () => {
         `}
       </style>
 
-      {/* Background ambiance */}
-      
-      
-      <div className="container mx-auto px-0 md:px-4 relative z-10 w-full max-w-[100vw]">
-        <Reveal y={30} duration={0.7}
-          className="text-center mb-16 md:mb-20 px-4">
-          <span className="text-[rgb(var(--primary))] font-bold tracking-widest uppercase text-sm mb-4 block">
-            {t('brands.label')}
-          </span>
-          <h2 className="text-4xl md:text-5xl lg:text-6xl font-black mb-6 text-[rgb(var(--foreground))] tracking-tight">
-            {t('brands.title')}
-          </h2>
-          <p className="text-[rgb(var(--muted-foreground))] max-w-2xl mx-auto text-lg leading-relaxed font-medium">
-            {t('brands.subtitle')}
-          </p>
-        </Reveal>
+      {/* The heading shares the page column; the marquee below runs wider. */}
+      <div className="shell relative z-10">
+        <SectionHeading
+          title={t('brands.title')}
+          subtitle={t('brands.subtitle')}
+        />
+      </div>
+
+      <div className="bleed container mx-auto px-0 md:px-4 relative z-10 w-full max-w-[100vw]">
 
         {/* The Marquee Display */}
         <div className="flex flex-col gap-4 w-full">

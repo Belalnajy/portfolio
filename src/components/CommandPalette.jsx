@@ -62,7 +62,8 @@ const CommandPalette = () => {
     const home = isArabic ? '/ar' : '';
     const sections = [
       { id: 'about', label: t('nav.about'), href: `${home}/#about` },
-      { id: 'experience', label: t('nav.timeline'), href: `${home}/#experience` },
+      { id: 'experience', label: t('nav.timeline'), href: `${home}/cv#experience` },
+      { id: 'suite', label: t('nav.suite'), href: `${home}/cv#platform-suite` },
       { id: 'work', label: t('nav.projects'), href: `${home}/work` },
       { id: 'services', label: t('nav.services'), href: `${home}/services` },
       { id: 'now', label: t('nav.now'), href: `${home}/now` },

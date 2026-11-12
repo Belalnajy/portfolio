@@ -24,7 +24,7 @@ const PROFESSIONAL_SERVICE_JSON_LD = {
   name: 'بلال ناجي | خدمات تطوير الويب المتكاملة',
   alternateName: 'Belal Nagy | Full-Stack Development Services',
   url: `${SITE_URL}/ar/services`,
-  image: `${SITE_URL}/hero.webp`,
+  image: `${SITE_URL}/portrait.webp`,
   description:
     'خدمات تطوير ويب متكاملة من بلال ناجي: بناء منصات من الصفر (SaaS ومنصات تعليمية ومتاجر إلكترونية)، هندسة باك إند وذكاء اصطناعي، تعريب وواجهات RTL، استلام وإصلاح المشاريع المتوقفة، والأمان والـ DevOps.',
   address: {

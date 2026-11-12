@@ -2,6 +2,7 @@
 import { useMemo } from 'react';
 import { revealDelay } from '../lib/motion';
 import Reveal from './Reveal';
+import SectionHeading from './SectionHeading';
 import { FaLaptopCode, FaGraduationCap, FaBriefcase, FaCalendarAlt, FaMapMarkerAlt } from 'react-icons/fa';
 import { useTranslation } from 'react-i18next';
 import { asArray } from '../lib/as-array';
@@ -154,15 +155,8 @@ const InteractiveTimeline = () => {
 
   return (
     <section id="experience" className="py-20 relative overflow-hidden text-start">
-      <div className="container mx-auto px-4 relative z-10">
-        <Reveal y={20} duration={0.5} className="text-center mb-16">
-          <h2 className="text-5xl font-bold mb-4 text-[rgb(var(--foreground))]">
-            {t('timeline.title')}
-          </h2>
-          <p className="text-[rgb(var(--muted-foreground))] max-w-2xl mx-auto text-lg leading-relaxed">
-            {t('timeline.subtitle')}
-          </p>
-        </Reveal>
+      <div className="container mx-auto px-6 relative z-10">
+        <SectionHeading className="max-w-3xl lg:max-w-6xl mx-auto" title={t('timeline.title')} subtitle={t('timeline.subtitle')} />
 
         {/* One list, two layouts. From `lg` up it is a bento grid, so the
             whole career is legible at a glance and tile size carries the

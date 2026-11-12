@@ -1,5 +1,20 @@
 @import 'tailwindcss';
 
+/* The one page column every section shares: 72rem of content plus the 1.5rem
+   gutters, centred. Equivalent to `container px-6` with an inner max-w-6xl,
+   but in one class, so no section can end up with its own left edge. */
+@utility shell {
+  width: 100%;
+  max-width: 75rem;
+  margin-inline: auto;
+  padding-inline: 1.5rem;
+}
+/* Steps in with Tailwind's container below xl, so a .shell section and a
+   `container` section start at the same x at every width, not only at 1440. */
+@media (min-width: 40rem) and (max-width: 47.99rem) { .shell { max-width: 40rem; } }
+@media (min-width: 48rem) and (max-width: 63.99rem) { .shell { max-width: 48rem; } }
+@media (min-width: 64rem) and (max-width: 79.99rem) { .shell { max-width: 64rem; } }
+
 /* Glassmorphism utilities */
 @layer utilities {
   /* Surfaces derive from the palette rather than raw white/black alpha, so
@@ -75,6 +90,55 @@
   :root:not([data-theme='light']) .logo-mark:hover,
   :root:not([data-theme='light']) .group:hover .logo-mark {
     background-color: rgb(255 255 255);
+  }
+
+  /* The client-logo wall (BrandLogos) in the dark theme. A light plate
+     hugging each mark made a patchwork of bright rectangles, and white parts
+     of a logo vanished on it. Instead every tile is one even, mid-dark slate
+     (about #5A6573 once over the page): black marks still read on it (about
+     3.4:1) and white ones clearly (about 6:1), and it stays quieter than the
+     content around it. Marks keep their colour at 90%. */
+  :root:not([data-theme='light']) .logo-tile {
+    background: rgb(112 124 140 / 0.62);
+    border-color: rgb(112 124 140 / 0.35);
+  }
+  :root:not([data-theme='light']) .logo-tile:hover {
+    background: rgb(112 124 140 / 0.75);
+  }
+  :root:not([data-theme='light']) .logo-tile .logo-mark {
+    background-color: transparent;
+    padding: 0;
+    filter: none;
+    opacity: 0.9;
+  }
+  :root:not([data-theme='light']) .logo-tile:hover .logo-mark {
+    opacity: 1;
+  }
+  /* Per-logo flags from BrandLogos.jsx. A white mark ('white') would vanish
+     on the light theme's white tiles, and a navy or purple one ('dim') on the
+     dark theme's slate; each is drawn as a silhouette in the theme where it
+     would vanish, so every tile stays the same and every mark reads. */
+  :root[data-theme='light'] .logo-white .logo-mark {
+    filter: brightness(0);
+    opacity: 0.8;
+  }
+  :root:not([data-theme='light']) .logo-dim .logo-mark {
+    filter: brightness(0) invert(1);
+    opacity: 0.85;
+  }
+  :root[data-theme='light'] .logo-white:hover .logo-mark,
+  :root:not([data-theme='light']) .logo-dim:hover .logo-mark {
+    opacity: 1;
+  }
+
+  /* A technology mark in a dark brand colour (Django, Nx, OpenAI, Prisma):
+     true to the brand on the light theme, lifted towards white on the dark
+     one, where the raw colour would sink into the background. */
+  .brand-lift {
+    color: var(--brand);
+  }
+  :root:not([data-theme='light']) .brand-lift {
+    color: color-mix(in srgb, var(--brand) 55%, white);
   }
 
   /* Visible focus in both themes. Design: keep a focus indicator at least
@@ -720,21 +784,15 @@
     letter-spacing: -0.02em;
   }
 
-  /* Fluid display scale: the wordmark hugs the viewport without media queries. */
-  .text-display-xl {
-    font-size: clamp(2.75rem, 8vw, 6.75rem);
-    line-height: 1.08;
-    padding-bottom: 0.08em;
-  }
-  /* Arabic script carries deep descenders and diacritics; give it room. */
-  [dir='rtl'] .text-display-xl {
-    font-size: clamp(2.5rem, 7vw, 5.5rem);
-    line-height: 1.5;
-    padding-bottom: 0.1em;
-  }
+  /* Fluid display scale: headlines hug the viewport without media queries. */
   .text-display-lg {
     font-size: clamp(2rem, 5.5vw, 4rem);
-    line-height: 1.05;
+    line-height: 1.08;
+  }
+  /* The hero's offer and the /rescue title run to two or three lines; Arabic
+     needs the room between them for its descenders and diacritics. */
+  [dir='rtl'] .text-display-lg {
+    line-height: 1.45;
   }
 
   /* Copper gradient fill for display text. */
@@ -884,6 +942,25 @@
 .focus-card:has(:focus-visible) {
   outline: 2px solid rgb(var(--accent));
   outline-offset: 3px;
+}
+
+/* From 768 to 1279px the contact dock (FloatingActions) floats in the bottom
+   end corner, where it sat on project descriptions. Where the page column
+   reaches within 80px of the edge, both gutters grow to keep it clear: the
+   column stays centred, and the padding falls back to the usual 1.5rem once
+   the column's own margin is wide enough (880px, then 1136px). Section
+   backgrounds and the logo marquee (.bleed) still run to the edge. */
+@media (min-width: 768px) and (max-width: 1023.98px) {
+  .site-main .shell,
+  .site-main .container:not(.bleed) {
+    padding-inline: max(1.5rem, calc(464px - 50vw));
+  }
+}
+@media (min-width: 1024px) and (max-width: 1279.98px) {
+  .site-main .shell,
+  .site-main .container:not(.bleed) {
+    padding-inline: max(1.5rem, calc(592px - 50vw));
+  }
 }
 
 /* The phone contact dock steps aside while the menu or the FAQ panel is

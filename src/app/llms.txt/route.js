@@ -58,13 +58,14 @@ NestJS، Node.js، Django، PostgreSQL، ويدعم العربية والـ RTL 
 
 ## Main pages
 
-- [Home (English)](${SITE_URL}/): who Belal is, experience timeline, flagship projects and contact
+- [Home (English)](${SITE_URL}/): what Belal builds, four flagship projects, client reviews, how a project starts, a short about, FAQ and contact
 - [Home (Arabic)](${SITE_URL}/ar): the same site, fully in Arabic (every page also exists under /ar)
 - [Work](${SITE_URL}/work): the complete archive of ${FACTS.archive} projects (${FACTS.projects} client projects, counting his co-founded venture Indstrz; the rest ITI training, event and learning projects) with skills and certifications
 - [Services & packages](${SITE_URL}/services): what Belal offers, the delivery process and pricing packages
 - [Legacy Code Rescue](${SITE_URL}/rescue): the dedicated page for taking over stuck or abandoned projects: audit first, stabilize, no forced rewrite
 - [Now](${SITE_URL}/now): what he is focused on right now, updated regularly
 - [Blog](${SITE_URL}/blog): engineering write-ups from shipped projects
+- [CV](${SITE_URL}/cv): the CV in the browser, with the full experience timeline (#experience) and the one-engine LMS platform suite (#platform-suite)
 - [CV (PDF)](${SITE_URL}/Belal_Nagy_CV.pdf)
 - [Full site content (llms-full.txt)](${SITE_URL}/llms-full.txt): every article, case study and FAQ answer as plain markdown, in one file
 

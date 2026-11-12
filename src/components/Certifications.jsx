@@ -1,6 +1,7 @@
 "use client";
 import { m, AnimatePresence } from 'framer-motion';
 import Reveal from './Reveal';
+import SectionHeading from './SectionHeading';
 import { revealDelay, REVEAL_DURATION } from '../lib/motion';
 import { useState, useMemo, useRef } from 'react';
 import { useFocusTrap } from '../lib/useFocusTrap';
@@ -134,16 +135,8 @@ const Certifications = () => {
 
   return (
     <section id="certifications" className="py-20 relative">
-      <div className="container mx-auto px-4 relative z-10">
-        <Reveal y={20} duration={0.5}
-          className="text-center mb-16">
-          <h2 className="text-5xl font-bold mb-4 text-[rgb(var(--foreground))]">
-            {t('certifications.title')}
-          </h2>
-          <p className="text-[rgb(var(--muted-foreground))] text-lg max-w-2xl mx-auto">
-            {t('certifications.subtitle')}
-          </p>
-        </Reveal>
+      <div className="container mx-auto px-6 relative z-10">
+        <SectionHeading className="max-w-6xl mx-auto" title={t('certifications.title')} subtitle={t('certifications.subtitle')} />
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
           {certificates.map((cert, index) => (

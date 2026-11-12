@@ -32,7 +32,7 @@ const FaqAssistant = () => {
     setIsOpen(true);
   };
 
-  // The phone dock owns the only visible launcher on small screens; it asks
+  // Below xl the contact dock owns the only visible launcher; it asks
   // for the panel with an event so neither component has to know the other.
   useEffect(() => {
     const open = () => {
@@ -481,7 +481,7 @@ const FaqAssistant = () => {
   };
 
   return (
-    <div className="fixed bottom-[calc(max(1rem,env(safe-area-inset-bottom))+4.5rem)] md:bottom-24 end-4 md:end-6 z-[9999] flex flex-col items-end">
+    <div className="fixed bottom-[calc(max(1rem,env(safe-area-inset-bottom))+4.5rem)] md:bottom-6 xl:bottom-24 end-4 md:end-6 z-[9999] flex flex-col items-end">
       <AnimatePresence>
         {isOpen && (
           <m.div
@@ -694,7 +694,7 @@ const FaqAssistant = () => {
         // Only while the panel exists: it is unmounted when closed.
         aria-controls={isOpen ? 'faq-panel' : undefined}
         aria-label={t('faq.tooltip')}
-        className="hidden md:flex w-14 h-14 bg-gradient-to-r from-[rgb(var(--accent))] to-[rgb(var(--accent-hover))] rounded-full items-center justify-center text-[rgb(var(--accent-contrast))] shadow-lg relative group">
+        className="hidden xl:flex w-14 h-14 bg-gradient-to-r from-[rgb(var(--accent))] to-[rgb(var(--accent-hover))] rounded-full items-center justify-center text-[rgb(var(--accent-contrast))] shadow-lg relative group">
         <AnimatePresence mode="wait">
           {isOpen ? (
             <m.div

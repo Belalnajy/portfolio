@@ -1,5 +1,7 @@
 'use client';
 import SiteShell from '../SiteShell';
+import InteractiveTimeline from '../InteractiveTimeline';
+import PlatformSuite from '../PlatformSuite';
 import { useTranslation } from 'react-i18next';
 import { FaDownload, FaPrint, FaEnvelope, FaGlobe, FaGithub, FaLinkedin, FaMapMarkerAlt } from 'react-icons/fa';
 import { track } from '@vercel/analytics';
@@ -85,7 +87,9 @@ const CvContent = ({ bundle }) => {
       {/* The sheet. `cv-sheet` is what the print stylesheet keeps. */}
       <article className="cv-sheet glass-card print:bg-transparent print:border-0 print:shadow-none rounded-2xl border border-[rgb(var(--border))]/60 p-6 sm:p-10">
         <header className="pb-5 mb-6 border-b border-[rgb(var(--border))]">
-          <h2 className="font-display text-3xl font-bold text-[rgb(var(--foreground))]">
+          {/* The name is written in Latin on both CVs; lang="en" keeps the
+              display face's tracking, which :lang(ar) resets. */}
+          <h2 lang="en" className="font-display text-3xl font-bold text-[rgb(var(--foreground))]">
             {cv.contact.name}
           </h2>
           <p className="text-[rgb(var(--primary))] font-semibold mt-1">{cv.contact.role}</p>
@@ -195,10 +199,19 @@ const CvContent = ({ bundle }) => {
 /**
  * A CV a recruiter can read without downloading anything, printed straight
  * from the browser onto A4, and built from the same data as the PDF.
+ *
+ * Below the sheet, on screen only: the interactive experience timeline and
+ * the platform suite, which moved here from the home page. Their section ids
+ * (#experience, #platform-suite) are what the nav, footer and command
+ * palette link to.
  */
 const CvPage = ({ lang, bundle }) => (
   <SiteShell lang={lang} bundle={bundle}>
     <CvContent bundle={bundle} />
+    <div className="print:hidden">
+      <InteractiveTimeline />
+      <PlatformSuite />
+    </div>
   </SiteShell>
 );
 

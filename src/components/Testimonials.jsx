@@ -9,7 +9,7 @@ import {
   FaChevronRight,
   FaExternalLinkAlt,
 } from "react-icons/fa";
-import PlatformLinks from "./PlatformLinks";
+import SectionHeading from "./SectionHeading";
 import { useTranslation } from 'react-i18next';
 
 const SERVICE_TITLE = "تصميم وتطوير موقع ويب كامل واحترافي | Full Stack Web";
@@ -64,7 +64,12 @@ const TESTIMONIALS_CONFIG = [
   { key: 'ahmed_e', name: "Ahmed E.", date: '2026-01-18', platform: "Khamsat", link: "https://khamsat.com/user/belalnajy/reviews/1072456" },
 ];
 
-const Testimonials = () => {
+/**
+ * `variant="page"`: on /testimonials the page's own h1 and subtitle introduce
+ * the reviews, so the section heading is left out (it used to say the same
+ * thing twice, one under the other); the rating summary stays.
+ */
+const Testimonials = ({ variant = 'section' }) => {
   const { t, i18n } = useTranslation();
   const isArabic = i18n.language === 'ar';
   const [activeIndex, setActiveIndex] = useState(0);
@@ -149,17 +154,18 @@ const Testimonials = () => {
   };
 
   return (
-    <section id="testimonials" className="py-20 relative text-start">
+    <section id="testimonials" className={`${variant === 'page' ? 'pt-8 pb-20' : 'py-20'} relative text-start`}>
       <div className="container mx-auto px-6 relative z-10">
+        {variant !== 'page' && (
+          <SectionHeading
+            className="max-w-6xl mx-auto mb-6 md:mb-8"
+            title={t('testimonials.title')}
+            subtitle={t('testimonials.subtitle')}
+          />
+        )}
         <Reveal y={20} duration={0.5}
-          className="text-center mb-16">
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 text-[rgb(var(--foreground))]">
-            {t('testimonials.title')}
-          </h2>
-          <p className="text-[rgb(var(--muted-foreground))] max-w-2xl mx-auto text-lg mb-4 leading-relaxed">
-            {t('testimonials.subtitle')}
-          </p>
-          <div className="flex items-center justify-center gap-6 flex-wrap">
+          className="max-w-6xl mx-auto">
+          <div className="flex items-center gap-x-6 gap-y-3 flex-wrap">
             <div className="flex items-center gap-2">
               <div className="flex gap-1">
                 {[...Array(5)].map((_, i) =>
@@ -182,7 +188,7 @@ const Testimonials = () => {
         </Reveal>
 
         <Reveal y={20} duration={0.5} delay={0.3}
-          className="mt-16">
+          className="mt-10 max-w-6xl mx-auto">
           <div className="relative">
             {/* initial={false}: the first card is simply there in the server
                 HTML (it used to slide in at page load, far below the fold,
@@ -234,8 +240,10 @@ const Testimonials = () => {
                       rel="noopener noreferrer"
                       whileHover={{ scale: 1.02, y: -2 }}
                       whileTap={{ scale: 0.98 }}
-                      className={`flex items-center justify-center gap-2 w-full md:w-auto px-6 py-3 mb-10 rounded-xl bg-[rgb(var(--primary))] text-[rgb(var(--accent-contrast))] font-semibold hover:shadow-xl transition-all`}>
-                      <FaExternalLinkAlt />
+                      // An outline button: the page's filled copper is for
+                      // its one primary action, getting in touch.
+                      className="inline-flex items-center justify-center gap-2 w-full sm:w-auto min-h-[44px] px-5 mb-10 rounded-xl border border-[rgb(var(--primary))]/40 text-[rgb(var(--primary))] text-sm font-semibold hover:bg-[rgb(var(--primary))]/10 transition-colors">
+                      <FaExternalLinkAlt aria-hidden="true" className="text-xs" />
                       <span>
                         {t('testimonials.view_review', { platform: testimonials[activeIndex].platform })}
                       </span>
@@ -266,7 +274,7 @@ const Testimonials = () => {
 
                     <div className="flex items-center gap-4">
                       {testimonials[activeIndex].platform && (
-                        <span className="px-5 py-2 rounded-xl bg-[rgb(var(--card))]/5 text-[rgb(var(--primary))] text-sm font-bold border border-[rgb(var(--border))] tracking-wide uppercase">
+                        <span lang="en" className="px-5 py-2 rounded-xl bg-[rgb(var(--card))]/5 text-[rgb(var(--primary))] text-sm font-bold border border-[rgb(var(--border))] tracking-wide uppercase">
                           {testimonials[activeIndex].platform}
                         </span>
                       )}
@@ -347,20 +355,12 @@ const Testimonials = () => {
                 <p className="text-xs text-[rgb(var(--foreground))] font-bold text-center truncate mb-1">
                   <bdi lang={scriptLang(testimonial.name)}>{testimonial.name}</bdi>
                 </p>
-                <p className="text-[11px] text-[rgb(var(--muted-foreground))] text-center truncate uppercase">
+                <p lang="en" className="text-[11px] text-[rgb(var(--muted-foreground))] text-center truncate uppercase">
                   {testimonial.platform || '\u00A0'}
                 </p>
               </m.button>
             )}
           </div>
-
-          <Reveal y={20} duration={0.5} delay={0.3}
-            className="mt-24 text-center">
-            <h3 className="text-3xl font-bold mb-8 text-[rgb(var(--foreground))] tracking-tight">
-              {t('testimonials.follow_me')}
-            </h3>
-            <PlatformLinks variant="default" />
-          </Reveal>
         </Reveal>
       </div>
     </section>

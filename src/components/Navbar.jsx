@@ -125,19 +125,9 @@ const Navbar = () => {
       observerOptions,
     );
 
-    // Observe all sections
-    const sections = [
-      'home',
-      'about',
-      'projects',
-      'platform-suite',
-      'skills',
-      'experience',
-      'services',
-      'packages',
-      'testimonials',
-      'contact',
-    ];
+    // The sections of the home page, in order. The experience timeline and
+    // the platform suite live on /cv now, so they are not observed here.
+    const sections = ['home', 'projects', 'testimonials', 'how-we-start', 'about', 'faq', 'contact'];
     sections.forEach((sectionId) => {
       const element = document.getElementById(sectionId);
       if (element) {
@@ -164,15 +154,19 @@ const Navbar = () => {
   }, []);
   const onHome = pathname === '/' || pathname === '/ar';
 
+  // `mobileOnly` items live in the phone drawer only; the desktop bar keeps
+  // the short list. `menuLabel` is the drawer's longer wording, where the bar
+  // has no room for it.
   const navItems = [
     { label: t('nav.home'), href: `${home}/`, route: '/' },
     { label: t('nav.about'), href: `${home}/#about`, anchor: 'about' },
-    { label: t('nav.timeline'), href: `${home}/#experience`, anchor: 'experience' },
     { label: t('nav.projects'), href: `${home}/work`, route: '/work' },
     { label: t('nav.services'), href: `${home}/services`, route: '/services' },
+    { label: t('nav.rescue_short'), menuLabel: t('nav.rescue'), href: `${home}/rescue`, route: '/rescue' },
     { label: t('nav.now'), href: `${home}/now`, route: '/now' },
     { label: t('nav.blog'), href: `${home}/blog`, route: '/blog' },
-    { label: t('nav.suite'), href: `${home}/#platform-suite`, anchor: 'platform-suite', mobileOnly: true },
+    { label: t('nav.timeline'), href: `${home}/cv#experience`, mobileOnly: true },
+    { label: t('nav.suite'), href: `${home}/cv#platform-suite`, mobileOnly: true },
     { label: t('nav.testimonials'), href: `${home}/#testimonials`, anchor: 'testimonials', mobileOnly: true },
     { label: t('nav.contact'), href: `${home}/#contact`, anchor: 'contact' },
   ];
@@ -185,7 +179,7 @@ const Navbar = () => {
       const current = pathname.replace(/^\/ar(?=\/|$)/, '') || '/';
       return item.route === '/' ? current === '/' && activeSection === 'home' : current === item.route;
     }
-    return onHome && activeSection === item.anchor;
+    return Boolean(item.anchor) && onHome && activeSection === item.anchor;
   };
 
   return (
@@ -230,8 +224,13 @@ const Navbar = () => {
             className="flex items-center gap-3 min-h-11 cursor-pointer group relative">
               {/* The mark spells B at rest and rearranges into N on hover. */}
               <Logo size={34} className="shrink-0" />
-              <div className="relative">
-                <span className="relative text-2xl font-bold text-[rgb(var(--foreground))] tracking-tight flex items-center">
+              {/* Below 360px the wordmark is visually hidden (the mark and the
+                  link's accessible name stay): at 320 it pushed the menu
+                  button off the screen. */}
+              <div className="relative max-[359px]:sr-only">
+                {/* lang="en": on /ar the :lang(ar) reset would otherwise strip
+                    the Latin wordmark's tight tracking. */}
+                <span lang="en" className="relative text-xl sm:text-2xl font-bold text-[rgb(var(--foreground))] tracking-tight flex items-center whitespace-nowrap">
                   <span className="bg-gradient-to-r from-[rgb(var(--foreground))] via-[rgb(var(--primary))] to-[rgb(var(--foreground))] bg-clip-text text-transparent">
                     Belal Nagy
                   </span>
@@ -302,11 +301,12 @@ const Navbar = () => {
               <span>{isArabic ? 'EN' : 'عربي'}</span>
             </m.button>
 
-            {/* Resume Button */}
+            {/* Resume button: an outline pill. The filled copper is kept for
+                the one primary action on a page (the hero's contact CTA). */}
             <MagneticButton
               type="button"
               onClick={downloadCV}
-              className="group relative min-h-[44px] px-6 py-2 rounded-full bg-[rgb(var(--primary))] text-[rgb(var(--accent-contrast))] font-semibold overflow-hidden transition-all duration-300 hover:shadow-xl flex items-center gap-2">
+              className="group relative min-h-[44px] px-5 py-2 rounded-full border border-[rgb(var(--border-control))] text-[rgb(var(--foreground))] hover:border-[rgb(var(--primary))] hover:text-[rgb(var(--primary))] font-semibold overflow-hidden transition-colors duration-300 flex items-center gap-2">
               <span className="relative z-10 flex items-center gap-2">
                 <FaDownload className="text-sm" />
                 {t('nav.download_cv')}
@@ -423,7 +423,7 @@ const Navbar = () => {
                       <span aria-hidden="true" className="text-xs text-[rgb(var(--accent))] font-mono">
                         {String(index + 1).padStart(2, '0')}
                       </span>
-                      {item.label}
+                      {item.menuLabel ?? item.label}
                     </span>
 
                     {/* Arrow indicator */}

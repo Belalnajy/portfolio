@@ -1,4 +1,5 @@
 import { FaPlus } from 'react-icons/fa';
+import SectionHeading from './SectionHeading';
 import { FAQ_ITEMS } from '../content/faq';
 
 const HEADINGS = {
@@ -17,15 +18,10 @@ const HomeFaq = ({ lang = 'en' }) => {
 
   return (
     <section id="faq" className="py-20 relative text-start">
-      <div className="container mx-auto px-6 relative z-10 max-w-3xl">
-        <div className="text-center mb-12">
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 text-[rgb(var(--foreground))]">
-            {title}
-          </h2>
-          <p className="text-[rgb(var(--muted-foreground))] text-lg leading-relaxed">{subtitle}</p>
-        </div>
+      <div className="shell relative z-10">
+        <SectionHeading title={title} subtitle={subtitle} />
 
-        <div className="space-y-3">
+        <div className="space-y-3 max-w-3xl">
           {FAQ_ITEMS[lang].map(({ question, answer }) => (
             <details
               key={question}

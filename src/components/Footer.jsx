@@ -27,8 +27,9 @@ const Footer = () => {
     () => [
       { name: t('nav.home'), href: `${home}/` },
       { name: t('nav.about'), href: `${home}/#about` },
-      { name: t('nav.timeline'), href: `${home}/#experience` },
-      { name: t('nav.suite'), href: `${home}/#platform-suite` },
+      // The timeline and the platform suite moved off the home page to /cv.
+      { name: t('nav.timeline'), href: `${home}/cv#experience` },
+      { name: t('nav.suite'), href: `${home}/cv#platform-suite` },
       { name: t('nav.projects'), href: `${home}/work` },
       { name: t('nav.services'), href: `${home}/services` },
       { name: t('nav.now'), href: `${home}/now` },

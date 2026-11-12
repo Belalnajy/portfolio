@@ -1,7 +1,8 @@
 "use client";
 import { m } from "framer-motion";
 import Reveal from './Reveal';
-import { revealDelay, REVEAL_DURATION } from '../lib/motion';
+import SectionHeading from './SectionHeading';
+import { revealDelay } from '../lib/motion';
 import { useMemo } from "react";
 import {
   FaLaptopCode,
@@ -9,26 +10,10 @@ import {
   FaGlobe,
   FaShieldAlt,
   FaWrench,
-  FaComments,
-  FaDraftingCompass,
-  FaCode,
-  FaVial,
-  FaRocket,
-  FaLifeRing,
 } from "react-icons/fa";
+import ProcessSteps from './ProcessSteps';
 import { useTranslation } from 'react-i18next';
 import { asArray } from '../lib/as-array';
-
-// "How I work" lives inside Services as a compact strip rather than a
-// section of its own; #process keeps old links working.
-const PROCESS_STEPS = [
-  { key: 'discovery', icon: <FaComments /> },
-  { key: 'blueprint', icon: <FaDraftingCompass /> },
-  { key: 'build', icon: <FaCode /> },
-  { key: 'review', icon: <FaVial /> },
-  { key: 'launch', icon: <FaRocket /> },
-  { key: 'support', icon: <FaLifeRing /> },
-];
 
 const Services = () => {
   const { t, i18n } = useTranslation();
@@ -56,54 +41,49 @@ const Services = () => {
       <div className="container mx-auto px-6 relative z-10">
         {/* First viewport of /services: animated by CSS from the first paint,
             and moved rather than faded, so the heading never waits for
-            JavaScript (see Reveal). */}
-        <Reveal rise y={20} duration={0.5}
-          className="text-center mb-16">
-          {/* Only rendered on /services, where this is the page heading. */}
-          <h1 className="text-5xl font-bold mb-4 text-[rgb(var(--foreground))]">
-            {t('services.title')}
-          </h1>
-          <p className="text-[rgb(var(--muted-foreground))] max-w-2xl mx-auto text-lg leading-relaxed">
-            {t('services.subtitle')}
-          </p>
-        </Reveal>
+            JavaScript (see Reveal). Only rendered on /services, where this
+            is the page heading. */}
+        <SectionHeading
+          as="h1"
+          rise
+          className="max-w-6xl mx-auto"
+          title={t('services.title')}
+          subtitle={t('services.subtitle')}
+        />
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {/* A plain card grid: equal-height cards, nothing that pretends to be
+            clickable unless it is. Five services fill two rows on large
+            screens, the rescue card (the one with a page of its own) taking
+            the wider slot at the end. */}
+        <ul className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 max-w-6xl mx-auto">
           {services.map((service, index) => (
             <Reveal
-              as={m.div}
+              as="li"
               y={20}
               delay={revealDelay(index)}
-              key={index}
-              // Still read by Framer for the hover animation below.
-              transition={{ duration: REVEAL_DURATION, delay: revealDelay(index) }}
-              whileHover={{ y: -10, scale: 1.02 }}
-              className="glass-card glass-hover p-6 rounded-xl cursor-pointer group">
-              {/* Icon */}
-              <div className="mb-6 flex justify-start">
-                <div
-                  className={`inline-flex items-center justify-center w-16 h-16 rounded-xl bg-[rgb(var(--muted))]/50 border border-[rgb(var(--border))] text-[rgb(var(--foreground))] text-3xl shadow-lg group-hover:scale-110 transition-transform duration-300`}>
+              key={service.title}
+              className={`glass-card rounded-2xl border border-[rgb(var(--border))]/60 p-6 flex flex-col h-full text-start transition-colors hover:border-[rgb(var(--primary))]/40 ${
+                service.href ? 'md:col-span-2 lg:col-span-2' : ''
+              }`}>
+              <div className="flex items-center gap-4 mb-4">
+                <span
+                  aria-hidden="true"
+                  className="inline-flex shrink-0 items-center justify-center w-12 h-12 rounded-xl bg-[rgb(var(--muted))]/50 border border-[rgb(var(--border))] text-[rgb(var(--primary))] text-xl">
                   {service.icon}
-                </div>
+                </span>
+                <h2 className="text-lg sm:text-xl font-bold leading-snug text-[rgb(var(--foreground))]">
+                  {service.title}
+                </h2>
               </div>
 
-              {/* Title */}
-              <h2 className="text-2xl font-bold mb-3 text-[rgb(var(--foreground))] group-hover:text-[rgb(var(--primary))] transition-colors text-start">
-                {service.title}
-              </h2>
-
-              {/* Description */}
-              <p className="text-[rgb(var(--muted-foreground))] mb-4 leading-relaxed text-start">
-                {service.description}
+              <p className="text-sm text-[rgb(var(--muted-foreground))] leading-relaxed mb-5">
+                {service.desc}
               </p>
 
-              {/* Features */}
-              <ul className="space-y-2">
+              <ul className={`grid gap-2 mt-auto ${service.href ? 'sm:grid-cols-2 sm:gap-x-6' : ''}`}>
                 {service.features.map((feature, i) => (
-                  <li
-                    key={i}
-                    className="text-sm text-[rgb(var(--foreground))] flex items-start text-start">
-                    <span aria-hidden="true" className="text-[rgb(var(--muted-foreground))] me-2 mt-1">
+                  <li key={i} className="text-sm text-[rgb(var(--foreground))] flex items-start gap-2">
+                    <span aria-hidden="true" className="text-[rgb(var(--primary))] mt-0.5">
                       ✓
                     </span>
                     {feature}
@@ -114,62 +94,27 @@ const Services = () => {
               {service.href && (
                 <a
                   href={`${isArabic ? '/ar' : ''}${service.href}`}
-                  className="inline-flex items-center gap-2 min-h-11 mt-2 text-sm font-semibold text-[rgb(var(--primary))] hover:underline underline-offset-4">
+                  className="inline-flex items-center gap-2 min-h-11 mt-4 self-start text-sm font-semibold text-[rgb(var(--primary))] hover:underline underline-offset-4">
                   {t('services.rescue_cta')}
                 </a>
               )}
-
-              {/* Hover Effect Line */}
-              <div
-                className={`mt-6 h-1 w-0 group-hover:w-full bg-[rgb(var(--primary))] rounded-full transition-all duration-500`}
-              />
             </Reveal>
           ))}
+        </ul>
+
+        {/* How I work — six steps, one line each. #process keeps old links
+            working. */}
+        <div id="process" className="mt-20 scroll-mt-24 max-w-6xl mx-auto">
+          <SectionHeading
+            title={t('process.title')}
+            subtitle={t('process.subtitle')}
+          />
+          <ProcessSteps />
         </div>
-
-        {/* How I work — six steps, one line each */}
-        <Reveal y={20} duration={0.5}
-          id="process"
-          className="mt-20 scroll-mt-24">
-          <div className="text-center mb-10">
-            <span className="text-[rgb(var(--primary))] font-bold tracking-widest uppercase text-xs sm:text-sm mb-3 block">
-              {t('process.label')}
-            </span>
-            <h2 className="text-2xl sm:text-3xl font-bold text-[rgb(var(--foreground))] tracking-tight mb-3">
-              {t('process.title')}
-            </h2>
-            <p className="text-[rgb(var(--muted-foreground))] max-w-2xl mx-auto text-base leading-relaxed">
-              {t('process.subtitle')}
-            </p>
-          </div>
-
-          <ol className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-            {PROCESS_STEPS.map((step, index) => (
-              <Reveal as="li" y={16} delay={revealDelay(index)}
-                key={step.key}
-                className="relative flex gap-4 p-5 rounded-xl bg-[rgb(var(--muted))]/10 border border-[rgb(var(--border))]/50 hover:border-[rgb(var(--primary))]/40 transition-colors">
-                <span className="shrink-0 inline-flex items-center justify-center w-11 h-11 rounded-lg bg-[rgb(var(--muted))]/40 text-[rgb(var(--muted-foreground))] border border-[rgb(var(--border))] text-lg">
-                  {step.icon}
-                </span>
-                <div className="min-w-0">
-                  <h3 className="font-bold text-[rgb(var(--foreground))] leading-snug mb-1">
-                    {t(`process.steps.${step.key}.title`)}
-                  </h3>
-                  <p className="text-xs text-[rgb(var(--muted-foreground))] leading-relaxed mb-2">
-                    {t(`process.steps.${step.key}.desc`)}
-                  </p>
-                  <span className="inline-block text-[11px] font-semibold px-2.5 py-0.5 rounded-full bg-[rgb(var(--primary))]/10 text-[rgb(var(--primary))]">
-                    {t(`process.steps.${step.key}.deliverable`)}
-                  </span>
-                </div>
-              </Reveal>
-            ))}
-          </ol>
-        </Reveal>
 
         {/* CTA Section */}
         <Reveal y={20} duration={0.5} delay={0.2}
-          className="mt-16 text-center">
+          className="mt-16 text-center max-w-6xl mx-auto">
           <p className="text-[rgb(var(--muted-foreground))] text-lg mb-6">
             {t('services.ready')}
           </p>

@@ -30,11 +30,26 @@ import {
   SiFramer,
   SiLaravel,
   SiPhp,
+  SiDocker,
+  SiFirebase,
+  SiVercel,
+  SiRedux,
+  SiReactquery,
+  SiNx,
+  SiRadixui,
+  SiApple,
+  SiAppstore,
+  SiPwa,
+  SiCodemagic,
+  SiLeaflet,
+  SiPuppeteer,
+  SiTypeorm,
+  SiKnexdotjs,
+  SiGooglegemini,
 } from 'react-icons/si';
 import {
   FaGithub,
   FaExternalLinkAlt,
-  FaCode,
   FaHtml5,
   FaCss3Alt,
   FaJs,
@@ -57,6 +72,15 @@ import {
   FaMobileAlt,
   FaQuran,
   FaBug,
+  FaPlug,
+  FaUpload,
+  FaCreditCard,
+  FaLanguage,
+  FaSearch,
+  FaBell,
+  FaCogs,
+  FaSlidersH,
+  FaCubes,
 } from 'react-icons/fa';
 import { useTranslation } from 'react-i18next';
 import dynamic from 'next/dynamic';
@@ -68,7 +92,12 @@ import { coverMeta } from '../lib/cover-meta';
 import { CASE_STUDIES, CASE_STUDY_SLUGS } from '../lib/case-studies';
 import { asArray } from '../lib/as-array';
 import ProjectKindLabel from './ProjectKindLabel';
+import SectionHeading from './SectionHeading';
 
+// Every technology in the registry has a mark here: a brand icon where one
+// exists, otherwise a plain glyph for what it is (an upload, a payment, a
+// language). Anything missing renders as a neutral text chip (see
+// getTechIcon), never as a generic </> icon that says nothing.
 export const TECH_ICONS = {
   'HTML': FaHtml5,
   'CSS': FaCss3Alt,
@@ -90,55 +119,104 @@ export const TECH_ICONS = {
   'Socket.io': SiSocketdotio,
   'Node.js': SiNodedotjs,
   'Express.js': SiExpress,
-  'TypeORM': FaDatabase,
-  'Nx Monorepo': FaCode,
-  'Leaflet': SiOpenlayers,
-  'AI': FaCode,
+  'TypeORM': SiTypeorm,
+  'Nx Monorepo': SiNx,
+  'Leaflet': SiLeaflet,
+  'AI': FaRobot,
   'Flask': SiFlask,
-  'SQLAlchemy': FaDatabase,
+  // SQLAlchemy has a mark, but at icon size it is an unreadable smudge; it
+  // shows as a text chip instead.
   'Cloudinary': SiCloudinary,
   'Turborepo': SiTurborepo,
-  'Puppeteer': FaRobot,
+  'Puppeteer': SiPuppeteer,
   'QRCode': FaQrcode,
   'Recharts': FaChartLine,
-  'Knex.js': FaDatabase,
+  'Knex.js': SiKnexdotjs,
   'OpenAI': SiOpenai,
   'Vite': SiVite,
-  'Radix UI': FaCode,
+  'Radix UI': SiRadixui,
   'Nodemailer': FaEnvelope,
   'FastAPI': SiFastapi,
-  'Gemini': FaRobot,
+  'Gemini': SiGooglegemini,
   'Celery': SiCelery,
   'Redis': SiRedis,
   'Framer Motion': SiFramer,
-  'MyFatoorah': FaCode,
+  'MyFatoorah': FaCreditCard,
   'NELC': FaGraduationCap,
   'SCFHS': FaHospital,
-  'Multer': FaCode,
+  'Multer': FaUpload,
   'Excel Processing': FaFileExcel,
   'React Native': FaReact,
   'Android': FaAndroid,
   'Google Play': FaGooglePlay,
-  'REST API': FaCode,
+  'REST API': FaPlug,
   'Bug Fixing': FaBug,
   'UI/UX Redesign': FaMobileAlt,
   'Tajweed': FaQuran,
   'Laravel': SiLaravel,
   'PHP': SiPhp,
+  'Docker': SiDocker,
+  'Firebase': SiFirebase,
+  'Vercel': SiVercel,
+  'Vercel Serverless': SiVercel,
+  'Redux': SiRedux,
+  'React Query': SiReactquery,
+  'iOS': SiApple,
+  'App Store': SiAppstore,
+  'App Store Connect API': SiAppstore,
+  'PWA': SiPwa,
+  'Codemagic': SiCodemagic,
+  'Service Worker': FaCogs,
+  'Web Push': FaBell,
+  'SEO': FaSearch,
+  'RTL': FaLanguage,
+  'i18next': FaLanguage,
+  'CMS': FaCubes,
+  'Customization': FaSlidersH,
+};
+
+/** Rough perceived lightness (0–1) of a #RRGGBB colour. */
+const lightness = (hex) => {
+  const [r, g, b] = [1, 3, 5].map((i) => parseInt(hex.slice(i, i + 2), 16) / 255);
+  return 0.2126 * r + 0.7152 * g + 0.0722 * b;
 };
 
 /**
  * Renders a technology mark in its own brand colour, sourced from
  * src/lib/brand-colors.js. Anything without a known brand colour falls back to
- * --brand-neutral, which follows the palette.
+ * --brand-neutral, which follows the palette. A technology with no mark at
+ * all returns null: where the name is written beside the mark that is
+ * enough, and icon-only rows use TechMark, which shows a text chip instead.
  */
 export const getTechIcon = (tech) => {
-  const Icon = TECH_ICONS[tech] || FaCode;
+  const Icon = TECH_ICONS[tech];
+  if (!Icon) return null;
   const color = brandColor(tech);
-  return color ? (
-    <Icon style={{ color }} />
+  if (!color) return <Icon className="text-[rgb(var(--brand-neutral))]" />;
+  const l = lightness(color);
+  // Black marks (Next.js, Express, Vercel) are monochrome brands: drawn in
+  // the text colour, as those brands show themselves on dark backgrounds.
+  if (l < 0.12) return <Icon className="text-[rgb(var(--foreground))]" />;
+  // Dark but coloured (Django, Nx, OpenAI, Prisma): the brand hue, lifted
+  // towards white in the dark theme only (.brand-lift in globals.css).
+  if (l < 0.25) return <Icon className="brand-lift" style={{ '--brand': color }} />;
+  return <Icon style={{ color }} />;
+};
+
+/**
+ * One technology in an icon-only row: the mark, named for assistive tech and
+ * on hover, or a small neutral chip with the name when there is no mark.
+ */
+const TechMark = ({ tech, className = '' }) => {
+  const icon = getTechIcon(tech);
+  return icon ? (
+    <span title={tech} role="img" aria-label={tech} className={className}>
+      {icon}
+    </span>
   ) : (
-    <Icon className="text-[rgb(var(--brand-neutral))]" />
+    <span className="inline-flex items-center px-2 py-0.5 rounded-md border border-[rgb(var(--border))] bg-[rgb(var(--muted))]/30 text-[11px] font-medium leading-5 text-[rgb(var(--muted-foreground))]" dir="ltr">
+      {tech}
+    </span>
   );
 };
 
@@ -288,16 +366,13 @@ const ProjectCard = ({ project, index, onClick, headingAs: CardHeading = 'h3' })
         </p>
 
         {/* Minimal Tech Icons only (No redundant text pills) */}
-        <div className="flex flex-wrap gap-3 mt-auto relative z-10 pointer-events-none">
-          {project.tags.slice(0, 6).map((tech, i) => (
-            <div
-              key={i}
-              title={tech}
-              role="img"
-              aria-label={tech}
-              className="text-lg opacity-70 group-hover:opacity-100 transition-opacity">
-              {getTechIcon(tech)}
-            </div>
+        <div className="flex flex-wrap items-center gap-3 mt-auto relative z-10 pointer-events-none">
+          {project.tags.slice(0, 6).map((tech) => (
+            <TechMark
+              key={tech}
+              tech={tech}
+              className="text-lg opacity-70 group-hover:opacity-100 transition-opacity"
+            />
           ))}
           {project.tags.length > 6 && (
             <span className="text-xs text-[rgb(var(--muted-foreground))] flex items-center font-medium">
@@ -378,11 +453,9 @@ const FeaturedRow = ({ project, index, onClick, isArabic, headingAs: RowHeading 
         <p className="text-[rgb(var(--muted-foreground))] leading-relaxed mb-5">
           {project.description}
         </p>
-        <div className="flex flex-wrap gap-3 mb-6 text-lg">
+        <div className="flex flex-wrap items-center gap-3 mb-6 text-lg">
           {project.tags.slice(0, 6).map((tech) => (
-            <span key={tech} title={tech} role="img" aria-label={tech}>
-              {getTechIcon(tech)}
-            </span>
+            <TechMark key={tech} tech={tech} />
           ))}
         </div>
         <div className="flex flex-wrap gap-3">
@@ -407,10 +480,12 @@ const FeaturedRow = ({ project, index, onClick, isArabic, headingAs: RowHeading 
               <span className="sr-only">: {project.title}</span>
             </a>
           )}
+          {/* No padding of its own: when it wraps under the buttons its text
+              lines up with their edge, not 20px inside it. */}
           <button
             type="button"
             onClick={() => onClick(project)}
-            className="inline-flex items-center min-h-[44px] px-5 py-2.5 rounded-xl font-semibold text-sm text-[rgb(var(--muted-foreground))] hover:text-[rgb(var(--foreground))] transition-colors">
+            className="inline-flex items-center min-h-[44px] px-0 font-semibold text-sm text-[rgb(var(--muted-foreground))] hover:text-[rgb(var(--foreground))] transition-colors">
             {t('projects.view_details')}
             <span className="sr-only">: {project.title}</span>
           </button>
@@ -546,25 +621,23 @@ const Projects = ({ variant = 'full' }) => {
   }, [hasMoreGrid, gridLimit]);
 
   return (
-    <section id="projects" className="py-20 relative min-h-screen">
-      <div className="container mx-auto px-4 relative z-10">
-        {/* On /work this is the top of the page, so it animates from the first
-            paint without a fade; on the home page it is a scroll reveal. */}
-        <Reveal y={20} duration={0.5} rise={!isHome}
-          className="text-center mb-16">
-          {/* The page heading on /work; a section heading under the home hero. */}
-          <Heading className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 text-[rgb(var(--foreground))]">
-            {t(isHome ? 'projects.title' : 'projects.archive_title')}
-          </Heading>
-          <p className="text-[rgb(var(--muted-foreground))] max-w-2xl mx-auto text-lg">
-            {t('projects.subtitle')}
-          </p>
-        </Reveal>
+    <section id="projects" className={`py-20 relative ${isHome ? '' : 'min-h-screen'}`}>
+      <div className="container mx-auto px-6 relative z-10">
+        {/* On /work this is the top of the page and its h1, so it moves from
+            the first paint without a fade; on the home page it is a section
+            heading and a scroll reveal. */}
+        <SectionHeading
+          as={Heading}
+          rise={!isHome}
+          className="max-w-6xl mx-auto"
+          title={t(isHome ? 'projects.title' : 'projects.archive_title')}
+          subtitle={t('projects.subtitle')}
+        />
 
         {/* Filter & Search - Premium Segmented Control */}
         {!isHome && (
         <Reveal y={20} duration={0.5} delay={0.2} immediate
-          className="mb-12 flex flex-col md:flex-row gap-6 items-center justify-between max-w-5xl mx-auto">
+          className="mb-12 flex flex-col md:flex-row gap-6 items-center justify-between max-w-6xl mx-auto">
           {/* Segmented control — wraps into rows on phones instead of scrolling
               off-screen, so every category stays reachable. */}
           <div

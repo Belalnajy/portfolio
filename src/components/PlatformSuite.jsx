@@ -3,10 +3,10 @@ import { Fragment, useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
 import { m, useScroll, useTransform, useReducedMotion } from 'framer-motion';
 import Reveal from './Reveal';
+import SectionHeading from './SectionHeading';
 import { revealDelay, REVEAL_DURATION } from '../lib/motion';
 import { useTranslation } from 'react-i18next';
 import {
-  FaLayerGroup,
   FaPalette,
   FaExternalLinkAlt,
   FaServer,
@@ -118,24 +118,12 @@ const PlatformSuite = () => {
 
   return (
     <section id="platform-suite" className="py-16 md:py-24 relative overflow-hidden">
-      {/* Background ambiance */}
-      
-
-      <div className="container mx-auto px-4 relative z-10">
-        <Reveal y={30} duration={0.6}
-          className="text-center mb-16"
-        >
-          <span className="inline-flex items-center gap-2 text-[rgb(var(--primary))] font-bold tracking-widest uppercase text-sm mb-4">
-            <FaLayerGroup />
-            {t('platform_suite.label')}
-          </span>
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 text-[rgb(var(--foreground))] tracking-tight">
-            {t('platform_suite.title')}
-          </h2>
-          <p className="text-[rgb(var(--muted-foreground))] max-w-3xl mx-auto text-lg leading-relaxed">
-            {t('platform_suite.subtitle')}
-          </p>
-        </Reveal>
+      <div className="container mx-auto px-6 relative z-10">
+        <SectionHeading
+          className="max-w-6xl mx-auto"
+          title={t('platform_suite.title')}
+          subtitle={t('platform_suite.subtitle')}
+        />
 
         {/* One engine → three brands, told by the scroll */}
         <EngineStory />

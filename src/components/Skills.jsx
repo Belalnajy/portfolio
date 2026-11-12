@@ -2,6 +2,7 @@
 import { useState, useMemo } from 'react';
 import { m } from 'framer-motion';
 import Reveal from './Reveal';
+import SectionHeading from './SectionHeading';
 import { revealDelay, REVEAL_DURATION } from '../lib/motion';
 import {
   FaCode,
@@ -179,17 +180,11 @@ const Skills = () => {
   return (
     <section id="skills" className="py-20">
       <div className="container mx-auto px-6">
-        <Reveal y={20} duration={0.5}
-          className="text-center mb-12">
-          <h2 className="text-5xl font-bold mb-4 text-[rgb(var(--foreground))]">{t('skills.title')}</h2>
-          <p className="text-[rgb(var(--muted-foreground))] max-w-2xl mx-auto">
-            {t('skills.subtitle')}
-          </p>
-        </Reveal>
+        <SectionHeading className="max-w-6xl mx-auto" title={t('skills.title')} subtitle={t('skills.subtitle')} />
 
         {/* Category Filter Tabs */}
         <Reveal y={20} duration={0.5} delay={0.2}
-          className="flex flex-wrap justify-center gap-3 mb-12">
+          className="flex flex-wrap gap-3 mb-12 max-w-6xl mx-auto">
           {filterTabs.map((tab, index) => (
             <Reveal
               as={m.button}
