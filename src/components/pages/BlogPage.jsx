@@ -1,15 +1,20 @@
 'use client';
 import Link from 'next/link';
-import { motion } from 'framer-motion';
+import Reveal from '../Reveal';
 import { FaArrowRight, FaArrowLeft } from 'react-icons/fa';
-import { REVEAL_VIEWPORT, revealDelay, REVEAL_DURATION } from '../../lib/motion';
+import { revealDelay } from '../../lib/motion';
 import { useTranslation } from 'react-i18next';
 import SiteShell from '../SiteShell';
 import { BLOG_POSTS, BLOG_SLUGS } from '../../lib/blog';
 
 const formatDate = (iso, lang) =>
-  new Intl.DateTimeFormat(lang === 'ar' ? 'ar' : 'en', {
+  // `-u-nu-latn`: Arabic month names with Western digits, as everywhere else
+  // on the site (Arabic-Indic digits are not used).
+  new Intl.DateTimeFormat(lang === 'ar' ? 'ar-u-nu-latn' : 'en', {
     dateStyle: 'long',
+    // The ISO date is midnight UTC; without this a reader west of UTC gets the
+    // previous day, which is wrong and does not match the prerendered HTML.
+    timeZone: 'UTC',
   }).format(new Date(iso));
 
 /**
@@ -25,10 +30,10 @@ const BlogContent = () => {
 
   return (
     <div className="container mx-auto px-6 max-w-3xl pt-36 pb-24">
-      <motion.header
-        initial={{ opacity: 0, y: 16 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5 }}
+      {/* First viewport: a CSS animation that runs from the first paint and
+          moves without fading, so the page's largest text is on screen before
+          any JavaScript has loaded (see Reveal). */}
+      <Reveal as="header" rise y={16} duration={0.5}
         className="text-start mb-14">
         <h1 className="font-display text-display-lg font-bold text-[rgb(var(--foreground))] mb-3">
           {t('blog_page.title')}
@@ -36,23 +41,19 @@ const BlogContent = () => {
         <p className="text-lg text-[rgb(var(--muted-foreground))] leading-relaxed">
           {t('blog_page.subtitle')}
         </p>
-      </motion.header>
+      </Reveal>
 
       <div className="space-y-6">
         {BLOG_SLUGS.map((slug, index) => {
           const post = BLOG_POSTS[slug];
           const copy = (isArabic && post.ar) || post.en;
           return (
-            <motion.article
-              key={slug}
-              initial={{ opacity: 0, y: 24 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={REVEAL_VIEWPORT}
-              transition={{ duration: REVEAL_DURATION, delay: revealDelay(index) }}>
+            <Reveal as="article" y={24} delay={revealDelay(index)}
+              key={slug}>
               <Link
                 href={`${home}/blog/${slug}`}
                 className="group block glass-card rounded-2xl border border-[rgb(var(--border))]/60 hover:border-[rgb(var(--primary))]/40 p-6 sm:p-8 text-start transition-colors">
-                <p className="text-xs font-mono text-[rgb(var(--muted-foreground))]/80 mb-3">
+                <p className="text-xs font-mono text-[rgb(var(--muted-foreground))] mb-3">
                   {formatDate(post.date, i18n.language)} ·{' '}
                   {t('blog_page.minutes', { count: post.minutes })}
                 </p>
@@ -77,7 +78,7 @@ const BlogContent = () => {
                   </span>
                 </div>
               </Link>
-            </motion.article>
+            </Reveal>
           );
         })}
       </div>

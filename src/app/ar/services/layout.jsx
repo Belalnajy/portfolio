@@ -1,29 +1,18 @@
-import { OG_IMAGE, SITE_URL } from '../../layout';
-import { PERSON_ID } from '../../../lib/site';
+import { pageMetadata } from '../../../lib/metadata';
+import { SITE_URL, PERSON_ID } from '../../../lib/site';
+import JsonLd from '../../../components/JsonLd';
 
-export const metadata = {
-  title: 'الخدمات والباكدجات',
+export const metadata = pageMetadata({
+  lang: 'ar',
+  path: '/services',
+  title: 'الخدمات والباقات',
   description:
-    'خدمات تطوير Full-Stack: بناء من الصفر، هندسة AI وباك إند، تعريب و RTL، واستلام الأكواد القائمة، بعملية واضحة وباكدجات شفافة.',
-  alternates: {
-    canonical: '/ar/services',
-    languages: { en: '/services', ar: '/ar/services', 'x-default': '/services' },
-  },
-  openGraph: {
-    type: 'website',
-    url: '/ar/services',
-    locale: 'ar_SA',
-    title: 'الخدمات والباكدجات | بلال ناجي',
-    description: 'خدمات تطوير Full-Stack بعملية واضحة وباكدجات شفافة.',
-    images: [OG_IMAGE],
-  },
-  twitter: {
-    card: 'summary_large_image',
-    title: 'الخدمات والباكدجات | بلال ناجي',
-    description: 'خدمات تطوير Full-Stack بعملية واضحة وباكدجات شفافة.',
-    images: [OG_IMAGE],
-  },
-};
+    'خدمات تطوير Full-Stack: بناء من الصفر، هندسة AI وباك إند، تعريب ودعم RTL، واستلام المشاريع القائمة، بعملية واضحة وباقات محددة.',
+  shareTitle: 'الخدمات والباقات | بلال ناجي',
+  shareDescription:
+    'خدمات تطوير Full-Stack بعملية واضحة وباقات محددة.',
+  card: true,
+});
 
 // The Arabic twin of the ProfessionalService entity on /services, so Arabic
 // queries like «مبرمج مواقع في الإسكندرية» resolve to a hireable service.
@@ -37,7 +26,7 @@ const PROFESSIONAL_SERVICE_JSON_LD = {
   url: `${SITE_URL}/ar/services`,
   image: `${SITE_URL}/hero.webp`,
   description:
-    'خدمات تطوير ويب متكاملة من بلال ناجي: بناء منصات من الصفر (SaaS ومنصات تعليمية ومتاجر إلكترونية)، هندسة باك إند وذكاء اصطناعي، تعريب وواجهات RTL، استلام وإصلاح المشاريع المتوقفة، وأمان و DevOps.',
+    'خدمات تطوير ويب متكاملة من بلال ناجي: بناء منصات من الصفر (SaaS ومنصات تعليمية ومتاجر إلكترونية)، هندسة باك إند وذكاء اصطناعي، تعريب وواجهات RTL، استلام وإصلاح المشاريع المتوقفة، والأمان والـ DevOps.',
   address: {
     '@type': 'PostalAddress',
     addressLocality: 'الإسكندرية',
@@ -59,7 +48,7 @@ const PROFESSIONAL_SERVICE_JSON_LD = {
       'تطوير متكامل مخصص (SaaS، منصات تعليمية، متاجر إلكترونية)',
       'هندسة باك إند وذكاء اصطناعي',
       'تعريب وواجهات RTL ومواقع متعددة اللغات',
-      'أمان و DevOps',
+      'الأمان والـ DevOps',
       'استلام المشاريع المتوقفة والفحص الفني',
     ].map((name) => ({
       '@type': 'Offer',
@@ -71,12 +60,7 @@ const PROFESSIONAL_SERVICE_JSON_LD = {
 export default function ServicesLayout({ children }) {
   return (
     <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify(PROFESSIONAL_SERVICE_JSON_LD),
-        }}
-      />
+      <JsonLd data={PROFESSIONAL_SERVICE_JSON_LD} />
       {children}
     </>
   );

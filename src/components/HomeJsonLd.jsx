@@ -1,5 +1,6 @@
 import { FAQ_ITEMS } from '../content/faq';
 import { SITE_URL, PERSON_ID, WEBSITE_ID, HOME_UPDATED } from '../lib/site';
+import JsonLd from './JsonLd';
 
 /**
  * Page-level structured data for the home routes: a ProfilePage wrapper
@@ -45,14 +46,8 @@ const HomeJsonLd = ({ lang = 'en' }) => {
 
   return (
     <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(profilePage) }}
-      />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqPage) }}
-      />
+      <JsonLd data={profilePage} />
+      <JsonLd data={faqPage} />
     </>
   );
 };

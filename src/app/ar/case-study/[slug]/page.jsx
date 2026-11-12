@@ -5,6 +5,7 @@ import {
   caseStudyJsonLd,
   loadNarrative,
 } from '../../../../lib/case-study-metadata';
+import JsonLd from '../../../../components/JsonLd';
 
 export const dynamicParams = false;
 
@@ -35,15 +36,11 @@ export default async function ArabicPage({ params }) {
   const jsonLd = caseStudyJsonLd(slug, narrative.ar, CASE_STUDIES[slug].image, 'ar');
 
   return (
-    <div lang="ar" dir="rtl">
+    <>
       {jsonLd.map((block, i) => (
-        <script
-          key={i}
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(block) }}
-        />
+        <JsonLd key={i} data={block} />
       ))}
       <CaseStudyPageClient slug={slug} narrative={narrative} nav={neighbours(slug)} />
-    </div>
+    </>
   );
 }

@@ -5,8 +5,6 @@ import ar from '../../../locales/ar';
 
 export default function ArabicRescuePage() {
   return (
-    <div lang="ar" dir="rtl">
-      <RescuePage lang="ar" bundle={ar} />
-    </div>
+    <RescuePage lang="ar" bundle={ar} />
   );
 }

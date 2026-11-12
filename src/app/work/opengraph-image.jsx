@@ -6,5 +6,5 @@ export const contentType = OG_CONTENT_TYPE;
 export const alt = 'Work | Belal Nagy';
 
 export default function Image() {
-  return pageOgImage('Work', `${FACTS.projects} projects for ${FACTS.clients} clients across Egypt and the Gulf. The complete archive.`);
+  return pageOgImage('Work', `The complete archive: ${FACTS.archive} projects, ${FACTS.projects} of them for clients across Egypt and the Gulf.`);
 }

@@ -1,46 +1,42 @@
 import { SITE_URL, PERSON_REF, WEBSITE_ID } from './site';
+import { pageMetadata } from './metadata';
 import { CASE_STUDIES, CASE_STUDY_SLUGS } from './case-studies';
+import en from '../locales/en';
+import ar from '../locales/ar';
+
+/**
+ * The plain-text label of a project's kind ("ITI training project",
+ * "Co-founded venture" …), or null for plain client work. The same strings
+ * the pages show (`projects.kinds` in the locale files), for the server-side
+ * outputs that describe a project: structured data, llms.txt, llms-full.txt.
+ */
+export const projectKindLabel = (slug, lang = 'en') => {
+  const { kind } = CASE_STUDIES[slug];
+  return kind ? (lang === 'ar' ? ar : en).translation.projects.kinds[kind] : null;
+};
 
 /**
  * Route metadata for /case-study/<slug> (en) and /ar/case-study/<slug> (ar),
  * read from the same content module as the page so the page and its share
  * card always say the same thing. Server-only: imported by the [slug] routes.
  *
- * The share image comes from the opengraph-image file in each route folder,
- * so no `images` are declared here.
+ * The share image is the opengraph-image card generated for each route.
  */
 export const loadNarrative = (slug) =>
   import(`../content/case-studies/${slug}.js`).then((mod) => mod.default);
 
 export const caseStudyMetadata = async (slug, lang = 'en') => {
   const copy = (await loadNarrative(slug))[lang];
-  const enPath = `/case-study/${slug}`;
-  const arPath = `/ar/case-study/${slug}`;
-  const path = lang === 'ar' ? arPath : enPath;
 
-  return {
+  return pageMetadata({
+    lang,
+    path: `/case-study/${slug}`,
     title: copy.title,
     description: copy.summary,
-    alternates: {
-      canonical: path,
-      languages: { en: enPath, ar: arPath, 'x-default': enPath },
-    },
-    openGraph: {
-      type: 'article',
-      url: `${SITE_URL}${path}`,
-      locale: lang === 'ar' ? 'ar_SA' : 'en_US',
-      alternateLocale: lang === 'ar' ? 'en_US' : 'ar_SA',
-      title: copy.title,
-      description: copy.summary,
-      siteName: 'Belal Nagy Portfolio',
-    },
-    twitter: {
-      card: 'summary_large_image',
-      title: copy.title,
-      description: copy.summary,
-      creator: '@belalnajy',
-    },
-  };
+    type: 'article',
+    card: true,
+    cardAlt: 'A case study by Belal Nagy',
+  });
 };
 
 /**
@@ -75,6 +71,9 @@ export const caseStudyJsonLd = (slug, copy, image, lang = 'en') => {
         name: project.name,
         ...(project.liveUrl && { url: project.liveUrl }),
         creator: PERSON_REF,
+        // Training, event, learning and own-venture work says so, so it is
+        // not read as a plain client engagement.
+        ...(project.kind && { description: projectKindLabel(slug, lang) }),
       },
     },
     {

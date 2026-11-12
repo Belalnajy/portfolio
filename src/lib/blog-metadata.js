@@ -1,5 +1,6 @@
 import { BLOG_POSTS } from './blog';
 import { SITE_URL, PERSON_REF, WEBSITE_ID } from './site';
+import { pageMetadata } from './metadata';
 
 /**
  * Metadata + structured data for the article routes. Mirrors
@@ -9,37 +10,22 @@ import { SITE_URL, PERSON_REF, WEBSITE_ID } from './site';
 export const blogPostMetadata = (slug, lang) => {
   const post = BLOG_POSTS[slug];
   const copy = lang === 'ar' ? post.ar : post.en;
-  const path = `/blog/${slug}`;
 
-  return {
+  return pageMetadata({
+    lang,
+    path: `/blog/${slug}`,
     title: copy.title,
     description: copy.description,
-    alternates: {
-      canonical: lang === 'ar' ? `/ar${path}` : path,
-      languages: {
-        en: path,
-        ar: `/ar${path}`,
-        'x-default': path,
-      },
-    },
+    type: 'article',
+    card: true,
+    cardAlt: 'An article by Belal Nagy',
     openGraph: {
-      type: 'article',
-      url: lang === 'ar' ? `/ar${path}` : path,
-      title: copy.title,
-      description: copy.description,
       publishedTime: post.date,
       modifiedTime: post.updated ?? post.date,
       authors: [SITE_URL],
-      locale: lang === 'ar' ? 'ar_SA' : 'en_US',
-      siteName: 'Belal Nagy Portfolio',
       tags: post.tags,
     },
-    twitter: {
-      card: 'summary_large_image',
-      title: copy.title,
-      description: copy.description,
-    },
-  };
+  });
 };
 
 export const blogPostJsonLd = (slug, lang) => {

@@ -1,7 +1,7 @@
 'use client';
 import SiteShell from '../SiteShell';
-import { motion } from 'framer-motion';
-import { REVEAL_VIEWPORT, revealDelay, REVEAL_DURATION } from '../../lib/motion';
+import Reveal from '../Reveal';
+import { revealDelay } from '../../lib/motion';
 import { useTranslation } from 'react-i18next';
 
 const EMAIL = 'belalnajy9@gmail.com';
@@ -19,25 +19,21 @@ const PrivacyContent = () => {
         <p className="text-[rgb(var(--muted-foreground))] text-lg mt-3 leading-relaxed">
           {t('privacy.subtitle')}
         </p>
-        <p className="font-mono text-xs text-[rgb(var(--muted-foreground))]/70 mt-4">
+        <p className="font-mono text-xs text-[rgb(var(--muted-foreground))] mt-4">
           {t('privacy.updated')}
         </p>
       </header>
 
       <div className="space-y-6">
         {(Array.isArray(sections) ? sections : []).map((section, index) => (
-          <motion.section
+          <Reveal as="section" y={20} delay={revealDelay(index)}
             key={section.heading}
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={REVEAL_VIEWPORT}
-            transition={{ duration: REVEAL_DURATION, delay: revealDelay(index) }}
             className="glass-card rounded-2xl border border-[rgb(var(--border))]/60 p-6 sm:p-7">
             <h2 className="font-display text-xl font-bold text-[rgb(var(--foreground))] mb-3">
               {section.heading}
             </h2>
             <p className="text-[rgb(var(--muted-foreground))] leading-relaxed">{section.body}</p>
-          </motion.section>
+          </Reveal>
         ))}
       </div>
 

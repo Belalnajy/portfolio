@@ -1,5 +1,5 @@
 import { CASE_STUDIES, CASE_STUDY_SLUGS } from '../../lib/case-studies';
-import { loadNarrative } from '../../lib/case-study-metadata';
+import { loadNarrative, projectKindLabel } from '../../lib/case-study-metadata';
 import { BLOG_POSTS, BLOG_SLUGS, loadPost } from '../../lib/blog';
 import { FAQ_ITEMS } from '../../content/faq';
 import { SITE_URL } from '../../lib/site';
@@ -23,6 +23,7 @@ const caseStudySection = async (slug) => {
     `- URL: ${SITE_URL}/case-study/${slug} (Arabic: ${SITE_URL}/ar/case-study/${slug})`,
     project.liveUrl && `- Live product: ${project.liveUrl}`,
     `- Stack: ${project.stack.join(', ')}`,
+    `- Context: ${projectKindLabel(slug) ?? 'Client project'}`,
     `- Role: ${en.facts.role}`,
     `- Scope: ${en.facts.scope}`,
     `- Audience: ${en.facts.audience}`,

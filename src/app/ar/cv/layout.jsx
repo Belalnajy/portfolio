@@ -1,28 +1,17 @@
-import { OG_IMAGE } from '../../layout';
+import { pageMetadata } from '../../../lib/metadata';
 
-export const metadata = {
+export const metadata = pageMetadata({
+  lang: 'ar',
+  path: '/cv',
   title: 'السيرة الذاتية',
   description:
     'السيرة الذاتية لبلال ناجي، مطور Full-Stack من الإسكندرية: الخبرات والمشاريع المختارة والمهارات والشهادات. تُقرأ في المتصفح أو تُحمَّل كملف PDF.',
-  alternates: {
-    canonical: '/ar/cv',
-    languages: { en: '/cv', ar: '/ar/cv', 'x-default': '/cv' },
-  },
-  openGraph: {
-    type: 'profile',
-    url: '/ar/cv',
-    locale: 'ar_SA',
-    title: 'السيرة الذاتية | بلال ناجي',
-    description: 'الخبرات والمشاريع المختارة والمهارات والشهادات في صفحة واحدة.',
-    images: [OG_IMAGE],
-  },
-  twitter: {
-    card: 'summary_large_image',
-    title: 'السيرة الذاتية | بلال ناجي',
-    description: 'الخبرات والمشاريع المختارة والمهارات والشهادات في صفحة واحدة.',
-    images: [OG_IMAGE],
-  },
-};
+  shareTitle: 'السيرة الذاتية | بلال ناجي',
+  shareDescription:
+    'الخبرات والمشاريع المختارة والمهارات والشهادات في صفحة واحدة.',
+  type: 'profile',
+  card: true,
+});
 
 export default function ArabicCvLayout({ children }) {
   return children;

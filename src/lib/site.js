@@ -26,8 +26,6 @@ export const SAME_AS = [
   'https://github.com/Belalnajy',
   'https://linkedin.com/in/belalnajy',
   'https://khamsat.com/user/belalnajy',
-  'https://mostaql.com/u/belalnagy',
-  'https://www.nafezly.com/u/belalnajy',
 ];
 
 // Bump when the home page content changes. Read by the sitemap and the home

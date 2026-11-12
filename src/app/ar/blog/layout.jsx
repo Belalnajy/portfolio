@@ -1,6 +1,8 @@
-import { OG_IMAGE } from '../../layout';
+import { pageMetadata } from '../../../lib/metadata';
 
-export const metadata = {
+export const metadata = pageMetadata({
+  lang: 'ar',
+  path: '/blog',
   // A plain-string title here would break the template chain and leave the
   // article pages without the Arabic name suffix; the object re-declares it.
   title: {
@@ -10,27 +12,11 @@ export const metadata = {
   },
   description:
     'مقالات هندسية من مشاريع حقيقية: بنية Django متعددة العملاء، واستلام المشاريع القديمة بدون إعادة كتابة، وواجهات عربية RTL تصمد أمام لوحات التحكم والفواتير.',
-  alternates: {
-    canonical: '/ar/blog',
-    languages: { en: '/blog', ar: '/ar/blog', 'x-default': '/blog' },
-  },
-  openGraph: {
-    type: 'website',
-    url: '/ar/blog',
-    locale: 'ar_SA',
-    title: 'المقالات | بلال ناجي',
-    description:
-      'مقالات هندسية من مشاريع حقيقية: البنية، واستلام المشاريع القديمة، والعربية RTL.',
-    images: [OG_IMAGE],
-  },
-  twitter: {
-    card: 'summary_large_image',
-    title: 'المقالات | بلال ناجي',
-    description:
-      'مقالات هندسية من مشاريع حقيقية: البنية، واستلام المشاريع القديمة، والعربية RTL.',
-    images: [OG_IMAGE],
-  },
-};
+  shareTitle: 'المقالات | بلال ناجي',
+  shareDescription:
+    'مقالات هندسية من مشاريع حقيقية: البنية، واستلام المشاريع القديمة، والعربية RTL.',
+  card: true,
+});
 
 export default function BlogLayout({ children }) {
   return children;

@@ -5,8 +5,6 @@ import ar from '../../../locales/ar';
 
 export default function ArabicCvPage() {
   return (
-    <div lang="ar" dir="rtl">
-      <CvPage lang="ar" bundle={ar} />
-    </div>
+    <CvPage lang="ar" bundle={ar} />
   );
 }

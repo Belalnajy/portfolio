@@ -5,8 +5,6 @@ import ar from '../../../locales/ar';
 
 export default function ArabicPrivacyPage() {
   return (
-    <div lang="ar" dir="rtl">
-      <PrivacyPage lang="ar" bundle={ar} />
-    </div>
+    <PrivacyPage lang="ar" bundle={ar} />
   );
 }

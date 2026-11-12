@@ -3,7 +3,7 @@ import SiteShell from '../SiteShell';
 import { useTranslation } from 'react-i18next';
 import { FaDownload, FaPrint, FaEnvelope, FaGlobe, FaGithub, FaLinkedin, FaMapMarkerAlt } from 'react-icons/fa';
 import { track } from '@vercel/analytics';
-import { buildCv } from '../../lib/cv';
+import { buildCv, CV_UPDATED } from '../../lib/cv';
 
 const Section = ({ title, children }) => (
   <section className="cv-section mb-7 last:mb-0">
@@ -181,9 +181,10 @@ const CvContent = ({ bundle }) => {
 
       <p className="print:hidden text-center text-xs text-[rgb(var(--muted-foreground))] mt-6">
         {t('cv.updated', {
-          date: new Date().toLocaleDateString(i18n.language === 'ar' ? 'ar-EG' : 'en-GB', {
+          date: new Date(`${CV_UPDATED}T00:00:00Z`).toLocaleDateString(i18n.language === 'ar' ? 'ar-EG-u-nu-latn' : 'en-GB', {
             month: 'long',
             year: 'numeric',
+            timeZone: 'UTC',
           }),
         })}
       </p>

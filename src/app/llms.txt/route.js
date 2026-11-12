@@ -1,5 +1,5 @@
-import { CASE_STUDIES, CASE_STUDY_SLUGS } from '../../lib/case-studies';
-import { loadNarrative } from '../../lib/case-study-metadata';
+import { CASE_STUDIES, CASE_STUDY_SLUGS, COUNTED_KINDS } from '../../lib/case-studies';
+import { loadNarrative, projectKindLabel } from '../../lib/case-study-metadata';
 import { BLOG_POSTS, BLOG_SLUGS } from '../../lib/blog';
 import { SITE_URL } from '../../lib/site';
 import { FACTS } from '../../lib/facts';
@@ -15,7 +15,11 @@ export async function GET() {
   const caseStudies = await Promise.all(
     CASE_STUDY_SLUGS.map(async (slug) => {
       const narrative = await loadNarrative(slug);
-      return `- [${CASE_STUDIES[slug].name}](${SITE_URL}/case-study/${slug}): ${narrative.en.summary}`;
+      const kind = projectKindLabel(slug);
+      // A counted kind (the co-founded venture) is part of the client-project
+      // figure, so only the uncounted ones are marked "not client work".
+      const counted = COUNTED_KINDS.includes(CASE_STUDIES[slug].kind);
+      return `- [${CASE_STUDIES[slug].name}](${SITE_URL}/case-study/${slug})${kind ? ` (${kind}${counted ? '' : ', not client work'})` : ''}: ${narrative.en.summary}`;
     }),
   );
 
@@ -24,7 +28,7 @@ export async function GET() {
 > Belal Nagy is a full-stack developer based in Alexandria, Egypt, currently a
 > Software Engineer at ezSec Inc (a cybersecurity company in Kitchener,
 > Canada, remote) and co-founder of Indstrz. He builds web platforms from
-> zero and takes over existing codebases that need fixing: 36 projects for 27
+> zero and takes over existing codebases that need fixing: ${FACTS.projects} projects for ${FACTS.clients}
 > clients across Egypt and the Gulf, in Next.js, Laravel, NestJS, Node.js,
 > Django and PostgreSQL, with Arabic/RTL support in every project.
 
@@ -33,30 +37,30 @@ Key facts:
 - Current role: Software Engineer at ezSec Inc, Canada (remote, full-time, since 01/2026), including DevOps deployment work
 - Also: Full Stack Developer at S&F, Saudi Arabia (part-time); co-founder of Indstrz, a B2B industrial procurement platform selected for the Venture Ready Program by Plug and Play
 - Education: Bachelor of Business (English Section), Business Information Systems (BIS), Alexandria University, 2019–2023, GPA 3.265
-- Taught front-end development to 440+ students as an external instructor at ITI
+- Taught front-end development to ${FACTS.students}+ students as an external instructor at ITI
 - Specialties: multi-tenant platforms (one LMS engine running three accredited brands), Arabic-first/RTL interfaces, legacy-code takeover, real-time systems
 - Languages: Arabic (native), English
-- Contact and profiles: [GitHub](https://github.com/Belalnajy), [LinkedIn](https://linkedin.com/in/belalnajy), [Khamsat](https://khamsat.com/user/belalnajy), [Mostaql](https://mostaql.com/u/belalnagy), [Nafezly](https://www.nafezly.com/u/belalnajy)
+- Contact and profiles: [GitHub](https://github.com/Belalnajy), [LinkedIn](https://linkedin.com/in/belalnajy), [Khamsat](https://khamsat.com/user/belalnajy)
 
 ## من هو بلال ناجي؟ (About in Arabic)
 
 بلال ناجي (يُكتب أيضاً «بلال ناجى»، بالإنجليزية Belal Nagy) هو مهندس برمجيات
 ومطور ويب متكامل (Full-Stack) من الإسكندرية، مصر. يعمل حالياً مهندس برمجيات في
 شركة الأمن السيبراني الكندية ezSec Inc عن بُعد، وهو شريك مؤسس في منصة Indstrz
-للمشتريات الصناعية. نفّذ ٣٦ مشروعاً لـ ٢٧ عميلاً في مصر والسعودية والخليج،
+للمشتريات الصناعية. نفّذ ${FACTS.projects} مشروعاً لـ ${FACTS.clients} عميلاً في مصر والسعودية والخليج،
 منها منصات تعليمية معتمدة (إنجاز، HC Holding، مدى للتعليم) تعمل على محرّك
-Django واحد، ومنصة معهد بالقلم التعليمية. يعمل بتقنيات Next.js و Laravel و
-NestJS و Node.js و Django و PostgreSQL، ويدعم العربية و RTL في كل مشاريعه.
+Django واحد، ومنصة معهد بالقلم التعليمية. يعمل بتقنيات Next.js، Laravel،
+NestJS، Node.js، Django، PostgreSQL، ويدعم العربية والـ RTL في كل مشاريعه.
 حاصل على بكالوريوس نظم معلومات الأعمال (BIS) من جامعة الإسكندرية، ودرّس تطوير
-الواجهات الأمامية لأكثر من ٤٤٠ طالباً في معهد تكنولوجيا المعلومات ITI.
-تقييماته على منصات العمل الحر خمسات ونفذلي إيجابية بنسبة ١٠٠٪.
+الواجهات الأمامية لأكثر من ${FACTS.students} طالباً في معهد تكنولوجيا المعلومات ITI.
+تقييماته على منصة العمل الحر خمسات إيجابية بنسبة 100%.
 موقعه: ${SITE_URL}/ar، والتواصل عبر نموذج الاتصال في الموقع.
 
 ## Main pages
 
 - [Home (English)](${SITE_URL}/): who Belal is, experience timeline, flagship projects and contact
 - [Home (Arabic)](${SITE_URL}/ar): the same site, fully in Arabic (every page also exists under /ar)
-- [Work](${SITE_URL}/work): the complete archive of ${FACTS.projects} projects with skills and certifications
+- [Work](${SITE_URL}/work): the complete archive of ${FACTS.archive} projects (${FACTS.projects} client projects, counting his co-founded venture Indstrz; the rest ITI training, event and learning projects) with skills and certifications
 - [Services & packages](${SITE_URL}/services): what Belal offers, the delivery process and pricing packages
 - [Legacy Code Rescue](${SITE_URL}/rescue): the dedicated page for taking over stuck or abandoned projects: audit first, stabilize, no forced rewrite
 - [Now](${SITE_URL}/now): what he is focused on right now, updated regularly

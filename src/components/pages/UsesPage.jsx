@@ -1,7 +1,7 @@
 'use client';
 import SiteShell from '../SiteShell';
-import { motion } from 'framer-motion';
-import { REVEAL_VIEWPORT, revealDelay, REVEAL_DURATION } from '../../lib/motion';
+import Reveal from '../Reveal';
+import { revealDelay } from '../../lib/motion';
 import { FaTerminal, FaCode, FaDatabase, FaProjectDiagram, FaCircle } from 'react-icons/fa';
 import { useTranslation } from 'react-i18next';
 
@@ -24,12 +24,8 @@ const UsesContent = () => {
 
       <div className="grid sm:grid-cols-2 gap-5">
         {(Array.isArray(groups) ? groups : []).map((group, index) => (
-          <motion.section
+          <Reveal as="section" y={20} delay={revealDelay(index)}
             key={group.heading}
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={REVEAL_VIEWPORT}
-            transition={{ duration: REVEAL_DURATION, delay: revealDelay(index) }}
             className="glass-card rounded-2xl border border-[rgb(var(--border))]/60 p-6">
             <h2 className="flex items-center gap-3 font-display text-lg font-bold text-[rgb(var(--foreground))] mb-4">
               <span className="inline-flex items-center justify-center w-10 h-10 rounded-xl bg-[rgb(var(--muted))]/40 border border-[rgb(var(--border))] text-[rgb(var(--muted-foreground))]">
@@ -45,7 +41,7 @@ const UsesContent = () => {
                 </li>
               ))}
             </ul>
-          </motion.section>
+          </Reveal>
         ))}
       </div>
 

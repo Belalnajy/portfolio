@@ -4,6 +4,7 @@ import {
   blogPostMetadata,
   blogPostJsonLd,
 } from '../../../../lib/blog-metadata';
+import JsonLd from '../../../../components/JsonLd';
 
 export const dynamicParams = false;
 
@@ -27,11 +28,7 @@ export default async function Page({ params }) {
   return (
     <>
       {jsonLd.map((block, i) => (
-        <script
-          key={i}
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(block) }}
-        />
+        <JsonLd key={i} data={block} />
       ))}
       <ArabicBlogPostPageClient
         slug={slug}

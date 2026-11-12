@@ -1,6 +1,7 @@
 import { ImageResponse } from 'next/og';
 import { CASE_STUDIES } from './case-studies';
 import { BLOG_POSTS } from './blog';
+import { FACTS } from './facts';
 import { loadNarrative } from './case-study-metadata';
 
 export const OG_SIZE = { width: 1200, height: 630 };
@@ -13,6 +14,57 @@ const SURFACE = '#121821';
 const COPPER = '#C87F1E';
 const TEXT = '#E8EDF2';
 const MUTED = '#93A1B0';
+
+/**
+ * The site-wide share card served at /og.png (used by every page that has no
+ * card of its own). Rendered at build time from FACTS, so the numbers on it
+ * move with the site; the old static PNG was still saying 31 projects.
+ */
+export const siteOgImage = () =>
+  new ImageResponse(
+    (
+      <div
+        style={{
+          width: '100%',
+          height: '100%',
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'center',
+          padding: '0 86px',
+          background: `linear-gradient(135deg, ${SURFACE} 0%, ${INK} 60%)`,
+          borderTop: `8px solid ${COPPER}`,
+          color: TEXT,
+          fontFamily: 'sans-serif',
+        }}>
+        <div style={{ width: 96, height: 12, borderRadius: 6, background: COPPER, display: 'flex', marginBottom: 44 }} />
+        <div style={{ display: 'flex', fontSize: 128, fontWeight: 800, lineHeight: 1, letterSpacing: -2 }}>
+          <span style={{ color: '#FFFFFF' }}>Belal</span>
+          <span style={{ color: '#EFC88E', marginLeft: 32 }}>Nagy</span>
+        </div>
+        <div style={{ display: 'flex', fontSize: 58, fontWeight: 700, color: MUTED, marginTop: 30 }}>
+          Full-Stack Developer
+        </div>
+        <div
+          style={{
+            display: 'flex',
+            alignSelf: 'flex-start',
+            marginTop: 52,
+            padding: '20px 40px',
+            borderRadius: 26,
+            border: `2px solid ${COPPER}88`,
+            background: '#1E1B17',
+            fontSize: 52,
+            fontWeight: 800,
+          }}>
+          <span style={{ color: COPPER }}>{FACTS.projects}</span>
+          <span style={{ marginLeft: 18 }}>projects for</span>
+          <span style={{ color: COPPER, marginLeft: 18 }}>{FACTS.clients}</span>
+          <span style={{ marginLeft: 18 }}>clients</span>
+        </div>
+      </div>
+    ),
+    OG_SIZE,
+  );
 
 /**
  * Share card for a top-level page: same ink-and-copper frame as the case

@@ -1,6 +1,6 @@
 'use client';
 import Link from 'next/link';
-import { motion } from 'framer-motion';
+import Reveal from '../Reveal';
 import {
   FaWrench,
   FaExclamationTriangle,
@@ -9,13 +9,13 @@ import {
   FaArrowLeft,
   FaBookOpen,
 } from 'react-icons/fa';
-import { REVEAL_VIEWPORT, revealDelay, REVEAL_DURATION } from '../../lib/motion';
+import { revealDelay } from '../../lib/motion';
 import { useTranslation } from 'react-i18next';
 import SiteShell from '../SiteShell';
 import Contact from '../Contact';
 import { whatsappUrl } from '../WhatsAppButton';
+import { asArray } from '../../lib/as-array';
 
-const asArray = (value) => (Array.isArray(value) ? value : []);
 
 /**
  * Dedicated landing page for the service with the most urgent buyers:
@@ -35,10 +35,10 @@ const RescueContent = () => {
   return (
     <div className="container mx-auto px-6 max-w-4xl pt-36 pb-10 text-start">
       {/* Header */}
-      <motion.header
-        initial={{ opacity: 0, y: 16 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5 }}
+      {/* First viewport: a CSS animation that runs from the first paint and
+          moves without fading, so the page's largest text is on screen before
+          any JavaScript has loaded (see Reveal). */}
+      <Reveal as="header" rise y={16} duration={0.5}
         className="mb-16">
         <p className="inline-flex items-center gap-2 text-[rgb(var(--primary))] font-bold tracking-widest uppercase text-sm mb-5">
           <FaWrench />
@@ -65,14 +65,10 @@ const RescueContent = () => {
             {t('rescue_page.cta_contact')}
           </a>
         </div>
-      </motion.header>
+      </Reveal>
 
       {/* Symptoms */}
-      <motion.section
-        initial={{ opacity: 0, y: 24 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={REVEAL_VIEWPORT}
-        transition={{ duration: REVEAL_DURATION }}
+      <Reveal as="section" y={24}
         className="glass-card rounded-2xl border border-[rgb(var(--border))]/60 p-6 sm:p-8 mb-14">
         <h2 className="flex items-center gap-3 font-display text-xl font-bold text-[rgb(var(--foreground))] mb-6">
           <span className="inline-flex items-center justify-center w-10 h-10 rounded-xl bg-[rgb(var(--accent))]/10 border border-[rgb(var(--accent))]/25 text-[rgb(var(--accent))]">
@@ -88,7 +84,7 @@ const RescueContent = () => {
             </li>
           ))}
         </ul>
-      </motion.section>
+      </Reveal>
 
       {/* Process */}
       <section className="mb-14">
@@ -97,12 +93,8 @@ const RescueContent = () => {
         </h2>
         <div className="space-y-8">
           {steps.map((step, index) => (
-            <motion.div
+            <Reveal y={24} delay={revealDelay(index)}
               key={index}
-              initial={{ opacity: 0, y: 24 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={REVEAL_VIEWPORT}
-              transition={{ duration: REVEAL_DURATION, delay: revealDelay(index) }}
               className="flex items-start gap-5">
               <span
                 className="font-display text-4xl sm:text-5xl font-bold text-outline leading-none select-none shrink-0"
@@ -116,17 +108,13 @@ const RescueContent = () => {
                 </h3>
                 <p className="text-[rgb(var(--muted-foreground))] leading-relaxed">{step.desc}</p>
               </div>
-            </motion.div>
+            </Reveal>
           ))}
         </div>
       </section>
 
       {/* Proof */}
-      <motion.section
-        initial={{ opacity: 0, y: 24 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={REVEAL_VIEWPORT}
-        transition={{ duration: REVEAL_DURATION }}
+      <Reveal as="section" y={24}
         className="glass-card rounded-2xl border border-[rgb(var(--primary))]/25 p-6 sm:p-8 mb-14">
         <h2 className="font-display text-xl font-bold text-[rgb(var(--primary))] mb-4">
           {t('rescue_page.proof_title')}
@@ -148,14 +136,10 @@ const RescueContent = () => {
             {t('rescue_page.proof_article_cta')}
           </Link>
         </div>
-      </motion.section>
+      </Reveal>
 
       {/* CTA */}
-      <motion.section
-        initial={{ opacity: 0, y: 24 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={REVEAL_VIEWPORT}
-        transition={{ duration: REVEAL_DURATION }}
+      <Reveal as="section" y={24}
         className="text-center mb-4">
         <h2 className="font-display text-2xl sm:text-3xl font-bold text-[rgb(var(--foreground))] mb-3">
           {t('rescue_page.cta_title')}
@@ -163,7 +147,7 @@ const RescueContent = () => {
         <p className="text-[rgb(var(--muted-foreground))] leading-relaxed max-w-2xl mx-auto">
           {t('rescue_page.cta_body')}
         </p>
-      </motion.section>
+      </Reveal>
     </div>
   );
 };
