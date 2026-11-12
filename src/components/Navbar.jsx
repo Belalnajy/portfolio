@@ -31,15 +31,10 @@ import { switchLanguage, twinPath, LANGUAGE_SWITCH_LABEL } from '../lib/language
 import { useSite } from './SiteShell';
 import { useEscapeLayer } from '../lib/useEscapeLayer';
 import { homeAnchor } from '../lib/home-anchor';
+import { registerChrome, showChrome } from '../lib/scroll-chrome';
 
-// Hide-on-scroll (phones): past this depth, a downward move of more than
-// HIDE_DELTA slides the header away; any upward move of as much brings it
-// back. html[data-header="hidden"] is set only when the header really hides
-// (never on wider screens, under reduced motion, while the menu or a sheet is
-// open, or while focus is inside the header), so anything that moves with it
-// (the /work filter rail) can trust it. CSS does the moving (.site-header).
-const HIDE_AFTER = 120;
-const HIDE_DELTA = 8;
+// Hide-on-scroll (phones) lives in src/lib/scroll-chrome.js, shared with
+// the tab bar's compact state: one scroll listener for both.
 
 // Sheet rows enter one after another, 20ms apart, the first eight only.
 const rowDelay = (index) => Math.min(index, 8) * 0.02;
@@ -142,7 +137,7 @@ const Navbar = () => {
     if (!isOpen) return undefined;
     const root = document.documentElement;
     root.setAttribute('data-menu-open', '');
-    root.removeAttribute('data-header');
+    showChrome();
     return () => root.removeAttribute('data-menu-open');
   }, [isOpen]);
 
@@ -197,61 +192,10 @@ const Navbar = () => {
     switchLanguage(i18n.language === 'en' ? 'ar' : 'en');
   };
 
-  // One passive scroll listener, at most one update per frame: the scrolled
-  // state (the header's fill) and the hide-on-scroll flag on <html>. React
-  // skips the re-render when `scrolled` has not changed, and the flag is a
-  // plain attribute write, so most frames cost a comparison.
-  useEffect(() => {
-    const root = document.documentElement;
-    const header = headerRef.current;
-    const phone = window.matchMedia('(max-width: 767.98px)');
-    const calm = window.matchMedia('(prefers-reduced-motion: reduce)');
-    // Whether the header may slide away right now.
-    const canHide = () =>
-      phone.matches &&
-      !calm.matches &&
-      !root.hasAttribute('data-menu-open') &&
-      !root.hasAttribute('data-sheet-open') &&
-      !header?.contains(document.activeElement);
-    const show = () => root.removeAttribute('data-header');
-    let anchor = window.scrollY;
-    let frame = 0;
-    const update = () => {
-      frame = 0;
-      const y = window.scrollY;
-      setScrolled(y > 8);
-      if (y < HIDE_AFTER) {
-        show();
-        anchor = y;
-        return;
-      }
-      const delta = y - anchor;
-      if (delta > HIDE_DELTA) {
-        if (canHide()) root.setAttribute('data-header', 'hidden');
-        anchor = y;
-      } else if (delta < -HIDE_DELTA) {
-        show();
-        anchor = y;
-      }
-    };
-    const onScroll = () => {
-      if (!frame) frame = requestAnimationFrame(update);
-    };
-    update();
-    window.addEventListener('scroll', onScroll, { passive: true });
-    // Focus arriving in a hidden header (Tab, a screen reader) brings it back.
-    header?.addEventListener('focusin', show);
-    phone.addEventListener('change', show);
-    calm.addEventListener('change', show);
-    return () => {
-      window.removeEventListener('scroll', onScroll);
-      header?.removeEventListener('focusin', show);
-      phone.removeEventListener('change', show);
-      calm.removeEventListener('change', show);
-      cancelAnimationFrame(frame);
-      show();
-    };
-  }, []);
+  // The header's fill follows the scroll position, and on phones it slides
+  // away on the way down (html[data-header], set by the shared scroll
+  // controller only when it really hides).
+  useEffect(() => registerChrome('header', headerRef.current, setScrolled), []);
 
   // Intersection Observer for active section detection. Without one the nav
   // simply never highlights a section; the page itself must not break.

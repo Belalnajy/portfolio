@@ -10,6 +10,7 @@ import { brandColor } from '../lib/brand-colors';
 import { useEscapeLayer } from '../lib/useEscapeLayer';
 import { useFocusTrap } from '../lib/useFocusTrap';
 import { homeAnchor } from '../lib/home-anchor';
+import { showChrome } from '../lib/scroll-chrome';
 
 const EMAIL = 'belalnajy9@gmail.com';
 const SPRING = { type: 'spring', stiffness: 420, damping: 40 };
@@ -46,7 +47,7 @@ const ContactSheet = ({ open, onClose }) => {
     if (!open) return undefined;
     const root = document.documentElement;
     root.setAttribute('data-sheet-open', '');
-    root.removeAttribute('data-header');
+    showChrome();
     return () => root.removeAttribute('data-sheet-open');
   }, [open]);
 
