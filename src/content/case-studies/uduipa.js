@@ -62,9 +62,9 @@ const content = {
       ]
     },
     "approach": {
-      "body": "بنيتها كـ Monorepo بـ Turborepo مع Next.js و NestJS على PostgreSQL، فبوابة الأعضاء ولوحة الإدارة بيتشاركوا نفس الأنواع والمنطق. نظام صلاحيات RBAC واسع النطاق مع مصادقة JWT آمنة بيفصل صلاحيات العضو والموظف والأدمن، وتوليد المستندات مؤتمت بالكامل بـ PDF عبر Puppeteer ورموز QR.",
+      "body": "بنيتها كـ Monorepo بـ Turborepo، فيه Next.js مع NestJS على PostgreSQL، فبوابة الأعضاء ولوحة الإدارة بيتشاركوا نفس الأنواع والمنطق. نظام صلاحيات RBAC واسع النطاق مع مصادقة JWT آمنة بيفصل صلاحيات العضو والموظف والأدمن، وتوليد المستندات مؤتمت بالكامل بـ PDF عبر Puppeteer ورموز QR.",
       "points": [
-        "Turborepo Monorepo: Next.js و NestJS و PostgreSQL",
+        "Turborepo Monorepo: Next.js، NestJS، PostgreSQL",
         "نظام RBAC واسع النطاق مع مصادقة JWT آمنة",
         "توليد PDF مؤتمت مع رموز QR للتحقق",
         "التحليلات مدمجة من البداية"

@@ -45,7 +45,7 @@ const content = {
   },
   "ar": {
     "title": "Indstrz، منصة مشتريات صناعية B2B مبنية من الصفر",
-    "summary": "منصة B2B شاركت في تأسيسها بترقمن المشتريات الصناعية: المشتري ينشر طلب عرض أسعار (RFQ)، والموردون المعتمدون يردوا، والطرفين يتفاوضوا لحظياً. تم اختيارها ضمن برنامج Venture Ready من Plug and Play بدعم GIZ Egypt و ITIDA.",
+    "summary": "منصة B2B شاركت في تأسيسها بترقمن المشتريات الصناعية: المشتري ينشر طلب عرض أسعار (RFQ)، والموردون المعتمدون يردوا، والطرفين يتفاوضوا لحظياً. تم اختيارها ضمن برنامج Venture Ready من Plug and Play بدعم من GIZ Egypt ومن ITIDA.",
     "facts": {
       "role": "شريك مؤسس وقائد تقني",
       "scope": "دورة RFQ رقمية، محرك تفاوض لحظي، معمارية المنصة",
@@ -63,7 +63,7 @@ const content = {
     "approach": {
       "body": "قدت البناء التقني بواجهة Next.js وخلفية Flask على PostgreSQL، بمعمارية طبقية بنمط Modular Application Factory عشان كل ميزة تفضل معزولة وقابلة للاختبار. المراسلة والإشعارات اللحظية شغالة بـ Socket.io، والصلاحيات قائمة على الأدوار مع إبطال توكن JWT.",
       "points": [
-        "واجهة Next.js وخلفية Flask و PostgreSQL",
+        "واجهة Next.js وخلفية Flask مع PostgreSQL",
         "معمارية طبقية بنمط Modular Application Factory",
         "Socket.io للمراسلة والإشعارات اللحظية",
         "صلاحيات قائمة على الأدوار مع إبطال JWT"
@@ -79,10 +79,10 @@ const content = {
       ]
     },
     "outcome": {
-      "body": "تم اختيار Indstrz ضمن برنامج Venture Ready، المنفَّذ بواسطة Plug and Play بدعم من GIZ Egypt و ITIDA، ومستضاف في مراكز Creativa للابتكار بالإسكندرية، وهو اعتراف خارجي بالمنتج وطريقة بنائه.",
+      "body": "تم اختيار Indstrz ضمن برنامج Venture Ready، المنفَّذ بواسطة Plug and Play بدعم من GIZ Egypt ومن ITIDA، ومستضاف في مراكز Creativa للابتكار بالإسكندرية، وهو اعتراف خارجي بالمنتج وطريقة بنائه.",
       "points": [
         "مختارة ضمن برنامج Venture Ready من Plug and Play",
-        "بدعم من GIZ Egypt و ITIDA",
+        "بدعم من GIZ Egypt ومن ITIDA",
         "مستضافة في مراكز Creativa للابتكار بالإسكندرية"
       ]
     }

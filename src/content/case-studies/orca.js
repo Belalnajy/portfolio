@@ -61,7 +61,7 @@ const content = {
       ]
     },
     "approach": {
-      "body": "Next.js و Tailwind في الواجهة مع أنيميشن Framer Motion؛ و Node.js و Express على MongoDB وراهم. المصادقة والتفويض مؤمّنين بـ JWT، والدفع متكامل مع Paymob.",
+      "body": "Next.js مع Tailwind في الواجهة، وأنيميشن بـ Framer Motion؛ ووراهم Node.js مع Express على MongoDB. المصادقة والتفويض مؤمّنين بـ JWT، والدفع متكامل مع Paymob.",
       "points": [
         "واجهة متجر Next.js + Tailwind مع Framer Motion",
         "خلفية Node.js + Express + MongoDB",

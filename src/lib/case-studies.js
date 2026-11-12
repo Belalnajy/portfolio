@@ -1,10 +1,24 @@
 /**
- * Route-level facts for each long-form case study. The narrative (both
- * languages) lives in `src/content/case-studies/<slug>.js` and is loaded per
- * page; this registry is only what page shells, share images, the sitemap and
- * the project-card links need — small enough to import from client code.
- * Both /case-study/<slug> and /ar/case-study/<slug> read from here so the two
- * never drift.
+ * The one project registry. Every project fact that is not prose lives here:
+ * the case-study routes, share images, sitemap, llms.txt, the command palette
+ * and the project cards (src/components/Projects.jsx) all read it, so a
+ * stack, a live URL or a cover is typed once. The narrative (both languages)
+ * lives in `src/content/case-studies/<slug>.js` and is loaded per page; card
+ * wording lives in the locale bundles under `projects.items.<slug>`.
+ *
+ * Per project: `name`, `image` (cover), `stack`, `category` (the archive
+ * filter: Full Stack | Frontend | Backend | Mobile), `updated`, and when they
+ * apply `liveUrl`, `appStoreUrl`, `github`, `featured`, `gallery` and `kind`.
+ * Leave a link out when there is none; nothing uses a '#' placeholder.
+ *
+ * `kind` labels work that was not a plain client engagement, wherever it is
+ * shown. 'iti' (an ITI training project), 'event' (built at the Cursor
+ * Alexandria event; the label names it, so give a different event its own
+ * kind) and 'learning' (built while learning the stack) are not client work
+ * and are left out of the headline project count. 'venture' (a product he
+ * co-founded) is labelled but still counted: the owner counts it as both.
+ * No `kind` means client work. The labels are `projects.kinds.<kind>` in both
+ * locale files.
  *
  * `gallery` lists extra screens captured from the live product: `-dN` are
  * desktop views further down the page, `-m` is the phone view.
@@ -14,7 +28,9 @@ export const CASE_STUDIES = {
     name: 'OX GYM',
     image: '/oxgym.webp',
     liveUrl: 'https://oxgym-eg.com/',
-    stack: ['JavaScript', 'Node.js', 'PostgreSQL', 'PWA', 'Web Push', 'Vercel'],
+    stack: ['JavaScript', 'Node.js', 'PostgreSQL', 'Vercel Serverless', 'PWA', 'Web Push', 'Service Worker', 'SEO'],
+    category: 'Full Stack',
+    featured: true,
     updated: '2026-11-11',
     gallery: ['/gallery/oxgym-d1.webp', '/gallery/oxgym-d2.webp', '/gallery/oxgym-d3.webp', '/gallery/oxgym-d4.webp', '/gallery/oxgym-m.webp'],
   },
@@ -23,6 +39,8 @@ export const CASE_STUDIES = {
     image: '/opptmakers.webp',
     liveUrl: 'https://opptmakers.cloud/login',
     stack: ['Next.js', 'NestJS', 'PostgreSQL', 'React', 'Tailwind', 'Docker'],
+    category: 'Full Stack',
+    featured: true,
     updated: '2026-11-11',
     gallery: ['/gallery/opptmakers-d1.webp', '/gallery/opptmakers-d2.webp', '/gallery/opptmakers-d3.webp', '/gallery/opptmakers-d4.webp', '/gallery/opptmakers-m.webp'],
   },
@@ -31,6 +49,8 @@ export const CASE_STUDIES = {
     image: '/opptmakers-platforms.webp',
     liveUrl: 'https://platforms.opptmakers.cloud/login',
     stack: ['Next.js', 'NestJS', 'PostgreSQL', 'React', 'Tailwind', 'Docker'],
+    category: 'Full Stack',
+    featured: true,
     updated: '2026-11-11',
     gallery: ['/gallery/opptmakers-platforms-d1.webp', '/gallery/opptmakers-platforms-d2.webp', '/gallery/opptmakers-platforms-d3.webp', '/gallery/opptmakers-platforms-d4.webp', '/gallery/opptmakers-platforms-m.webp'],
   },
@@ -39,21 +59,28 @@ export const CASE_STUDIES = {
     image: '/bilqalam.webp',
     liveUrl: 'https://bilqalaminstitute.net/',
     stack: ['Next.js', 'React', 'Laravel', 'PHP', 'Tailwind'],
+    category: 'Full Stack',
+    featured: true,
     updated: '2026-08-30',
     gallery: ['/gallery/bilqalam-d1.webp', '/gallery/bilqalam-d2.webp', '/gallery/bilqalam-d3.webp', '/gallery/bilqalam-m.webp'],
   },
   indstrz: {
     name: 'Indstrz',
+    kind: 'venture',
     image: '/indstrz.webp',
     liveUrl: 'https://indstrz.com/en',
-    stack: ['Next.js', 'React', 'Flask', 'PostgreSQL', 'Socket.io', 'SQLAlchemy'],
+    stack: ['Next.js', 'React', 'Flask', 'PostgreSQL', 'Socket.io', 'SQLAlchemy', 'Cloudinary'],
+    category: 'Full Stack',
+    featured: true,
     updated: '2026-08-30',
     gallery: ['/gallery/indstrz-d1.webp', '/gallery/indstrz-d2.webp', '/gallery/indstrz-d3.webp', '/gallery/indstrz-m.webp'],
   },
   uduipa: {
     name: 'UDUIPA',
     image: '/uduipa.webp',
-    stack: ['Next.js', 'NestJS', 'TypeScript', 'PostgreSQL', 'Turborepo', 'Puppeteer'],
+    stack: ['Next.js', 'NestJS', 'TypeScript', 'PostgreSQL', 'Turborepo', 'Cloudinary', 'Puppeteer', 'Recharts'],
+    category: 'Full Stack',
+    featured: true,
     updated: '2026-08-30',
   },
   profleet: {
@@ -61,6 +88,8 @@ export const CASE_STUDIES = {
     image: '/profleet.webp',
     liveUrl: 'https://pro-fleet.vercel.app/',
     stack: ['Next.js', 'TypeScript', 'Prisma', 'Socket.io', 'PostgreSQL', 'Leaflet'],
+    category: 'Full Stack',
+    featured: true,
     updated: '2026-08-30',
     gallery: ['/gallery/profleet-d1.webp', '/gallery/profleet-d2.webp', '/gallery/profleet-m.webp'],
   },
@@ -69,15 +98,19 @@ export const CASE_STUDIES = {
     image: '/medicta.webp',
     liveUrl: 'https://play.google.com/store/apps/details?id=com.medicta',
     appStoreUrl: 'https://apps.apple.com/app/id6743770555',
-    stack: ['React Native', 'React Query', 'Redux', 'Firebase', 'i18next', 'Codemagic', 'App Store Connect API'],
+    stack: ['React Native', 'Android', 'iOS', 'React Query', 'Redux', 'Firebase', 'Codemagic', 'Google Play', 'App Store', 'i18next', 'App Store Connect API'],
+    category: 'Mobile',
+    featured: true,
     updated: '2026-11-11',
     gallery: ['/gallery/medicta-d1.webp', '/gallery/medicta-d2.webp', '/gallery/medicta-d3.webp', '/gallery/medicta-d4.webp', '/gallery/medicta-m.webp'],
   },
   toyo228: {
     name: 'Toyo228',
     image: '/toyo228.webp',
-    liveUrl: 'http://toyo228.com/en',
-    stack: ['Next.js', 'NestJS', 'TypeORM', 'PostgreSQL', 'TypeScript', 'Turborepo'],
+    liveUrl: 'https://toyo228.com/en',
+    stack: ['Next.js', 'NestJS', 'TypeORM', 'PostgreSQL', 'TypeScript', 'Turborepo', 'Multer', 'Excel Processing'],
+    category: 'Full Stack',
+    featured: true,
     updated: '2026-08-31',
     gallery: ['/gallery/toyo228-d1.webp', '/gallery/toyo228-d2.webp', '/gallery/toyo228-m.webp'],
   },
@@ -85,7 +118,9 @@ export const CASE_STUDIES = {
     name: 'Injaz',
     image: '/injaz.webp',
     liveUrl: 'https://lms-injaz.com/',
-    stack: ['Django', 'PostgreSQL', 'Python', 'Celery', 'Redis', 'MyFatoorah'],
+    stack: ['Django', 'PostgreSQL', 'Python', 'Celery', 'Redis', 'MyFatoorah', 'NELC', 'SCFHS'],
+    category: 'Full Stack',
+    featured: true,
     updated: '2026-08-31',
     gallery: ['/gallery/injaz-d1.webp', '/gallery/injaz-d3.webp'],
   },
@@ -93,7 +128,8 @@ export const CASE_STUDIES = {
     name: 'HC Holding',
     image: '/hcholding.webp',
     liveUrl: 'https://lms-hcholding.org/',
-    stack: ['Django', 'PostgreSQL', 'Python', 'Celery', 'Redis', 'MyFatoorah'],
+    stack: ['Django', 'PostgreSQL', 'Python', 'Celery', 'Redis', 'MyFatoorah', 'NELC', 'SCFHS'],
+    category: 'Full Stack',
     updated: '2026-08-31',
     gallery: ['/gallery/hcholding-d1.webp', '/gallery/hcholding-d3.webp', '/gallery/hcholding-m.webp'],
   },
@@ -101,7 +137,8 @@ export const CASE_STUDIES = {
     name: 'Mada Education',
     image: '/mada.webp',
     liveUrl: 'https://mada-education.com/',
-    stack: ['Django', 'PostgreSQL', 'Python', 'Celery', 'Redis', 'Tailwind'],
+    stack: ['Django', 'PostgreSQL', 'Python', 'Celery', 'Redis', 'MyFatoorah', 'Tailwind'],
+    category: 'Full Stack',
     updated: '2026-08-31',
     gallery: ['/gallery/mada-d1.webp', '/gallery/mada-d2.webp', '/gallery/mada-m.webp'],
   },
@@ -110,32 +147,39 @@ export const CASE_STUDIES = {
     image: '/mutlq.webp',
     liveUrl: 'https://mutlq.org/',
     stack: ['Django', 'PostgreSQL', 'Tailwind', 'JavaScript'],
+    category: 'Frontend',
     updated: '2026-08-31',
   },
   motors: {
     name: 'Motors',
     image: '/motors.webp',
     stack: ['Next.js', 'NestJS', 'TypeORM', 'PostgreSQL', 'TypeScript', 'Multer'],
+    category: 'Full Stack',
+    featured: true,
     updated: '2026-08-31',
   },
   waferlee: {
     name: 'Waferlee',
     image: '/waferlee.webp',
     liveUrl: 'https://waferlee.ae',
-    stack: ['Next.js', 'NestJS', 'TypeORM', 'PostgreSQL', 'Tailwind', 'Radix UI'],
+    stack: ['Next.js', 'NestJS', 'TypeORM', 'PostgreSQL', 'Tailwind', 'Radix UI', 'Framer Motion'],
+    category: 'Full Stack',
     updated: '2026-08-31',
   },
   baserah: {
     name: 'Baserah AI',
     image: '/baserah.webp',
+    liveUrl: 'https://baserah.ai/',
     stack: ['FastAPI', 'Python', 'MongoDB', 'AI', 'Gemini'],
+    category: 'Full Stack',
     updated: '2026-08-31',
   },
   sf_portal: {
     name: 'S&F Digital Portfolio',
     image: '/smartfast.webp',
     liveUrl: 'https://smart-fast.com/',
-    stack: ['React', 'TypeScript', 'Vite', 'Radix UI', 'Tailwind', 'Django'],
+    stack: ['React', 'TypeScript', 'Vite', 'Radix UI', 'Tailwind', 'Django', 'Recharts'],
+    category: 'Full Stack',
     updated: '2026-08-31',
   },
   journal: {
@@ -143,6 +187,7 @@ export const CASE_STUDIES = {
     image: '/journal.webp',
     liveUrl: 'https://upafa-edu.net/',
     stack: ['React', 'NestJS', 'TypeORM', 'PostgreSQL', 'TypeScript', 'Nx Monorepo'],
+    category: 'Full Stack',
     updated: '2026-08-31',
   },
   clinic: {
@@ -150,6 +195,8 @@ export const CASE_STUDIES = {
     image: '/clinic.webp',
     liveUrl: 'https://clinic-project-2.vercel.app/',
     stack: ['React', 'Django', 'PostgreSQL', 'Tailwind', 'AI'],
+    kind: 'iti',
+    category: 'Full Stack',
     updated: '2026-08-31',
   },
   manqla: {
@@ -157,6 +204,7 @@ export const CASE_STUDIES = {
     image: '/manqla.webp',
     liveUrl: 'https://www.manqla.com/',
     stack: ['React', 'Tailwind', 'TypeScript'],
+    category: 'Frontend',
     updated: '2026-08-31',
   },
   orca: {
@@ -164,6 +212,7 @@ export const CASE_STUDIES = {
     image: '/orca.webp',
     liveUrl: 'https://orcastore.vercel.app/',
     stack: ['Next.js', 'Tailwind', 'Node.js', 'Express.js', 'MongoDB'],
+    category: 'Full Stack',
     updated: '2026-08-31',
   },
   amarna: {
@@ -171,6 +220,7 @@ export const CASE_STUDIES = {
     image: '/amarna.webp',
     liveUrl: 'https://amarna-travel.trekksoft.com/ar',
     stack: ['CMS', 'RTL', 'Customization'],
+    category: 'Frontend',
     updated: '2026-08-31',
   },
   sonomedix: {
@@ -178,13 +228,15 @@ export const CASE_STUDIES = {
     image: '/sonomedix.webp',
     liveUrl: 'https://sonomedix.cloud/',
     stack: ['React', 'Tailwind', 'Node.js', 'Express.js', 'MongoDB'],
+    category: 'Full Stack',
     updated: '2026-08-31',
   },
   nextstop: {
     name: 'NextStop Visa',
     image: '/nextstop.webp',
     liveUrl: 'https://next-stop-project-nine.vercel.app/',
-    stack: ['Next.js', 'Tailwind', 'React'],
+    stack: ['Next.js', 'Tailwind', 'Vercel', 'React'],
+    category: 'Frontend',
     updated: '2026-08-31',
   },
   kmbc: {
@@ -192,6 +244,7 @@ export const CASE_STUDIES = {
     image: '/kmbc.webp',
     liveUrl: 'https://www.kmbc-kw.com/',
     stack: ['Next.js', 'Tailwind', 'Framer Motion', 'React'],
+    category: 'Frontend',
     updated: '2026-08-31',
   },
   rabzan: {
@@ -199,6 +252,7 @@ export const CASE_STUDIES = {
     image: '/rabzan.webp',
     liveUrl: 'https://www.rabzan.com/',
     stack: ['React', 'Tailwind', 'JavaScript'],
+    category: 'Frontend',
     updated: '2026-08-31',
   },
   sems: {
@@ -206,6 +260,7 @@ export const CASE_STUDIES = {
     image: '/sems.webp',
     liveUrl: 'https://sems-project.vercel.app/',
     stack: ['Next.js', 'Tailwind', 'React', 'TypeScript'],
+    category: 'Full Stack',
     updated: '2026-08-31',
   },
   quotemate: {
@@ -213,6 +268,8 @@ export const CASE_STUDIES = {
     image: '/quotemate.webp',
     liveUrl: 'https://quote-mateapp.vercel.app/',
     stack: ['Next.js', 'Tailwind', 'AI', 'OpenAI', 'React'],
+    kind: 'event',
+    category: 'Full Stack',
     updated: '2026-08-31',
   },
   dmagni: {
@@ -220,6 +277,7 @@ export const CASE_STUDIES = {
     image: '/dmagni.webp',
     liveUrl: 'https://dmagni-project.vercel.app/',
     stack: ['Next.js', 'Tailwind', 'AI', 'React'],
+    category: 'Full Stack',
     updated: '2026-08-31',
   },
   cme: {
@@ -227,6 +285,7 @@ export const CASE_STUDIES = {
     image: '/cme.webp',
     liveUrl: 'https://cmehours.online/',
     stack: ['Next.js', 'Tailwind', 'React', 'PostgreSQL'],
+    category: 'Full Stack',
     updated: '2026-08-31',
   },
   dpms: {
@@ -234,18 +293,23 @@ export const CASE_STUDIES = {
     image: '/dpms.webp',
     liveUrl: 'https://dpms-rust.vercel.app/',
     stack: ['Next.js', 'Tailwind', 'React', 'PostgreSQL'],
+    category: 'Full Stack',
     updated: '2026-08-31',
   },
   alva_ai: {
     name: 'Alva AI (PULSE)',
     image: '/alva.webp',
-    stack: ['React', 'Node.js', 'Express.js', 'OpenAI', 'Tailwind', 'Vite'],
+    stack: ['React', 'Node.js', 'Express.js', 'Knex.js', 'OpenAI', 'Tailwind', 'Vite'],
+    category: 'Full Stack',
     updated: '2026-08-31',
   },
   inventory: {
     name: 'Inventory System',
     image: '/inventory.webp',
     stack: ['Django', 'PostgreSQL', 'Bootstrap', 'JavaScript'],
+    kind: 'iti',
+    category: 'Full Stack',
+    github: 'https://github.com/ChaoticMaximoff/Inventory-Management-System-ITI-Django-Project',
     updated: '2026-08-31',
   },
   cinemascore: {
@@ -253,6 +317,9 @@ export const CASE_STUDIES = {
     image: '/cinemascore.webp',
     liveUrl: 'https://movies-app-react-project-mocha.vercel.app/',
     stack: ['React', 'Bootstrap', 'TMDB API'],
+    kind: 'iti',
+    category: 'Frontend',
+    github: 'https://github.com/HamsEldakrory/Movies-App-react-project',
     updated: '2026-08-31',
   },
   movieweb: {
@@ -260,12 +327,17 @@ export const CASE_STUDIES = {
     image: '/movies.webp',
     liveUrl: 'https://movieswebsiteproject.vercel.app/',
     stack: ['HTML', 'CSS', 'JavaScript', 'jQuery', 'Tailwind'],
+    kind: 'learning',
+    category: 'Frontend',
+    github: 'https://github.com/Belalnajy/movieswebsiteproject',
     updated: '2026-08-31',
   },
   hms_odoo: {
     name: 'Hospital Management',
     image: '/HMS.webp',
     stack: ['Odoo', 'Python', 'PostgreSQL'],
+    kind: 'iti',
+    category: 'Backend',
     updated: '2026-08-31',
   },
   bookstore: {
@@ -273,14 +345,35 @@ export const CASE_STUDIES = {
     image: '/book.webp',
     liveUrl: 'https://bookstoredeploytest.vercel.app/',
     stack: ['HTML', 'CSS', 'JavaScript', 'jQuery', 'Bootstrap'],
+    kind: 'iti',
+    category: 'Frontend',
+    github: 'https://github.com/Sara-Elagder/Front-end-ITI',
     updated: '2026-08-31',
   },
   library: {
     name: 'Library Management',
     image: '/library.webp',
     stack: ['Django', 'PostgreSQL', 'Python'],
+    kind: 'learning',
+    category: 'Full Stack',
+    github: 'https://github.com/Belalnajy/LMSProject',
     updated: '2026-08-31',
   },
 };
 
 export const CASE_STUDY_SLUGS = Object.keys(CASE_STUDIES);
+
+/** What a `kind` means; every value used above must be listed here. */
+export const PROJECT_KINDS = ['iti', 'event', 'learning', 'venture'];
+
+/** Kinds that are labelled but still counted as client work (and may be featured). */
+export const COUNTED_KINDS = ['venture'];
+
+/**
+ * What the headline "N projects for M clients" counts: client work, plus the
+ * labelled kinds the owner counts (COUNTED_KINDS).
+ */
+export const CLIENT_PROJECT_SLUGS = CASE_STUDY_SLUGS.filter((slug) => {
+  const { kind } = CASE_STUDIES[slug];
+  return !kind || COUNTED_KINDS.includes(kind);
+});

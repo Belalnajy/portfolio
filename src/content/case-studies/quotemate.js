@@ -1,11 +1,11 @@
 const content = {
   "en": {
     "title": "QuoteMate, From Messy RFQs to Professional Quotes in Seconds",
-    "summary": "An intelligent platform that uses AI to transform unstructured RFQ requests (PDFs, images, free text) into structured, professional quote documents, built to speed up industrial sales teams.",
+    "summary": "An intelligent platform that uses AI to transform unstructured RFQ requests (PDFs, images, free text) into structured, professional quote documents, built at the Cursor Alexandria event to tackle a problem industrial sales teams have: retyping RFQs into quotes.",
     "facts": {
       "role": "Full-stack developer",
       "scope": "AI extraction, quote generation, document archiving, sales workflow",
-      "audience": "Industrial sales teams handling RFQs"
+      "audience": "Designed for industrial sales teams handling RFQs"
     },
     "challenge": {
       "body": "RFQs arrive however the customer feels like sending them: a scanned PDF, a photo of a list, a rambling email. A salesperson retypes all of it into a quote, and every retype costs hours and invites errors. The platform had to read those messy inputs and produce a document ready to send.",
@@ -35,21 +35,21 @@ const content = {
       ]
     },
     "outcome": {
-      "body": "QuoteMate collapses the RFQ-to-quote cycle from hours of retyping to seconds of review: applied AI on a real industrial workflow, with a live demo online.",
+      "body": "Built and demoed at the Cursor Alexandria event: a working prototype that turns a messy RFQ into a draft quote in seconds, showing how applied AI could take the retyping out of an industrial sales workflow. The demo is live online.",
       "points": [
         "Live demo online",
-        "Hours of manual work per quote removed",
-        "AI applied to a concrete business bottleneck"
+        "Built and demoed at the Cursor Alexandria event",
+        "Prototype aimed at a real sales bottleneck: retyping RFQs"
       ]
     }
   },
   "ar": {
     "title": "QuoteMate، من RFQ مبعثر لعرض سعر احترافي في ثواني",
-    "summary": "منصة ذكية بتستخدم الذكاء الاصطناعي لتحويل طلبات الـ RFQ غير المنظمة (PDF وصور ونص حر) لوثائق عروض أسعار منظمة واحترافية، مبنية لتسريع فرق المبيعات الصناعية.",
+    "summary": "منصة ذكية بتستخدم الذكاء الاصطناعي لتحويل طلبات الـ RFQ غير المنظمة (PDF وصور ونص حر) لوثائق عروض أسعار منظمة واحترافية، عملتها في فعالية Cursor Alexandria حوالين مشكلة فرق المبيعات الصناعية.",
     "facts": {
       "role": "مطور Full-Stack",
       "scope": "استخراج بالـ AI، توليد عروض، أرشفة مستندات، دورة عمل مبيعات",
-      "audience": "فرق مبيعات صناعية بتتعامل مع RFQs"
+      "audience": "مصممة لفرق المبيعات الصناعية اللي بتتعامل مع RFQs"
     },
     "challenge": {
       "body": "طلبات الأسعار بتوصل بالشكل اللي العميل حابب يبعتها بيه: PDF متصور، صورة قايمة، إيميل مطوّل. مندوب المبيعات بيعيد كتابة كل ده في عرض سعر، وكل إعادة كتابة بتكلف ساعات وبتفتح باب الأخطاء. المنصة كان لازم تقرا المدخلات المبعثرة دي وتطلّع مستند جاهز للإرسال.",
@@ -79,11 +79,11 @@ const content = {
       ]
     },
     "outcome": {
-      "body": "QuoteMate بيضغط دورة الـ RFQ-لعرض-السعر من ساعات إعادة كتابة لثواني مراجعة: ذكاء اصطناعي تطبيقي على دورة عمل صناعية حقيقية، وديمو مباشر أونلاين.",
+      "body": "عملته وعرضته في فعالية Cursor Alexandria: نموذج أولي شغال بيحوّل RFQ مبعثر لمسودة عرض سعر في ثواني، وبيوضح إزاي الذكاء الاصطناعي ممكن يشيل إعادة الكتابة من دورة المبيعات الصناعية. والديمو شغال أونلاين.",
       "points": [
         "ديمو مباشر أونلاين",
-        "ساعات شغل يدوي اتشالت من كل عرض",
-        "AI متطبق على عنق زجاجة تجاري ملموس"
+        "اتبنى واتعرض في فعالية Cursor Alexandria",
+        "نموذج أولي لمشكلة حقيقية: إعادة كتابة طلبات الأسعار يدوياً"
       ]
     }
   }

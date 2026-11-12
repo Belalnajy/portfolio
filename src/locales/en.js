@@ -4,28 +4,26 @@
 const en = {
     translation: {
       hero: {
-        available: 'Available for new projects',
+        available: 'Open to freelance projects',
         greeting_start: 'Hi, I\'m ',
         name: 'Belal Nagy',
-        i_am_a: 'I\'m a ',
         description_1: 'I build web platforms from zero, and take over existing codebases that need fixing. ',
-        description_2: '36 projects',
+        description_2: '{{projects}} projects',
         description_3: ' for ',
-        description_4: '27 clients',
+        description_4: '{{clients}} clients',
         description_5: ' across Egypt and the Gulf.',
         view_projects: 'View Projects',
         contact_me: 'Contact Me',
         download_cv: 'Download CV',
         freelance_title: 'Verified freelancer',
         freelance_rating: '100% positive client reviews',
-        freelance_platforms: 'Khamsat · Nafezly',
+        freelance_platforms: 'Khamsat',
         hire_me: 'Hire me for a project',
         hire_me_b: 'Get a free project estimate',
         role_line: 'Software Engineer · Full-Stack Developer',
         now_label: 'Now',
         now_value: 'Software Engineer @ ezSec Inc',
         location: 'Alexandria, Egypt · working worldwide',
-        now_meta: 'Remote · Kitchener, Canada',
         scroll: 'Scroll',
         follow_me: 'Follow me on Arabic platforms'
       },
@@ -36,13 +34,13 @@ const en = {
           now_meta: 'Remote · Kitchener, Canada',
           base: 'Based in',
           base_value: 'Alexandria, Egypt',
-          base_meta: '31.2°N 29.9°E · working worldwide',
+          base_meta: 'working worldwide',
           langs: 'Languages',
           langs_value: 'Arabic (native) · English',
           stack_title: 'Core stack',
         },
         title: 'About Me',
-        subtitle: 'Full-stack developer in Alexandria, Egypt. Next.js, Laravel, NestJS, Node.js, Django, PostgreSQL.',
+        subtitle: 'Full-stack developer in Alexandria, Egypt. I work in Next.js, Laravel, NestJS, Node.js, Django and PostgreSQL.',
         personal_info: 'Personal Information',
         professional_summary: 'Professional Summary',
         labels: {
@@ -59,7 +57,7 @@ const en = {
         },
         summary_p1: 'Full-stack developer based in <1>Alexandria, Egypt</1>. I work in Next.js, Laravel, NestJS, Node.js, Django and PostgreSQL. I am currently a Software Engineer at <3>ezSec Inc in Canada</3>, working remotely.',
         summary_p2: 'I am the sole developer on <1>Bilqalam Institute</1>, a production learning platform serving thousands of enrolled students. It handles student enrollment and management, billing and invoicing, and the admin reporting dashboards the institute runs on. I built it and I maintain it alone, in <3>Next.js and Laravel</3>.',
-        summary_p3: 'I also built a multi-tenant LMS engine that runs as <1>three separately branded accredited platforms</1>, Injaz, HC Holding and Mada Education, on one hardened Django and PostgreSQL core. I co-founded Indstrz, a B2B industrial platform, and taught front-end development to <3>440+ students</3> as an external instructor at ITI. Arabic and RTL work goes into every project I ship, including the financial and data-heavy interfaces.',
+        summary_p3: 'I also built a multi-tenant LMS engine that runs as <1>three separately branded accredited platforms</1>, Injaz, HC Holding and Mada Education, on one hardened Django and PostgreSQL core. I co-founded Indstrz, a B2B industrial platform, and taught front-end development to <3>{{students}}+ students</3> as an external instructor at ITI. Arabic and RTL work goes into every project I ship, including the financial and data-heavy interfaces.',
         highlights: {
           sole_developer: {
             title: 'Sole developer on production systems',
@@ -78,7 +76,7 @@ const en = {
       projects: {
         title: 'Featured Projects',
         archive_title: 'Projects & Case Studies',
-        subtitle: 'Here are some of my notable projects that showcase my skills and experience',
+        subtitle: 'Selected projects, each with a case study on what I built and why.',
         search_placeholder: 'Search projects by name...',
         no_results: 'No projects found matching your criteria',
         view_details: 'View Details',
@@ -87,6 +85,12 @@ const en = {
         show_featured: 'Show featured only',
         load_more: 'Load more ({{count}} remaining)',
         featured_note: 'A hand-picked selection. The full archive is one click away.',
+        kinds: {
+          iti: 'ITI training project',
+          event: 'Cursor Alexandria event project',
+          learning: 'Learning project',
+          venture: 'Co-founded venture'
+        },
         categories: {
           all: 'All',
           fullstack: 'Full Stack',
@@ -416,7 +420,7 @@ const en = {
           },
           library: {
             title: 'Library Management System',
-            desc: 'A comprehensive LMS using Django and PostgreSQL for efficient library operations.',
+            desc: 'A library management system built with Django and PostgreSQL for cataloguing and search.',
             features: [
               'Book cataloging system',
               'CRUD operations for books',
@@ -526,17 +530,6 @@ const en = {
           }
         }
       },
-      laptop_showcase: {
-        label: 'Interactive Preview',
-        title: 'Experience My Work in 3D',
-        subtitle: 'Explore my featured projects through an immersive 3D laptop showcase. Hover and interact with the model to see the details.',
-        features: {
-          responsive: 'Responsive & Adaptive',
-          performance: 'High Performance',
-          modern: 'Modern Tech Stack',
-          rtl: 'Full RTL Support'
-        }
-      },
       platform_suite: {
         label: 'Product Suite',
         title: 'One Engine, Many Brands',
@@ -558,9 +551,9 @@ const en = {
         footnote: 'One codebase, one deployment pipeline, one security model, three products. New clients launch in days instead of months, and every fix or feature lands across the whole suite at once.'
       },
       brands: {
-        label: 'Partners in Growth',
-        title: 'Trusted By Innovators',
-        subtitle: 'A curated collection of digital platforms, applications, and corporate identities we have empowered towards digital excellence.'
+        label: 'Clients',
+        title: 'Who I Have Built For',
+        subtitle: 'Companies, institutes and products I have built software for.'
       },
       skills: {
         title: 'Skills & Expertise',
@@ -651,7 +644,7 @@ const en = {
             period: '07/2025 - Present',
             employment: 'Contract',
             description: [
-              'Taught Front-End Development (HTML, CSS, JavaScript) to more than 440 students',
+              'Taught Front-End Development (HTML, CSS, JavaScript) to more than {{students}} students',
               'Designed and delivered practical coding sessions and real-world project guidance'
             ]
           },
@@ -705,9 +698,8 @@ const en = {
         ]
       },
       stats: {
-        projects: 'Projects Completed',
+        projects: 'Client Projects',
         technologies: 'Technologies Mastered',
-        years: 'Years of Experience',
         students: 'Students Taught',
         clients: 'Clients Served'
       },
@@ -727,7 +719,7 @@ const en = {
       },
       services: {
         title: 'Services I Offer',
-        subtitle: 'Comprehensive web development services tailored to bring your ideas to life',
+        subtitle: 'Websites, platforms and internal systems in Arabic and English, built by one developer you deal with directly.',
         ready: 'Ready to start your project?',
         get_in_touch: 'Get in Touch',
         rescue_cta: 'Project stuck? See how a rescue works →',
@@ -877,6 +869,7 @@ const en = {
       },
       case_studies: {
         previous: 'Previous case study',
+        next: 'Next case study',
         label: 'Case Study',
         back: 'Back to Projects',
         visit: 'Visit Live Site',
@@ -901,7 +894,7 @@ const en = {
       },
       testimonials: {
         title: 'What People Say',
-        subtitle: "Feedback from clients, students, and colleagues I've worked with",
+        subtitle: 'Reviews from clients I have worked with through freelance platforms.',
         positive_reviews: 'Positive Reviews',
         reviews_count: 'Reviews',
         view_review: 'View Full Review on {{platform}}',
@@ -928,7 +921,7 @@ const en = {
             role: 'Client - Khamsat'
           },
           ahmed_e: {
-            text: 'The work was exactly as I wanted in a reasonable time, not the last interaction with Engineer Belal, God willing.',
+            text: 'The work was exactly what I wanted, in a reasonable time. This will not be my last project with Engineer Belal, God willing.',
             role: 'Client - Khamsat'
           },
           amal_a: {
@@ -940,7 +933,7 @@ const en = {
             role: 'Client - Khamsat'
           },
           aseel_a: {
-            text: 'Brother Belal, thank you for your effort. I am honored to work with you in other future projects for your good treatment and I advise everyone to deal with you. His work is perfect and excellent.',
+            text: 'Brother Belal, thank you for the effort you put in. I would be honoured to work with you again on future projects because of how well you deal with people, and I recommend you to everyone. His work is precise and excellent. Thank you.',
             role: 'Project Owner'
           },
           abo_m: {
@@ -963,7 +956,7 @@ const en = {
       },
       contact: {
         title: 'Get In Touch',
-        subtitle: 'Feel free to reach out for collaborations or just a friendly hello',
+        subtitle: 'Tell me what you are building and where it stands.',
         info: {
           email: 'Email',
           phone: 'Phone',
@@ -988,7 +981,8 @@ const en = {
         },
         notifications: {
           success: "Message sent successfully! I'll get back to you soon.",
-          error: 'Failed to send message. Please email me directly at belalnajy9@gmail.com.'
+          error: 'Failed to send message. Please email me directly at belalnajy9@gmail.com.',
+          unavailable: 'The contact form is not available right now. Please email me directly at belalnajy9@gmail.com.'
         }
       },
       nav: {
@@ -997,9 +991,7 @@ const en = {
         timeline: 'Timeline',
         projects: 'Projects',
         suite: 'Product Suite',
-        skills: 'Skills',
         services: 'Services',
-        packages: 'Packages',
         testimonials: 'Testimonials',
         now: 'Now',
         blog: 'Blog',
@@ -1038,7 +1030,7 @@ const en = {
           'AI-assisted development workflows, used with review discipline',
         ],
         availability_title: 'Availability',
-        availability_body: 'Full-time at ezSec. Open to freelance projects with a clear scope. The fastest way to start is the contact form.',
+        availability_body: 'I work full-time at ezSec and take freelance projects with a clear scope alongside it. The easiest way to start one is the contact form.',
         availability_cta: 'Start a conversation',
       },
       rescue_page: {
@@ -1097,7 +1089,7 @@ const en = {
       },
       footer: {
         about_title: 'Belal Nagy',
-        about_text: 'I build web platforms from zero, and take over existing codebases that need fixing. 36 projects for 27 clients across Egypt and the Gulf.',
+        about_text: 'I build web platforms from zero, and take over existing codebases that need fixing. {{projects}} projects for {{clients}} clients across Egypt and the Gulf.',
         quick_links: 'Quick Links',
         services: 'Services',
         get_in_touch: 'Get in Touch',
@@ -1247,7 +1239,7 @@ const en = {
         },
         highlights: {
           delivered: '{{projects}}+ projects delivered for {{clients}}+ clients across Egypt and the Gulf',
-          reviews: '100% positive client reviews on Khamsat and Nafezly',
+          reviews: '100% positive client reviews on Khamsat',
           teaching: 'Taught front-end development to {{students}}+ students at ITI',
           rtl: 'Arabic and RTL shipped in every project, including financial and data-heavy interfaces'
         },
@@ -1264,6 +1256,29 @@ const en = {
         title: 'Quick FAQ',
         subtitle: 'Instant answers about Belal',
         tooltip: 'How can I help you?'
+      },
+      // Accessible names and announcements only: none of these is visible text.
+      a11y: {
+        skip_to_content: 'Skip to content',
+        main_nav: 'Main',
+        tab_bar: 'Quick links',
+        home_link: 'Belal Nagy, home',
+        menu_open: 'Open menu',
+        menu_close: 'Close menu',
+        close_notification: 'Dismiss notification',
+        faq_close: 'Close quick FAQ',
+        faq_topics: 'Question topics',
+        faq_conversation: 'Conversation',
+        palette_results: 'Results',
+        palette_count: 'Results: {{count}}',
+        search_projects: 'Search projects',
+        filter_projects: 'Filter projects',
+        projects_count: 'Projects shown: {{count}}',
+        review_prev: 'Previous review',
+        review_next: 'Next review',
+        review_n: 'Review {{n}} of {{count}}',
+        logos_pause: 'Pause the logo scroll',
+        logos_play: 'Play the logo scroll'
       }
     }
 };

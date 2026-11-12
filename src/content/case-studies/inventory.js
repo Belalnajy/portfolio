@@ -3,7 +3,7 @@ const content = {
     "title": "An Inventory System Covering the Whole Stock Lifecycle",
     "summary": "A role-based inventory management system built with Django, PostgreSQL and Bootstrap during my ITI training, as a team project: stock, orders, shipments, suppliers, customers and reporting in one system.",
     "facts": {
-      "role": "Full-stack developer · ITI team project",
+      "role": "Full-stack developer",
       "scope": "Stock management, orders and shipments, suppliers, reporting",
       "audience": "Warehouse and operations staff"
     },
@@ -45,9 +45,9 @@ const content = {
   },
   "ar": {
     "title": "نظام مخازن بيغطي دورة حياة المخزون كلها",
-    "summary": "نظام إدارة مخازن قائم على الأدوار مبني بـ Django و PostgreSQL و Bootstrap أثناء تدريبي في ITI كمشروع جماعي: مخزون وطلبات وشحنات وموردين وعملاء وتقارير في نظام واحد.",
+    "summary": "نظام إدارة مخازن قائم على الأدوار مبني بـ Django، PostgreSQL، Bootstrap أثناء تدريبي في ITI كمشروع جماعي: مخزون وطلبات وشحنات وموردين وعملاء وتقارير في نظام واحد.",
     "facts": {
-      "role": "مطور Full-Stack · مشروع جماعي في ITI",
+      "role": "مطور Full-Stack",
       "scope": "إدارة مخزون، طلبات وشحنات، موردين، تقارير",
       "audience": "موظفو المخازن والعمليات"
     },
@@ -61,7 +61,7 @@ const content = {
       ]
     },
     "approach": {
-      "body": "بنيناه على Django و PostgreSQL بواجهة Bootstrap: تحكم وصول بالأدوار على دورات العمل، وحركات مخزون لحظية مربوطة بالطلبات، وتتبع شحنات، وشاشات تقارير بتلخص التشغيل.",
+      "body": "بنيناه على Django مع PostgreSQL بواجهة Bootstrap: تحكم وصول بالأدوار على دورات العمل، وحركات مخزون لحظية مربوطة بالطلبات، وتتبع شحنات، وشاشات تقارير بتلخص التشغيل.",
       "points": [
         "Django + PostgreSQL + Bootstrap",
         "تحكم وصول قائم على الأدوار",

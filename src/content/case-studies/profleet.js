@@ -62,9 +62,9 @@ const content = {
       ]
     },
     "approach": {
-      "body": "المنصة مبنية على Next.js و TypeScript مع Prisma على PostgreSQL. المواقع اللحظية بتتدفق عبر Socket.io على خرائط Leaflet تفاعلية، وكل لوحة تحكم محددة النطاق حسب الدور، ومعاها شات بوت ذكاء اصطناعي بيساعد المستخدمين جوه المنتج.",
+      "body": "المنصة مبنية على Next.js بـ TypeScript، مع Prisma على PostgreSQL. المواقع اللحظية بتتدفق عبر Socket.io على خرائط Leaflet تفاعلية، وكل لوحة تحكم محددة النطاق حسب الدور، ومعاها شات بوت ذكاء اصطناعي بيساعد المستخدمين جوه المنتج.",
       "points": [
-        "Next.js و TypeScript و Prisma و PostgreSQL",
+        "Next.js، TypeScript، Prisma، PostgreSQL",
         "Socket.io يبث على خرائط Leaflet تفاعلية",
         "لوحات تحكم وتحليلات محددة حسب الدور",
         "شات بوت ذكاء اصطناعي لمساعدة المستخدمين"

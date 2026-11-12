@@ -3,7 +3,7 @@ const content = {
     "title": "A Clinic Management System with an AI Assistant (ITI Graduation Project)",
     "summary": "My ITI graduation project: a comprehensive clinic management system with smart appointment scheduling, role-based dashboards, prescription and billing management, real-time analytics, plus an AI chatbot built on Hugging Face.",
     "facts": {
-      "role": "Full-stack developer · ITI graduation project",
+      "role": "Full-stack developer",
       "scope": "Scheduling, role dashboards, prescriptions and billing, AI chatbot",
       "audience": "Doctors, clinic staff and patients"
     },
@@ -47,7 +47,7 @@ const content = {
     "title": "نظام إدارة عيادات بمساعد ذكاء اصطناعي (مشروع تخرج ITI)",
     "summary": "مشروع تخرجي من ITI: نظام شامل لإدارة العيادات بجدولة مواعيد ذكية، لوحات تحكم بالأدوار، إدارة روشتات وفواتير، تحليلات لحظية، بالإضافة لمساعد ذكاء اصطناعي مبني على Hugging Face.",
     "facts": {
-      "role": "مطور Full-Stack · مشروع تخرج ITI",
+      "role": "مطور Full-Stack",
       "scope": "جدولة، لوحات أدوار، روشتات وفواتير، شات بوت AI",
       "audience": "أطباء وموظفو عيادات ومرضى"
     },
@@ -61,7 +61,7 @@ const content = {
       ]
     },
     "approach": {
-      "body": "React في الواجهة و Django و PostgreSQL وراها، مع تحكم وصول بالأدوار على لوحات الدكتور والموظفين والمريض. تحليلات لحظية بتلخص نشاط العيادة، وشات بوت مبني بموديلات Hugging Face بيساعد المرضى في الاستفسارات والحجز.",
+      "body": "React في الواجهة، ووراها Django مع PostgreSQL، وفيه تحكم وصول بالأدوار على لوحات الدكتور والموظفين والمريض. تحليلات لحظية بتلخص نشاط العيادة، وشات بوت مبني بموديلات Hugging Face بيساعد المرضى في الاستفسارات والحجز.",
       "points": [
         "React + Django + PostgreSQL",
         "RBAC على شاشات الدكتور والموظفين والمريض",

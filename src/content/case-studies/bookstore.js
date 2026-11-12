@@ -3,7 +3,7 @@ const content = {
     "title": "A Bookstore Front-End on Pure Web Fundamentals",
     "summary": "A comprehensive bookstore web application with an interactive UI, client-side validation and dynamic content updates, built with a team during ITI training on HTML, CSS, JavaScript, jQuery and Bootstrap.",
     "facts": {
-      "role": "Front-end developer · ITI team project",
+      "role": "Front-end developer",
       "scope": "Interactive browsing, validation, dynamic content",
       "audience": "Book shoppers"
     },
@@ -44,9 +44,9 @@ const content = {
   },
   "ar": {
     "title": "واجهة متجر كتب على أساسيات الويب الخام",
-    "summary": "تطبيق متجر كتب متكامل بواجهة تفاعلية وتحقق على جهة العميل وتحديثات محتوى ديناميكية، مبني مع فريق أثناء تدريب ITI بـ HTML و CSS و JavaScript و jQuery و Bootstrap.",
+    "summary": "تطبيق متجر كتب متكامل بواجهة تفاعلية وتحقق على جهة العميل وتحديثات محتوى ديناميكية، مبني مع فريق أثناء تدريب ITI بـ HTML، CSS، JavaScript، jQuery، Bootstrap.",
     "facts": {
-      "role": "مطور واجهات · مشروع جماعي في ITI",
+      "role": "مطور واجهات",
       "scope": "تصفح تفاعلي، تحقق، محتوى ديناميكي",
       "audience": "متسوقو الكتب"
     },

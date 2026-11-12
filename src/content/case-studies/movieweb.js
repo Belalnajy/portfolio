@@ -1,7 +1,7 @@
 const content = {
   "en": {
     "title": "A Movie Web App Built Without a Framework",
-    "summary": "A dynamic movie web application built with HTML, CSS, JavaScript, jQuery and Tailwind: responsive browsing, interactive features and real-time updates, with no framework doing the work for me.",
+    "summary": "A dynamic movie web application I built while learning HTML, CSS, JavaScript, jQuery and Tailwind: responsive browsing, interactive features and real-time updates, with no framework doing the work for me.",
     "facts": {
       "role": "Front-end developer",
       "scope": "Responsive UI, interactivity, dynamic updates",
@@ -37,14 +37,14 @@ const content = {
       "body": "Live online: proof of the fundamentals under every framework I use today: if the framework disappeared tomorrow, the web skills remain.",
       "points": [
         "Live demo online",
-        "Framework-free dynamic UI delivered",
+        "Framework-free dynamic UI, built from scratch",
         "Fundamentals that transfer everywhere"
       ]
     }
   },
   "ar": {
     "title": "تطبيق أفلام مبني من غير Framework",
-    "summary": "تطبيق أفلام ديناميكي مبني بـ HTML و CSS و JavaScript و jQuery و Tailwind: تصفح متجاوب وخصائص تفاعلية وتحديثات لحظية، من غير framework يعمل الشغل بدالي.",
+    "summary": "تطبيق أفلام ديناميكي عملته وأنا بتعلم HTML، CSS، JavaScript، jQuery، Tailwind: تصفح متجاوب وخصائص تفاعلية وتحديثات لحظية، من غير framework يعمل الشغل بدالي.",
     "facts": {
       "role": "مطور واجهات أمامية",
       "scope": "واجهة متجاوبة، تفاعلية، تحديثات ديناميكية",
@@ -60,7 +60,7 @@ const content = {
       ]
     },
     "approach": {
-      "body": "JavaScript خام و jQuery بيحركوا التفاعلية وتحديثات المحتوى اللحظية، و Tailwind بيتولى التخطيط المتجاوب، والهيكلة بتخلي التلاعب في الـ DOM منظم مش متشابك.",
+      "body": "JavaScript خام مع jQuery بيحركوا التفاعلية وتحديثات المحتوى اللحظية، والتخطيط المتجاوب على Tailwind، والهيكلة بتخلي التلاعب في الـ DOM منظم مش متشابك.",
       "points": [
         "تفاعلية Vanilla JS + jQuery",
         "تخطيط متجاوب بـ Tailwind",
@@ -80,7 +80,7 @@ const content = {
       "body": "شغال أونلاين، وده دليل على الأساسيات اللي تحت كل framework بستخدمه النهاردة: لو الـ framework اختفى بكرة، مهارات الويب باقية.",
       "points": [
         "ديمو مباشر أونلاين",
-        "واجهة ديناميكية اتسلّمت من غير framework",
+        "واجهة ديناميكية اتبنت من غير framework",
         "أساسيات بتتنقل في كل مكان"
       ]
     }

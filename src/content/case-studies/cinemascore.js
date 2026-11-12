@@ -3,7 +3,7 @@ const content = {
     "title": "CinemaScore, a Movie Discovery App on Live API Data",
     "summary": "A dynamic web app for browsing movies and TV shows through the TMDB API: discovery, watchlists, advanced search and language switching, built as a team project during ITI training.",
     "facts": {
-      "role": "Front-end developer · ITI team project",
+      "role": "Front-end developer",
       "scope": "API integration, browsing, watchlist, search, i18n",
       "audience": "Movie and TV fans"
     },
@@ -47,7 +47,7 @@ const content = {
     "title": "CinemaScore، تطبيق اكتشاف أفلام على بيانات API حية",
     "summary": "تطبيق ويب ديناميكي لتصفح الأفلام والمسلسلات عبر TMDB API: اكتشاف وقوائم مشاهدة وبحث متقدم وتبديل لغات، مبني كمشروع جماعي أثناء تدريب ITI.",
     "facts": {
-      "role": "مطور واجهات · مشروع جماعي في ITI",
+      "role": "مطور واجهات",
       "scope": "تكامل API، تصفح، قائمة مشاهدة، بحث، تعدد لغات",
       "audience": "عشاق الأفلام والمسلسلات"
     },
@@ -61,7 +61,7 @@ const content = {
       ]
     },
     "approach": {
-      "body": "بنيناه بـ React و Bootstrap: تكامل TMDB بيحرك التصفح وصفحات التفاصيل، وبحث متقدم بيفلتر الكتالوج، وحالة قايمة المشاهدة متدارة على مستوى التطبيق، والواجهة بتبدّل اللغات بنضافة.",
+      "body": "بنيناه بـ React مع Bootstrap: تكامل TMDB بيحرك التصفح وصفحات التفاصيل، وبحث متقدم بيفلتر الكتالوج، وحالة قايمة المشاهدة متدارة على مستوى التطبيق، والواجهة بتبدّل اللغات بنضافة.",
       "points": [
         "React + Bootstrap",
         "تكامل TMDB API",

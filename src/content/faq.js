@@ -1,3 +1,5 @@
+import { FACTS } from '../lib/facts';
+
 /**
  * Question/answer pairs for the home pages, phrased the way people actually
  * ask answer engines. Rendered visibly by HomeFaq and as FAQPage structured
@@ -9,7 +11,7 @@ export const FAQ_ITEMS = {
     {
       question: 'Who is Belal Nagy?',
       answer:
-        'Belal Nagy is a full-stack developer based in Alexandria, Egypt. He is currently a Software Engineer at ezSec Inc, a cybersecurity company in Kitchener, Canada (working remotely), and co-founder of Indstrz, a B2B industrial procurement platform. He has delivered 36 projects for 27 clients across Egypt and the Gulf.',
+        `Belal Nagy is a full-stack developer based in Alexandria, Egypt. He is currently a Software Engineer at ezSec Inc, a cybersecurity company in Kitchener, Canada (working remotely), and co-founder of Indstrz, a B2B industrial procurement platform. He has delivered ${FACTS.projects} projects for ${FACTS.clients} clients across Egypt and the Gulf.`,
     },
     {
       question: 'What technologies does Belal Nagy work with?',
@@ -29,12 +31,12 @@ export const FAQ_ITEMS = {
     {
       question: 'Is Belal Nagy available for hire?',
       answer:
-        'He is currently a full-time Software Engineer at ezSec Inc and takes freelance projects for clients in Egypt and the Gulf: full-stack builds from zero, AI and backend engineering, Arabic/RTL localization, and technical audits of existing code. The contact form on belalnagy.com is the fastest way to reach him.',
+        'Yes, for freelance work. Alongside his full-time role as a Software Engineer at ezSec Inc, he takes freelance projects with a clear scope for clients in Egypt and the Gulf: full-stack builds from zero, AI and backend engineering, Arabic/RTL localization, and technical audits of existing code. The contact form on belalnagy.com is the easiest way to start.',
     },
     {
       question: 'What is Belal Nagy’s education?',
       answer:
-        'A Bachelor of Business (English Section) in Business Information Systems (BIS) from Alexandria University (2019–2023), graduating with Very Good (GPA 3.265). He also completed the ITI Full Stack Development with Python program and later taught front-end development to more than 440 students as an external ITI instructor.',
+        `A Bachelor of Business (English Section) in Business Information Systems (BIS) from Alexandria University (2019–2023), graduating with Very Good (GPA 3.265). He also completed the ITI Full Stack Development with Python program and later taught front-end development to more than ${FACTS.students} students as an external ITI instructor.`,
     },
     {
       question: 'Does Belal Nagy build Arabic and RTL websites?',
@@ -46,37 +48,37 @@ export const FAQ_ITEMS = {
     {
       question: 'من هو بلال ناجي؟',
       answer:
-        'بلال ناجي مطور Full-Stack من الإسكندرية، مصر. بيشتغل حالياً مهندس برمجيات في ezSec Inc، شركة أمن سيبراني في كيتشنر بكندا (عن بُعد)، وشريك مؤسس في Indstrz، منصة مشتريات صناعية B2B. سلّم 36 مشروعاً لـ 27 عميلاً في مصر والخليج.',
+        `بلال ناجي مطور Full-Stack من الإسكندرية، مصر. يعمل حالياً مهندس برمجيات في ezSec Inc، شركة أمن سيبراني في كيتشنر بكندا (عن بُعد)، وهو شريك مؤسس في Indstrz، منصة مشتريات صناعية B2B. سلّم ${FACTS.projects} مشروعاً لـ ${FACTS.clients} عميلاً في مصر والخليج.`,
     },
     {
       question: 'بلال ناجي بيشتغل بأنهي تقنيات؟',
       answer:
-        'التقنيات الأساسية: Next.js و React و Laravel و NestJS و Node.js و Django و Flask و PostgreSQL، مع TypeScript و Python. بيبني APIs آمنة بـ RBAC ومصادقة JWT، وبيستخدم معماريات طبقية، وكل مشاريعه بدعم كامل للعربية والـ RTL بما فيها الواجهات المالية والمليانة بيانات.',
+        'التقنيات الأساسية: Next.js، React، Laravel، NestJS، Node.js، Django، Flask، PostgreSQL، مع TypeScript ولغة Python. يبني واجهات برمجية (APIs) آمنة بصلاحيات RBAC ومصادقة JWT، ويعتمد على معماريات طبقية، وكل مشاريعه تدعم العربية والـ RTL بالكامل، بما في ذلك الواجهات المالية والمليئة بالبيانات.',
     },
     {
       question: 'بلال ناجي بنى مشاريع إيه؟',
       answer:
-        'منصات إنتاجية منها معهد بالقلم (منصة تعليمية بتخدم آلاف الطلاب، مبنية ومُدارة بمفرده)، ومحرك LMS متعدد المستأجرين بيشغّل ثلاث منصات معتمدة من SCFHS (الإنجاز والتجمع الصحي ومدى)، ونظام تحكيم سري مزدوج لمجلة جامعة سعودية، وأسواق B2B زي Indstrz و Toyo228، وأنظمة لحظية زي منصة Pro Fleet لتتبع الأساطيل.',
+        'منصات تعمل فعلياً، منها معهد بالقلم (منصة تعليمية تخدم آلاف الطلاب، بناها ويديرها بمفرده)، ونظام تدريب إلكتروني (LMS) واحد يشغّل ثلاث منصات معتمدة من SCFHS (الإنجاز والتجمع الصحي ومدى)، ونظام تحكيم سري مزدوج لمجلة جامعة سعودية، وأسواق B2B مثل Indstrz ومنصة Toyo228، وأنظمة لحظية مثل منصة Pro Fleet لتتبع الأساطيل.',
     },
     {
       question: 'بلال بيستلم أكواد قائمة محتاجة إصلاح؟',
       answer:
-        'أيوه، استلام الأكواد القديمة من خدماته الأساسية. من الأمثلة: Medicta، تطبيق حجز مواعيد طبية استلمه وثبّته وعاد تصميمه ونزّله على Google Play والآب ستور، وشغل تخصيص CMS متسلّم جوه منصات مقفولة.',
+        'نعم، استلام المشاريع القائمة من خدماته الأساسية. من الأمثلة: Medicta، تطبيق حجز مواعيد طبية استلمه وثبّته وأعاد تصميمه ونشره على Google Play والآب ستور، وتعديلات على مواقع مبنية على منصات مغلقة.',
     },
     {
       question: 'أقدر أتعامل مع بلال ناجي إزاي؟',
       answer:
-        'بيشتغل حالياً دوام كامل في ezSec Inc وبياخد مشاريع حرة لعملاء مصر والخليج: بناء منصات من الصفر، هندسة AI وباك إند، تعريب و RTL، ومراجعات تقنية للأكواد القائمة. أسرع طريقة للتواصل هي فورم التواصل على belalnagy.com.',
+        'نعم، للعمل الحر. إلى جانب عمله بدوام كامل مهندس برمجيات في ezSec Inc، يأخذ بلال مشاريع فريلانس بنطاق واضح لعملاء في مصر والخليج: بناء منصات من الصفر، وهندسة الذكاء الاصطناعي والباك إند، والتعريب ودعم RTL، والمراجعة التقنية للأكواد القائمة. أسهل طريقة للبدء هي نموذج التواصل على belalnagy.com.',
     },
     {
       question: 'إيه مؤهل بلال ناجي الدراسي؟',
       answer:
-        'بكالوريوس الأعمال (القسم الإنجليزي) تخصص نظم معلومات الأعمال (BIS) من جامعة الإسكندرية (2019–2023) بتقدير جيد جداً (3.265). وأتم برنامج ITI للتطوير المتكامل ببايثون، ودرّس بعدها تطوير الواجهات لأكتر من 440 طالباً كمحاضر خارجي في ITI.',
+        `بكالوريوس الأعمال (القسم الإنجليزي) تخصص نظم معلومات الأعمال (BIS) من جامعة الإسكندرية (2019–2023) بتقدير جيد جداً (3.265). وأتم برنامج ITI للتطوير المتكامل ببايثون، ثم درّس تطوير الواجهات لأكثر من ${FACTS.students} طالباً كمحاضر خارجي في ITI.`,
     },
     {
       question: 'بيبني مواقع عربية بتدعم RTL؟',
       answer:
-        'أيوه، الشغل العربي أولاً تخصص أساسي. كل مشروع بيتسلم بدعم RTL كامل متصمم من البداية مش مضاف لاحقاً، بما في ذلك لوحات التحكم والفواتير وشاشات التقارير اللي التخطيط من اليمين لليسار بيتكسر فيها عادة.',
+        'نعم، العمل العربي أولاً تخصص أساسي عنده. كل مشروع يُسلَّم بدعم RTL كامل مصمم من البداية وليس مضافاً لاحقاً، بما في ذلك لوحات التحكم والفواتير وشاشات التقارير التي يختل فيها التخطيط من اليمين لليسار عادةً.',
     },
   ],
 };

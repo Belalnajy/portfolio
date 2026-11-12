@@ -1,7 +1,7 @@
 // Explicit extensions: scripts/generate-cv.mjs loads this through plain Node
 // ESM, which does not resolve extensionless paths the way the bundler does.
 import { CASE_STUDIES } from './case-studies.js';
-import { FACTS } from './facts.js';
+import { fillFacts } from './facts.js';
 
 /**
  * The CV, assembled from the site's own content.
@@ -17,7 +17,24 @@ import { FACTS } from './facts.js';
  */
 
 // <1>…</1> mark Trans-component islands in the site copy; the CV is plain text.
+// Locale strings carry {{projects}}-style fact placeholders that i18next fills
+// on the site; the CV reads the raw bundle, so it fills them itself, once.
+const fillDeep = (value) => {
+  if (typeof value === 'string') return fillFacts(value);
+  if (Array.isArray(value)) return value.map(fillDeep);
+  if (value && typeof value === 'object') {
+    return Object.fromEntries(Object.entries(value).map(([key, inner]) => [key, fillDeep(inner)]));
+  }
+  return value;
+};
+
 const strip = (value) => String(value).replace(/<\/?\d+>/g, '');
+
+// When the CV content last changed. Bump it together with the content (and
+// regenerate the PDF): the /cv page prints this date, and a `new Date()` there
+// claimed the CV was updated in whatever month the visitor happened to read
+// it, and stopped matching the prerendered HTML as soon as the month rolled over.
+export const CV_UPDATED = '2026-11-11';
 
 export const CV_CONTACT = {
   name: 'Belal Nagy',
@@ -40,7 +57,7 @@ const SKILL_ROWS = [
 ];
 
 export const buildCv = (bundle) => {
-  const t = bundle.translation;
+  const t = fillDeep(bundle.translation);
   const timeline = t.timeline.items;
 
   return {
@@ -49,11 +66,9 @@ export const buildCv = (bundle) => {
 
     // Derived, so a number can never be true on the site and stale here.
     highlights: [
-      t.cv.highlights.delivered
-        .replace('{{projects}}', FACTS.projects)
-        .replace('{{clients}}', FACTS.clients),
+      t.cv.highlights.delivered,
       t.cv.highlights.reviews,
-      t.cv.highlights.teaching.replace('{{students}}', FACTS.students),
+      t.cv.highlights.teaching,
       t.cv.highlights.rtl,
     ],
 
