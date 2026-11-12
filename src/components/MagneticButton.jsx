@@ -1,6 +1,6 @@
 "use client";
 import { useRef, useState } from 'react';
-import { motion } from 'framer-motion';
+import { m } from 'framer-motion';
 
 // Renders a real <a> when given an href (keyboard-focusable, native smooth
 // scroll via CSS scroll-behavior), and a <button> otherwise.
@@ -21,7 +21,7 @@ const MagneticButton = ({ children, className = '', href, ...props }) => {
   };
 
   const { x, y } = position;
-  const Tag = href ? motion.a : motion.button;
+  const Tag = href ? m.a : m.button;
 
   return (
     <Tag

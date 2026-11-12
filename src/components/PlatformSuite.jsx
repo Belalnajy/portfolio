@@ -1,8 +1,9 @@
 "use client";
-import { useRef } from 'react';
+import { Fragment, useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
-import { motion, useScroll, useTransform, useReducedMotion } from 'framer-motion';
-import { REVEAL_VIEWPORT, revealDelay, REVEAL_DURATION } from '../lib/motion';
+import { m, useScroll, useTransform, useReducedMotion } from 'framer-motion';
+import Reveal from './Reveal';
+import { revealDelay, REVEAL_DURATION } from '../lib/motion';
 import { useTranslation } from 'react-i18next';
 import {
   FaLayerGroup,
@@ -34,7 +35,13 @@ const SHARED_CAPABILITIES = [
  */
 const EngineStory = () => {
   const ref = useRef(null);
-  const prefersReducedMotion = useReducedMotion();
+  // The preference only counts after mount: the server renders the
+  // scroll-driven version, hydration has to match it, and only then can the
+  // keyed remount below swap in the static diagram.
+  const wantsReducedMotion = useReducedMotion();
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => setMounted(true), []);
+  const prefersReducedMotion = mounted && wantsReducedMotion;
   const { scrollYProgress } = useScroll({
     target: ref,
     offset: ['start 0.92', 'start 0.35'],
@@ -57,12 +64,18 @@ const EngineStory = () => {
 
   return (
     <div ref={ref} className="max-w-2xl mx-auto mb-14 select-none" aria-hidden="true" dir="ltr">
+      {/* Keyed on the motion preference: the server renders the scroll-driven
+          version (opacity 0 before any scrolling), and switching an element's
+          style from motion values to plain numbers does not write them to
+          the DOM (neither in hydration nor in an update). A remount does, so
+          the static diagram really shows. */}
+      <Fragment key={prefersReducedMotion ? 'still' : 'scroll'}>
       {/* The core */}
-      <motion.div
+      <m.div
         style={{ opacity: still(coreOpacity), scale: still(coreScale) }}
         className="mx-auto w-fit px-5 py-2.5 rounded-xl bg-[rgb(var(--primary))]/10 border border-[rgb(var(--border))] text-[rgb(var(--primary))] font-mono text-sm font-semibold shadow-[0_0_30px_rgb(var(--accent)/0.15)]">
         Django + PostgreSQL core
-      </motion.div>
+      </m.div>
 
       {/* Connectors */}
       <svg viewBox="0 0 400 72" className="w-full h-16 sm:h-[72px]" fill="none">
@@ -71,7 +84,7 @@ const EngineStory = () => {
           'M200 0 L 200 72',
           'M200 0 C 200 40, 334 32, 334 72',
         ].map((d, i) => (
-          <motion.path
+          <m.path
             key={i}
             d={d}
             stroke="rgb(var(--accent) / 0.55)"
@@ -85,16 +98,17 @@ const EngineStory = () => {
       {/* The three brands */}
       <div className="grid grid-cols-3 gap-3">
         {LMS_SUITE.members.map((member, i) => (
-          <motion.div
+          <m.div
             key={member.slug}
             style={{ opacity: still(brandOpacities[i]), y: prefersReducedMotion ? 0 : brandLifts[i] }}
             className="text-center px-2 py-2.5 rounded-xl bg-[rgb(var(--muted))]/25 border border-[rgb(var(--border))]/60 text-xs sm:text-sm font-semibold text-[rgb(var(--foreground))] truncate"
           >
             <span className="inline-block w-2 h-2 rounded-full me-2" style={{ backgroundColor: member.accent }} />
             {member.name}
-          </motion.div>
+          </m.div>
         ))}
       </div>
+      </Fragment>
     </div>
   );
 };
@@ -108,11 +122,7 @@ const PlatformSuite = () => {
       
 
       <div className="container mx-auto px-4 relative z-10">
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={REVEAL_VIEWPORT}
-          transition={{ duration: 0.6 }}
+        <Reveal y={30} duration={0.6}
           className="text-center mb-16"
         >
           <span className="inline-flex items-center gap-2 text-[rgb(var(--primary))] font-bold tracking-widest uppercase text-sm mb-4">
@@ -125,17 +135,13 @@ const PlatformSuite = () => {
           <p className="text-[rgb(var(--muted-foreground))] max-w-3xl mx-auto text-lg leading-relaxed">
             {t('platform_suite.subtitle')}
           </p>
-        </motion.div>
+        </Reveal>
 
         {/* One engine → three brands, told by the scroll */}
         <EngineStory />
 
         {/* Shared engine capabilities */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={REVEAL_VIEWPORT}
-          transition={{ duration: 0.5, delay: 0.1 }}
+        <Reveal y={20} duration={0.5} delay={0.1}
           className="glass-card rounded-2xl border border-[rgb(var(--border))]/50 p-6 md:p-8 mb-12"
         >
           <h3 className="text-lg font-bold text-[rgb(var(--foreground))] mb-6 text-center">
@@ -143,12 +149,8 @@ const PlatformSuite = () => {
           </h3>
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
             {SHARED_CAPABILITIES.map((cap, index) => (
-              <motion.div
+              <Reveal scale={0.95} delay={revealDelay(index)}
                 key={cap.key}
-                initial={{ opacity: 0, scale: 0.95 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                viewport={REVEAL_VIEWPORT}
-                transition={{ duration: REVEAL_DURATION, delay: revealDelay(index) }}
                 className="flex flex-col items-center text-center gap-3 p-4 rounded-xl bg-[rgb(var(--muted))]/10 border border-[rgb(var(--border))]/40"
               >
                 <span className="w-10 h-10 rounded-lg flex items-center justify-center bg-[rgb(var(--muted))]/40 text-[rgb(var(--muted-foreground))] border border-[rgb(var(--border))]">
@@ -157,22 +159,23 @@ const PlatformSuite = () => {
                 <span className="text-xs font-semibold text-[rgb(var(--foreground))] leading-snug">
                   {t(`platform_suite.capabilities.${cap.key}`)}
                 </span>
-              </motion.div>
+              </Reveal>
             ))}
           </div>
-        </motion.div>
+        </Reveal>
 
         {/* Branded deployments */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {LMS_SUITE.members.map((member, index) => (
-            <motion.a
+            <Reveal
+              as={m.a}
+              y={24}
+              delay={revealDelay(index)}
               key={member.slug}
               href={member.url}
               target="_blank"
               rel="noopener noreferrer"
-              initial={{ opacity: 0, y: 24 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={REVEAL_VIEWPORT}
+              // Still read by Framer for the hover animation below.
               transition={{ duration: REVEAL_DURATION, delay: revealDelay(index) }}
               whileHover={{ y: -6 }}
               className="group glass-card rounded-2xl overflow-hidden border border-[rgb(var(--border))]/50 hover:border-[rgb(var(--primary))]/40 transition-colors flex flex-col"
@@ -208,19 +211,15 @@ const PlatformSuite = () => {
                   {member.url.replace(/^https?:\/\/|\/$/g, '')}
                 </span>
               </div>
-            </motion.a>
+            </Reveal>
           ))}
         </div>
 
-        <motion.p
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={REVEAL_VIEWPORT}
-          transition={{ duration: 0.5, delay: 0.3 }}
+        <Reveal as="p" duration={0.5} delay={0.3}
           className="text-center text-sm text-[rgb(var(--muted-foreground))] mt-10 max-w-2xl mx-auto leading-relaxed"
         >
           {t('platform_suite.footnote')}
-        </motion.p>
+        </Reveal>
       </div>
     </section>
   );

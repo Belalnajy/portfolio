@@ -1,6 +1,7 @@
 "use client";
-import { motion } from "framer-motion";
-import { REVEAL_VIEWPORT, revealDelay, REVEAL_DURATION } from '../lib/motion';
+import { m } from "framer-motion";
+import Reveal from './Reveal';
+import { revealDelay, REVEAL_DURATION } from '../lib/motion';
 import { useMemo } from "react";
 import {
   FaLaptopCode,
@@ -16,6 +17,7 @@ import {
   FaLifeRing,
 } from "react-icons/fa";
 import { useTranslation } from 'react-i18next';
+import { asArray } from '../lib/as-array';
 
 // "How I work" lives inside Services as a compact strip rather than a
 // section of its own; #process keeps old links working.
@@ -33,7 +35,7 @@ const Services = () => {
   const isArabic = i18n.language === 'ar';
 
   const services = useMemo(() => {
-    const list = t('services.list', { returnObjects: true });
+    const list = asArray(t('services.list', { returnObjects: true }));
     const config = [
       { icon: <FaLaptopCode /> },
       { icon: <FaServer /> },
@@ -52,11 +54,10 @@ const Services = () => {
   return (
     <section id="services" className="py-20 relative text-start">
       <div className="container mx-auto px-6 relative z-10">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={REVEAL_VIEWPORT}
-          transition={{ duration: 0.5 }}
+        {/* First viewport of /services: animated by CSS from the first paint,
+            and moved rather than faded, so the heading never waits for
+            JavaScript (see Reveal). */}
+        <Reveal rise y={20} duration={0.5}
           className="text-center mb-16">
           {/* Only rendered on /services, where this is the page heading. */}
           <h1 className="text-5xl font-bold mb-4 text-[rgb(var(--foreground))]">
@@ -65,15 +66,16 @@ const Services = () => {
           <p className="text-[rgb(var(--muted-foreground))] max-w-2xl mx-auto text-lg leading-relaxed">
             {t('services.subtitle')}
           </p>
-        </motion.div>
+        </Reveal>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {services.map((service, index) => (
-            <motion.div
+            <Reveal
+              as={m.div}
+              y={20}
+              delay={revealDelay(index)}
               key={index}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={REVEAL_VIEWPORT}
+              // Still read by Framer for the hover animation below.
               transition={{ duration: REVEAL_DURATION, delay: revealDelay(index) }}
               whileHover={{ y: -10, scale: 1.02 }}
               className="glass-card glass-hover p-6 rounded-xl cursor-pointer group">
@@ -101,7 +103,7 @@ const Services = () => {
                   <li
                     key={i}
                     className="text-sm text-[rgb(var(--foreground))] flex items-start text-start">
-                    <span className={`text-[rgb(var(--muted-foreground))] ${isArabic ? 'ml-2' : 'mr-2'} mt-1`}>
+                    <span aria-hidden="true" className="text-[rgb(var(--muted-foreground))] me-2 mt-1">
                       ✓
                     </span>
                     {feature}
@@ -112,7 +114,7 @@ const Services = () => {
               {service.href && (
                 <a
                   href={`${isArabic ? '/ar' : ''}${service.href}`}
-                  className="inline-flex items-center gap-2 mt-5 text-sm font-semibold text-[rgb(var(--primary))] hover:underline underline-offset-4">
+                  className="inline-flex items-center gap-2 min-h-11 mt-2 text-sm font-semibold text-[rgb(var(--primary))] hover:underline underline-offset-4">
                   {t('services.rescue_cta')}
                 </a>
               )}
@@ -121,17 +123,13 @@ const Services = () => {
               <div
                 className={`mt-6 h-1 w-0 group-hover:w-full bg-[rgb(var(--primary))] rounded-full transition-all duration-500`}
               />
-            </motion.div>
+            </Reveal>
           ))}
         </div>
 
         {/* How I work — six steps, one line each */}
-        <motion.div
+        <Reveal y={20} duration={0.5}
           id="process"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={REVEAL_VIEWPORT}
-          transition={{ duration: 0.5 }}
           className="mt-20 scroll-mt-24">
           <div className="text-center mb-10">
             <span className="text-[rgb(var(--primary))] font-bold tracking-widest uppercase text-xs sm:text-sm mb-3 block">
@@ -147,12 +145,8 @@ const Services = () => {
 
           <ol className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {PROCESS_STEPS.map((step, index) => (
-              <motion.li
+              <Reveal as="li" y={16} delay={revealDelay(index)}
                 key={step.key}
-                initial={{ opacity: 0, y: 16 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={REVEAL_VIEWPORT}
-                transition={{ duration: REVEAL_DURATION, delay: revealDelay(index) }}
                 className="relative flex gap-4 p-5 rounded-xl bg-[rgb(var(--muted))]/10 border border-[rgb(var(--border))]/50 hover:border-[rgb(var(--primary))]/40 transition-colors">
                 <span className="shrink-0 inline-flex items-center justify-center w-11 h-11 rounded-lg bg-[rgb(var(--muted))]/40 text-[rgb(var(--muted-foreground))] border border-[rgb(var(--border))] text-lg">
                   {step.icon}
@@ -168,29 +162,25 @@ const Services = () => {
                     {t(`process.steps.${step.key}.deliverable`)}
                   </span>
                 </div>
-              </motion.li>
+              </Reveal>
             ))}
           </ol>
-        </motion.div>
+        </Reveal>
 
         {/* CTA Section */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={REVEAL_VIEWPORT}
-          transition={{ duration: 0.5, delay: 0.2 }}
+        <Reveal y={20} duration={0.5} delay={0.2}
           className="mt-16 text-center">
           <p className="text-[rgb(var(--muted-foreground))] text-lg mb-6">
             {t('services.ready')}
           </p>
-          <motion.a
+          <m.a
             href="#contact"
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
             className="inline-block bg-gradient-to-r from-[rgb(var(--accent))] to-[rgb(var(--accent-hover))] text-[rgb(var(--accent-contrast))] px-8 py-4 rounded-lg font-semibold shadow-lg hover:shadow-xl transition-all">
             {t('services.get_in_touch')}
-          </motion.a>
-        </motion.div>
+          </m.a>
+        </Reveal>
       </div>
     </section>
   );

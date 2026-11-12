@@ -1,7 +1,6 @@
 "use client";
 import { useState } from 'react';
-import { motion } from 'framer-motion';
-import { REVEAL_VIEWPORT } from '../lib/motion';
+import Reveal from './Reveal';
 import { FaArrowRight, FaCheck, FaTimes, FaFileInvoiceDollar } from 'react-icons/fa';
 import { useTranslation } from 'react-i18next';
 
@@ -76,7 +75,7 @@ const Toggle = ({ options, value, onChange, label }) => (
         type="button"
         onClick={() => onChange(option.value)}
         aria-pressed={value === option.value}
-        className={`px-4 min-h-[38px] rounded-lg text-sm font-semibold transition-colors ${
+        className={`px-4 min-h-[44px] rounded-lg text-sm font-semibold transition-colors ${
           value === option.value
             ? 'bg-[rgb(var(--primary))] text-[rgb(var(--accent-contrast))]'
             : 'text-[rgb(var(--muted-foreground))] hover:text-[rgb(var(--foreground))]'
@@ -100,12 +99,8 @@ const RtlDemo = () => {
   const checks = ['alignment', 'icons', 'bidi', 'numerals'];
 
   return (
-    <motion.section
+    <Reveal as="section" y={24} duration={0.5}
       id="rtl-demo"
-      initial={{ opacity: 0, y: 24 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={REVEAL_VIEWPORT}
-      transition={{ duration: 0.5 }}
       className="scroll-mt-24">
       <div className="text-center mb-8">
         <span className="inline-flex items-center gap-2 text-[rgb(var(--primary))] font-bold tracking-widest uppercase text-xs sm:text-sm mb-3">
@@ -275,12 +270,12 @@ const RtlDemo = () => {
           <p className="text-xs text-[rgb(var(--muted-foreground))] leading-relaxed mt-5 pt-4 border-t border-[rgb(var(--border))]/60">
             {t('rtl_demo.footnote')}
           </p>
-          <p className="text-[11px] text-[rgb(var(--muted-foreground))]/70 mt-3">
+          <p className="text-[11px] text-[rgb(var(--muted-foreground))] mt-3">
             {t('rtl_demo.sample_note')}
           </p>
         </aside>
       </div>
-    </motion.section>
+    </Reveal>
   );
 };
 

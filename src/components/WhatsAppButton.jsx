@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useState } from 'react';
-import { motion } from 'framer-motion';
+import { m } from 'framer-motion';
 import { FaWhatsapp } from 'react-icons/fa';
 import { useTranslation } from 'react-i18next';
 import { track } from '@vercel/analytics';
@@ -26,7 +26,7 @@ const WhatsAppButton = () => {
   useEffect(() => setMounted(true), []);
 
   return (
-    <motion.a
+    <m.a
       href={mounted ? whatsappUrl(t('whatsapp.message')) : undefined}
       target="_blank"
       rel="noopener noreferrer"
@@ -35,14 +35,14 @@ const WhatsAppButton = () => {
       whileTap={{ scale: 0.9 }}
       style={{ backgroundColor: brandColor('WhatsApp') }}
       onClick={() => track('whatsapp_click', { placement: 'desktop_fab' })}
-      className="hidden md:flex fixed right-6 bottom-6 z-[9999] w-14 h-14 rounded-full items-center justify-center text-[rgb(var(--scrim))] shadow-lg shadow-[#25D366]/40 group">
+      className="hidden md:flex fixed end-6 bottom-6 z-[9999] w-14 h-14 rounded-full items-center justify-center text-[rgb(var(--scrim))] shadow-lg shadow-[#25D366]/40 group">
       <FaWhatsapp size={30} />
 
       {/* Tooltip */}
-      <span className="absolute right-full mr-4 px-3 py-1 bg-[rgb(var(--card))] border border-[rgb(var(--border))] text-[rgb(var(--foreground))] text-xs font-medium rounded-lg opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none">
+      <span className="absolute end-full me-4 px-3 py-1 bg-[rgb(var(--card))] border border-[rgb(var(--border))] text-[rgb(var(--foreground))] text-xs font-medium rounded-lg opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none">
         {t('whatsapp.aria')}
       </span>
-    </motion.a>
+    </m.a>
   );
 };
 

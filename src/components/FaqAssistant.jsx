@@ -1,6 +1,6 @@
 "use client";
 import { useState, useEffect, useRef } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { m, AnimatePresence, useReducedMotion } from 'framer-motion';
 import {
   FaTimes,
   FaPaperPlane,
@@ -15,18 +15,59 @@ import {
   FaCheckCircle,
 } from 'react-icons/fa';
 import { useTranslation } from 'react-i18next';
+import { useEscapeLayer } from '../lib/useEscapeLayer';
 
 const FaqAssistant = () => {
   const { t } = useTranslation();
   const [isOpen, setIsOpen] = useState(false);
+  const reduceMotion = useReducedMotion();
+  const panelRef = useRef(null);
+  const launcherRef = useRef(null);
+  // Whatever had focus when the panel opened (the desktop launcher or the
+  // phone dock's FAQ item), so closing can hand focus back.
+  const openerRef = useRef(null);
+
+  const openPanel = () => {
+    openerRef.current = document.activeElement;
+    setIsOpen(true);
+  };
 
   // The phone dock owns the only visible launcher on small screens; it asks
   // for the panel with an event so neither component has to know the other.
   useEffect(() => {
-    const open = () => setIsOpen(true);
+    const open = () => {
+      openerRef.current = document.activeElement;
+      setIsOpen(true);
+    };
     window.addEventListener('faq:open', open);
     return () => window.removeEventListener('faq:open', open);
   }, []);
+
+  // A non-modal dialog: focus moves into it on open, Escape closes it, and
+  // focus returns to the control that opened it (or, if that is gone, as the
+  // dock's menu item is once the dock folds, to the dock's own button).
+  useEffect(() => {
+    if (!isOpen) return undefined;
+    const root = document.documentElement;
+    const launcher = launcherRef.current;
+    const panel = panelRef.current;
+    root.setAttribute('data-faq-open', '');
+    panel?.focus({ preventScroll: true });
+    return () => {
+      root.removeAttribute('data-faq-open');
+      // A non-modal panel: if focus already went elsewhere on the page (the
+      // contact form, say), closing must not pull it back.
+      const current = document.activeElement;
+      if (current && current !== document.body && !panel?.contains(current)) return;
+      const opener = openerRef.current;
+      const visible = (el) => el && el.isConnected && el.getClientRects().length > 0;
+      const target = visible(opener)
+        ? opener
+        : [launcher, document.querySelector('#contact-dock > button[aria-expanded]')].find(visible);
+      target?.focus({ preventScroll: true });
+    };
+  }, [isOpen]);
+  useEscapeLayer(isOpen, () => setIsOpen(false));
   const [language, setLanguage] = useState(null); // 'en' or 'ar'
   const [messages, setMessages] = useState([
     {
@@ -39,6 +80,10 @@ const FaqAssistant = () => {
   const [isTyping, setIsTyping] = useState(false);
   const [activeCategory, setActiveCategory] = useState('HR');
   const chatEndRef = useRef(null);
+  // The pretend "typing" pause before an answer; cleared on unmount so it
+  // never sets state on a component that is gone.
+  const replyTimer = useRef(null);
+  useEffect(() => () => clearTimeout(replyTimer.current), []);
 
   const knowledgeBase = {
     en: [
@@ -217,7 +262,7 @@ const FaqAssistant = () => {
         category: 'HR',
         icon: <FaCheckCircle />,
         answer:
-          "I bring technical mastery, a business-first mindset, and production experience. I build tools that don't just work; they provide ROI and solve real human problems efficiently.",
+          'I build real systems and keep them running myself: Bilqalam Institute serves thousands of students on a platform I built and still maintain alone. I work in Arabic and English, take over projects other developers left behind, and you deal with me directly from the first call to launch.',
       },
       {
         question: 'Can you show me projects?',
@@ -225,15 +270,15 @@ const FaqAssistant = () => {
         category: 'HR',
         icon: <FaProjectDiagram />,
         answer:
-          'Absolutely! I can show you my top Web and React projects, explain my custom backend architectures, and show you live demos currently serving real users in the market.',
+          'Absolutely! I can show you my top Web and React projects, explain my custom backend architectures, and show you live products and demos.',
       },
       {
-        question: 'Work mode & Availability?',
+        question: 'Do you take freelance projects?',
         id: 'hr_availability',
         category: 'HR',
         icon: <FaEnvelope />,
         answer:
-          "I'm currently open to full-time opportunities (Remote or On-site). I'm looking for a dynamic team where I can contribute my technical mastery in Full-Stack development and build scalable solutions.",
+          'Yes. Alongside my full-time job as a Software Engineer at ezSec, I take freelance projects with a clear scope: new platforms, internal systems, and taking over existing projects that need fixing. The contact form or WhatsApp is the easiest way to start.',
       },
     ],
     ar: [
@@ -244,7 +289,7 @@ const FaqAssistant = () => {
         category: 'Projects',
         icon: <FaProjectDiagram />,
         answer:
-          'منصة B2B ضخمة مبنية بـ Next.js و Flask. صممت نظام الـ RFQ الرقمي بالكامل ودعمت التفاوض المباشر بـ Socket.io، وده حل مشكلة بطء التوريد التقليدي في قطاع الصناعة.',
+          'منصة B2B ضخمة مبنية بـ Next.js مع Flask. صممت نظام الـ RFQ الرقمي بالكامل ودعمت التفاوض المباشر بـ Socket.io، وده حل مشكلة بطء التوريد التقليدي في قطاع الصناعة.',
       },
       {
         question: 'أصعب مشروع واجهته؟',
@@ -278,7 +323,7 @@ const FaqAssistant = () => {
         category: 'Results',
         icon: <FaDatabase />,
         answer:
-          'قمت ببناء ونشر نظام إدارة مخازن متكامل على Railway باستخدام Django و PostgreSQL. النظام بيوفر تتبع لحظي للمخزون ودقة عالية في البيانات، وحل مشاكل التسجيل اليدوي المتكررة.',
+          'قمت ببناء ونشر نظام إدارة مخازن متكامل على Railway باستخدام Django مع PostgreSQL. النظام بيوفر تتبع لحظي للمخزون ودقة عالية في البيانات، وحل مشاكل التسجيل اليدوي المتكررة.',
       },
       {
         question: 'تأثير حقيقي في Baserah AI',
@@ -294,7 +339,7 @@ const FaqAssistant = () => {
         category: 'Results',
         icon: <FaEnvelope />,
         answer:
-          'عندي خبرة كبيرة في نشر التطبيقات على Railway و Vercel و VPS. بهتم جداً إن المشروع يكون Production-ready من حيث الـ Error handling والـ Logging عشان يشتغل بكفاءة دايماً.',
+          'عندي خبرة كبيرة في نشر التطبيقات على Railway، Vercel، VPS. بهتم جداً إن المشروع يكون Production-ready من حيث الـ Error handling والـ Logging عشان يشتغل بكفاءة دايماً.',
       },
       {
         question: 'نظام المجلات العلمية (نجاح)',
@@ -354,7 +399,7 @@ const FaqAssistant = () => {
         category: 'Tech',
         icon: <FaDatabase />,
         answer:
-          'متخصص في بناء Backend قوي بـ NestJS و Django. بصمم APIs آمنة (REST/GraphQL) مع نظام صلاحيات متقدم (RBAC) واستعلامات قاعدة بيانات محسنة جداً بأدوات زي Prisma أو TypeORM.',
+          'متخصص في بناء Backend قوي بـ NestJS أو Django. بصمم APIs آمنة (REST/GraphQL) مع نظام صلاحيات متقدم (RBAC) واستعلامات قاعدة بيانات محسنة جداً بأدوات زي Prisma أو TypeORM.',
       },
       {
         question: 'التقنيات المستخدمة هنا؟',
@@ -362,7 +407,7 @@ const FaqAssistant = () => {
         category: 'Tech',
         icon: <FaCode />,
         answer:
-          'الأداة دي مبنية بـ React 19 و Framer Motion و Tailwind. بتوري مهاراتي في التعامل مع الـ Complex State والـ RTL وتقديم UI فاخر من غير مكتبات تقيلة.',
+          'الأداة دي مبنية بـ React 19، Framer Motion، Tailwind. بتوري مهاراتي في التعامل مع الـ Complex State والـ RTL وتقديم UI فاخر من غير مكتبات تقيلة.',
       },
 
       // --- HR ---
@@ -372,7 +417,7 @@ const FaqAssistant = () => {
         category: 'HR',
         icon: <FaCheckCircle />,
         answer:
-          'لأني بجمع بين التمكن التقني وعقلية البيزنس. أهدافي هي الـ ROI وزيادة الكفاءة، ومشاريعي السابقة بتثبت قدرتي على تحويل الاحتياجات لنتايج حقيقية وملموسة.',
+          'لأني أبني أنظمة حقيقية وأتولى تشغيلها بنفسي: معهد بالقلم يخدم آلاف الطلاب على منصة بنيتها وأتولى صيانتها بمفردي. أعمل بالعربي والإنجليزي، وأستلم المشاريع التي تركها مطورون آخرون، وتتعامل معي مباشرة من أول مكالمة حتى الإطلاق.',
       },
       {
         question: 'أقدر أعرف إيه هنا؟',
@@ -380,15 +425,15 @@ const FaqAssistant = () => {
         category: 'HR',
         icon: <FaProjectDiagram />,
         answer:
-          'أنا هنا عشان أوريك أهم مشاريع بلال في الـ Web و React، مهاراته التقنية، وإزاي بيحول المشاكل المعقدة لبرامج سهلة الاستخدام وحلول عملية فعلاً.',
+          'أنا هنا عشان أوريك أهم مشاريع بلال في الويب والـ React، مهاراته التقنية، وإزاي بيحول المشاكل المعقدة لبرامج سهلة الاستخدام وحلول عملية فعلاً.',
       },
       {
-        question: 'متاح للعمل ونظام الشغل؟',
+        question: 'هل تأخذ مشاريع فريلانس؟',
         id: 'hr_availability_ar',
         category: 'HR',
         icon: <FaEnvelope />,
         answer:
-          'أنا متاح حالياً للفرص الوظيفية (Remote أو On-site). بدور على تحدي جديد في فريق عمل طموح، أقدر من خلاله أساهم بمهاراتي كمهندس Full-Stack في بناء منتجات تقنية قوية.',
+          'نعم. إلى جانب عملي بدوام كامل مهندس برمجيات في ezSec، آخذ مشاريع فريلانس بنطاق واضح: منصات جديدة، وأنظمة داخلية، واستلام مشاريع قائمة تحتاج إلى إصلاح. أسهل طريقة للبدء هي نموذج التواصل أو واتساب.',
       },
     ],
   };
@@ -406,7 +451,7 @@ const FaqAssistant = () => {
     const greeting =
       lang === 'en'
         ? "I can show you Belal's top Web & React projects, technical skills, and how he solves business problems. How can I help you?"
-        : 'أقدر أوريك أهم مشاريع بلال في الـ Web و React، مهاراته التقنية، وإزاي بيحل مشاكل البيزنس برمجياً. أقدر أساعدك بإيه؟';
+        : 'أقدر أوريك أهم مشاريع بلال في الويب والـ React، مهاراته التقنية، وإزاي بيحل مشاكل البيزنس برمجياً. أقدر أساعدك بإيه؟';
 
     setMessages((prev) => [
       ...prev,
@@ -427,7 +472,8 @@ const FaqAssistant = () => {
 
     setIsTyping(true);
 
-    setTimeout(() => {
+    clearTimeout(replyTimer.current);
+    replyTimer.current = setTimeout(() => {
       const botMessage = { id: Date.now() + 1, text: q.answer, sender: 'bot' };
       setMessages((prev) => [...prev, botMessage]);
       setIsTyping(false);
@@ -435,44 +481,55 @@ const FaqAssistant = () => {
   };
 
   return (
-    <div className="fixed bottom-[calc(max(1rem,env(safe-area-inset-bottom))+4.5rem)] md:bottom-24 right-4 md:right-6 z-[9999]">
+    <div className="fixed bottom-[calc(max(1rem,env(safe-area-inset-bottom))+4.5rem)] md:bottom-24 end-4 md:end-6 z-[9999] flex flex-col items-end">
       <AnimatePresence>
         {isOpen && (
-          <motion.div
+          <m.div
+            ref={panelRef}
+            id="faq-panel"
+            role="dialog"
+            aria-labelledby="faq-panel-title"
+            tabIndex={-1}
             initial={{ opacity: 0, y: 20, scale: 0.95 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 20, scale: 0.95 }}
-            className="mb-4 w-[calc(100vw-2rem)] max-w-[350px] md:w-[400px] h-[70dvh] max-h-[500px] glass-card flex flex-col shadow-2xl rounded-2xl overflow-hidden border border-[rgb(var(--primary))]/40 bg-[rgb(var(--background))]/80 md:bg-transparent">
+            className="focus:outline-none mb-4 w-[calc(100vw-2rem)] max-w-[350px] md:w-[400px] h-[70dvh] max-h-[500px] flex flex-col shadow-2xl rounded-2xl overflow-hidden border border-[rgb(var(--primary))]/40 bg-[rgb(var(--card))]">
             {/* Header */}
             <div className="p-4 bg-gradient-to-r from-[rgb(var(--accent))]/15 to-[rgb(var(--accent-hover))]/10 flex items-center justify-between border-b border-[rgb(var(--border))]">
-              <div className="flex items-center space-x-3">
-                <div className="p-2 bg-gradient-to-r from-[rgb(var(--accent))] to-[rgb(var(--accent-hover))] rounded-lg text-[rgb(var(--accent-contrast))]">
+              <div className="flex items-center gap-3">
+                <div aria-hidden="true" className="p-2 bg-gradient-to-r from-[rgb(var(--accent))] to-[rgb(var(--accent-hover))] rounded-lg text-[rgb(var(--accent-contrast))]">
                   <FaUserAstronaut />
                 </div>
                 <div>
-                  <h3 className="font-bold text-[rgb(var(--foreground))]">
+                  <h2 id="faq-panel-title" className="font-bold text-[rgb(var(--foreground))]">
                     {t('faq.title')}
-                  </h3>
+                  </h2>
                   <p className="text-xs text-[rgb(var(--success))]">
                     {t('faq.subtitle')}
                   </p>
                 </div>
               </div>
               <button
+                type="button"
                 onClick={() => setIsOpen(false)}
-                className="text-[rgb(var(--muted-foreground))] hover:text-[rgb(var(--destructive))] transition-colors">
-                <FaTimes size={18} />
+                aria-label={t('a11y.faq_close')}
+                className="shrink-0 w-11 h-11 -me-2 flex items-center justify-center rounded-lg text-[rgb(var(--muted-foreground))] hover:text-[rgb(var(--destructive))] transition-colors">
+                <FaTimes aria-hidden="true" size={18} />
               </button>
             </div>
 
             {/* Chat Body */}
+            {/* role="log": new answers are read out as they arrive. Focusable
+                so the conversation can be scrolled from the keyboard. */}
             <div
-              className={`flex-1 overflow-y-auto p-4 space-y-4 custom-scrollbar ${
-                language === 'ar' ? 'text-right' : 'text-left'
-              }`}>
+              role="log"
+              aria-live="polite"
+              aria-label={t('a11y.faq_conversation')}
+              tabIndex={0}
+              className="flex-1 overflow-y-auto p-4 space-y-4 custom-scrollbar text-start">
               {messages.map((msg) => (
                 <div key={msg.id} className="space-y-3">
-                  <motion.div
+                  <m.div
                     initial={{
                       opacity: 0,
                       x: msg.sender === 'user' ? 20 : -20,
@@ -487,26 +544,29 @@ const FaqAssistant = () => {
                           ? 'bg-gradient-to-r from-[rgb(var(--accent))] to-[rgb(var(--accent-hover))] text-[rgb(var(--accent-contrast))] rounded-tr-none'
                           : 'glass-card text-[rgb(var(--foreground))] rounded-tl-none border border-[rgb(var(--border))]'
                       }`}
-                      dir={
-                        language === 'ar' && msg.sender === 'bot'
-                          ? 'rtl'
-                          : 'ltr'
-                      }>
+                      // Each bubble takes its direction from its own text and
+                      // is voiced in the chat's language once one is chosen.
+                      dir="auto"
+                      lang={msg.isLanguageSelect ? undefined : language || undefined}>
                       {msg.text}
                     </div>
-                  </motion.div>
+                  </m.div>
 
                   {msg.isLanguageSelect && !language && (
-                    <div className="flex justify-center space-x-4 mt-2">
+                    <div className="flex justify-center gap-4 mt-2">
                       <button
+                        type="button"
+                        lang="en"
                         onClick={() => handleLanguageSelect('en')}
-                        className="px-4 py-2 bg-[rgb(var(--accent))] rounded-xl text-xs font-bold text-[rgb(var(--accent-contrast))] hover:bg-[rgb(var(--accent))] transition-all shadow-lg">
-                        English 🇺🇸
+                        className="min-h-[44px] px-4 py-2 bg-[rgb(var(--accent))] rounded-xl text-sm font-bold text-[rgb(var(--accent-contrast))] hover:bg-[rgb(var(--accent))] transition-all shadow-lg">
+                        English <span aria-hidden="true">🇺🇸</span>
                       </button>
                       <button
+                        type="button"
+                        lang="ar"
                         onClick={() => handleLanguageSelect('ar')}
-                        className="px-4 py-2 bg-[rgb(var(--accent))] rounded-xl text-xs font-bold text-[rgb(var(--accent-contrast))] hover:bg-[rgb(var(--accent))] transition-all shadow-lg font-arabic">
-                        العربية 🇪🇬
+                        className="min-h-[44px] px-4 py-2 bg-[rgb(var(--accent))] rounded-xl text-sm font-bold text-[rgb(var(--accent-contrast))] hover:bg-[rgb(var(--accent))] transition-all shadow-lg font-arabic">
+                        العربية <span aria-hidden="true">🇪🇬</span>
                       </button>
                     </div>
                   )}
@@ -514,30 +574,22 @@ const FaqAssistant = () => {
               ))}
 
               {isTyping && (
-                <div className="flex justify-start">
+                <div aria-hidden="true" className="flex justify-start">
                   <div className="glass-card p-3 rounded-2xl rounded-tl-none border border-[rgb(var(--border))]">
-                    <div className="flex space-x-1">
-                      <motion.div
-                        animate={{ opacity: [0, 1, 0] }}
-                        transition={{ repeat: Infinity, duration: 1 }}
+                    <div className="flex gap-1">
+                      <m.div
+                        animate={reduceMotion ? { opacity: 1 } : { opacity: [0, 1, 0] }}
+                        transition={reduceMotion ? { duration: 0 } : { repeat: Infinity, duration: 1 }}
                         className="w-1.5 h-1.5 bg-[rgb(var(--primary))] rounded-full"
                       />
-                      <motion.div
-                        animate={{ opacity: [0, 1, 0] }}
-                        transition={{
-                          repeat: Infinity,
-                          duration: 1,
-                          delay: 0.2,
-                        }}
+                      <m.div
+                        animate={reduceMotion ? { opacity: 1 } : { opacity: [0, 1, 0] }}
+                        transition={reduceMotion ? { duration: 0 } : { repeat: Infinity, duration: 1, delay: 0.2 }}
                         className="w-1.5 h-1.5 bg-[rgb(var(--primary))] rounded-full"
                       />
-                      <motion.div
-                        animate={{ opacity: [0, 1, 0] }}
-                        transition={{
-                          repeat: Infinity,
-                          duration: 1,
-                          delay: 0.4,
-                        }}
+                      <m.div
+                        animate={reduceMotion ? { opacity: 1 } : { opacity: [0, 1, 0] }}
+                        transition={reduceMotion ? { duration: 0 } : { repeat: Infinity, duration: 1, delay: 0.4 }}
                         className="w-1.5 h-1.5 bg-[rgb(var(--primary))] rounded-full"
                       />
                     </div>
@@ -551,14 +603,20 @@ const FaqAssistant = () => {
             {language && (
               <div
                 className="p-4 bg-[rgb(var(--background))]/50 border-t border-[rgb(var(--border))] space-y-3"
+                lang={language}
                 dir={language === 'ar' ? 'rtl' : 'ltr'}>
-                <div className="flex space-x-2 overflow-x-auto pb-2 custom-scrollbar no-scrollbar scroll-smooth">
+                <div
+                  role="group"
+                  aria-label={t('a11y.faq_topics')}
+                  className="flex gap-2 overflow-x-auto pb-2 custom-scrollbar no-scrollbar scroll-smooth">
                   {['HR', 'Projects', 'Results', 'Approach', 'Tech'].map(
                     (cat) => (
                       <button
                         key={cat}
+                        type="button"
+                        aria-pressed={activeCategory === cat}
                         onClick={() => setActiveCategory(cat)}
-                        className={`px-3 py-1 text-[10px] uppercase font-bold rounded-full transition-all whitespace-nowrap ${
+                        className={`min-h-[44px] px-3 py-1 text-xs font-bold rounded-full transition-all whitespace-nowrap ${
                           activeCategory === cat
                             ? 'bg-[rgb(var(--primary))] text-[rgb(var(--accent-contrast))]'
                             : 'glass-card text-[rgb(var(--muted-foreground))] hover:text-[rgb(var(--foreground))]'
@@ -586,16 +644,17 @@ const FaqAssistant = () => {
                     )
                   )}
                 </div>
-                <div className="flex flex-wrap gap-2 max-h-[120px] overflow-y-auto custom-scrollbar pr-1">
+                <div className="flex flex-wrap gap-2 max-h-[148px] overflow-y-auto custom-scrollbar pe-1">
                   {knowledgeBase[language]
                     .filter((q) => q.category === activeCategory)
                     .map((q) => (
                       <button
                         key={q.id}
+                        type="button"
                         onClick={() => handleQuestionClick(q)}
                         disabled={isTyping}
-                        className="flex items-center space-x-2 px-3 py-1.5 text-xs glass-card border-[rgb(var(--border))] hover:border-[rgb(var(--primary))] hover:bg-[rgb(var(--primary))]/10 transition-all text-[rgb(var(--foreground))] rounded-full whitespace-nowrap">
-                        <span className="text-[rgb(var(--primary))]">
+                        className="flex items-center gap-2 min-h-[44px] px-3 py-1.5 text-sm glass-card border-[rgb(var(--border))] hover:border-[rgb(var(--primary))] hover:bg-[rgb(var(--primary))]/10 transition-all text-[rgb(var(--foreground))] rounded-full whitespace-nowrap">
+                        <span aria-hidden="true" className="text-[rgb(var(--primary))]">
                           {q.icon}
                         </span>
                         <span>{q.question}</span>
@@ -604,21 +663,21 @@ const FaqAssistant = () => {
                 </div>
               </div>
             )}
-          </motion.div>
+          </m.div>
         )}
       </AnimatePresence>
 
       {/* Floating Button */}
-      <motion.button
+      <m.button
         animate={
-          !isOpen
+          !isOpen && !reduceMotion
             ? {
                 y: [0, -10, 0],
               }
             : {}
         }
         transition={
-          !isOpen
+          !isOpen && !reduceMotion
             ? {
                 duration: 3,
                 repeat: Infinity,
@@ -626,41 +685,48 @@ const FaqAssistant = () => {
               }
             : {}
         }
+        ref={launcherRef}
+        type="button"
         whileHover={{ scale: 1.1, rotate: 5 }}
         whileTap={{ scale: 0.9 }}
-        onClick={() => setIsOpen(!isOpen)}
+        onClick={() => (isOpen ? setIsOpen(false) : openPanel())}
+        aria-expanded={isOpen}
+        // Only while the panel exists: it is unmounted when closed.
+        aria-controls={isOpen ? 'faq-panel' : undefined}
         aria-label={t('faq.tooltip')}
         className="hidden md:flex w-14 h-14 bg-gradient-to-r from-[rgb(var(--accent))] to-[rgb(var(--accent-hover))] rounded-full items-center justify-center text-[rgb(var(--accent-contrast))] shadow-lg relative group">
         <AnimatePresence mode="wait">
           {isOpen ? (
-            <motion.div
+            <m.div
               key="close"
+              aria-hidden="true"
               initial={{ rotate: -90, opacity: 0 }}
               animate={{ rotate: 0, opacity: 1 }}
               exit={{ rotate: 90, opacity: 0 }}>
               <FaTimes size={24} />
-            </motion.div>
+            </m.div>
           ) : (
-            <motion.div
+            <m.div
               key="bot"
+              aria-hidden="true"
               initial={{ rotate: 90, opacity: 0 }}
               animate={{ rotate: 0, opacity: 1 }}
               exit={{ rotate: -90, opacity: 0 }}>
               <FaUserAstronaut size={28} />
-            </motion.div>
+            </m.div>
           )}
         </AnimatePresence>
         {!isOpen && (
-          <span className="absolute -top-1 -right-1 w-4 h-4 bg-[rgb(var(--success))] rounded-full border-2 border-[rgb(var(--background))] animate-pulse" />
+          <span aria-hidden="true" className="absolute -top-1 -end-1 w-4 h-4 bg-[rgb(var(--success))] rounded-full border-2 border-[rgb(var(--background))] animate-pulse" />
         )}
 
         {/* Tooltip */}
         {!isOpen && (
-          <div className="absolute right-full mr-4 px-3 py-1 bg-gradient-to-r from-[rgb(var(--accent))] to-[rgb(var(--accent-hover))] text-[rgb(var(--accent-contrast))] text-xs rounded-lg opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none">
+          <div aria-hidden="true" className="absolute end-full me-4 px-3 py-1 bg-gradient-to-r from-[rgb(var(--accent))] to-[rgb(var(--accent-hover))] text-[rgb(var(--accent-contrast))] text-xs rounded-lg opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none">
             {t('faq.tooltip')}
           </div>
         )}
-      </motion.button>
+      </m.button>
     </div>
   );
 };

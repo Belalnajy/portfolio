@@ -1,5 +1,5 @@
 "use client";
-import { motion } from 'framer-motion';
+import { m } from 'framer-motion';
 import { FaLinkedin } from 'react-icons/fa';
 import { useTranslation } from 'react-i18next';
 
@@ -18,13 +18,8 @@ const PLATFORMS = [
     nameAr: 'خمسات',
     nameEn: 'Khamsat',
     url: 'https://khamsat.com/user/belalnajy',
-    logo: '/khamsat.webp'
-  },
-  {
-    nameAr: 'نفذلي',
-    nameEn: 'Nafezly',
-    url: 'https://www.nafezly.com/u/belalnajy',
-    logo: '/nafzly.webp'
+    logo: '/khamsat.webp',
+    size: [1200, 1200]
   }
 ];
 
@@ -34,7 +29,10 @@ const Mark = ({ platform, className }) =>
   ) : (
     <img
       src={platform.logo}
-      alt={platform.name}
+      // Decorative: the platform's name is always written beside the mark.
+      alt=""
+      width={platform.size[0]}
+      height={platform.size[1]}
       loading="lazy"
       className={`logo-mark object-contain ${className}`}
     />
@@ -56,7 +54,7 @@ const PlatformLinks = ({ variant = 'default' }) => {
     return (
       <div className="flex items-center gap-3 flex-wrap justify-center">
         {platforms.map((platform) => (
-          <motion.a
+          <m.a
             key={platform.url}
             href={platform.url}
             target="_blank"
@@ -68,7 +66,7 @@ const PlatformLinks = ({ variant = 'default' }) => {
               <Mark platform={platform} className="w-full h-full" />
             </div>
             <span className="text-sm font-medium text-[rgb(var(--foreground))]">{platform.name}</span>
-          </motion.a>
+          </m.a>
         ))}
       </div>
     );
@@ -79,19 +77,19 @@ const PlatformLinks = ({ variant = 'default' }) => {
     return (
       <div className="flex flex-wrap items-center justify-center gap-4">
         {platforms.map((platform) => (
-          <motion.a
+          <m.a
             key={platform.url}
             href={platform.url}
             target="_blank"
             rel="noopener noreferrer"
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
-            className="flex items-center gap-2 text-[rgb(var(--foreground))] hover:text-[rgb(var(--primary))] transition-all">
+            className="flex items-center gap-2 min-h-[44px] px-1 text-[rgb(var(--foreground))] hover:text-[rgb(var(--primary))] transition-all">
             <div className="w-6 h-6 flex items-center justify-center">
               <Mark platform={platform} className="w-full h-full" />
             </div>
             <span className="text-sm font-medium">{platform.name}</span>
-          </motion.a>
+          </m.a>
         ))}
       </div>
     );
@@ -101,7 +99,7 @@ const PlatformLinks = ({ variant = 'default' }) => {
   return (
     <div className="flex flex-wrap items-center justify-center gap-4">
       {platforms.map((platform) => (
-        <motion.a
+        <m.a
           key={platform.url}
           href={platform.url}
           target="_blank"
@@ -112,15 +110,15 @@ const PlatformLinks = ({ variant = 'default' }) => {
           <div className="w-12 h-12 flex items-center justify-center bg-[rgb(var(--card))] rounded-lg p-2">
             <Mark platform={platform} className="w-full h-full" />
           </div>
-          <div className="text-left">
+          <div className="text-start">
             <p className="font-bold text-[rgb(var(--foreground))] text-sm">
               {platform.name}
             </p>
-            <p className="text-xs text-[rgb(var(--muted-foreground))]">
+            <p lang={isArabic ? 'en' : 'ar'} className="text-xs text-[rgb(var(--muted-foreground))]">
               {platform.altName}
             </p>
           </div>
-        </motion.a>
+        </m.a>
       ))}
     </div>
   );

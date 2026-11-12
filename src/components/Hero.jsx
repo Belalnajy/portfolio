@@ -189,7 +189,7 @@ const Hero = () => {
       {/* Scroll cue */}
       <a
         href="#about"
-        className="relative z-10 mx-auto mb-6 flex flex-col items-center gap-2 text-[rgb(var(--muted-foreground))] hover:text-[rgb(var(--primary))] transition-colors animate-fadeInUp"
+        className="relative z-10 mx-auto mb-6 flex flex-col items-center justify-center gap-2 min-h-[44px] min-w-[44px] px-2 text-[rgb(var(--muted-foreground))] hover:text-[rgb(var(--primary))] transition-colors animate-fadeInUp"
         style={{ animationDelay: '0.5s' }}
         aria-label={t('hero.scroll')}>
         <span className="text-[11px] tracking-[0.3em] uppercase">{t('hero.scroll')}</span>

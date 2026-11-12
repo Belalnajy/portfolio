@@ -1,8 +1,9 @@
 "use client";
 import { useState, useEffect, useMemo, useRef } from 'react';
 import Image from 'next/image';
-import { motion, AnimatePresence } from 'framer-motion';
-import { REVEAL_VIEWPORT, LONG_LIST_VIEWPORT, revealDelay, REVEAL_DURATION } from '../lib/motion';
+import { m, AnimatePresence } from 'framer-motion';
+import Reveal from './Reveal';
+import { revealDelay } from '../lib/motion';
 import {
   SiDjango,
   SiPostgresql,
@@ -57,7 +58,6 @@ import {
   FaQuran,
   FaBug,
 } from 'react-icons/fa';
-import ProjectSkeleton from './skeletons/ProjectSkeleton';
 import { useTranslation } from 'react-i18next';
 import dynamic from 'next/dynamic';
 
@@ -65,7 +65,9 @@ import dynamic from 'next/dynamic';
 const ProjectModal = dynamic(() => import('./ProjectModal'), { ssr: false });
 import { brandColor } from '../lib/brand-colors';
 import { coverMeta } from '../lib/cover-meta';
-import { CASE_STUDY_SLUGS } from '../lib/case-studies';
+import { CASE_STUDIES, CASE_STUDY_SLUGS } from '../lib/case-studies';
+import { asArray } from '../lib/as-array';
+import ProjectKindLabel from './ProjectKindLabel';
 
 export const TECH_ICONS = {
   'HTML': FaHtml5,
@@ -192,6 +194,30 @@ const FEATURED_ORDER = [
   'motors',
 ];
 
+/**
+ * The order of the full archive grid, which is editorial too and differs from
+ * the registry order (that one drives previous/next between case studies).
+ * A project missing from this list sorts to the end, so a new registry entry
+ * shows up without touching this file.
+ */
+const ARCHIVE_ORDER = [
+  'opptmakers', 'opptmakers-platforms', 'bilqalam', 'medicta', 'toyo228',
+  'injaz', 'hcholding', 'mada', 'mutlq', 'indstrz', 'sonomedix', 'kmbc',
+  'rabzan', 'manqla', 'sems', 'nextstop', 'quotemate', 'dmagni', 'cme',
+  'dpms', 'motors', 'uduipa', 'waferlee', 'baserah', 'sf_portal', 'journal',
+  'oxgym', 'profleet', 'clinic', 'orca', 'amarna', 'inventory', 'cinemascore',
+  'movieweb', 'hms_odoo', 'bookstore', 'library', 'alva_ai',
+];
+
+const rankIn = (order) => (slug) => {
+  const index = order.indexOf(slug);
+  return index === -1 ? Number.MAX_SAFE_INTEGER : index;
+};
+const archiveRank = rankIn(ARCHIVE_ORDER);
+const byArchiveOrder = (a, b) => archiveRank(a.slug) - archiveRank(b.slug);
+
+const LMS_SUITE_SLUGS = new Set(LMS_SUITE.members.map((member) => member.slug));
+
 const featuredRank = (slug) => {
   const index = FEATURED_ORDER.indexOf(slug);
   return index === -1 ? Number.MAX_SAFE_INTEGER : index;
@@ -204,13 +230,12 @@ const ProjectCard = ({ project, index, onClick, headingAs: CardHeading = 'h3' })
   const cover = coverMeta(project.image);
 
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={LONG_LIST_VIEWPORT}
-      transition={{ duration: REVEAL_DURATION, delay: revealDelay(index) }}
-      onClick={() => onClick(project)}
-      className="group relative glass-card rounded-2xl overflow-hidden shadow-lg transition-all duration-300 cursor-pointer border border-transparent hover:border-[rgb(var(--primary))]/30 hover:-translate-y-1 flex flex-col h-full bg-[rgb(var(--background))]">
+    // The whole card opens the details, through one real button: the title.
+    // Its ::after stretches over the card, so a click anywhere still works,
+    // while keyboard and screen-reader users get a named, focusable control
+    // (the card used to be a clickable <div> nobody could reach by keyboard).
+    <Reveal y={20} delay={revealDelay(index)} long
+      className="focus-card group relative glass-card rounded-2xl overflow-hidden shadow-lg transition-all duration-300 cursor-pointer border border-transparent hover:border-[rgb(var(--primary))]/30 hover:-translate-y-1 flex flex-col h-full bg-[rgb(var(--background))]">
       {/* Sleek Image Container with inner padding */}
       <div className="relative w-full aspect-video bg-[rgb(var(--scrim))] p-4 pb-0 flex items-end justify-center overflow-hidden border-b border-[rgb(var(--border))]/30">
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-[rgb(var(--accent))]/10 via-[rgb(var(--scrim))]/0 to-[rgb(var(--scrim))] opacity-50 z-0" />
@@ -235,8 +260,8 @@ const ProjectCard = ({ project, index, onClick, headingAs: CardHeading = 'h3' })
         )}
 
         {/* Hover Glass Overlay - Click to View */}
-        <div className="absolute inset-0 z-20 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-[rgb(var(--scrim))]/60 backdrop-blur-[2px]">
-          <span className="px-6 py-2 rounded-full glass-card text-[rgb(var(--on-scrim))] text-sm font-semibold tracking-wider flex items-center gap-2 transform translate-y-4 group-hover:translate-y-0 transition-all duration-300">
+        <div aria-hidden="true" className="absolute inset-0 z-20 flex items-center justify-center opacity-0 group-hover:opacity-100 group-focus-within:opacity-100 transition-opacity duration-300 bg-[rgb(var(--scrim))]/60 backdrop-blur-[2px]">
+          <span className="px-6 py-2 rounded-full bg-[rgb(var(--scrim))]/85 border border-[rgb(var(--on-scrim))]/20 text-[rgb(var(--on-scrim))] text-sm font-semibold tracking-wider flex items-center gap-2 transform translate-y-4 group-hover:translate-y-0 transition-all duration-300">
             {t('projects.view_details')}
           </span>
         </div>
@@ -246,9 +271,17 @@ const ProjectCard = ({ project, index, onClick, headingAs: CardHeading = 'h3' })
       <div className="p-6 flex flex-col flex-grow text-start">
         <div className="flex justify-between items-start mb-2">
           <CardHeading className="text-xl font-bold text-[rgb(var(--foreground))] group-hover:text-[rgb(var(--primary))] transition-colors line-clamp-1">
-            {project.title}
+            <button
+              type="button"
+              onClick={() => onClick(project)}
+              className="text-start rounded-md after:absolute after:inset-0 after:z-30 after:content-[''] after:rounded-2xl focus-visible:outline-none">
+              {project.title}
+            </button>
           </CardHeading>
         </div>
+
+        {/* Training, event and learning work is labelled, not passed off as client work. */}
+        <ProjectKindLabel kind={project.kind} className="self-start mb-3" />
 
         <p className="text-[rgb(var(--muted-foreground))] text-sm mb-6 line-clamp-2 leading-relaxed flex-grow">
           {project.description}
@@ -260,18 +293,20 @@ const ProjectCard = ({ project, index, onClick, headingAs: CardHeading = 'h3' })
             <div
               key={i}
               title={tech}
+              role="img"
+              aria-label={tech}
               className="text-lg opacity-70 group-hover:opacity-100 transition-opacity">
               {getTechIcon(tech)}
             </div>
           ))}
           {project.tags.length > 6 && (
-            <span className="text-xs text-[rgb(var(--muted-foreground))] flex items-center opacity-70 font-medium">
+            <span className="text-xs text-[rgb(var(--muted-foreground))] flex items-center font-medium">
               +{project.tags.length - 6}
             </span>
           )}
         </div>
       </div>
-    </motion.div>
+    </Reveal>
   );
 };
 
@@ -289,18 +324,20 @@ const FeaturedRow = ({ project, index, onClick, isArabic, headingAs: RowHeading 
     : null;
 
   return (
-    <motion.article
-      initial={{ opacity: 0, y: 32 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={REVEAL_VIEWPORT}
-      transition={{ duration: 0.55 }}
+    // The first row of /work is the page's largest paint: it rises in from the
+    // first frame instead of waiting, transparent, for the scroll observer.
+    <Reveal as="article" y={32} duration={0.55} rise={eager}
       className="group grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-12 items-center">
       {/* Screenshot */}
       <div className={`lg:col-span-7 ${flip ? 'lg:order-2' : ''}`}>
+        {/* A pointer shortcut to "View details" below; kept out of the tab
+            order and the accessibility tree so each row is not three stops
+            and two identical announcements. */}
         <button
           type="button"
           onClick={() => onClick(project)}
-          aria-label={project.title}
+          tabIndex={-1}
+          aria-hidden="true"
           className="block w-full cursor-pointer">
           <div className="relative rounded-2xl overflow-hidden border border-[rgb(var(--border))]/60 bg-[rgb(var(--scrim))] p-3 sm:p-4 transition-colors duration-300 group-hover:border-[rgb(var(--primary))]/40">
             <Image
@@ -323,14 +360,18 @@ const FeaturedRow = ({ project, index, onClick, isArabic, headingAs: RowHeading 
 
       {/* Copy */}
       <div className={`lg:col-span-5 text-start ${flip ? 'lg:order-1' : ''}`}>
-        <p className="font-display text-6xl md:text-7xl font-bold text-outline leading-none mb-4 select-none" dir="ltr">
-          {String(index + 1).padStart(2, '0')}
+        {/* The block follows the page direction (start side in Arabic too);
+            only the digits themselves are marked left-to-right. */}
+        <p className="font-display text-6xl md:text-7xl font-bold text-outline leading-none mb-4 select-none">
+          <span dir="ltr">{String(index + 1).padStart(2, '0')}</span>
         </p>
         {project.impact && (
           <span className="inline-block px-3 py-1 rounded-full text-xs font-semibold bg-[rgb(var(--muted))]/40 text-[rgb(var(--muted-foreground))] border border-[rgb(var(--border))] mb-3">
             {project.impact}
           </span>
         )}
+        {/* Featured rows are client work today; the label keeps it honest if that changes. */}
+        <ProjectKindLabel kind={project.kind} className="mb-3 me-2" />
         <RowHeading className="font-display text-2xl md:text-3xl font-bold text-[rgb(var(--foreground))] mb-3 leading-tight">
           {project.title}
         </RowHeading>
@@ -339,7 +380,7 @@ const FeaturedRow = ({ project, index, onClick, isArabic, headingAs: RowHeading 
         </p>
         <div className="flex flex-wrap gap-3 mb-6 text-lg">
           {project.tags.slice(0, 6).map((tech) => (
-            <span key={tech} title={tech}>
+            <span key={tech} title={tech} role="img" aria-label={tech}>
               {getTechIcon(tech)}
             </span>
           ))}
@@ -348,29 +389,34 @@ const FeaturedRow = ({ project, index, onClick, isArabic, headingAs: RowHeading 
           {caseStudyHref && (
             <a
               href={caseStudyHref}
-              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl font-semibold text-sm bg-[rgb(var(--primary))]/10 text-[rgb(var(--primary))] border border-[rgb(var(--primary))]/30 hover:bg-[rgb(var(--primary))]/20 transition-colors">
+              className="inline-flex items-center gap-2 min-h-[44px] px-5 py-2.5 rounded-xl font-semibold text-sm bg-[rgb(var(--primary))]/10 text-[rgb(var(--primary))] border border-[rgb(var(--primary))]/30 hover:bg-[rgb(var(--primary))]/20 transition-colors">
               {t('projects.modal.case_study')}
+              {/* Every row has these three controls: the project name makes
+                  each one distinct in a links list. */}
+              <span className="sr-only">: {project.title}</span>
             </a>
           )}
-          {project.live && project.live !== '#' && (
+          {project.live && (
             <a
               href={project.live}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl font-semibold text-sm border border-[rgb(var(--border-control))] text-[rgb(var(--foreground))] hover:border-[rgb(var(--primary))] hover:text-[rgb(var(--primary))] transition-colors">
-              <FaExternalLinkAlt className="text-xs" />
+              className="inline-flex items-center gap-2 min-h-[44px] px-5 py-2.5 rounded-xl font-semibold text-sm border border-[rgb(var(--border-control))] text-[rgb(var(--foreground))] hover:border-[rgb(var(--primary))] hover:text-[rgb(var(--primary))] transition-colors">
+              <FaExternalLinkAlt aria-hidden="true" className="text-xs" />
               {t('projects.modal.live_link')}
+              <span className="sr-only">: {project.title}</span>
             </a>
           )}
           <button
             type="button"
             onClick={() => onClick(project)}
-            className="inline-flex items-center px-5 py-2.5 rounded-xl font-semibold text-sm text-[rgb(var(--muted-foreground))] hover:text-[rgb(var(--foreground))] transition-colors">
+            className="inline-flex items-center min-h-[44px] px-5 py-2.5 rounded-xl font-semibold text-sm text-[rgb(var(--muted-foreground))] hover:text-[rgb(var(--foreground))] transition-colors">
             {t('projects.view_details')}
+            <span className="sr-only">: {project.title}</span>
           </button>
         </div>
       </div>
-    </motion.article>
+    </Reveal>
   );
 };
 
@@ -389,14 +435,16 @@ const Projects = ({ variant = 'full' }) => {
   const isHome = variant === 'home';
   const Heading = isHome ? 'h2' : 'h1';
   const itemHeading = isHome ? 'h3' : 'h2';
-  // Content comes from the local i18n bundle, so there is nothing to wait for.
-  const [loading] = useState(false);
   const [filter, setFilter] = useState('All');
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedProject, setSelectedProject] = useState(null);
   const [showArchive, setShowArchive] = useState(false);
   const [gridLimit, setGridLimit] = useState(GRID_PAGE_SIZE);
   const sentinelRef = useRef(null);
+  const resultsRef = useRef(null);
+  // Set when the archive toggle opens the full grid, so focus can follow the
+  // content instead of staying on a button now 38 cards further down.
+  const focusResultsRef = useRef(false);
 
   // A new filter, search or archive toggle starts the grid from page one again.
   useEffect(() => {
@@ -420,613 +468,33 @@ const Projects = ({ variant = 'full' }) => {
     { id: 'Mobile', label: t('projects.categories.mobile') },
   ];
 
+  // Every card is derived from the case-study registry: slug, cover, stack,
+  // live URL, category and featured flag are typed once, in
+  // src/lib/case-studies.js, and only the wording comes from the locale
+  // bundle. The cards used to carry their own copy of those facts, and 12
+  // stacks and one live URL had drifted from the registry.
   const projectsData = useMemo(
-    () => [
-      {
-        slug: 'opptmakers',
-        featured: true,
-        title: t('projects.items.opptmakers.title'),
-        impact: t('projects.items.opptmakers.impact', { defaultValue: '' }),
-        description: t('projects.items.opptmakers.desc'),
-        image: '/opptmakers.webp',
-        tags: ['Next.js', 'NestJS', 'PostgreSQL', 'React', 'Tailwind', 'Docker'],
-        features: t('projects.items.opptmakers.features', {
-          returnObjects: true,
-        }),
-        github: '#',
-        live: 'https://opptmakers.cloud/login',
-        category: 'Full Stack',
-      },
-      {
-        slug: 'opptmakers-platforms',
-        featured: true,
-        title: t('projects.items.opptmakers-platforms.title'),
-        impact: t('projects.items.opptmakers-platforms.impact', { defaultValue: '' }),
-        description: t('projects.items.opptmakers-platforms.desc'),
-        image: '/opptmakers-platforms.webp',
-        tags: ['Next.js', 'NestJS', 'PostgreSQL', 'React', 'Tailwind', 'Docker'],
-        features: t('projects.items.opptmakers-platforms.features', {
-          returnObjects: true,
-        }),
-        github: '#',
-        live: 'https://platforms.opptmakers.cloud/login',
-        category: 'Full Stack',
-      },
-      {
-        slug: 'bilqalam',
-        featured: true,
-        title: t('projects.items.bilqalam.title'),
-        impact: t('projects.items.bilqalam.impact', { defaultValue: '' }),
-        description: t('projects.items.bilqalam.desc'),
-        image: '/bilqalam.webp',
-        tags: ['Next.js', 'React', 'Laravel', 'PHP', 'Tailwind'],
-        features: t('projects.items.bilqalam.features', {
-          returnObjects: true,
-        }),
-        github: '#',
-        live: 'https://bilqalaminstitute.net/',
-        caseStudy: '/case-study/bilqalam',
-        category: 'Full Stack',
-      },
-      {
-        slug: 'medicta',
-        featured: true,
-        caseStudy: '/case-study/medicta',
-        title: t('projects.items.medicta.title'),
-        impact: t('projects.items.medicta.impact', { defaultValue: '' }),
-        description: t('projects.items.medicta.desc'),
-        image: '/medicta.webp',
-        tags: [
-          'React Native',
-          'Android',
-          'iOS',
-          'React Query',
-          'Redux',
-          'Firebase',
-          'Codemagic',
-          'Google Play',
-          'App Store',
-        ],
-        features: t('projects.items.medicta.features', { returnObjects: true }),
-        github: '#',
-        live: 'https://play.google.com/store/apps/details?id=com.medicta',
-        category: 'Mobile',
-      },
-      {
-        slug: 'toyo228',
-        featured: true,
-        title: t('projects.items.toyo228.title'),
-        impact: t('projects.items.toyo228.impact', { defaultValue: '' }),
-        description: t('projects.items.toyo228.desc'),
-        image: '/toyo228.webp',
-        tags: [
-          'Next.js',
-          'NestJS',
-          'TypeORM',
-          'PostgreSQL',
-          'TypeScript',
-          'Turborepo',
-          'Multer',
-          'Excel Processing',
-        ],
-        features: t('projects.items.toyo228.features', { returnObjects: true }),
-        github: '#',
-        live: 'http://toyo228.com/en',
-        category: 'Full Stack',
-      },
-      {
-        slug: 'injaz',
-        featured: true,
-        title: t('projects.items.injaz.title'),
-        impact: t('projects.items.injaz.impact', { defaultValue: '' }),
-        description: t('projects.items.injaz.desc'),
-        image: '/injaz.webp',
-        tags: [
-          'Django',
-          'PostgreSQL',
-          'Python',
-          'Celery',
-          'Redis',
-          'MyFatoorah',
-          'NELC',
-          'SCFHS',
-        ],
-        features: t('projects.items.injaz.features', { returnObjects: true }),
-        github: '#',
-        live: 'https://lms-injaz.com/',
-        category: 'Full Stack',
-        suite: LMS_SUITE,
-      },
-      {
-        slug: 'hcholding',
-        title: t('projects.items.hcholding.title'),
-        description: t('projects.items.hcholding.desc'),
-        image: '/hcholding.webp',
-        tags: [
-          'Django',
-          'PostgreSQL',
-          'Python',
-          'Celery',
-          'Redis',
-          'MyFatoorah',
-          'NELC',
-          'SCFHS',
-        ],
-        features: t('projects.items.hcholding.features', { returnObjects: true }),
-        github: '#',
-        live: 'https://lms-hcholding.org/',
-        category: 'Full Stack',
-        suite: LMS_SUITE,
-      },
-      {
-        slug: 'mada',
-        title: t('projects.items.mada.title'),
-        description: t('projects.items.mada.desc'),
-        image: '/mada.webp',
-        tags: [
-          'Django',
-          'PostgreSQL',
-          'Python',
-          'Celery',
-          'Redis',
-          'MyFatoorah',
-          'Tailwind',
-        ],
-        features: t('projects.items.mada.features', { returnObjects: true }),
-        github: '#',
-        live: 'https://mada-education.com/',
-        category: 'Full Stack',
-        suite: LMS_SUITE,
-      },
-      {
-        slug: 'mutlq',
-        title: t('projects.items.mutlq.title'),
-        description: t('projects.items.mutlq.desc'),
-        image: '/mutlq.webp',
-        tags: ['Django', 'PostgreSQL', 'Tailwind', 'JavaScript'],
-        features: t('projects.items.mutlq.features', { returnObjects: true }),
-        github: '#',
-        live: 'https://mutlq.org/',
-        category: 'Frontend',
-      },
-      {
-        slug: 'indstrz',
-        featured: true,
-        caseStudy: '/case-study/indstrz',
-        title: t('projects.items.indstrz.title'),
-        impact: t('projects.items.indstrz.impact', { defaultValue: '' }),
-        description: t('projects.items.indstrz.desc'),
-        image: '/indstrz.webp',
-        tags: [
-          'Next.js',
-          'React',
-          'Flask',
-          'PostgreSQL',
-          'Socket.io',
-          'SQLAlchemy',
-          'Cloudinary',
-        ],
-        features: t('projects.items.indstrz.features', { returnObjects: true }),
-        github: '#',
-        live: 'https://indstrz.com/en',
-        category: 'Full Stack',
-      },
-      {
-        slug: 'sonomedix',
-        title: t('projects.items.sonomedix.title'),
-        description: t('projects.items.sonomedix.desc'),
-        image: '/sonomedix.webp',
-        tags: ['React', 'Tailwind', 'Node.js', 'Express.js', 'MongoDB'],
-        features: t('projects.items.sonomedix.features', {
-          returnObjects: true,
-        }),
-        github: '#',
-        live: 'https://sonomedix.cloud/',
-        category: 'Full Stack',
-      },
-      {
-        slug: 'kmbc',
-        title: t('projects.items.kmbc.title'),
-        description: t('projects.items.kmbc.desc'),
-        image: '/kmbc.webp',
-        tags: ['Next.js', 'Tailwind', 'Framer Motion', 'React'],
-        features: t('projects.items.kmbc.features', { returnObjects: true }),
-        github: '#',
-        live: 'https://www.kmbc-kw.com/',
-        category: 'Frontend',
-      },
-      {
-        slug: 'rabzan',
-        title: t('projects.items.rabzan.title'),
-        description: t('projects.items.rabzan.desc'),
-        image: '/rabzan.webp',
-        tags: ['React', 'Tailwind', 'JavaScript'],
-        features: t('projects.items.rabzan.features', { returnObjects: true }),
-        github: '#',
-        live: 'https://www.rabzan.com/',
-        category: 'Frontend',
-      },
-      {
-        slug: 'manqla',
-        title: t('projects.items.manqla.title'),
-        description: t('projects.items.manqla.desc'),
-        image: '/manqla.webp',
-        tags: ['React', 'Tailwind', 'TypeScript'],
-        features: t('projects.items.manqla.features', { returnObjects: true }),
-        github: '#',
-        live: 'https://www.manqla.com/',
-        category: 'Frontend',
-      },
-      {
-        slug: 'sems',
-        title: t('projects.items.sems.title'),
-        description: t('projects.items.sems.desc'),
-        image: '/sems.webp',
-        tags: ['Next.js', 'Tailwind', 'React', 'TypeScript'],
-        features: t('projects.items.sems.features', { returnObjects: true }),
-        github: '#',
-        live: 'https://sems-project.vercel.app/',
-        category: 'Full Stack',
-      },
-      {
-        slug: 'nextstop',
-        title: t('projects.items.nextstop.title'),
-        description: t('projects.items.nextstop.desc'),
-        image: '/nextstop.webp',
-        tags: ['Next.js', 'Tailwind', 'Vercel', 'React'],
-        features: t('projects.items.nextstop.features', {
-          returnObjects: true,
-        }),
-        github: '#',
-        live: 'https://next-stop-project-nine.vercel.app/',
-        category: 'Frontend',
-      },
-      {
-        slug: 'quotemate',
-        title: t('projects.items.quotemate.title'),
-        description: t('projects.items.quotemate.desc'),
-        image: '/quotemate.webp',
-        tags: ['Next.js', 'Tailwind', 'AI', 'OpenAI', 'React'],
-        features: t('projects.items.quotemate.features', {
-          returnObjects: true,
-        }),
-        github: '#',
-        live: 'https://quote-mateapp.vercel.app/',
-        category: 'Full Stack',
-      },
-      {
-        slug: 'dmagni',
-        title: t('projects.items.dmagni.title'),
-        description: t('projects.items.dmagni.desc'),
-        image: '/dmagni.webp',
-        tags: ['Next.js', 'Tailwind', 'AI', 'React'],
-        features: t('projects.items.dmagni.features', { returnObjects: true }),
-        github: '#',
-        live: 'https://dmagni-project.vercel.app/',
-        category: 'Full Stack',
-      },
-      {
-        slug: 'cme',
-        title: t('projects.items.cme.title'),
-        description: t('projects.items.cme.desc'),
-        image: '/cme.webp',
-        tags: ['Next.js', 'Tailwind', 'React', 'PostgreSQL'],
-        features: t('projects.items.cme.features', { returnObjects: true }),
-        github: '#',
-        live: 'https://cmehours.online/',
-        category: 'Full Stack',
-      },
-      {
-        slug: 'dpms',
-        title: t('projects.items.dpms.title'),
-        description: t('projects.items.dpms.desc'),
-        image: '/dpms.webp',
-        tags: ['Next.js', 'Tailwind', 'React', 'PostgreSQL'],
-        features: t('projects.items.dpms.features', { returnObjects: true }),
-        github: '#',
-        live: 'https://dpms-rust.vercel.app/',
-        category: 'Full Stack',
-      },
-      {
-        slug: 'motors',
-        featured: true,
-        title: t('projects.items.motors.title'),
-        impact: t('projects.items.motors.impact', { defaultValue: '' }),
-        description: t('projects.items.motors.desc'),
-        image: '/motors.webp',
-        tags: [
-          'Next.js',
-          'NestJS',
-          'TypeORM',
-          'PostgreSQL',
-          'TypeScript',
-          'Multer',
-        ],
-        features: t('projects.items.motors.features', { returnObjects: true }),
-        github: '#',
-        live: '#',
-        category: 'Full Stack',
-      },
-      {
-        slug: 'uduipa',
-        featured: true,
-        caseStudy: '/case-study/uduipa',
-        title: t('projects.items.uduipa.title'),
-        impact: t('projects.items.uduipa.impact', { defaultValue: '' }),
-        description: t('projects.items.uduipa.desc'),
-        image: '/uduipa.webp',
-        tags: [
-          'Next.js',
-          'NestJS',
-          'TypeScript',
-          'PostgreSQL',
-          'Turborepo',
-          'Cloudinary',
-          'Puppeteer',
-          'Recharts',
-        ],
-        features: t('projects.items.uduipa.features', { returnObjects: true }),
-        github: '#',
-        live: '#',
-        category: 'Full Stack',
-      },
-      {
-        slug: 'waferlee',
-        title: t('projects.items.waferlee.title'),
-        description: t('projects.items.waferlee.desc'),
-        image: '/waferlee.webp',
-        tags: [
-          'Next.js',
-          'NestJS',
-          'TypeORM',
-          'PostgreSQL',
-          'Tailwind',
-          'Radix UI',
-          'Framer Motion',
-        ],
-        features: t('projects.items.waferlee.features', {
-          returnObjects: true,
-        }),
-        github: '#',
-        live: 'https://waferlee.ae',
-        category: 'Full Stack',
-      },
-      {
-        slug: 'baserah',
-        title: t('projects.items.baserah.title'),
-        description: t('projects.items.baserah.desc'),
-        image: '/baserah.webp',
-        tags: ['FastAPI', 'Python', 'MongoDB', 'AI', 'Gemini'],
-        features: t('projects.items.baserah.features', { returnObjects: true }),
-        github: '#',
-        live: 'https://baserah.ai/',
-        category: 'Full Stack',
-      },
-      {
-        slug: 'sf_portal',
-        title: t('projects.items.sf_portal.title'),
-        description: t('projects.items.sf_portal.desc'),
-        image: '/smartfast.webp',
-        tags: [
-          'React',
-          'TypeScript',
-          'Vite',
-          'Radix UI',
-          'Tailwind',
-          'Django',
-          'Recharts',
-        ],
-        features: t('projects.items.sf_portal.features', {
-          returnObjects: true,
-        }),
-        github: '#',
-        live: 'https://smart-fast.com/',
-        category: 'Full Stack',
-      },
-      {
-        slug: 'journal',
-        title: t('projects.items.journal.title'),
-        description: t('projects.items.journal.desc'),
-        image: '/journal.webp',
-        tags: [
-          'React',
-          'NestJS',
-          'TypeORM',
-          'PostgreSQL',
-          'TypeScript',
-          'Nx Monorepo',
-        ],
-        features: t('projects.items.journal.features', { returnObjects: true }),
-        github: '#',
-        live: 'https://upafa-edu.net/',
-        category: 'Full Stack',
-      },
-      {
-        slug: 'oxgym',
-        featured: true,
-        caseStudy: '/case-study/oxgym',
-        title: t('projects.items.oxgym.title'),
-        impact: t('projects.items.oxgym.impact', { defaultValue: '' }),
-        description: t('projects.items.oxgym.desc'),
-        image: '/oxgym.webp',
-        tags: [
-          'JavaScript',
-          'Node.js',
-          'PostgreSQL',
-          'Vercel Serverless',
-          'PWA',
-          'Web Push',
-          'Service Worker',
-          'SEO',
-        ],
-        features: t('projects.items.oxgym.features', {
-          returnObjects: true,
-        }),
-        github: '#',
-        live: 'https://oxgym-eg.com/',
-        category: 'Full Stack',
-      },
-      {
-        slug: 'profleet',
-        featured: true,
-        caseStudy: '/case-study/profleet',
-        title: t('projects.items.profleet.title'),
-        impact: t('projects.items.profleet.impact', { defaultValue: '' }),
-        description: t('projects.items.profleet.desc'),
-        image: '/profleet.webp',
-        tags: [
-          'Next.js',
-          'TypeScript',
-          'Prisma',
-          'Socket.io',
-          'PostgreSQL',
-          'Leaflet',
-        ],
-        features: t('projects.items.profleet.features', {
-          returnObjects: true,
-        }),
-        github: '#',
-        live: 'https://pro-fleet.vercel.app/',
-        category: 'Full Stack',
-      },
-      {
-        slug: 'clinic',
-        title: t('projects.items.clinic.title'),
-        description: t('projects.items.clinic.desc'),
-        image: '/clinic.webp',
-        tags: ['React', 'Django', 'PostgreSQL', 'Tailwind', 'AI'],
-        features: t('projects.items.clinic.features', { returnObjects: true }),
-        github: '#',
-        live: 'https://clinic-project-2.vercel.app/',
-        category: 'Full Stack',
-      },
-
-      {
-        slug: 'orca',
-        title: t('projects.items.orca.title'),
-        description: t('projects.items.orca.desc'),
-        image: '/orca.webp',
-        tags: ['Next.js', 'Tailwind', 'Node.js', 'Express.js', 'MongoDB'],
-        features: t('projects.items.orca.features', { returnObjects: true }),
-        github: '#',
-        live: 'https://orcastore.vercel.app/',
-        category: 'Full Stack',
-      },
-      {
-        slug: 'amarna',
-        title: t('projects.items.amarna.title'),
-        description: t('projects.items.amarna.desc'),
-        image: '/amarna.webp',
-        tags: ['CMS', 'RTL', 'Customization'],
-        features: t('projects.items.amarna.features', { returnObjects: true }),
-        github: '#',
-        live: 'https://amarna-travel.trekksoft.com/ar',
-        category: 'Frontend',
-      },
-      {
-        slug: 'inventory',
-        title: t('projects.items.inventory.title'),
-        description: t('projects.items.inventory.desc'),
-        image: '/inventory.webp',
-        tags: ['Django', 'PostgreSQL', 'Bootstrap', 'JavaScript'],
-        features: t('projects.items.inventory.features', {
-          returnObjects: true,
-        }),
-        github:
-          'https://github.com/ChaoticMaximoff/Inventory-Management-System-ITI-Django-Project',
-        live: '#',
-        category: 'Full Stack',
-      },
-      {
-        slug: 'cinemascore',
-        title: t('projects.items.cinemascore.title'),
-        description: t('projects.items.cinemascore.desc'),
-        image: '/cinemascore.webp',
-        tags: ['React', 'Bootstrap', 'TMDB API'],
-        features: t('projects.items.cinemascore.features', {
-          returnObjects: true,
-        }),
-        github: 'https://github.com/HamsEldakrory/Movies-App-react-project',
-        live: 'https://movies-app-react-project-mocha.vercel.app/',
-        category: 'Frontend',
-      },
-      {
-        slug: 'movieweb',
-        title: t('projects.items.movieweb.title'),
-        description: t('projects.items.movieweb.desc'),
-        image: '/movies.webp',
-        tags: ['HTML', 'CSS', 'JavaScript', 'jQuery', 'Tailwind'],
-        features: t('projects.items.movieweb.features', {
-          returnObjects: true,
-        }),
-        github: 'https://github.com/Belalnajy/movieswebsiteproject',
-        live: 'https://movieswebsiteproject.vercel.app/',
-        category: 'Frontend',
-      },
-      {
-        slug: 'hms_odoo',
-        title: t('projects.items.hms_odoo.title'),
-        description: t('projects.items.hms_odoo.desc'),
-        image: '/HMS.webp',
-        tags: ['Odoo', 'Python', 'PostgreSQL'],
-        features: t('projects.items.hms_odoo.features', {
-          returnObjects: true,
-        }),
-        github: '#',
-        live: '#',
-        category: 'Backend',
-      },
-      {
-        slug: 'bookstore',
-        title: t('projects.items.bookstore.title'),
-        description: t('projects.items.bookstore.desc'),
-        image: '/book.webp',
-        tags: ['HTML', 'CSS', 'JavaScript', 'jQuery', 'Bootstrap'],
-        features: t('projects.items.bookstore.features', {
-          returnObjects: true,
-        }),
-        github: 'https://github.com/Sara-Elagder/Front-end-ITI',
-        live: 'https://bookstoredeploytest.vercel.app/',
-        category: 'Frontend',
-      },
-      {
-        slug: 'library',
-        title: t('projects.items.library.title'),
-        description: t('projects.items.library.desc'),
-        image: '/library.webp',
-        tags: ['Django', 'PostgreSQL', 'Python'],
-        features: t('projects.items.library.features', { returnObjects: true }),
-        github: 'https://github.com/Belalnajy/LMSProject',
-        live: '#',
-        category: 'Full Stack',
-      },
-      {
-        slug: 'alva_ai',
-        title: t('projects.items.alva_ai.title'),
-        description: t('projects.items.alva_ai.desc'),
-        image: '/alva.webp',
-        tags: [
-          'React',
-          'Node.js',
-          'Express.js',
-          'Knex.js',
-          'OpenAI',
-          'Tailwind',
-          'Vite',
-        ],
-        features: t('projects.items.alva_ai.features', { returnObjects: true }),
-        github: '#',
-        live: '#',
-        category: 'Full Stack',
-      },
-    ].map((project) => ({
-      ...project,
-      // Every project in the case-study registry gets its long-form page,
-      // driven by the same source that builds the routes and the sitemap.
-      caseStudy: CASE_STUDY_SLUGS.includes(project.slug)
-        ? `/case-study/${project.slug}`
-        : project.caseStudy,
-    })),
+    () =>
+      CASE_STUDY_SLUGS.map((slug) => {
+        const { image, stack, liveUrl, github, category, featured, kind } = CASE_STUDIES[slug];
+        return {
+          slug,
+          featured: Boolean(featured),
+          title: t(`projects.items.${slug}.title`),
+          impact: t(`projects.items.${slug}.impact`, { defaultValue: '' }),
+          description: t(`projects.items.${slug}.desc`),
+          features: asArray(t(`projects.items.${slug}.features`, { returnObjects: true })),
+          image,
+          tags: stack,
+          // null, not a '#' placeholder, when there is nothing to link to.
+          live: liveUrl ?? null,
+          github: github ?? null,
+          category,
+          kind,
+          caseStudy: `/case-study/${slug}`,
+          ...(LMS_SUITE_SLUGS.has(slug) && { suite: LMS_SUITE }),
+        };
+      }).sort(byArchiveOrder),
     [t],
   );
 
@@ -1053,11 +521,18 @@ const Projects = ({ variant = 'full' }) => {
     : visibleProjects;
   const hasMoreGrid = isGridView && visibleProjects.length > gridLimit;
 
+  useEffect(() => {
+    if (!showArchive || !focusResultsRef.current) return;
+    focusResultsRef.current = false;
+    resultsRef.current?.querySelector('button')?.focus();
+  }, [showArchive]);
+
   // Load the next grid page when the sentinel scrolls near the viewport.
   // Re-observes after every page load: the re-render can replace the sentinel
   // node, and an observer on a detached node never fires again.
   useEffect(() => {
-    if (!hasMoreGrid || !sentinelRef.current) return;
+    // Without an observer the sentinel is still a button that loads the next page.
+    if (!hasMoreGrid || !sentinelRef.current || typeof IntersectionObserver === 'undefined') return;
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
@@ -1073,11 +548,9 @@ const Projects = ({ variant = 'full' }) => {
   return (
     <section id="projects" className="py-20 relative min-h-screen">
       <div className="container mx-auto px-4 relative z-10">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={REVEAL_VIEWPORT}
-          transition={{ duration: 0.5 }}
+        {/* On /work this is the top of the page, so it animates from the first
+            paint without a fade; on the home page it is a scroll reveal. */}
+        <Reveal y={20} duration={0.5} rise={!isHome}
           className="text-center mb-16">
           {/* The page heading on /work; a section heading under the home hero. */}
           <Heading className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 text-[rgb(var(--foreground))]">
@@ -1086,22 +559,23 @@ const Projects = ({ variant = 'full' }) => {
           <p className="text-[rgb(var(--muted-foreground))] max-w-2xl mx-auto text-lg">
             {t('projects.subtitle')}
           </p>
-        </motion.div>
+        </Reveal>
 
         {/* Filter & Search - Premium Segmented Control */}
         {!isHome && (
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={REVEAL_VIEWPORT}
-          transition={{ duration: 0.5, delay: 0.2 }}
+        <Reveal y={20} duration={0.5} delay={0.2} immediate
           className="mb-12 flex flex-col md:flex-row gap-6 items-center justify-between max-w-5xl mx-auto">
           {/* Segmented control — wraps into rows on phones instead of scrolling
               off-screen, so every category stays reachable. */}
-          <div className="flex flex-wrap justify-center gap-1 p-1 bg-[rgb(var(--muted))]/30 backdrop-blur-md rounded-2xl md:rounded-full border border-[rgb(var(--border))]/50 relative w-full md:w-auto">
+          <div
+            role="group"
+            aria-label={t('a11y.filter_projects')}
+            className="flex flex-wrap justify-center gap-1 p-1 bg-[rgb(var(--muted))]/30 backdrop-blur-md rounded-2xl md:rounded-full border border-[rgb(var(--border))]/50 relative w-full md:w-auto">
             {categories.map((category) => (
               <button
                 key={category.id}
+                type="button"
+                aria-pressed={filter === category.id}
                 onClick={() => setFilter(category.id)}
                 className={`relative px-4 sm:px-6 min-h-[44px] rounded-full text-sm font-medium transition-colors z-10 whitespace-nowrap ${
                   filter === category.id
@@ -1109,7 +583,7 @@ const Projects = ({ variant = 'full' }) => {
                     : 'text-[rgb(var(--muted-foreground))] hover:text-[rgb(var(--foreground))]'
                   }`}>
                 {filter === category.id && (
-                  <motion.div
+                  <m.div
                     layoutId="activeFilter"
                     className="absolute inset-0 bg-[rgb(var(--primary))] shadow-lg rounded-full -z-10"
                     transition={{ type: 'spring', stiffness: 400, damping: 30 }}
@@ -1122,20 +596,32 @@ const Projects = ({ variant = 'full' }) => {
 
           {/* Search */}
           <div className="relative w-full md:w-auto shrink-0">
+            {/* 16px text: anything smaller makes iOS zoom the page on focus. */}
             <input
-              type="text"
+              type="search"
+              aria-label={t('a11y.search_projects')}
+              aria-controls="project-results"
               placeholder={t('projects.search_placeholder')}
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full md:w-72 px-5 py-2.5 rounded-full bg-[rgb(var(--background))] border border-[rgb(var(--border))] focus:border-[rgb(var(--primary))] focus:ring-1 focus:ring-[rgb(var(--primary))]/50 outline-none transition-all shadow-sm text-sm text-[rgb(var(--foreground))]"
+              className="w-full md:w-72 min-h-[44px] px-5 py-2.5 rounded-full bg-[rgb(var(--background))] border border-[rgb(var(--border-control))] focus:border-[rgb(var(--primary))] focus:ring-1 focus:ring-[rgb(var(--primary))]/50 outline-none transition-all shadow-sm text-base text-[rgb(var(--foreground))]"
             />
           </div>
-        </motion.div>
+        </Reveal>
+        )}
+
+        {/* Announces what a filter or a search left on screen. */}
+        {!isHome && (
+          <p className="sr-only" role="status" aria-live="polite">
+            {visibleProjects.length === 0
+              ? t('projects.no_results')
+              : t('a11y.projects_count', { count: visibleProjects.length })}
+          </p>
         )}
 
         {isHome || (isDefaultView && !showArchive) ? (
           /* Curated view: editorial rows, one flagship per row. */
-          <div className="space-y-20 lg:space-y-28 max-w-6xl mx-auto">
+          <div id="project-results" className="space-y-20 lg:space-y-28 max-w-6xl mx-auto">
             {visibleProjects.map((project, index) => (
               <FeaturedRow
                 key={project.slug}
@@ -1150,12 +636,8 @@ const Projects = ({ variant = 'full' }) => {
           </div>
         ) : (
           <>
-          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8">
-            {loading ? (
-              Array.from({ length: 6 }).map((_, index) => (
-                <ProjectSkeleton key={index} index={index} />
-              ))
-            ) : gridProjects.length > 0 ? (
+          <div id="project-results" ref={resultsRef} className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8">
+            {gridProjects.length > 0 ? (
               gridProjects.map((project, index) => (
                 <ProjectCard
                   key={project.slug}
@@ -1167,12 +649,13 @@ const Projects = ({ variant = 'full' }) => {
                 />
               ))
             ) : (
-              <motion.div
+              <m.div
+                aria-hidden="true"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 className="col-span-full flex flex-col items-center justify-center py-20 text-[rgb(var(--muted-foreground))]">
                 <p className="text-xl">{t('projects.no_results')}</p>
-              </motion.div>
+              </m.div>
             )}
           </div>
           {/* Progressive-load sentinel: also a real button, so keyboard and
@@ -1180,8 +663,9 @@ const Projects = ({ variant = 'full' }) => {
           {hasMoreGrid && (
             <div ref={sentinelRef} className="mt-12 flex justify-center">
               <button
+                type="button"
                 onClick={() => setGridLimit((prev) => prev + GRID_PAGE_SIZE)}
-                className="px-8 py-3 rounded-full border border-[rgb(var(--border))] bg-[rgb(var(--muted))]/30 hover:border-[rgb(var(--primary))] hover:text-[rgb(var(--primary))] transition-colors text-sm font-semibold text-[rgb(var(--foreground))]">
+                className="min-h-[44px] px-8 py-3 rounded-full border border-[rgb(var(--border))] bg-[rgb(var(--muted))]/30 hover:border-[rgb(var(--primary))] hover:text-[rgb(var(--primary))] transition-colors text-sm font-semibold text-[rgb(var(--foreground))]">
                 {t('projects.load_more', {
                   count: visibleProjects.length - gridLimit,
                 })}
@@ -1196,7 +680,7 @@ const Projects = ({ variant = 'full' }) => {
           <div className="mt-16 flex justify-center">
             <a
               href={`${isArabic ? '/ar' : ''}/work`}
-              className="px-8 py-3.5 rounded-full border border-[rgb(var(--border-control))] hover:border-[rgb(var(--primary))] hover:text-[rgb(var(--primary))] transition-colors text-sm font-semibold text-[rgb(var(--foreground))]">
+              className="inline-flex items-center min-h-[44px] px-8 py-3.5 rounded-full border border-[rgb(var(--border-control))] hover:border-[rgb(var(--primary))] hover:text-[rgb(var(--primary))] transition-colors text-sm font-semibold text-[rgb(var(--foreground))]">
               {t('projects.view_all', { count: projectsData.length })}
             </a>
           </div>
@@ -1211,8 +695,14 @@ const Projects = ({ variant = 'full' }) => {
               </p>
             )}
             <button
-              onClick={() => setShowArchive((prev) => !prev)}
-              className="px-8 py-3 rounded-full border border-[rgb(var(--border))] bg-[rgb(var(--muted))]/30 hover:border-[rgb(var(--primary))] hover:text-[rgb(var(--primary))] transition-colors text-sm font-semibold text-[rgb(var(--foreground))]">
+              type="button"
+              aria-expanded={showArchive}
+              aria-controls="project-results"
+              onClick={() => {
+                focusResultsRef.current = !showArchive;
+                setShowArchive((prev) => !prev);
+              }}
+              className="min-h-[44px] px-8 py-3 rounded-full border border-[rgb(var(--border))] bg-[rgb(var(--muted))]/30 hover:border-[rgb(var(--primary))] hover:text-[rgb(var(--primary))] transition-colors text-sm font-semibold text-[rgb(var(--foreground))]">
               {showArchive
                 ? t('projects.show_featured')
                 : t('projects.show_all', { count: projectsData.length })}

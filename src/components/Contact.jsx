@@ -1,7 +1,8 @@
 "use client";
 import { useState, useRef, useMemo, useEffect } from 'react';
-import { motion } from 'framer-motion';
-import { REVEAL_VIEWPORT, revealDelay, REVEAL_DURATION } from '../lib/motion';
+import { m } from 'framer-motion';
+import Reveal from './Reveal';
+import { revealDelay, REVEAL_DURATION } from '../lib/motion';
 import {
   FaEnvelope,
   FaPhone,
@@ -13,11 +14,29 @@ import { useTranslation } from 'react-i18next';
 import { useSite } from './SiteShell';
 import { whatsappUrl } from './WhatsAppButton';
 
+// Read at build time (NEXT_PUBLIC_* is inlined). No placeholder fallbacks: a
+// build without them used to ship 'service_xxxxxxx' and fail on every submit
+// with a generic error, so nobody noticed the form was dead.
+const EMAILJS = {
+  serviceId: process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID,
+  templateId: process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID,
+  publicKey: process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY,
+};
+const EMAILJS_CONFIGURED = Object.values(EMAILJS).every(Boolean);
+
+// Bounds on what the form will send, so it cannot be used to mail a novel.
+const MAX_LENGTH = { name: 100, email: 254, message: 5000 };
+// Nobody reads the form, types three fields and submits this fast; scripts
+// do. A faster submit is delayed until this much time has passed, not refused.
+const MIN_FILL_TIME_MS = 3000;
+
 const Contact = () => {
   const { showNotification } = useSite();
   const { t, i18n } = useTranslation();
   const isArabic = i18n.language === 'ar';
-  const formRef = useRef();
+  const honeypotRef = useRef(null);
+  // When the form became usable, for the minimum-fill-time check.
+  const mountedAt = useRef(0);
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
     name: '',
@@ -34,19 +53,41 @@ const Contact = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    if (!EMAILJS_CONFIGURED) {
+      console.error('Contact form: the NEXT_PUBLIC_EMAILJS_* variables were not set when this build was made.');
+      showNotification?.(t('contact.notifications.unavailable'), 'error');
+      return;
+    }
+
+    // Honeypot: the field is invisible and unreachable for people, so only a
+    // script fills it. Answer as if it worked and send nothing.
+    if (honeypotRef.current?.value) {
+      showNotification?.(t('contact.notifications.success'), 'success');
+      setFormData({ name: '', email: '', message: '' });
+      return;
+    }
+
     setLoading(true);
 
     try {
-      const serviceId =
-        process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID || 'service_xxxxxxx';
-      const templateId =
-        process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID || 'template_xxxxxxx';
-      const publicKey =
-        process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY || 'your_public_key';
+      // Submitted faster than a person plausibly fills three fields: hold the
+      // send until the minimum time has passed instead of refusing it. A quick
+      // (autofilled) visitor only sees "Sending…" for a moment longer, and
+      // a script that posts the form the instant it loads still has to wait.
+      const remaining = MIN_FILL_TIME_MS - (Date.now() - mountedAt.current);
+      if (remaining > 0) await new Promise((resolve) => setTimeout(resolve, remaining));
 
       // The SDK is only needed once someone actually submits.
       const { default: emailjs } = await import('@emailjs/browser');
-      await emailjs.sendForm(serviceId, templateId, formRef.current, publicKey);
+      // Named fields rather than the whole form, so the honeypot never
+      // reaches the email template.
+      await emailjs.send(
+        EMAILJS.serviceId,
+        EMAILJS.templateId,
+        { name: formData.name, email: formData.email, message: formData.message },
+        EMAILJS.publicKey,
+      );
 
       showNotification?.(t('contact.notifications.success'), 'success');
 
@@ -68,7 +109,10 @@ const Contact = () => {
   // the same treatment: attached after hydration, absent from the static HTML.
   const [revealedPhone, setRevealedPhone] = useState(false);
   const [mounted, setMounted] = useState(false);
-  useEffect(() => setMounted(true), []);
+  useEffect(() => {
+    mountedAt.current = Date.now();
+    setMounted(true);
+  }, []);
 
   const contactInfo = useMemo(
     () => [
@@ -112,11 +156,7 @@ const Contact = () => {
   return (
     <section id="contact" className="py-20 relative text-start">
       <div className="container mx-auto px-6 relative z-10">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={REVEAL_VIEWPORT}
-          transition={{ duration: 0.5 }}
+        <Reveal y={20} duration={0.5}
           className="text-center mb-16">
           <h2 className="text-5xl font-bold mb-4 text-[rgb(var(--foreground))]">
             {t('contact.title')}
@@ -124,25 +164,28 @@ const Contact = () => {
           <p className="text-[rgb(var(--muted-foreground))] max-w-2xl mx-auto text-lg leading-relaxed">
             {t('contact.subtitle')}
           </p>
-        </motion.div>
+        </Reveal>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
           {/* Contact Information */}
-          <motion.div
-            initial={{ opacity: 0, x: isArabic ? 20 : -20 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={REVEAL_VIEWPORT}
-            transition={{ duration: 0.5 }}
+          <Reveal x={isArabic ? 20 : -20} duration={0.5}
             className="space-y-6">
             {contactInfo.map((item, index) => (
-              <motion.div
+              <Reveal
+                as={m.div}
+                x={isArabic ? 20 : -20}
+                delay={revealDelay(index)}
                 key={index}
-                initial={{ opacity: 0, x: isArabic ? 20 : -20 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={REVEAL_VIEWPORT}
+                // Still read by Framer for the hover animation below.
                 transition={{ duration: REVEAL_DURATION, delay: revealDelay(index) }}
                 whileHover={{ y: -5, scale: 1.02 }}
-                className="flex items-start gap-6 glass-card glass-hover p-6 rounded-xl cursor-pointer shadow-lg hover:shadow-xl transition-all duration-300 border border-[rgb(var(--border))]/50">
+                // The link or button inside stretches over the card (its
+                // ::after), so the whole card is the tap target it looks
+                // like; the location card has nothing to open and is not
+                // dressed as clickable.
+                className={`focus-card relative flex items-start gap-6 glass-card glass-hover p-6 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 border border-[rgb(var(--border))]/50 ${
+                  item.href || item.reveal ? 'cursor-pointer' : ''
+                }`}>
                 <div
                   className={`p-4 rounded-xl border flex-shrink-0 group-hover:scale-110 transition-transform duration-300 ${
                     item.highlight
@@ -159,7 +202,7 @@ const Contact = () => {
                     <button
                       type="button"
                       onClick={() => setRevealedPhone(true)}
-                      className="text-[rgb(var(--primary))] hover:underline transition-colors text-start block min-h-[32px]">
+                      className="text-[rgb(var(--primary))] hover:underline transition-colors text-start block min-h-[32px] after:absolute after:inset-0 after:content-[''] after:rounded-xl">
                       {t('contact.info.show_phone')}
                     </button>
                   ) : item.href ? (
@@ -173,7 +216,10 @@ const Contact = () => {
                           ? 'noopener noreferrer'
                           : undefined
                       }
-                      className="text-[rgb(var(--muted-foreground))] hover:text-[rgb(var(--primary))] transition-colors text-start block">
+                      // Addresses and handles are Latin and left-to-right in
+                      // either language; dir="ltr" keeps "@" and "." in place.
+                      dir={item.reveal || item.highlight ? undefined : 'ltr'}
+                      className="text-[rgb(var(--muted-foreground))] hover:text-[rgb(var(--primary))] transition-colors text-start block after:absolute after:inset-0 after:content-[''] after:rounded-xl">
                       {item.value}
                     </a>
                   ) : (
@@ -182,23 +228,34 @@ const Contact = () => {
                     </p>
                   )}
                 </div>
-              </motion.div>
+              </Reveal>
             ))}
-          </motion.div>
+          </Reveal>
 
           {/* Contact Form */}
-          <motion.div
-            initial={{ opacity: 0, x: isArabic ? -20 : 20 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={REVEAL_VIEWPORT}
-            transition={{ duration: 0.5 }}
+          <Reveal x={isArabic ? -20 : 20} duration={0.5}
             className="glass-card p-8 rounded-xl">
-            <form ref={formRef} onSubmit={handleSubmit} className="space-y-6">
+            <form onSubmit={handleSubmit} className="space-y-6">
+              {/* Honeypot. Off-screen rather than display:none (some bots skip
+                  those), out of the tab order and hidden from assistive tech. */}
+              <div aria-hidden="true" className="absolute -start-[9999px] w-px h-px overflow-hidden">
+                <input
+                  ref={honeypotRef}
+                  type="text"
+                  name="hp_note"
+                  tabIndex={-1}
+                  autoComplete="off"
+                  defaultValue=""
+                />
+              </div>
               <div>
                 <label
                   htmlFor="name"
                   className="block text-[rgb(var(--foreground))] font-medium mb-2 text-start">
                   {t('contact.form.name')}
+                  {/* Required, shown; the field's own `required` says it to
+                      assistive tech, so the mark itself is hidden from it. */}
+                  <span aria-hidden="true" className="text-[rgb(var(--destructive))] ms-1">*</span>
                 </label>
                 <input
                   type="text"
@@ -207,7 +264,9 @@ const Contact = () => {
                   value={formData.name}
                   onChange={handleChange}
                   required
-                  className="w-full glass-card border border-[rgb(var(--border))] rounded-lg px-4 py-3 text-[rgb(var(--foreground))] focus:outline-none focus:border-[rgb(var(--primary))] transition-colors text-start"
+                  autoComplete="name"
+                  maxLength={MAX_LENGTH.name}
+                  className="w-full glass-card border border-[rgb(var(--border-control))]! rounded-lg px-4 py-3 text-[rgb(var(--foreground))] focus:border-[rgb(var(--primary))] transition-colors text-start"
                   placeholder={t('contact.form.placeholders.name')}
                 />
               </div>
@@ -216,6 +275,9 @@ const Contact = () => {
                   htmlFor="email"
                   className="block text-[rgb(var(--foreground))] font-medium mb-2 text-start">
                   {t('contact.form.email')}
+                  {/* Required, shown; the field's own `required` says it to
+                      assistive tech, so the mark itself is hidden from it. */}
+                  <span aria-hidden="true" className="text-[rgb(var(--destructive))] ms-1">*</span>
                 </label>
                 <input
                   type="email"
@@ -224,7 +286,10 @@ const Contact = () => {
                   value={formData.email}
                   onChange={handleChange}
                   required
-                  className="w-full glass-card border border-[rgb(var(--border))] rounded-lg px-4 py-3 text-[rgb(var(--foreground))] focus:outline-none focus:border-[rgb(var(--primary))] transition-colors text-start"
+                  autoComplete="email"
+                  dir="ltr"
+                  maxLength={MAX_LENGTH.email}
+                  className="w-full glass-card border border-[rgb(var(--border-control))]! rounded-lg px-4 py-3 text-[rgb(var(--foreground))] focus:border-[rgb(var(--primary))] transition-colors text-start"
                   placeholder={t('contact.form.placeholders.email')}
                 />
               </div>
@@ -233,6 +298,9 @@ const Contact = () => {
                   htmlFor="message"
                   className="block text-[rgb(var(--foreground))] font-medium mb-2 text-start">
                   {t('contact.form.message')}
+                  {/* Required, shown; the field's own `required` says it to
+                      assistive tech, so the mark itself is hidden from it. */}
+                  <span aria-hidden="true" className="text-[rgb(var(--destructive))] ms-1">*</span>
                 </label>
                 <textarea
                   id="message"
@@ -240,12 +308,13 @@ const Contact = () => {
                   value={formData.message}
                   onChange={handleChange}
                   required
+                  maxLength={MAX_LENGTH.message}
                   rows="4"
-                  className="w-full glass-card border border-[rgb(var(--border))] rounded-lg px-4 py-3 text-[rgb(var(--foreground))] focus:outline-none focus:border-[rgb(var(--primary))] transition-colors resize-none text-start"
+                  className="w-full glass-card border border-[rgb(var(--border-control))]! rounded-lg px-4 py-3 text-[rgb(var(--foreground))] focus:border-[rgb(var(--primary))] transition-colors resize-none text-start"
                   placeholder={t('contact.form.placeholders.message')}
                 />
               </div>
-              <motion.button
+              <m.button
                 type="submit"
                 disabled={loading}
                 whileHover={{ scale: loading ? 1 : 1.05 }}
@@ -256,9 +325,9 @@ const Contact = () => {
                     : 'bg-gradient-to-r from-[rgb(var(--accent))] to-[rgb(var(--accent-hover))] hover:shadow-lg hover:shadow-[rgb(var(--accent))]/50'
                 } text-[rgb(var(--on-scrim))]`}>
                 {loading ? t('contact.form.sending') : t('contact.form.submit')}
-              </motion.button>
+              </m.button>
             </form>
-          </motion.div>
+          </Reveal>
         </div>
       </div>
     </section>

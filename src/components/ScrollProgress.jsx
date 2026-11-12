@@ -1,5 +1,5 @@
 "use client";
-import { motion, useScroll, useSpring } from "framer-motion";
+import { m, useScroll, useSpring } from "framer-motion";
 
 const ScrollProgress = () => {
   const { scrollYProgress } = useScroll();
@@ -10,8 +10,9 @@ const ScrollProgress = () => {
   });
 
   return (
-    <motion.div
-      className="fixed top-0 left-0 right-0 h-1 bg-[rgb(var(--accent))] origin-left z-[9999]"
+    <m.div
+      aria-hidden="true"
+      className="fixed top-0 left-0 right-0 h-1 bg-[rgb(var(--accent))] origin-left rtl:origin-right z-[9999]"
       style={{ scaleX }}
     />
   );

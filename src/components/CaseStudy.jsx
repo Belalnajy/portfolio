@@ -1,9 +1,9 @@
 "use client";
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import Image from 'next/image';
 import { I18nextProvider } from 'react-i18next';
-import { motion } from 'framer-motion';
-import { REVEAL_VIEWPORT, revealDelay, REVEAL_DURATION } from '../lib/motion';
+import Reveal from './Reveal';
+import { revealDelay } from '../lib/motion';
 import { useTranslation } from 'react-i18next';
 import {
   FaArrowLeft,
@@ -19,14 +19,12 @@ import {
 } from 'react-icons/fa';
 import { getTechIcon } from './Projects';
 import IconDefaults from './IconDefaults';
+import LanguageToggle from './LanguageToggle';
+import ProjectKindLabel from './ProjectKindLabel';
 import { coverMeta } from '../lib/cover-meta';
+import { asArray } from '../lib/as-array';
 import { CASE_STUDIES } from '../lib/case-studies';
-import {
-  createI18nInstance,
-  resolvePreferredLanguage,
-  loadLanguage,
-  DEFAULT_LANGUAGE,
-} from '../i18n';
+import { createI18nInstance, DEFAULT_LANGUAGE } from '../i18n';
 
 /**
  * Long-form write-up for a single project. The per-project copy comes in via
@@ -43,40 +41,23 @@ const CaseStudy = ({ lang = DEFAULT_LANGUAGE, bundle, ...props }) => {
   return (
     <I18nextProvider i18n={i18nInstance}>
       <IconDefaults>
-        <CaseStudyContent pageLang={lang} {...props} />
+        <CaseStudyContent {...props} />
       </IconDefaults>
     </I18nextProvider>
   );
 };
 
-const CaseStudyContent = ({ slug, narrative, image, liveUrl, appStoreUrl, stack, gallery, nav, pageLang }) => {
+const CaseStudyContent = ({ slug, narrative, image, liveUrl, appStoreUrl, stack, gallery, nav, kind }) => {
   const { t, i18n } = useTranslation();
   const isArabic = i18n.language === 'ar';
   const Back = isArabic ? FaArrowRight : FaArrowLeft;
   const Forward = isArabic ? FaArrowLeft : FaArrowRight;
   const copy = (isArabic && narrative.ar) || narrative.en;
-  // Links back into the one-page site follow the language being read.
+  // Links back into the site follow the language being read. "Back to
+  // projects" goes to the full archive on /work, where every case study is
+  // listed, not to the four-card section on the home page.
   const home = isArabic ? '/ar' : '';
   const cover = coverMeta(image);
-
-  useEffect(() => {
-    const preferred = resolvePreferredLanguage(pageLang);
-    if (preferred !== i18n.language) loadLanguage(i18n, preferred);
-  }, [i18n, pageLang]);
-
-  useEffect(() => {
-    document.dir = i18n.dir();
-    document.documentElement.lang = i18n.language;
-    // Keep the URL on the matching language route.
-    const { pathname, hash } = window.location;
-    if (i18n.language === 'ar' && pathname.startsWith('/case-study/')) {
-      window.history.replaceState(null, '', `/ar${pathname}${hash}`);
-    } else if (i18n.language === 'en' && pathname.startsWith('/ar/case-study/')) {
-      window.history.replaceState(null, '', `${pathname.slice(3)}${hash}`);
-    }
-  }, [i18n.language, i18n]);
-
-  const asArray = (value) => (Array.isArray(value) ? value : []);
 
   const blocks = [
     { key: 'challenge', icon: <FaExclamationTriangle />, accent: 'text-[rgb(var(--accent))]' },
@@ -86,17 +67,23 @@ const CaseStudyContent = ({ slug, narrative, image, liveUrl, appStoreUrl, stack,
   ];
 
   return (
-    <main className="min-h-screen bg-[rgb(var(--background))] text-[rgb(var(--foreground))] overflow-x-clip">
-      {/* Header */}
+    <div className="min-h-screen bg-[rgb(var(--background))] text-[rgb(var(--foreground))] overflow-x-clip">
+      {/* Standalone page without SiteShell, so it carries its own skip link:
+          the first focusable element, past the header to the story. */}
+      <a href="#main" className="skip-link">
+        {t('a11y.skip_to_content')}
+      </a>
+      {/* Header: a banner landmark of its own, outside <main>. */}
       <header className="sticky top-0 z-40 bg-[rgb(var(--background))]/90 backdrop-blur-xl border-b border-[rgb(var(--border))]/50">
         <div className="container mx-auto px-4 sm:px-6 h-16 flex items-center justify-between gap-3">
           <a
-            href={`${home}/#projects`}
+            href={`${home}/work`}
             className="inline-flex items-center gap-2 min-h-[44px] px-3 -mx-3 rounded-lg text-sm font-medium text-[rgb(var(--muted-foreground))] hover:text-[rgb(var(--foreground))] transition-colors"
           >
             <Back className="text-xs" />
             {t('case_studies.back')}
           </a>
+          <div className="flex items-center gap-2">
           {/* A mobile app lists both stores: one button each instead of "Visit Live Site". */}
           {liveUrl && appStoreUrl && (
             <div className="flex items-center gap-2">
@@ -130,47 +117,50 @@ const CaseStudyContent = ({ slug, narrative, image, liveUrl, appStoreUrl, stack,
               <span className="hidden sm:inline">{t('case_studies.visit')}</span>
             </a>
           )}
+          {/* Standalone page, no site navbar: the language switch lives here. */}
+          <LanguageToggle />
+          </div>
         </div>
       </header>
 
+      {/* tabIndex -1 so the skip link moves focus here, not just the scroll. */}
+      <main id="main" tabIndex={-1} className="focus:outline-none">
       {/* Hero */}
       <section className="relative pt-12 pb-10 md:pt-20 md:pb-14 overflow-hidden">
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-3xl h-72 bg-[rgb(var(--primary))]/8 blur-[120px] rounded-full pointer-events-none" />
 
         <div className="container mx-auto px-4 sm:px-6 relative z-10 max-w-4xl text-center">
-          <motion.span
-            initial={{ opacity: 0, y: 12 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
+          {/* The hero animates with CSS from the first paint (see Reveal).
+              The title, summary and cover move without fading: one of them
+              is the page's largest paint and must not start transparent. */}
+          <Reveal as="span" immediate y={12} duration={0.5}
             className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-bold tracking-widest uppercase bg-[rgb(var(--muted))]/40 text-[rgb(var(--muted-foreground))] border border-[rgb(var(--border))] mb-5"
           >
             <FaLayerGroup className="text-[10px]" />
             {t('case_studies.label')}
-          </motion.span>
+          </Reveal>
 
-          <motion.h1
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.05 }}
+          {/* Not client work: said up front, under the eyebrow. */}
+          {kind && (
+            <Reveal immediate y={12} duration={0.5} className="mb-5">
+              <ProjectKindLabel kind={kind} />
+            </Reveal>
+          )}
+
+          <Reveal as="h1" rise y={16} duration={0.6} delay={0.05}
             className="font-display text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight leading-tight mb-4"
           >
             {copy.title}
-          </motion.h1>
+          </Reveal>
 
-          <motion.p
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.1 }}
+          <Reveal as="p" rise y={16} duration={0.6} delay={0.1}
             className="text-base sm:text-lg text-[rgb(var(--muted-foreground))] leading-relaxed"
           >
             {copy.summary}
-          </motion.p>
+          </Reveal>
 
           {/* Fact strip */}
-          <motion.dl
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.15 }}
+          <Reveal as="dl" immediate y={16} duration={0.6} delay={0.15}
             className="grid grid-cols-1 sm:grid-cols-3 gap-3 mt-9 text-start"
           >
             {['role', 'scope', 'audience'].map((fact) => (
@@ -186,16 +176,13 @@ const CaseStudyContent = ({ slug, narrative, image, liveUrl, appStoreUrl, stack,
                 </dd>
               </div>
             ))}
-          </motion.dl>
+          </Reveal>
         </div>
       </section>
 
       {/* Cover */}
       <section className="container mx-auto px-4 sm:px-6 max-w-5xl">
-        <motion.div
-          initial={{ opacity: 0, y: 24 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.2 }}
+        <Reveal rise y={24} duration={0.6} delay={0.2}
           className="rounded-2xl overflow-hidden border border-[rgb(var(--border))]/50 bg-[rgb(var(--scrim))] p-3 sm:p-5"
         >
           <Image
@@ -209,7 +196,7 @@ const CaseStudyContent = ({ slug, narrative, image, liveUrl, appStoreUrl, stack,
             style={{ viewTransitionName: `cover-${slug}` }}
             className="w-full h-auto rounded-lg"
           />
-        </motion.div>
+        </Reveal>
       </section>
 
       {/* Narrative blocks */}
@@ -218,12 +205,8 @@ const CaseStudyContent = ({ slug, narrative, image, liveUrl, appStoreUrl, stack,
           const section = copy[block.key] || {};
           const points = asArray(section.points);
           return (
-            <motion.article
+            <Reveal as="article" y={24} delay={revealDelay(index)}
               key={block.key}
-              initial={{ opacity: 0, y: 24 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={REVEAL_VIEWPORT}
-              transition={{ duration: REVEAL_DURATION, delay: revealDelay(index) }}
               className="text-start"
             >
               <div className="flex items-center gap-4 mb-4">
@@ -261,17 +244,13 @@ const CaseStudyContent = ({ slug, narrative, image, liveUrl, appStoreUrl, stack,
                   ))}
                 </ul>
               )}
-            </motion.article>
+            </Reveal>
           );
         })}
 
         {/* Stack */}
         {stack?.length > 0 && (
-          <motion.article
-            initial={{ opacity: 0, y: 24 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={REVEAL_VIEWPORT}
-            transition={{ duration: 0.5 }}
+          <Reveal as="article" y={24} duration={0.5}
             className="text-start"
           >
             <h2 className="text-xl sm:text-2xl md:text-3xl font-bold tracking-tight mb-5">
@@ -288,7 +267,7 @@ const CaseStudyContent = ({ slug, narrative, image, liveUrl, appStoreUrl, stack,
                 </span>
               ))}
             </div>
-          </motion.article>
+          </Reveal>
         )}
       </section>
 
@@ -357,11 +336,7 @@ const CaseStudyContent = ({ slug, narrative, image, liveUrl, appStoreUrl, stack,
 
       {/* Closing CTA */}
       <section className="container mx-auto px-4 sm:px-6 max-w-4xl pb-20">
-        <motion.div
-          initial={{ opacity: 0, y: 24 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={REVEAL_VIEWPORT}
-          transition={{ duration: 0.5 }}
+        <Reveal y={24} duration={0.5}
           className="glass-card rounded-2xl border border-[rgb(var(--border))]/50 p-6 sm:p-10 text-center"
         >
           <h2 className="text-2xl sm:text-3xl font-bold mb-3">
@@ -378,14 +353,14 @@ const CaseStudyContent = ({ slug, narrative, image, liveUrl, appStoreUrl, stack,
               {t('case_studies.cta_button')}
             </a>
             <a
-              href={`${home}/#projects`}
+              href={`${home}/work`}
               className="inline-flex items-center justify-center gap-2 min-h-[48px] px-6 rounded-xl font-semibold glass-card border border-[rgb(var(--border))] hover:bg-[rgb(var(--muted))]/40 transition-colors"
             >
               <Back className="text-xs" />
               {t('case_studies.back')}
             </a>
           </div>
-        </motion.div>
+        </Reveal>
       </section>
 
       {/* Prev / next case study — the archive becomes a loop, not a dead end. */}
@@ -419,7 +394,8 @@ const CaseStudyContent = ({ slug, narrative, image, liveUrl, appStoreUrl, stack,
           </div>
         </nav>
       )}
-    </main>
+      </main>
+    </div>
   );
 };
 

@@ -1,7 +1,8 @@
 "use client";
 import { useState, useMemo } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { REVEAL_VIEWPORT, revealDelay, REVEAL_DURATION } from '../lib/motion';
+import { m } from 'framer-motion';
+import Reveal from './Reveal';
+import { revealDelay, REVEAL_DURATION } from '../lib/motion';
 import {
   FaCode,
   FaDatabase,
@@ -24,7 +25,6 @@ import {
   FaClock,
   FaSyncAlt,
 } from 'react-icons/fa';
-import SkillSkeleton from './skeletons/SkillSkeleton';
 import {
   SiDjango,
   SiPostgresql,
@@ -48,50 +48,37 @@ import { useTranslation } from 'react-i18next';
 import { brandColor } from '../lib/brand-colors';
 
 const SkillCard = ({ category, index }) => {
-  const { i18n } = useTranslation();
-  const isArabic = i18n.language === 'ar';
-  
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      whileInView={{ opacity: 1, y: 0 }}
-          viewport={REVEAL_VIEWPORT}
-      transition={{ duration: REVEAL_DURATION, delay: revealDelay(index) }}
+    <Reveal y={20} delay={revealDelay(index)}
       className="bg-[rgb(var(--card))] p-6 rounded-xl border border-[rgb(var(--border))] hover:border-[rgb(var(--primary))] transition-all duration-300 hover:shadow-lg hover:shadow-[rgb(var(--primary))]/10">
-      <div className={`flex items-center mb-6 ${isArabic ? 'space-x-reverse' : ''}`}>
+      <div className="flex items-center gap-4 mb-6">
         <div className="bg-[rgb(var(--primary))]/10 p-3 rounded-lg">
           {category.icon}
         </div>
-        <h3 className={`text-xl font-bold ${isArabic ? 'mr-4 text-right' : 'ml-4 text-left'}`}>
+        <h3 className="text-xl font-bold text-start">
           {category.title}
         </h3>
       </div>
       <div className="grid grid-cols-2 gap-3">
         {category.skills.map((skill, i) => (
-          <motion.div
+          <Reveal x={-20} delay={revealDelay(i)}
             key={i}
-            initial={{ opacity: 0, x: -20 }}
-            whileInView={{ opacity: 1, x: 0 }}
-          viewport={REVEAL_VIEWPORT}
-            transition={{ duration: REVEAL_DURATION, delay: revealDelay(i) }}
-            className={`flex items-center gap-2 p-3 rounded-lg hover:bg-[rgb(var(--muted))] transition-colors duration-200 group ${isArabic ? 'flex-row-reverse text-right' : 'flex-row text-left'}`}>
+            className="flex items-center gap-2 p-3 rounded-lg hover:bg-[rgb(var(--muted))] transition-colors duration-200 group text-start">
             <div className="bg-[rgb(var(--background))] p-2 rounded-lg group-hover:scale-110 transition-transform duration-200">
               {skill.icon}
             </div>
             <p className="text-[rgb(var(--foreground))] font-semibold text-sm">
               {skill.name}
             </p>
-          </motion.div>
+          </Reveal>
         ))}
       </div>
-    </motion.div>
+    </Reveal>
   );
 };
 
 const Skills = () => {
   const { t } = useTranslation();
-  // Content comes from the local i18n bundle, so there is nothing to wait for.
-  const [loading] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState('All');
 
   const skillCategories = useMemo(() => [
@@ -192,31 +179,24 @@ const Skills = () => {
   return (
     <section id="skills" className="py-20">
       <div className="container mx-auto px-6">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={REVEAL_VIEWPORT}
-          transition={{ duration: 0.5 }}
+        <Reveal y={20} duration={0.5}
           className="text-center mb-12">
           <h2 className="text-5xl font-bold mb-4 text-[rgb(var(--foreground))]">{t('skills.title')}</h2>
           <p className="text-[rgb(var(--muted-foreground))] max-w-2xl mx-auto">
             {t('skills.subtitle')}
           </p>
-        </motion.div>
+        </Reveal>
 
         {/* Category Filter Tabs */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={REVEAL_VIEWPORT}
-          transition={{ duration: 0.5, delay: 0.2 }}
+        <Reveal y={20} duration={0.5} delay={0.2}
           className="flex flex-wrap justify-center gap-3 mb-12">
           {filterTabs.map((tab, index) => (
-            <motion.button
+            <Reveal
+              as={m.button}
+              scale={0.9}
+              delay={revealDelay(index)}
               key={tab.id}
-              initial={{ opacity: 0, scale: 0.9 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-          viewport={REVEAL_VIEWPORT}
+              // Still read by Framer for the hover animation below.
               transition={{ duration: REVEAL_DURATION, delay: revealDelay(index) }}
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
@@ -227,36 +207,19 @@ const Skills = () => {
                   : 'bg-[rgb(var(--card))] text-[rgb(var(--foreground))] border border-[rgb(var(--border))] hover:border-[rgb(var(--primary))]'
               }`}>
               {tab.label}
-            </motion.button>
+            </Reveal>
           ))}
-        </motion.div>
+        </Reveal>
 
         {/* Skills Grid */}
-        <AnimatePresence mode="wait">
-          {loading ? (
-            <motion.div
-              key="loading"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {Array.from({ length: 8 }).map((_, index) => (
-                <SkillSkeleton key={index} index={index} />
-              ))}
-            </motion.div>
-          ) : (
-            <motion.div
-              key="content"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {filteredCategories.map((category, index) => (
-                <SkillCard key={category.id} category={category} index={index} />
-              ))}
-            </motion.div>
-          )}
-        </AnimatePresence>
+        <m.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {filteredCategories.map((category, index) => (
+            <SkillCard key={category.id} category={category} index={index} />
+          ))}
+        </m.div>
 
       </div>
     </section>

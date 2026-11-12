@@ -1,13 +1,8 @@
 'use client';
-import { createContext, useContext, useEffect, useState } from 'react';
+import { createContext, useContext, useEffect, useRef, useState } from 'react';
 import { I18nextProvider, useTranslation } from 'react-i18next';
-import { MotionConfig } from 'framer-motion';
-import {
-  createI18nInstance,
-  resolvePreferredLanguage,
-  loadLanguage,
-  DEFAULT_LANGUAGE,
-} from '../i18n';
+import MotionProvider from './MotionProvider';
+import { createI18nInstance, DEFAULT_LANGUAGE } from '../i18n';
 import IconDefaults from './IconDefaults';
 import Navbar from './Navbar';
 import Footer from './Footer';
@@ -37,23 +32,14 @@ const SiteContext = createContext({
 
 export const useSite = () => useContext(SiteContext);
 
-const ShellContent = ({ pageLang, children }) => {
+const ShellContent = ({ children }) => {
   const [notification, setNotification] = useState({
     message: '',
     type: '',
     isVisible: false,
   });
 
-  const { t, i18n } = useTranslation();
-
-  // Apply the stored/browser language only after hydration, so the first render
-  // matches the markup prerendered in this route's language.
-  useEffect(() => {
-    const preferred = resolvePreferredLanguage(pageLang);
-    if (preferred !== i18n.language) {
-      loadLanguage(i18n, preferred);
-    }
-  }, [i18n, pageLang]);
+  const { t } = useTranslation();
 
   // Installable PWA: register the hand-written service worker (public/sw.js)
   // once per page load. Production only — caching dev builds only confuses.
@@ -70,26 +56,23 @@ const ShellContent = ({ pageLang, children }) => {
     });
   }, []);
 
-  useEffect(() => {
-    document.dir = i18n.dir();
-    document.documentElement.lang = i18n.language;
-    // Keep the URL in step with the language on every shell page, so copying
-    // the address bar shares the page in the language actually being read.
-    const { pathname, hash } = window.location;
-    if (i18n.language === 'ar' && !pathname.startsWith('/ar')) {
-      const suffix = pathname === '/' ? '' : pathname;
-      window.history.replaceState(null, '', `/ar${suffix}${hash}`);
-    } else if (i18n.language === 'en' && pathname.startsWith('/ar')) {
-      const stripped = pathname.slice(3) || '/';
-      window.history.replaceState(null, '', `${stripped}${hash}`);
-    }
-  }, [i18n.language, i18n]);
+  // One toast at a time: a new one restarts the clock, so it is never hidden
+  // early by the timer of the toast it replaced.
+  const hideTimer = useRef(null);
+  const announceCount = useRef(0);
+  useEffect(() => () => clearTimeout(hideTimer.current), []);
 
+  // Errors carry instructions (an address to write to instead), so they stay
+  // long enough to be read twice; confirmations clear sooner. Both can be
+  // dismissed, and both are announced (see Notification).
   const showNotification = (message, type = 'success') => {
-    setNotification({ message, type, isVisible: true });
-    setTimeout(() => {
+    // A fresh key per call, so the same message twice is announced twice.
+    announceCount.current += 1;
+    setNotification({ message, type, isVisible: true, key: announceCount.current });
+    clearTimeout(hideTimer.current);
+    hideTimer.current = setTimeout(() => {
       setNotification((prev) => ({ ...prev, isVisible: false }));
-    }, 3000);
+    }, type === 'error' ? 10000 : 5000);
   };
 
   const downloadCV = async () => {
@@ -116,39 +99,54 @@ const ShellContent = ({ pageLang, children }) => {
   };
 
   return (
-    // reducedMotion="user" drops transform and layout animations for anyone who
-    // has asked their OS to reduce motion, without touching opacity fades.
-    <MotionConfig reducedMotion="user">
+    <MotionProvider>
       <SiteContext.Provider value={{ showNotification, downloadCV }}>
         {/* overflow-x-clip contains the decorative entrance offsets and blurred
             blobs, which otherwise let the page pan sideways on phones in RTL.
             `clip` rather than `hidden` so no scroll container is created. */}
         <div className="min-h-screen bg-[rgb(var(--background))] text-[rgb(var(--foreground))] transition-colors duration-300 relative overflow-x-clip">
+          {/* First stop for keyboard users: past the navigation to the page.
+              Hidden until focused. Keep it the first focusable element. */}
+          <a href="#main" className="skip-link">
+            {t('a11y.skip_to_content')}
+          </a>
           {/* One quiet film-grain layer instead of a particles canvas. */}
           <div className="grain-overlay" aria-hidden="true" />
-          <CommandPalette />
-          <DarkModeToggle />
-          <WhatsAppButton />
           <ScrollProgress />
           <Notification
             message={notification.message}
             type={notification.type}
             isVisible={notification.isVisible}
+            announceKey={notification.key}
+            closeLabel={t('a11y.close_notification')}
             onClose={() =>
               setNotification((prev) => ({ ...prev, isVisible: false }))
             }
           />
           <Navbar />
-          <main className="relative z-10">{children}</main>
-          <FaqAssistant />
+          {/* tabIndex -1 so the skip link can move focus here, not just scroll. */}
+          <main id="main" tabIndex={-1} className="relative z-10 focus:outline-none">
+            {children}
+          </main>
           <Footer />
           {/* Keeps the footer's last line clear of the phone tab bar. */}
           <div className="h-16 md:hidden" aria-hidden="true" />
-          <FloatingActions />
+          {/* Floating controls come after the page in the DOM, so the tab
+              order is navigation, content, footer, then these; their fixed
+              positioning places them on screen regardless. */}
           <MobileTabBar />
+          {/* The ways to get in touch that float over every page, grouped as
+              one complementary landmark rather than loose content. */}
+          <aside aria-label={t('actions.contact_menu')}>
+            <FloatingActions />
+            <FaqAssistant />
+            <WhatsAppButton />
+          </aside>
+          <DarkModeToggle />
+          <CommandPalette />
         </div>
       </SiteContext.Provider>
-    </MotionConfig>
+    </MotionProvider>
   );
 };
 
@@ -156,14 +154,14 @@ const ShellContent = ({ pageLang, children }) => {
  * The shared chrome every shell page renders inside: providers, navbar,
  * floating controls and footer. `lang` is the language the route prerenders
  * in and `bundle` its translations — only that bundle ships with the route;
- * the other loads if the visitor switches.
+ * switching language navigates to the twin route, which ships the other.
  */
 const SiteShell = ({ lang = DEFAULT_LANGUAGE, bundle, children }) => {
   const [i18nInstance] = useState(() => createI18nInstance(lang, bundle));
   return (
     <I18nextProvider i18n={i18nInstance}>
       <IconDefaults>
-        <ShellContent pageLang={lang}>{children}</ShellContent>
+        <ShellContent>{children}</ShellContent>
       </IconDefaults>
     </I18nextProvider>
   );

@@ -1,8 +1,9 @@
 "use client";
 import { useState, useEffect, useRef } from 'react';
 import Image from 'next/image';
-import { motion, useInView, useReducedMotion } from 'framer-motion';
-import { REVEAL_VIEWPORT, revealDelay, REVEAL_DURATION } from '../lib/motion';
+import { useInView, useReducedMotion } from 'framer-motion';
+import Reveal from './Reveal';
+import { revealDelay } from '../lib/motion';
 import { FACTS } from '../lib/facts';
 import {
   FaBriefcase,
@@ -61,14 +62,10 @@ const CORE_STACK = ['Next.js', 'React', 'NestJS', 'Laravel', 'Django', 'PostgreS
 
 /** One cell of the bento. `span` carries the lg grid classes. */
 const Cell = ({ span = '', index = 0, className = '', children }) => (
-  <motion.div
-    initial={{ opacity: 0, y: 20 }}
-    whileInView={{ opacity: 1, y: 0 }}
-    viewport={REVEAL_VIEWPORT}
-    transition={{ duration: REVEAL_DURATION, delay: revealDelay(index) }}
+  <Reveal y={20} delay={revealDelay(index)}
     className={`glass-card rounded-2xl border border-[rgb(var(--border))]/60 p-6 text-start ${span} ${className}`}>
     {children}
-  </motion.div>
+  </Reveal>
 );
 
 const CellLabel = ({ icon, children }) => (
@@ -103,11 +100,7 @@ const About = () => {
   return (
     <section id="about" className="py-24 relative">
       <div className="container mx-auto px-6 relative z-10 max-w-6xl">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={REVEAL_VIEWPORT}
-          transition={{ duration: 0.5 }}
+        <Reveal y={20} duration={0.5}
           className="mb-14 text-start">
           <h2 className="font-display text-display-lg font-bold text-[rgb(var(--foreground))] mb-3">
             {t('about.title')}
@@ -115,7 +108,7 @@ const About = () => {
           <p className="text-[rgb(var(--muted-foreground))] max-w-2xl text-lg">
             {t('about.subtitle')}
           </p>
-        </motion.div>
+        </Reveal>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-12 gap-4">
           {/* Portrait */}
@@ -169,7 +162,11 @@ const About = () => {
           <Cell span="sm:col-span-1 lg:col-span-4" index={3}>
             <CellLabel icon={<FaMapMarkerAlt />}>{t('about.bento.base')}</CellLabel>
             <p className="font-semibold text-[rgb(var(--foreground))]">{t('about.bento.base_value')}</p>
-            <p className="text-sm text-[rgb(var(--muted-foreground))] mt-1 font-mono" dir="ltr">
+            {/* Only the coordinates are monospace and left-to-right; the
+                sentence after them follows the page's language and face. */}
+            <p className="text-sm text-[rgb(var(--muted-foreground))] mt-1">
+              <span className="font-mono" dir="ltr">31.2°N 29.9°E</span>
+              {' · '}
               {t('about.bento.base_meta')}
             </p>
           </Cell>

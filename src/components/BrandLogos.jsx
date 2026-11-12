@@ -1,30 +1,91 @@
 "use client";
-import React from 'react';
-import { motion } from 'framer-motion';
-import { REVEAL_VIEWPORT } from '../lib/motion';
+import { useEffect, useRef, useState } from 'react';
+import Reveal from './Reveal';
 import { useTranslation } from 'react-i18next';
+import { FaPause, FaPlay } from 'react-icons/fa';
+import { CASE_STUDIES } from '../lib/case-studies';
 
+// [file, intrinsic width, intrinsic height]. The size goes on the <img> so the
+// browser knows each logo's shape before the file arrives; the CSS box still
+// decides how large it is drawn. The files are sized for the largest box they
+// are drawn in (192x80 CSS px on desktop at 2x with the hover zoom, 112x64 on
+// phones at 3x), so a 400px master is not sent to draw an 80px mark.
 const logos = [
-  'toyo228-logo.webp', 'motors-logo.webp', 'injaz-logo.webp', 'hcholding-logo.webp',
-  'mutlq-logo.webp', 'mada-logo.webp', 'bilqalam-logo.webp', 'medicta-logo.webp',
-  '21-secondary-logo.webp', 'CME-logo.webp', 'DiaMonitor-logo.webp',
-  'KMBC-logo.webp', 'amarna-logo.webp', 'baserah-logo.webp',
-  'dmagni-logo.webp', 'indstrz-logo.webp', 'manqla-logo.webp',
-  'nextstop-logo.webp', 'opptmakers-logo.webp', 'profleet-logo.webp', 'quotemate-logo.webp',
-  'rabzan-logo.svg', 'sf-logo.webp', 'sonomedix-logo.webp',
-  'uduipa-logo.webp', 'upafa-edu-logo.webp', 'waferlee.webp'
+  ['toyo228-logo.webp', 329, 223],
+  ['motors-logo.webp', 112, 118],
+  ['injaz-logo.webp', 192, 192],
+  ['hcholding-logo.webp', 200, 188],
+  ['mutlq-logo.webp', 192, 192],
+  ['mada-logo.webp', 182, 192],
+  ['bilqalam-logo.webp', 400, 151],
+  ['medicta-logo.webp', 400, 45],
+  ['21-secondary-logo.webp', 192, 192],
+  ['CME-logo.webp', 314, 236],
+  ['DiaMonitor-logo.webp', 194, 59],
+  ['KMBC-logo.webp', 243, 192],
+  ['amarna-logo.webp', 400, 118],
+  ['baserah-logo.webp', 400, 111],
+  ['dmagni-logo.webp', 192, 192],
+  ['indstrz-logo.webp', 384, 154],
+  ['manqla-logo.webp', 166, 46],
+  ['nextstop-logo.webp', 192, 192],
+  ['opptmakers-logo.webp', 120, 120],
+  ['profleet-logo.webp', 192, 192],
+  ['quotemate-logo.webp', 256, 103],
+  ['rabzan-logo.svg', 1920, 1080],
+  ['sf-logo.webp', 288, 91],
+  ['sonomedix-logo.webp', 195, 192],
+  ['uduipa-logo.webp', 100, 100],
+  ['upafa-edu-logo.webp', 192, 192],
+  ['waferlee.webp', 261, 80],
 ];
 
 const half = Math.ceil(logos.length / 2);
 const row1 = logos.slice(0, half);
 const row2 = logos.slice(half);
 
-// "toyo228-logo.webp" -> "toyo228" — good enough for alt text and tooltips.
+// Logo file -> case-study slug, so the alt text is the client's real name
+// from the registry ("Itimad Tibbi", not "CME"). Files with no case study
+// fall back to a tidied file name.
+const LOGO_SLUG = {
+  'toyo228-logo.webp': 'toyo228',
+  'motors-logo.webp': 'motors',
+  'injaz-logo.webp': 'injaz',
+  'hcholding-logo.webp': 'hcholding',
+  'mutlq-logo.webp': 'mutlq',
+  'mada-logo.webp': 'mada',
+  'bilqalam-logo.webp': 'bilqalam',
+  'medicta-logo.webp': 'medicta',
+  'CME-logo.webp': 'cme',
+  'DiaMonitor-logo.webp': 'dpms',
+  'KMBC-logo.webp': 'kmbc',
+  'amarna-logo.webp': 'amarna',
+  'baserah-logo.webp': 'baserah',
+  'dmagni-logo.webp': 'dmagni',
+  'indstrz-logo.webp': 'indstrz',
+  'manqla-logo.webp': 'manqla',
+  'nextstop-logo.webp': 'nextstop',
+  'opptmakers-logo.webp': 'opptmakers',
+  'profleet-logo.webp': 'profleet',
+  'quotemate-logo.webp': 'quotemate',
+  'rabzan-logo.svg': 'rabzan',
+  'sf-logo.webp': 'sf_portal',
+  'sonomedix-logo.webp': 'sonomedix',
+  'uduipa-logo.webp': 'uduipa',
+  'waferlee.webp': 'waferlee',
+};
+
 const logoName = (file) =>
-  file.replace(/([-_]?logo)?\.(webp|svg|png)$/i, '').replace(/-/g, ' ');
+  CASE_STUDIES[LOGO_SLUG[file]]?.name ??
+  file
+    .replace(/([-_]?logo)?\.(webp|svg|png)$/i, '')
+    .replace(/-/g, ' ')
+    .replace(/\b\w/g, (c) => c.toUpperCase());
 
 const MarqueeRow = ({ items, direction }) => {
-  // Duplicate the array to create the infinite looping effect
+  // The array runs twice so the loop is seamless. The second copy is only
+  // there for the eye: hidden from assistive tech, with empty alts, so each
+  // client is announced once and not under two names.
   const duplicatedItems = [...items, ...items];
   const animationClass = direction === 'left' ? 'animate-marquee-left' : 'animate-marquee-right';
   
@@ -35,14 +96,20 @@ const MarqueeRow = ({ items, direction }) => {
       <div className="absolute top-0 right-0 w-20 md:w-40 h-full bg-gradient-to-l from-[rgb(var(--background))] to-transparent z-20 pointer-events-none"></div>
 
       <div className={`flex w-max gap-4 md:gap-8 px-2 md:px-4 ${animationClass}`}>
-        {duplicatedItems.map((logo, index) => (
+        {duplicatedItems.map(([logo, width, height], index) => (
           <div
             key={index}
+            aria-hidden={index >= items.length ? 'true' : undefined}
             className="w-40 md:w-64 h-28 md:h-36 flex-shrink-0 relative group glass-card p-6 md:p-8 rounded-2xl flex justify-center items-center hover:bg-[rgb(var(--background))]/50 transition-all duration-300">
             <img
               src={`/logos/${logo}`}
-              alt={logoName(logo)}
-              className="logo-mark max-w-full max-h-full object-contain group-hover:scale-110"
+              alt={index >= items.length ? '' : logoName(logo)}
+              width={width}
+              height={height}
+              // w-auto/h-auto: the width/height attributes only describe the
+              // file; the box must still hug the logo, because in dark mode
+              // .logo-mark paints a light plate behind exactly that box.
+              className="logo-mark w-auto h-auto max-w-full max-h-full object-contain group-hover:scale-110"
               loading="lazy"
             />
           </div>
@@ -55,8 +122,33 @@ const MarqueeRow = ({ items, direction }) => {
 const BrandLogos = () => {
   const { t } = useTranslation();
 
+  // The two rows loop forever. Nobody sees them while the section is off
+  // screen, so they are paused there instead of being animated (and keeping
+  // the compositor awake) for the whole visit. A paused row resumes from
+  // where it stopped, so the pause itself is never visible.
+  const sectionRef = useRef(null);
+  const [offscreen, setOffscreen] = useState(false);
+  // Moving content that lasts more than five seconds needs a way to stop it
+  // (WCAG 2.2.2): hover pauses it for a mouse, this button for everyone else.
+  const [paused, setPaused] = useState(false);
+  useEffect(() => {
+    const section = sectionRef.current;
+    if (!section || typeof IntersectionObserver === 'undefined') return undefined;
+    const observer = new IntersectionObserver(
+      ([entry]) => setOffscreen(!entry.isIntersecting),
+      { rootMargin: '200px 0px' },
+    );
+    observer.observe(section);
+    return () => observer.disconnect();
+  }, []);
+
   return (
-    <section className="py-24 relative overflow-hidden" id="brands">
+    <section
+      ref={sectionRef}
+      data-offscreen={offscreen || undefined}
+      data-paused={paused || undefined}
+      className="py-24 relative overflow-hidden"
+      id="brands">
       {/* Injecting CSS Keyframes directly for the Marquee */}
       <style>
         {`
@@ -75,7 +167,11 @@ const BrandLogos = () => {
             animation: marquee-right 40s linear infinite;
           }
           .marquee-container:hover .animate-marquee-left,
-          .marquee-container:hover .animate-marquee-right {
+          .marquee-container:hover .animate-marquee-right,
+          [data-offscreen] .animate-marquee-left,
+          [data-offscreen] .animate-marquee-right,
+          [data-paused] .animate-marquee-left,
+          [data-paused] .animate-marquee-right {
             animation-play-state: paused;
           }
           @media (prefers-reduced-motion: reduce) {
@@ -91,11 +187,7 @@ const BrandLogos = () => {
       
       
       <div className="container mx-auto px-0 md:px-4 relative z-10 w-full max-w-[100vw]">
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={REVEAL_VIEWPORT}
-          transition={{ duration: 0.7, ease: "easeOut" }}
+        <Reveal y={30} duration={0.7}
           className="text-center mb-16 md:mb-20 px-4">
           <span className="text-[rgb(var(--primary))] font-bold tracking-widest uppercase text-sm mb-4 block">
             {t('brands.label')}
@@ -106,12 +198,25 @@ const BrandLogos = () => {
           <p className="text-[rgb(var(--muted-foreground))] max-w-2xl mx-auto text-lg leading-relaxed font-medium">
             {t('brands.subtitle')}
           </p>
-        </motion.div>
+        </Reveal>
 
         {/* The Marquee Display */}
         <div className="flex flex-col gap-4 w-full">
           <MarqueeRow items={row1} direction="left" />
           <MarqueeRow items={row2} direction="right" />
+        </div>
+
+        {/* Hidden when the rows do not move anyway (reduced motion). A
+            Tailwind variant, so it sits in the same layer as `flex` and is
+            ordered after it, instead of racing it from the inline <style>. */}
+        <div className="mt-6 flex motion-reduce:hidden justify-center px-4">
+          <button
+            type="button"
+            onClick={() => setPaused((was) => !was)}
+            className="inline-flex items-center gap-2 min-h-[44px] px-5 rounded-full border border-[rgb(var(--border-control))] text-sm font-semibold text-[rgb(var(--muted-foreground))] hover:text-[rgb(var(--foreground))] hover:border-[rgb(var(--primary))] transition-colors">
+            {paused ? <FaPlay aria-hidden="true" className="text-xs" /> : <FaPause aria-hidden="true" className="text-xs" />}
+            {paused ? t('a11y.logos_play') : t('a11y.logos_pause')}
+          </button>
         </div>
       </div>
     </section>

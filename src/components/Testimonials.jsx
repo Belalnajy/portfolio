@@ -1,7 +1,7 @@
 "use client";
 import { useState, useMemo, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { REVEAL_VIEWPORT } from '../lib/motion';
+import { m, AnimatePresence } from "framer-motion";
+import Reveal from './Reveal';
 import {
   FaQuoteLeft,
   FaStar,
@@ -28,6 +28,12 @@ const CATEGORY_EN = {
   'التعامل معه مرّة أخرى': 'Would hire again',
 };
 const KHAMSAT_PROFILE = "https://khamsat.com/user/belalnajy/reviews";
+
+// Names and the Khamsat service title are typed in whichever script the
+// reviewer used, whatever the page language: each sits in a <bdi> marked with
+// its own language, so "Salman A." cannot render as ".Salman A" on an Arabic
+// page, and an Arabic name is not read with an English voice.
+const scriptLang = (text) => (/[\u0600-\u06FF]/.test(text) ? "ar" : "en");
 
 /**
  * `key` maps each entry to its `testimonials.items.<key>` translation, so the
@@ -74,7 +80,8 @@ const Testimonials = () => {
   const testimonials = useMemo(() => {
     const formatAbsolute = (isoDate) =>
       new Date(`${isoDate}T00:00:00Z`).toLocaleDateString(
-        isArabic ? 'ar-EG' : 'en-US',
+        // Western digits in Arabic too (`-u-nu-latn`), as everywhere on the site.
+        isArabic ? 'ar-EG-u-nu-latn' : 'en-US',
         { month: 'short', year: 'numeric', timeZone: 'UTC' },
       );
 
@@ -144,11 +151,7 @@ const Testimonials = () => {
   return (
     <section id="testimonials" className="py-20 relative text-start">
       <div className="container mx-auto px-6 relative z-10">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={REVEAL_VIEWPORT}
-          transition={{ duration: 0.5 }}
+        <Reveal y={20} duration={0.5}
           className="text-center mb-16">
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 text-[rgb(var(--foreground))]">
             {t('testimonials.title')}
@@ -176,29 +179,35 @@ const Testimonials = () => {
               <span className="font-semibold text-[rgb(var(--foreground))]">{testimonials.length}</span> {t('testimonials.reviews_count')}
             </div>
           </div>
-        </motion.div>
+        </Reveal>
 
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={REVEAL_VIEWPORT}
-          transition={{ duration: 0.5, delay: 0.3 }}
+        <Reveal y={20} duration={0.5} delay={0.3}
           className="mt-16">
           <div className="relative">
-            <AnimatePresence mode="wait">
-              <motion.div
+            {/* initial={false}: the first card is simply there in the server
+                HTML (it used to slide in at page load, far below the fold,
+                and stayed invisible without JavaScript); switching cards
+                still slides. */}
+            {/* Polite live region: the review that replaces the current one
+                is read out after a press of previous, next or a dot. */}
+            <div aria-live="polite">
+            <AnimatePresence mode="wait" initial={false}>
+              <m.div
                 key={activeIndex}
                 initial={{ opacity: 0, x: isArabic ? -100 : 100 }}
                 animate={{ opacity: 1, x: 0 }}
                 exit={{ opacity: 0, x: isArabic ? 100 : -100 }}
                 transition={{ duration: 0.3 }}
                 className="glass-card p-5 sm:p-8 md:p-12 rounded-2xl relative overflow-hidden">
-                <div className={`absolute top-6 ${isArabic ? 'right-6 rotate-180' : 'left-6'} text-[rgb(var(--primary))]/10`}>
+                <div aria-hidden="true" className={`absolute top-6 start-6 ${isArabic ? '-scale-x-100' : ''} text-[rgb(var(--primary))]/10`}>
                   <FaQuoteLeft className="text-7xl lg:text-9xl" />
                 </div>
 
                 <div className="relative z-10">
-                  <div className={`flex items-center gap-1 mb-6 justify-center md:justify-start`}>
+                  <div
+                    role="img"
+                    aria-label={`${testimonials[activeIndex].rating}/5`}
+                    className="flex items-center gap-1 mb-6 justify-center md:justify-start">
                     {renderStars(testimonials[activeIndex].rating)}
                   </div>
 
@@ -212,14 +221,14 @@ const Testimonials = () => {
                         <span
                           key={idx}
                           className="px-3 py-1 rounded-full bg-[rgb(var(--primary))]/5 text-[rgb(var(--foreground))] text-xs border border-[rgb(var(--border))]">
-                          ⭐ {category}
+                          <span aria-hidden="true">⭐</span> {category}
                         </span>
                       )}
                     </div>
                   }
 
                   {testimonials[activeIndex].link && testimonials[activeIndex].link !== "#" &&
-                    <motion.a
+                    <m.a
                       href={testimonials[activeIndex].link}
                       target="_blank"
                       rel="noopener noreferrer"
@@ -230,28 +239,32 @@ const Testimonials = () => {
                       <span>
                         {t('testimonials.view_review', { platform: testimonials[activeIndex].platform })}
                       </span>
-                    </motion.a>
+                    </m.a>
                   }
 
                   <div className={`flex items-center gap-6 flex-col md:flex-row md:justify-between border-t border-[rgb(var(--border))]/50 pt-8`}>
-                    <div className={`flex items-center gap-4 ${isArabic ? 'flex-row-reverse text-right' : 'flex-row text-left'}`}>
-                      <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-[rgb(var(--primary))] to-[rgb(var(--primary))]/60 flex items-center justify-center text-[rgb(var(--accent-contrast))] text-2xl font-bold shadow-lg shadow-[rgb(var(--primary))]/20">
+                    <div className="flex items-center gap-4 text-start">
+                      <div aria-hidden="true" className="w-16 h-16 rounded-2xl bg-gradient-to-br from-[rgb(var(--primary))] to-[rgb(var(--primary))]/60 flex items-center justify-center text-[rgb(var(--accent-contrast))] text-2xl font-bold shadow-lg shadow-[rgb(var(--primary))]/20">
                         {testimonials[activeIndex].name.charAt(0)}
                       </div>
                       <div>
                         <p className="font-bold text-[rgb(var(--foreground))] text-xl mb-1">
-                          {testimonials[activeIndex].name}
+                          <bdi lang={scriptLang(testimonials[activeIndex].name)}>
+                            {testimonials[activeIndex].name}
+                          </bdi>
                         </p>
                         <p className="text-[rgb(var(--muted-foreground))] text-sm font-medium">
                           {testimonials[activeIndex].role}
                         </p>
-                        <p className="text-[rgb(var(--muted-foreground))]/70 text-xs mt-1">
-                          {testimonials[activeIndex].company}
+                        <p className="text-[rgb(var(--muted-foreground))] text-xs mt-1">
+                          <bdi lang={scriptLang(testimonials[activeIndex].company)}>
+                            {testimonials[activeIndex].company}
+                          </bdi>
                         </p>
                       </div>
                     </div>
 
-                    <div className={`flex items-center gap-4 ${isArabic ? 'flex-row-reverse' : 'flex-row'}`}>
+                    <div className="flex items-center gap-4">
                       {testimonials[activeIndex].platform && (
                         <span className="px-5 py-2 rounded-xl bg-[rgb(var(--card))]/5 text-[rgb(var(--primary))] text-sm font-bold border border-[rgb(var(--border))] tracking-wide uppercase">
                           {testimonials[activeIndex].platform}
@@ -263,26 +276,35 @@ const Testimonials = () => {
                     </div>
                   </div>
                 </div>
-              </motion.div>
+              </m.div>
             </AnimatePresence>
+            </div>
 
-            <div className={`flex items-center justify-center gap-6 mt-10 ${isArabic ? 'flex-row-reverse' : ''}`}>
-              <motion.button
+            {/* The row follows the document direction: in Arabic "previous"
+                is on the right and points right. */}
+            <div className="flex items-center justify-center gap-4 sm:gap-6 mt-10">
+              <m.button
                 whileHover={{ scale: 1.1, x: isArabic ? 5 : -5 }}
                 whileTap={{ scale: 0.9 }}
                 onClick={prevTestimonial}
-                className="w-14 h-14 rounded-2xl bg-[rgb(var(--card))] border border-[rgb(var(--border))] flex items-center justify-center text-[rgb(var(--foreground))] hover:bg-[rgb(var(--primary))] hover:text-[rgb(var(--accent-contrast))] transition-all shadow-xl"
-                aria-label="Previous testimonial">
+                type="button"
+                className="shrink-0 w-14 h-14 rounded-2xl bg-[rgb(var(--card))] border border-[rgb(var(--border))] flex items-center justify-center text-[rgb(var(--foreground))] hover:bg-[rgb(var(--primary))] hover:text-[rgb(var(--accent-contrast))] transition-all shadow-xl"
+                aria-label={t('a11y.review_prev')}>
                 <FaChevronLeft className={isArabic ? 'rotate-180' : ''} />
-              </motion.button>
+              </m.button>
 
-              <div className={`flex items-center gap-3 ${isArabic ? 'flex-row-reverse' : ''}`}>
+              {/* Dots from sm up. Eleven of them do not fit beside the arrows
+                  on a phone (they squeezed the arrows off-screen), and the
+                  reviewer cards below already jump to any review. */}
+              <div className="hidden sm:flex items-center gap-1">
                 {testimonials.map((_, index) =>
                   <button
                     key={index}
+                    type="button"
                     onClick={() => setActiveIndex(index)}
-                    className="group/dot h-11 px-1 flex items-center justify-center"
-                    aria-label={`Go to testimonial ${index + 1}`}
+                    className="group/dot h-11 min-w-6 px-2 flex items-center justify-center"
+                    aria-current={index === activeIndex ? 'true' : undefined}
+                    aria-label={t('a11y.review_n', { n: index + 1, count: testimonials.length })}
                   >
                     <span
                       className={`block h-2 rounded-full transition-all duration-300 ${index === activeIndex
@@ -293,54 +315,53 @@ const Testimonials = () => {
                 )}
               </div>
 
-              <motion.button
+              <m.button
                 whileHover={{ scale: 1.1, x: isArabic ? -5 : 5 }}
                 whileTap={{ scale: 0.9 }}
                 onClick={nextTestimonial}
-                className="w-14 h-14 rounded-2xl bg-[rgb(var(--card))] border border-[rgb(var(--border))] flex items-center justify-center text-[rgb(var(--foreground))] hover:bg-[rgb(var(--primary))] hover:text-[rgb(var(--accent-contrast))] transition-all shadow-xl"
-                aria-label="Next testimonial">
+                type="button"
+                className="shrink-0 w-14 h-14 rounded-2xl bg-[rgb(var(--card))] border border-[rgb(var(--border))] flex items-center justify-center text-[rgb(var(--foreground))] hover:bg-[rgb(var(--primary))] hover:text-[rgb(var(--accent-contrast))] transition-all shadow-xl"
+                aria-label={t('a11y.review_next')}>
                 <FaChevronRight className={isArabic ? 'rotate-180' : ''} />
-              </motion.button>
+              </m.button>
             </div>
           </div>
 
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4 mt-16">
             {testimonials.map((testimonial, index) =>
-              <motion.button
+              <m.button
                 key={testimonial.id}
+                type="button"
+                aria-current={index === activeIndex ? 'true' : undefined}
                 onClick={() => setActiveIndex(index)}
                 whileHover={{ y: -5 }}
                 whileTap={{ scale: 0.95 }}
                 className={`p-4 rounded-2xl transition-all duration-300 group ${index === activeIndex
                   ? "bg-[rgb(var(--primary))]/10 border-2 border-[rgb(var(--primary))] shadow-lg shadow-[rgb(var(--primary))]/10"
                   : "glass-card border border-[rgb(var(--border))] hover:border-[rgb(var(--primary))]/30 hover:bg-[rgb(var(--primary))]/5"}`}>
-                <div className={`w-12 h-12 mx-auto rounded-xl flex items-center justify-center text-lg font-bold mb-3 transition-colors ${index === activeIndex 
+                <div aria-hidden="true" className={`w-12 h-12 mx-auto rounded-xl flex items-center justify-center text-lg font-bold mb-3 transition-colors ${index === activeIndex 
                   ? 'bg-[rgb(var(--primary))] text-[rgb(var(--accent-contrast))]' 
                   : 'bg-[rgb(var(--primary))]/10 text-[rgb(var(--primary))] group-hover:bg-[rgb(var(--primary))]/20'}`}>
                   {testimonial.name.charAt(0)}
                 </div>
-                <p className={`text-xs text-[rgb(var(--foreground))] font-bold text-center truncate mb-1`}>
-                  {testimonial.name}
+                <p className="text-xs text-[rgb(var(--foreground))] font-bold text-center truncate mb-1">
+                  <bdi lang={scriptLang(testimonial.name)}>{testimonial.name}</bdi>
                 </p>
-                <p className="text-[10px] text-[rgb(var(--muted-foreground))] text-center truncate uppercase tracking-tighter">
+                <p className="text-[11px] text-[rgb(var(--muted-foreground))] text-center truncate uppercase">
                   {testimonial.platform || '\u00A0'}
                 </p>
-              </motion.button>
+              </m.button>
             )}
           </div>
 
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={REVEAL_VIEWPORT}
-            transition={{ duration: 0.5, delay: 0.3 }}
+          <Reveal y={20} duration={0.5} delay={0.3}
             className="mt-24 text-center">
             <h3 className="text-3xl font-bold mb-8 text-[rgb(var(--foreground))] tracking-tight">
               {t('testimonials.follow_me')}
             </h3>
             <PlatformLinks variant="default" />
-          </motion.div>
-        </motion.div>
+          </Reveal>
+        </Reveal>
       </div>
     </section>
   );

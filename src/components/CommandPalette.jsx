@@ -1,10 +1,12 @@
 'use client';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
-import { AnimatePresence, motion } from 'framer-motion';
+import { AnimatePresence, m } from 'framer-motion';
 import { FaSearch, FaHashtag, FaBookOpen, FaBolt } from 'react-icons/fa';
 import { useTranslation } from 'react-i18next';
 import { CASE_STUDIES } from '../lib/case-studies';
+import { switchLanguage } from '../lib/language';
+import { useEscapeLayer } from '../lib/useEscapeLayer';
 
 /**
  * ⌘K / Ctrl+K command palette: jump to any section, open any case study,
@@ -20,6 +22,8 @@ const CommandPalette = () => {
   const [mounted, setMounted] = useState(false);
   const inputRef = useRef(null);
   const listRef = useRef(null);
+  // The element focused before the palette opened; focus goes back there.
+  const openerRef = useRef(null);
 
   useEffect(() => setMounted(true), []);
 
@@ -27,21 +31,31 @@ const CommandPalette = () => {
     const onKeyDown = (event) => {
       if ((event.metaKey || event.ctrlKey) && event.key.toLowerCase() === 'k') {
         event.preventDefault();
-        setOpen((prev) => !prev);
+        setOpen((prev) => {
+          if (!prev) openerRef.current = document.activeElement;
+          return !prev;
+        });
       }
-      if (event.key === 'Escape') setOpen(false);
     };
     window.addEventListener('keydown', onKeyDown);
     return () => window.removeEventListener('keydown', onKeyDown);
   }, []);
 
+  // Escape closes the palette only; a menu or sheet under it stays open.
+  useEscapeLayer(open, () => setOpen(false));
+
   useEffect(() => {
-    if (open) {
-      setQuery('');
-      setActive(0);
-      // Focus after the panel mounts.
-      requestAnimationFrame(() => inputRef.current?.focus());
-    }
+    if (!open) return undefined;
+    setQuery('');
+    setActive(0);
+    // Focus after the panel mounts.
+    requestAnimationFrame(() => inputRef.current?.focus());
+    // On close (Escape, backdrop, ⌘K again) focus returns to where it was,
+    // instead of falling to <body> at the top of the page.
+    return () => {
+      const opener = openerRef.current;
+      if (opener && opener.isConnected && opener !== document.body) opener.focus({ preventScroll: true });
+    };
   }, [open]);
 
   const items = useMemo(() => {
@@ -78,7 +92,10 @@ const CommandPalette = () => {
       {
         id: 'lang',
         label: t('cmdk.switch_lang'),
-        href: isArabic ? '/' : '/ar',
+        // Named in the language it switches to; voiced in that language.
+        lang: isArabic ? 'en' : 'ar',
+        // Same page in the other language, not a jump to the home page.
+        language: isArabic ? 'en' : 'ar',
         group: 'actions',
         icon: <FaBolt />,
       },
@@ -102,10 +119,24 @@ const CommandPalette = () => {
       a.click();
       return;
     }
+    if (item.language) {
+      switchLanguage(item.language);
+      return;
+    }
+    // A section of this same page is a hash change, not a reload, so the
+    // phone menu (if the palette was opened over it) is told to close.
+    window.dispatchEvent(new CustomEvent('menu:close'));
     window.location.href = item.href;
   }, []);
 
   const onListKeyDown = (event) => {
+    // The input is the dialog's only tab stop (the results are options of a
+    // listbox, reached with the arrow keys), so Tab stays inside the dialog.
+    if (event.key === 'Tab') {
+      event.preventDefault();
+      inputRef.current?.focus();
+      return;
+    }
     if (event.key === 'ArrowDown') {
       event.preventDefault();
       setActive((prev) => Math.min(prev + 1, filtered.length - 1));
@@ -133,7 +164,7 @@ const CommandPalette = () => {
     <AnimatePresence>
       {open && (
         <>
-          <motion.div
+          <m.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
@@ -141,7 +172,7 @@ const CommandPalette = () => {
             className="fixed inset-0 z-[10000] bg-[rgb(var(--scrim))]/70 backdrop-blur-sm"
           />
           <div className="fixed inset-x-0 top-[12vh] z-[10001] flex justify-center px-4 pointer-events-none">
-            <motion.div
+            <m.div
               initial={{ opacity: 0, scale: 0.97, y: -8 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.97, y: -8 }}
@@ -149,28 +180,48 @@ const CommandPalette = () => {
               role="dialog"
               aria-modal="true"
               aria-label={t('cmdk.placeholder')}
+              dir={isArabic ? 'rtl' : 'ltr'}
               className="w-full max-w-xl glass-card bg-[rgb(var(--popover))] rounded-2xl border border-[rgb(var(--border))] shadow-2xl overflow-hidden pointer-events-auto"
               onKeyDown={onListKeyDown}>
               <div className="flex items-center gap-3 px-4 border-b border-[rgb(var(--border))]/60">
-                <FaSearch className="text-[rgb(var(--muted-foreground))] text-sm shrink-0" />
+                <FaSearch aria-hidden="true" className="text-[rgb(var(--muted-foreground))] text-sm shrink-0" />
+                {/* Combobox pattern: focus stays in the input, the highlighted
+                    result is announced through aria-activedescendant. */}
                 <input
                   ref={inputRef}
+                  type="search"
+                  role="combobox"
+                  aria-expanded="true"
+                  aria-controls="cmdk-results"
+                  aria-autocomplete="list"
+                  aria-activedescendant={filtered[active] ? `cmdk-${filtered[active].id}` : undefined}
+                  aria-label={t('cmdk.placeholder')}
+                  autoComplete="off"
                   value={query}
                   onChange={(event) => {
                     setQuery(event.target.value);
                     setActive(0);
                   }}
                   placeholder={t('cmdk.placeholder')}
-                  className="w-full bg-transparent py-4 text-[rgb(var(--foreground))] placeholder:text-[rgb(var(--muted-foreground))] outline-none text-sm"
+                  className="w-full bg-transparent py-4 text-[rgb(var(--foreground))] placeholder:text-[rgb(var(--muted-foreground))] outline-none text-base sm:text-sm"
                 />
-                <kbd className="hidden sm:block shrink-0 text-[10px] font-mono px-1.5 py-0.5 rounded border border-[rgb(var(--border))] text-[rgb(var(--muted-foreground))]">
+                <kbd aria-hidden="true" className="hidden sm:block shrink-0 text-[10px] font-mono px-1.5 py-0.5 rounded border border-[rgb(var(--border))] text-[rgb(var(--muted-foreground))]">
                   ESC
                 </kbd>
               </div>
 
-              <div ref={listRef} className="max-h-[46vh] overflow-y-auto overscroll-contain py-2">
+              {/* How many results the query left, for screen readers. */}
+              <p className="sr-only" role="status" aria-live="polite">
+                {filtered.length === 0 ? t('cmdk.no_results') : t('a11y.palette_count', { count: filtered.length })}
+              </p>
+              <div
+                ref={listRef}
+                id="cmdk-results"
+                role="listbox"
+                aria-label={t('a11y.palette_results')}
+                className="max-h-[46vh] overflow-y-auto overscroll-contain py-2">
                 {filtered.length === 0 && (
-                  <p className="px-4 py-6 text-sm text-[rgb(var(--muted-foreground))] text-center">
+                  <p aria-hidden="true" className="px-4 py-6 text-sm text-[rgb(var(--muted-foreground))] text-center">
                     {t('cmdk.no_results')}
                   </p>
                 )}
@@ -178,40 +229,44 @@ const CommandPalette = () => {
                   const groupItems = filtered.filter((item) => item.group === group);
                   if (groupItems.length === 0) return null;
                   return (
-                    <div key={group} className="mb-1">
-                      <p className="px-4 pt-2 pb-1 text-[10px] font-bold uppercase tracking-[0.2em] text-[rgb(var(--muted-foreground))]">
+                    <div key={group} role="group" aria-labelledby={`cmdk-group-${group}`} className="mb-1">
+                      <p id={`cmdk-group-${group}`} className="px-4 pt-2 pb-1 text-[11px] font-bold uppercase tracking-[0.2em] text-[rgb(var(--muted-foreground))]">
                         {t(`cmdk.${group}`)}
                       </p>
                       {groupItems.map((item) => {
                         const index = filtered.indexOf(item);
                         return (
-                          <button
+                          <div
                             key={item.id}
+                            id={`cmdk-${item.id}`}
+                            role="option"
+                            lang={item.lang}
+                            aria-selected={index === active}
                             data-active={index === active}
                             onMouseEnter={() => setActive(index)}
                             onClick={() => go(item)}
-                            className={`w-full flex items-center gap-3 px-4 py-2.5 text-sm text-start transition-colors ${
+                            className={`w-full flex items-center gap-3 px-4 py-2.5 min-h-[44px] cursor-pointer text-sm text-start transition-colors ${
                               index === active
                                 ? 'bg-[rgb(var(--primary))]/12 text-[rgb(var(--foreground))]'
                                 : 'text-[rgb(var(--muted-foreground))]'
                             }`}>
-                            <span className={`text-xs ${index === active ? 'text-[rgb(var(--primary))]' : ''}`}>
+                            <span aria-hidden="true" className={`text-xs ${index === active ? 'text-[rgb(var(--primary))]' : ''}`}>
                               {item.icon}
                             </span>
                             <span className="flex-1 truncate">{item.label}</span>
                             {index === active && (
-                              <kbd className="text-[10px] font-mono px-1.5 py-0.5 rounded border border-[rgb(var(--border))] text-[rgb(var(--muted-foreground))]">
+                              <kbd aria-hidden="true" className="text-[10px] font-mono px-1.5 py-0.5 rounded border border-[rgb(var(--border))] text-[rgb(var(--muted-foreground))]">
                                 ↵
                               </kbd>
                             )}
-                          </button>
+                          </div>
                         );
                       })}
                     </div>
                   );
                 })}
               </div>
-            </motion.div>
+            </m.div>
           </div>
         </>
       )}

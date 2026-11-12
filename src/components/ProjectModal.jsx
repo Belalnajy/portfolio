@@ -2,7 +2,7 @@
 import { useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
 import { createPortal } from 'react-dom';
-import { motion, AnimatePresence, useDragControls } from 'framer-motion';
+import { m, AnimatePresence, useDragControls } from 'framer-motion';
 import {
   FaGithub,
   FaExternalLinkAlt,
@@ -16,6 +16,8 @@ import { useTranslation } from 'react-i18next';
 import { track } from '@vercel/analytics';
 import { coverMeta } from '../lib/cover-meta';
 import { useFocusTrap } from '../lib/useFocusTrap';
+import { useEscapeLayer } from '../lib/useEscapeLayer';
+import ProjectKindLabel from './ProjectKindLabel';
 
 const MOBILE_QUERY = '(max-width: 639px)';
 
@@ -43,17 +45,32 @@ const ProjectModal = ({ project, isOpen, onClose }) => {
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => setMounted(true), []);
-  // Tab stays inside the sheet; focus returns to the card on close.
-  useFocusTrap(dialogRef, isOpen && mounted && !!project);
 
+  // Everything behind the sheet is made inert while it is open: not
+  // clickable, not focusable, not in the accessibility tree, so a screen
+  // reader's virtual cursor cannot wander into the page underneath.
+  // Declared before the focus trap so that on close the page is live again
+  // before the trap hands focus back to the card.
+  const active = isOpen && mounted && !!project;
   useEffect(() => {
-    if (!isOpen) return;
-    const onKeyDown = (event) => {
-      if (event.key === 'Escape') onClose();
-    };
-    window.addEventListener('keydown', onKeyDown);
-    return () => window.removeEventListener('keydown', onKeyDown);
-  }, [isOpen, onClose]);
+    const dialog = dialogRef.current;
+    if (!active || !dialog) return undefined;
+    const behind = [...document.body.children].filter(
+      (el) => !el.contains(dialog) && !el.hasAttribute('data-modal-backdrop') && !el.inert,
+    );
+    behind.forEach((el) => {
+      el.inert = true;
+    });
+    return () =>
+      behind.forEach((el) => {
+        el.inert = false;
+      });
+  }, [active]);
+
+  // Tab stays inside the sheet; focus returns to the card on close.
+  useFocusTrap(dialogRef, active);
+
+  useEscapeLayer(isOpen, onClose);
 
   if (!mounted || !project) return null;
 
@@ -85,7 +102,9 @@ const ProjectModal = ({ project, isOpen, onClose }) => {
       {isOpen && (
         <>
           {/* Backdrop — above the navbar and the floating action buttons */}
-          <motion.div
+          <m.div
+            data-modal-backdrop=""
+            aria-hidden="true"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
@@ -94,7 +113,7 @@ const ProjectModal = ({ project, isOpen, onClose }) => {
           />
 
           <div className="fixed inset-0 z-[9999] flex items-end justify-center sm:items-center sm:p-6 pointer-events-none">
-            <motion.div
+            <m.div
               {...sheetMotion}
               drag={isMobile ? 'y' : false}
               dragListener={false}
@@ -129,7 +148,8 @@ const ProjectModal = ({ project, isOpen, onClose }) => {
                   </h2>
                   <button
                     onClick={onClose}
-                    className="shrink-0 w-10 h-10 flex items-center justify-center rounded-full bg-[rgb(var(--muted))]/30 hover:bg-[rgb(var(--muted))]/60 text-[rgb(var(--foreground))] transition-colors"
+                    type="button"
+                    className="shrink-0 w-11 h-11 flex items-center justify-center rounded-full bg-[rgb(var(--muted))]/30 hover:bg-[rgb(var(--muted))]/60 text-[rgb(var(--foreground))] transition-colors"
                     aria-label={t('projects.modal.close')}
                   >
                     <FaTimes size={16} />
@@ -137,8 +157,9 @@ const ProjectModal = ({ project, isOpen, onClose }) => {
                 </div>
               </div>
 
-              {/* Scrollable body */}
-              <div className="flex-1 overflow-y-auto overscroll-contain">
+              {/* Scrollable body. Focusable so it can be scrolled with the
+                  arrow keys when it holds no link to tab to. */}
+              <div tabIndex={0} className="flex-1 overflow-y-auto overscroll-contain focus:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-[rgb(var(--accent))]">
                 {/* Cover image */}
                 <div className="relative w-full bg-[rgb(var(--scrim))] border-b border-[rgb(var(--border))]/30">
                   {/* Covers are wide (~2.4:1), so a shallow box on phones avoids
@@ -163,9 +184,10 @@ const ProjectModal = ({ project, isOpen, onClose }) => {
                     {/* Main details */}
                     <div className="flex-1 space-y-6 min-w-0">
                       <div>
-                        <h3 className="text-2xl sm:text-3xl md:text-4xl font-bold text-[rgb(var(--foreground))] mb-3 sm:mb-4 text-start leading-tight">
+                        <h3 className="text-2xl sm:text-3xl md:text-4xl font-bold text-[rgb(var(--foreground))] mb-3 text-start leading-tight">
                           {project.title}
                         </h3>
+                        <ProjectKindLabel kind={project.kind} className="mb-3 sm:mb-4" />
                         <p className="text-base sm:text-lg text-[rgb(var(--muted-foreground))] leading-relaxed text-start">
                           {project.description}
                         </p>
@@ -257,7 +279,7 @@ const ProjectModal = ({ project, isOpen, onClose }) => {
               </div>
 
               {/* Sticky action bar — thumb-reachable on mobile, clears the home indicator */}
-              {(project.live !== '#' || project.github !== '#' || project.caseStudy) && (
+              {(project.live || project.github || project.caseStudy) && (
                 <div className="shrink-0 flex flex-col sm:flex-row gap-3 px-4 sm:px-8 py-4 border-t border-[rgb(var(--border))]/40 bg-[rgb(var(--background))]/95 backdrop-blur-xl pb-[max(1rem,env(safe-area-inset-bottom))]">
                   {project.caseStudy && (
                     <a
@@ -268,7 +290,7 @@ const ProjectModal = ({ project, isOpen, onClose }) => {
                       <FaBookOpen /> {t('projects.modal.case_study')}
                     </a>
                   )}
-                  {project.live !== '#' && (
+                  {project.live && (
                     <a
                       href={project.live}
                       target="_blank"
@@ -278,7 +300,7 @@ const ProjectModal = ({ project, isOpen, onClose }) => {
                       <FaExternalLinkAlt /> {t('projects.modal.live_link')}
                     </a>
                   )}
-                  {project.github !== '#' && (
+                  {project.github && (
                     <a
                       href={project.github}
                       target="_blank"
@@ -290,7 +312,7 @@ const ProjectModal = ({ project, isOpen, onClose }) => {
                   )}
                 </div>
               )}
-            </motion.div>
+            </m.div>
           </div>
         </>
       )}

@@ -1,9 +1,10 @@
 "use client";
 import { useMemo } from 'react';
-import { motion } from 'framer-motion';
-import { REVEAL_VIEWPORT, revealDelay, REVEAL_DURATION } from '../lib/motion';
-import { FaLaptopCode, FaGraduationCap, FaBriefcase, FaCalendarAlt, FaMapMarkerAlt, FaChevronRight } from 'react-icons/fa';
+import { revealDelay } from '../lib/motion';
+import Reveal from './Reveal';
+import { FaLaptopCode, FaGraduationCap, FaBriefcase, FaCalendarAlt, FaMapMarkerAlt } from 'react-icons/fa';
 import { useTranslation } from 'react-i18next';
+import { asArray } from '../lib/as-array';
 
 /** Period, location and employment, as one row of pills. */
 const MetaPills = ({ exp, compact = false }) => (
@@ -38,11 +39,25 @@ const TypeBadge = ({ exp, t }) => (
   </span>
 );
 
+// Intrinsic sizes, so each <img> carries its shape; the CSS box decides how
+// large it is drawn.
+const LOGO_SIZES = {
+  '/logos/ezsec-logo.webp': [200, 200],
+  '/logos/opptmakers-logo.webp': [120, 120],
+  '/logos/indstrz-logo.webp': [384, 154],
+  '/logos/sf-logo.webp': [288, 91],
+  '/logos/iti-logo.webp': [127, 192],
+  '/logos/ezzsteel-logo.webp': [400, 210],
+  '/logos/alex-uni-logo.webp': [225, 225],
+};
+
 const Logo = ({ exp, className }) =>
   exp.logo ? (
     <img
       src={exp.logo}
       alt={exp.company}
+      width={LOGO_SIZES[exp.logo]?.[0]}
+      height={LOGO_SIZES[exp.logo]?.[1]}
       loading="lazy"
       className={`logo-mark object-contain ${className}`}
     />
@@ -52,12 +67,15 @@ const Logo = ({ exp, className }) =>
 
 const Bullets = ({ exp, isArabic }) => (
   <ul className="space-y-2.5 text-sm">
-    {exp.description.map((desc, i) => (
+    {asArray(exp.description).map((desc, i) => (
       <li
         key={i}
         className="flex items-start text-[rgb(var(--foreground))] leading-relaxed text-start">
-        <FaChevronRight
-          className={`text-[rgb(var(--muted-foreground))] ${isArabic ? 'ml-2.5 rotate-180' : 'mr-2.5'} mt-1.5 text-[10px] shrink-0`}
+        {/* The chevron is drawn by CSS (.chevron-bullet in globals.css): the
+            same glyph as before, without an inline SVG per bullet. */}
+        <span
+          aria-hidden="true"
+          className={`chevron-bullet text-[rgb(var(--muted-foreground))] me-2.5 ${isArabic ? 'rotate-180' : ''} mt-1.5 text-[10px] shrink-0`}
         />
         <span>{desc}</span>
       </li>
@@ -73,22 +91,18 @@ const LiveDot = () => (
   </span>
 );
 
-const RoleHeader = ({ exp, t, size = 'md' }) => (
+// Sized for the rail by default and stepped up for the bento grid at `lg`.
+const RoleHeader = ({ exp, t }) => (
   <div className="flex items-start justify-between gap-3 mb-4">
     <div className="flex items-start gap-3 min-w-0">
       <span
-        className={`shrink-0 rounded-xl bg-[rgb(var(--card))] border border-[rgb(var(--border))]/50 flex items-center justify-center overflow-hidden shadow-sm ${
-          size === 'lg' ? 'w-14 h-14 p-2.5' : 'w-11 h-11 p-2'
-        }`}>
+        className="shrink-0 rounded-xl bg-[rgb(var(--card))] border border-[rgb(var(--border))]/50 flex items-center justify-center overflow-hidden shadow-sm w-11 h-11 p-2 lg:w-14 lg:h-14 lg:p-2.5">
         <Logo exp={exp} className="w-full h-full" />
       </span>
       <span className="min-w-0">
         <span className="flex items-center gap-2">
           {exp.current && <LiveDot />}
-          <h3
-            className={`font-bold text-[rgb(var(--foreground))] leading-tight ${
-              size === 'lg' ? 'text-xl' : 'text-base'
-            }`}>
+          <h3 className="font-bold text-[rgb(var(--foreground))] leading-tight text-base lg:text-xl">
             {exp.title}
           </h3>
         </span>
@@ -106,7 +120,7 @@ const InteractiveTimeline = () => {
   const isArabic = i18n.language === 'ar';
 
   const experiences = useMemo(() => {
-    const items = t('timeline.items', { returnObjects: true });
+    const items = asArray(t('timeline.items', { returnObjects: true }));
     /**
      * Language-neutral metadata, matched to i18n items by their `key` field so
      * reordering or inserting entries can never mis-assign a logo.
@@ -141,82 +155,62 @@ const InteractiveTimeline = () => {
   return (
     <section id="experience" className="py-20 relative overflow-hidden text-start">
       <div className="container mx-auto px-4 relative z-10">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={REVEAL_VIEWPORT}
-          transition={{ duration: 0.5 }}
-          className="text-center mb-16">
+        <Reveal y={20} duration={0.5} className="text-center mb-16">
           <h2 className="text-5xl font-bold mb-4 text-[rgb(var(--foreground))]">
             {t('timeline.title')}
           </h2>
           <p className="text-[rgb(var(--muted-foreground))] max-w-2xl mx-auto text-lg leading-relaxed">
             {t('timeline.subtitle')}
           </p>
-        </motion.div>
+        </Reveal>
 
-        {/* Desktop: a bento grid, so the whole career is legible at a glance
-            and tile size carries the weight of each role. Tabs hid eight of
-            nine roles at a time; a stack of full-width cards ignored the
-            width and ran for thousands of pixels. */}
-        <ol className="hidden lg:grid lg:grid-cols-12 gap-5 max-w-6xl mx-auto list-none">
-          {experiences.map((exp, index) => (
-            <motion.li
-              key={exp.key || index}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={REVEAL_VIEWPORT}
-              transition={{ duration: REVEAL_DURATION, delay: revealDelay(index) }}
-              className={`${exp.span} group relative glass-card rounded-2xl border p-6 flex flex-col transition-all duration-300 hover:-translate-y-1 ${
-                exp.current
-                  ? 'border-[rgb(var(--primary))]/30 hover:border-[rgb(var(--primary))]/60'
-                  : 'border-[rgb(var(--border))]/50 hover:border-[rgb(var(--primary))]/40'
-              }`}>
-              {/* Accent wash on the roles still running */}
-              {exp.current && (
-                <span
-                  aria-hidden="true"
-                  className="pointer-events-none absolute inset-0 rounded-2xl bg-gradient-to-br from-[rgb(var(--primary))]/[0.06] to-transparent"
-                />
-              )}
+        {/* One list, two layouts. From `lg` up it is a bento grid, so the
+            whole career is legible at a glance and tile size carries the
+            weight of each role (tabs hid eight of nine roles at a time; a
+            stack of full-width cards ignored the width and ran for thousands
+            of pixels). Below that it is a single rail with full-width cards.
+            The switch is made with responsive classes on the same nodes: the
+            nine roles used to be rendered twice, once per layout, with one
+            copy hidden, which shipped every card, logo and icon double. */}
+        <div className="relative max-w-3xl lg:max-w-6xl mx-auto">
+          {/* The rail (phones and tablets only) */}
+          <div className="lg:hidden absolute top-2 bottom-2 start-5 w-px bg-gradient-to-b from-[rgb(var(--primary))]/50 via-[rgb(var(--primary))]/20 to-transparent" />
 
-              <div className="relative z-10 flex flex-col h-full">
-                <RoleHeader exp={exp} t={t} size="lg" />
-                <div className="mb-4">
-                  <MetaPills exp={exp} />
-                </div>
-                <Bullets exp={exp} isArabic={isArabic} />
-              </div>
-            </motion.li>
-          ))}
-        </ol>
-
-        {/* Phones and tablets: one rail, cards full width. */}
-        <div className="lg:hidden relative max-w-3xl mx-auto">
-          <div className="absolute top-2 bottom-2 start-5 w-px bg-gradient-to-b from-[rgb(var(--primary))]/50 via-[rgb(var(--primary))]/20 to-transparent" />
-
-          <ol className="space-y-8">
+          <ol className="list-none space-y-8 lg:space-y-0 lg:grid lg:grid-cols-12 lg:gap-5">
             {experiences.map((exp, index) => (
-              <motion.li
+              <Reveal
+                as="li"
                 key={exp.key || index}
-                initial={{ opacity: 0, y: 24 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={REVEAL_VIEWPORT}
-                transition={{ duration: REVEAL_DURATION, delay: revealDelay(index) }}
-                className="relative ps-14">
+                delay={revealDelay(index)}
+                className={`${exp.span} relative ps-14 lg:ps-0 [--reveal-y:24px] lg:[--reveal-y:20px]`}>
                 {/* Rail marker */}
-                <div className="absolute start-0 top-4 w-10 h-10 rounded-full flex items-center justify-center text-base ring-4 ring-[rgb(var(--background))] bg-[rgb(var(--card))] text-[rgb(var(--primary))] border border-[rgb(var(--border))]">
+                <div className="lg:hidden absolute start-0 top-4 w-10 h-10 rounded-full flex items-center justify-center text-base ring-4 ring-[rgb(var(--background))] bg-[rgb(var(--card))] text-[rgb(var(--primary))] border border-[rgb(var(--border))]">
                   {exp.icon}
                 </div>
 
-                <div className="glass-card p-6 rounded-xl relative">
-                  <RoleHeader exp={exp} t={t} />
-                  <div className="mb-4">
-                    <MetaPills exp={exp} />
+                <div
+                  className={`group relative glass-card p-6 rounded-xl lg:rounded-2xl lg:h-full lg:flex lg:flex-col lg:border lg:transition-all lg:duration-300 lg:hover:-translate-y-1 ${
+                    exp.current
+                      ? 'lg:border-[rgb(var(--primary))]/30 lg:hover:border-[rgb(var(--primary))]/60'
+                      : 'lg:border-[rgb(var(--border))]/50 lg:hover:border-[rgb(var(--primary))]/40'
+                  }`}>
+                  {/* Accent wash on the roles still running (bento only) */}
+                  {exp.current && (
+                    <span
+                      aria-hidden="true"
+                      className="hidden lg:block pointer-events-none absolute inset-0 rounded-2xl bg-gradient-to-br from-[rgb(var(--primary))]/[0.06] to-transparent"
+                    />
+                  )}
+
+                  <div className="lg:relative lg:z-10 lg:flex lg:flex-col lg:h-full">
+                    <RoleHeader exp={exp} t={t} />
+                    <div className="mb-4">
+                      <MetaPills exp={exp} />
+                    </div>
+                    <Bullets exp={exp} isArabic={isArabic} />
                   </div>
-                  <Bullets exp={exp} isArabic={isArabic} />
                 </div>
-              </motion.li>
+              </Reveal>
             ))}
           </ol>
         </div>

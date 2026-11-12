@@ -17,10 +17,6 @@ const MobileTabBar = () => {
   useEffect(() => {
     setPathname(window.location.pathname);
   }, []);
-  // Language switches rewrite the URL in place; keep the active tab in step.
-  useEffect(() => {
-    setPathname(window.location.pathname);
-  }, [isArabic]);
 
   const current = pathname.replace(/^\/ar(?=\/|$)/, '') || '/';
 
@@ -34,7 +30,7 @@ const MobileTabBar = () => {
 
   return (
     <nav
-      aria-label={t('nav.home')}
+      aria-label={t('a11y.tab_bar')}
       className="md:hidden fixed bottom-0 inset-x-0 z-40 bg-[rgb(var(--card))]/92 backdrop-blur-2xl border-t border-[rgb(var(--border))] pb-[env(safe-area-inset-bottom)]">
       <div className="grid grid-cols-5 h-16">
         {tabs.map((tab) => {
@@ -44,7 +40,7 @@ const MobileTabBar = () => {
               key={tab.label}
               href={tab.href}
               aria-current={active ? 'page' : undefined}
-              className={`relative flex flex-col items-center justify-center gap-1 text-[10px] font-semibold transition-colors ${
+              className={`relative flex flex-col items-center justify-center gap-1 text-[11px] font-semibold transition-colors ${
                 active
                   ? 'text-[rgb(var(--primary))]'
                   : 'text-[rgb(var(--muted-foreground))] active:text-[rgb(var(--foreground))]'
@@ -53,7 +49,7 @@ const MobileTabBar = () => {
               {active && (
                 <span className="absolute top-0 inset-x-4 h-0.5 rounded-full bg-[rgb(var(--primary))]" aria-hidden="true" />
               )}
-              <span className={`text-lg ${active ? 'scale-110' : ''} transition-transform`}>{tab.icon}</span>
+              <span aria-hidden="true" className={`text-lg ${active ? 'scale-110' : ''} transition-transform`}>{tab.icon}</span>
               <span className="truncate max-w-full px-1">{tab.label}</span>
             </a>
           );

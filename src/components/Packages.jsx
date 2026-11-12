@@ -1,6 +1,6 @@
 "use client";
-import { motion } from 'framer-motion';
-import { REVEAL_VIEWPORT, revealDelay, REVEAL_DURATION } from '../lib/motion';
+import Reveal from './Reveal';
+import { revealDelay } from '../lib/motion';
 import { useTranslation } from 'react-i18next';
 import { FaCheck, FaClock, FaStar, FaArrowRight, FaArrowLeft } from 'react-icons/fa';
 
@@ -25,11 +25,7 @@ const Packages = () => {
       <div className="absolute top-1/3 left-1/2 -translate-x-1/2 w-full max-w-4xl h-96 bg-[rgb(var(--primary))]/5 blur-[120px] rounded-full pointer-events-none z-0" />
 
       <div className="container mx-auto px-4 sm:px-6 relative z-10">
-        <motion.div
-          initial={{ opacity: 0, y: 24 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={REVEAL_VIEWPORT}
-          transition={{ duration: 0.6 }}
+        <Reveal y={24} duration={0.6}
           className="text-center mb-12 md:mb-16"
         >
           <span className="text-[rgb(var(--primary))] font-bold tracking-widest uppercase text-xs sm:text-sm mb-3 block">
@@ -41,7 +37,7 @@ const Packages = () => {
           <p className="text-[rgb(var(--muted-foreground))] max-w-2xl mx-auto text-base sm:text-lg leading-relaxed">
             {t('packages.subtitle')}
           </p>
-        </motion.div>
+        </Reveal>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 max-w-6xl mx-auto items-start">
           {TIERS.map((tier, index) => {
@@ -53,12 +49,8 @@ const Packages = () => {
             const hasPrice = Boolean(price && price.trim());
 
             return (
-              <motion.div
+              <Reveal y={26} delay={revealDelay(index)}
                 key={tier.key}
-                initial={{ opacity: 0, y: 26 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={REVEAL_VIEWPORT}
-                transition={{ duration: REVEAL_DURATION, delay: revealDelay(index) }}
                 className={`relative glass-card rounded-2xl p-6 sm:p-8 flex flex-col h-full text-start transition-colors ${
                   tier.featured
                     ? 'border-2 border-[rgb(var(--primary))] shadow-2xl lg:-translate-y-3'
@@ -113,20 +105,16 @@ const Packages = () => {
                     <Arrow className="text-xs" />
                   </span>
                 </a>
-              </motion.div>
+              </Reveal>
             );
           })}
         </div>
 
-        <motion.p
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={REVEAL_VIEWPORT}
-          transition={{ duration: 0.5, delay: 0.3 }}
+        <Reveal as="p" duration={0.5} delay={0.3}
           className="text-center text-sm text-[rgb(var(--muted-foreground))] mt-10 max-w-2xl mx-auto leading-relaxed"
         >
           {t('packages.footnote')}
-        </motion.p>
+        </Reveal>
       </div>
     </section>
   );

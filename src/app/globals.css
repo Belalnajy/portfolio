@@ -4,17 +4,17 @@
 @layer utilities {
   /* Surfaces derive from the palette rather than raw white/black alpha, so
      they follow the identity in both themes. */
-  .glass {
-    background: rgb(var(--surface) / 0.55);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    border: 1px solid rgb(var(--border-subtle) / 0.8);
-  }
-
+  /* No backdrop blur on the cards, on purpose. They used to declare
+     `backdrop-filter` and `-webkit-backdrop-filter` with the same value, and
+     the CSS build collapses that pair to the prefixed form only, which
+     Chromium ignores: Chrome and Android drew these cards unblurred while
+     Safari blurred every one of them (over a hundred on the home page, half
+     of them inside the moving logo marquee). The cards now render the way
+     Chrome has always shown them, in every browser, and nobody pays for a
+     blur pass per card while scrolling. The surfaces are opaque enough
+     (72% / 90%) to carry the text without it. */
   .glass-card {
     background: rgb(var(--surface) / 0.72);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
     border: 1px solid rgb(var(--border-subtle));
     box-shadow: 0 8px 32px 0 rgb(var(--scrim) / 0.35);
   }
@@ -24,11 +24,6 @@
     border: 1px solid rgb(var(--border-control) / 0.5);
     transform: translateY(-5px);
     box-shadow: 0 12px 40px 0 rgb(var(--scrim) / 0.45);
-  }
-
-  :root[data-theme='light'] .glass {
-    background: rgb(var(--surface) / 0.7);
-    border: 1px solid rgb(var(--border-subtle));
   }
 
   :root[data-theme='light'] .glass-card {
@@ -82,7 +77,8 @@
     background-color: rgb(255 255 255);
   }
 
-  /* Visible focus in both themes. */
+  /* Visible focus in both themes. Design: keep a focus indicator at least
+     this strong on every control (WCAG 2.4.7 / 2.4.11). */
   .focus-ring:focus-visible,
   a:focus-visible,
   button:focus-visible,
@@ -91,7 +87,8 @@
   [tabindex]:focus-visible {
     outline: 2px solid rgb(var(--accent));
     outline-offset: 2px;
-    border-radius: 4px;
+    /* No border-radius here: the outline follows each control's own shape,
+       and a radius at this specificity squared every rounded-full pill. */
   }
 }
 
@@ -233,7 +230,10 @@
   --border-control: 128 131 135;     /* #808387  inputs and controls, 3:1 */
   --text: 16 23 31;                  /* #10171F */
   --muted-text: 86 101 117;          /* #566575 */
-  --accent: 152 96 22;               /* #986016  text and fills, 4.5:1 */
+  /* #8A5614. Was #986016, which met 4.5:1 on the page but not on the
+     10% copper tints the case-study links and deliverable chips sit on
+     (4.1:1). This clears 4.7:1 on those tints and 5.5:1 on the page. */
+  --accent: 138 86 20;               /* #8A5614  text and fills */
   --accent-vivid: 184 115 51;        /* #B87333  true copper, 3:1 uses only */
   --accent-hover: 130 82 20;
   --accent-subtle: 249 246 241;
@@ -256,7 +256,10 @@
   }
   body {
     @apply bg-[rgb(var(--background))] text-[rgb(var(--foreground))];
-    font-family: 'Cairo', 'Inter', sans-serif;
+    /* The next/font variable, not the bare family name: it resolves to Cairo
+       followed by its metric-matched fallback, so text keeps its line breaks
+       when the web font swaps in. */
+    font-family: var(--font-cairo), sans-serif;
   }
   html {
     scroll-padding-top: 80px;
@@ -383,6 +386,116 @@
 
 .animate-fadeInDown {
   animation: fadeInDown 0.5s ease-out both;
+}
+
+/* ---------------------------------------------------------------------------
+   Scroll reveal (see components/Reveal.jsx)
+   An element starts transparent and slightly offset, and settles once an
+   IntersectionObserver marks it. An animation rather than a transition, so it
+   never fights the element's own `transition-*` utilities (hover lifts and
+   colour changes keep their timing).
+   Three states: no attribute (hidden), `data-visible="in"` (animating, the
+   animation's fill holds both ends) and `data-visible="done"` (plain
+   `opacity: 1`, no animation). The base opacity only changes in the last
+   step, at the instant the filled animation is dropped, so the value never
+   actually changes on screen and an element carrying `transition-all` cannot
+   start a second, competing opacity transition. In the end state the element
+   has no animation, transform or fill left on it, as if it never animated.
+   Only hidden under `.js`, which the pre-paint script in RootDocument puts on
+   <html>: without JavaScript nothing would ever reveal it, so it is never
+   hidden. If the JavaScript does not arrive (a failed chunk), the failsafe
+   below shows everything after eight seconds; Reveal marks <html> with
+   `data-reveal-ready` as soon as it runs, which switches the failsafe off.
+   Every variable is set on the element itself so a reveal nested in another
+   reveal never inherits its parent's offset or delay. In the components layer
+   so a Tailwind utility such as `lg:[--reveal-y:20px]` can override a default.
+   --------------------------------------------------------------------------- */
+@layer components {
+  .reveal,
+  .reveal-rise {
+    --reveal-x: 0px;
+    --reveal-y: 0px;
+    --reveal-scale: 1;
+    --reveal-delay: 0s;
+    --reveal-d: 0.45s;
+  }
+  @media (max-width: 767px) {
+    .reveal,
+    .reveal-rise {
+      --reveal-d: 0.3s;
+    }
+  }
+  .js .reveal:not([data-visible='done']) {
+    opacity: 0;
+  }
+  .js:not([data-reveal-ready]) .reveal:not([data-visible]) {
+    animation: revealFailsafe 0s linear 8s forwards;
+  }
+  .reveal[data-visible='in'] {
+    animation: reveal var(--reveal-d) ease-out var(--reveal-delay) both;
+  }
+  .reveal[data-visible='done'] {
+    opacity: 1;
+  }
+  /* Same movement with no fade: for the element that is the page's largest
+     paint, which must be visible in the very first frame. */
+  .reveal-rise {
+    animation: revealRise var(--reveal-d) ease-out var(--reveal-delay) backwards;
+  }
+}
+
+@keyframes reveal {
+  from {
+    opacity: 0;
+    transform: translate(var(--reveal-x), var(--reveal-y)) scale(var(--reveal-scale));
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes revealFailsafe {
+  to {
+    opacity: 1;
+  }
+}
+@keyframes revealRise {
+  from {
+    transform: translate(var(--reveal-x), var(--reveal-y)) scale(var(--reveal-scale));
+  }
+}
+
+/* Reduced motion: content is simply there, no fade and no movement. */
+@media (prefers-reduced-motion: reduce) {
+  .js .reveal:not([data-visible='done']) {
+    opacity: 1;
+  }
+  .reveal[data-visible='in'],
+  .reveal-rise,
+  .js:not([data-reveal-ready]) .reveal:not([data-visible]) {
+    animation: none;
+  }
+}
+
+/* List bullet: Font Awesome's chevron-right as a mask, so it takes the text
+   colour and the font size like the inline icon it replaces (a 1em box with
+   the glyph centred in it), at the cost of one rule instead of one SVG per
+   bullet in the HTML. */
+.chevron-bullet {
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  background-color: currentColor;
+  -webkit-mask: var(--chevron-right) center / contain no-repeat;
+  mask: var(--chevron-right) center / contain no-repeat;
+  --chevron-right: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 320 512'%3E%3Cpath d='M285.476 272.971L91.132 467.314c-9.373 9.373-24.569 9.373-33.941 0l-22.667-22.667c-9.357-9.357-9.375-24.522-.04-33.901L188.505 256 34.484 101.255c-9.335-9.379-9.317-24.544.04-33.901l22.667-22.667c9.373-9.373 24.569-9.373 33.941 0L285.475 239.03c9.373 9.372 9.373 24.568.001 33.941z'/%3E%3C/svg%3E");
+}
+
+/* Paper has no scroll position: nothing may stay hidden waiting for one. */
+@media print {
+  .reveal {
+    opacity: 1 !important;
+    animation: none !important;
+  }
 }
 
 /* ---------------------------------------------------------------------------
@@ -579,11 +692,31 @@
    Design system v2 — typography, texture, motion
    ============================================================ */
 
+/* Stand-in for Space Grotesk while it loads: Arial resized to its metrics
+   (the values next/font computes for its own fallback face), so Latin headlines keep their line
+   breaks when the web font swaps in. Limited to Latin and Latin Extended,
+   the ranges Space Grotesk itself covers, so Arabic in a headline falls
+   through to Cairo instead of being drawn by an Arial that has Arabic glyphs
+   (Windows, macOS). See src/lib/fonts-en.js. */
+@font-face {
+  font-family: 'Space Grotesk Latin Fallback';
+  src: local('Arial');
+  ascent-override: 89.71%;
+  descent-override: 26.62%;
+  line-gap-override: 0%;
+  size-adjust: 109.69%;
+  unicode-range: U+0000-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1EFF, U+2000-206F, U+20A0-20C4,
+    U+2113, U+2122, U+2191, U+2193, U+2212, U+2215, U+2C60-2C7F, U+A720-A7FF, U+FEFF, U+FFFD;
+}
+
 @layer utilities {
   /* Display face for headlines and the hero wordmark. Cairo takes over for
      Arabic glyphs, which Space Grotesk does not carry. */
   .font-display {
-    font-family: var(--font-display), 'Cairo', 'Inter', sans-serif;
+    /* The family by name rather than var(--font-display): the variable also
+       carries next/font's fallback face, which has no unicode-range and would
+       draw Arabic in Arial ahead of Cairo (see src/lib/fonts-en.js). */
+    font-family: 'Space Grotesk', 'Space Grotesk Latin Fallback', var(--font-cairo), sans-serif;
     letter-spacing: -0.02em;
   }
 
@@ -653,9 +786,15 @@
   @view-transition {
     navigation: auto;
   }
-  ::view-transition-old(root),
+  /* Old page out, then new page in, with only a short overlap. The headings
+     and covers at the top of a page are on screen from its first frame, so
+     a plain cross-fade showed the new heading over the fading old page. */
+  ::view-transition-old(root) {
+    animation-duration: 0.14s;
+  }
   ::view-transition-new(root) {
-    animation-duration: 0.22s;
+    animation-duration: 0.16s;
+    animation-delay: 0.08s;
   }
 }
 
@@ -711,5 +850,63 @@
   @page {
     size: A4;
     margin: 14mm 14mm 16mm;
+  }
+}
+
+/* ---------------------------------------------------------------------------
+   Accessibility plumbing. Design may restyle these, but keep what they do.
+   --------------------------------------------------------------------------- */
+
+/* Skip link: off-screen until it takes keyboard focus, then a visible pill
+   at the top start corner, above the fixed header. */
+.skip-link {
+  position: fixed;
+  top: 0.75rem;
+  inset-inline-start: 0.75rem;
+  z-index: 10002;
+  padding: 0.75rem 1.25rem;
+  border-radius: 0.75rem;
+  background: rgb(var(--accent));
+  color: rgb(var(--accent-contrast));
+  font-weight: 600;
+  transform: translateY(-200%);
+}
+.skip-link:focus,
+.skip-link:focus-visible {
+  transform: none;
+  outline: 2px solid rgb(var(--text));
+  outline-offset: 2px;
+}
+
+/* A card whose title button stretches over it (Projects.jsx): the card
+   itself shows the focus ring, since the button's own box is just the title
+   and the card's overflow clipping would hide a ring drawn by the overlay. */
+.focus-card:has(:focus-visible) {
+  outline: 2px solid rgb(var(--accent));
+  outline-offset: 3px;
+}
+
+/* The phone contact dock steps aside while the menu or the FAQ panel is
+   open; otherwise its 56px button covers their bottom corner. */
+:root[data-menu-open] .floating-dock,
+:root[data-faq-open] .floating-dock {
+  visibility: hidden;
+}
+
+/* Arabic is a joined script: letter-spacing pulls the letters of a word
+   apart, and negative tracking crushes them. Tracking utilities and the
+   display face's tight tracking are for Latin only. */
+:lang(ar) {
+  letter-spacing: 0 !important;
+}
+
+/* Looping attention-getters stop for anyone who asked for less motion
+   (WCAG 2.3.3). The status dots and the scroll cue simply stay put. */
+@media (prefers-reduced-motion: reduce) {
+  .animate-ping,
+  .animate-pulse,
+  .animate-bounce,
+  .animate-spin {
+    animation: none !important;
   }
 }

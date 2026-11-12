@@ -54,10 +54,3 @@ const STAGGER_STEP = 0.06;
  */
 export const revealDelay = (index = 0, step = STAGGER_STEP) =>
   Math.min(index, MAX_STAGGERED_ITEMS) * step;
-
-/** Standard fade-and-rise transition for a list item. */
-export const revealTransition = (index = 0) => ({
-  duration: REVEAL_DURATION,
-  delay: revealDelay(index),
-  ease: 'easeOut',
-});

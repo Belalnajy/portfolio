@@ -1,15 +1,19 @@
 'use client';
 import Link from 'next/link';
-import { motion } from 'framer-motion';
+import Reveal from './Reveal';
 import { FaArrowRight, FaArrowLeft } from 'react-icons/fa';
-import { REVEAL_VIEWPORT } from '../lib/motion';
 import { useTranslation } from 'react-i18next';
 import SiteShell from './SiteShell';
 import { BLOG_POSTS } from '../lib/blog';
 
 const formatDate = (iso, lang) =>
-  new Intl.DateTimeFormat(lang === 'ar' ? 'ar' : 'en', {
+  // `-u-nu-latn`: Arabic month names with Western digits, as everywhere else
+  // on the site (Arabic-Indic digits are not used).
+  new Intl.DateTimeFormat(lang === 'ar' ? 'ar-u-nu-latn' : 'en', {
     dateStyle: 'long',
+    // The ISO date is midnight UTC; without this a reader west of UTC gets the
+    // previous day, which is wrong and does not match the prerendered HTML.
+    timeZone: 'UTC',
   }).format(new Date(iso));
 
 /**
@@ -32,10 +36,10 @@ const ArticleContent = ({ slug, article, nextSlug }) => {
 
   return (
     <article className="container mx-auto px-6 max-w-3xl pt-36 pb-24 text-start">
-      <motion.header
-        initial={{ opacity: 0, y: 16 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5 }}
+      {/* First viewport: a CSS animation that runs from the first paint and
+          moves without fading, so the page's largest text is on screen before
+          any JavaScript has loaded (see Reveal). */}
+      <Reveal as="header" rise y={16} duration={0.5}
         className="mb-12">
         <Link
           href={`${home}/blog`}
@@ -46,7 +50,7 @@ const ArticleContent = ({ slug, article, nextSlug }) => {
         <h1 className="font-display text-3xl sm:text-4xl md:text-5xl font-bold text-[rgb(var(--foreground))] leading-tight mb-4">
           {copy.title}
         </h1>
-        <p className="text-sm font-mono text-[rgb(var(--muted-foreground))]/80 mb-4">
+        <p className="text-sm font-mono text-[rgb(var(--muted-foreground))] mb-4">
           {formatDate(facts.date, i18n.language)} ·{' '}
           {t('blog_page.minutes', { count: facts.minutes })} ·{' '}
           {t('blog_page.byline')}
@@ -61,7 +65,7 @@ const ArticleContent = ({ slug, article, nextSlug }) => {
             </span>
           ))}
         </div>
-      </motion.header>
+      </Reveal>
 
       <div className="space-y-5 mb-14">
         {copy.intro.map((paragraph, i) => (
@@ -74,12 +78,8 @@ const ArticleContent = ({ slug, article, nextSlug }) => {
       </div>
 
       {copy.sections.map((section, index) => (
-        <motion.section
+        <Reveal as="section" y={24} duration={0.5}
           key={index}
-          initial={{ opacity: 0, y: 24 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={REVEAL_VIEWPORT}
-          transition={{ duration: 0.5 }}
           className="mb-12">
           <div className="flex items-baseline gap-4 mb-5">
             <span
@@ -101,14 +101,10 @@ const ArticleContent = ({ slug, article, nextSlug }) => {
               </p>
             ))}
           </div>
-        </motion.section>
+        </Reveal>
       ))}
 
-      <motion.section
-        initial={{ opacity: 0, y: 24 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={REVEAL_VIEWPORT}
-        transition={{ duration: 0.5 }}
+      <Reveal as="section" y={24} duration={0.5}
         className="glass-card rounded-2xl border border-[rgb(var(--border))] p-6 sm:p-8 mb-14">
         <h2 className="font-display text-xl font-bold text-[rgb(var(--primary))] mb-4">
           {copy.takeaway.heading}
@@ -120,7 +116,7 @@ const ArticleContent = ({ slug, article, nextSlug }) => {
             </p>
           ))}
         </div>
-      </motion.section>
+      </Reveal>
 
       {next && (
         <Link

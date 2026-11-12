@@ -1,6 +1,6 @@
 "use client";
-import { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { useState, useEffect, useRef } from 'react';
+import { m, AnimatePresence, useReducedMotion } from 'framer-motion';
 import { revealDelay } from '../lib/motion';
 import { FaDownload, FaGlobe } from 'react-icons/fa';
 import { FiMenu, FiX } from 'react-icons/fi';
@@ -8,9 +8,11 @@ import { FaSun, FaMoon } from 'react-icons/fa';
 import { useTheme } from '../lib/useTheme';
 import MagneticButton from './MagneticButton';
 import Logo from './Logo';
+import LanguageToggle from './LanguageToggle';
 import { useTranslation } from 'react-i18next';
-import { loadLanguage } from '../i18n';
+import { switchLanguage, LANGUAGE_SWITCH_LABEL } from '../lib/language';
 import { useSite } from './SiteShell';
+import { useEscapeLayer } from '../lib/useEscapeLayer';
 
 const Navbar = () => {
   const { isDark, toggle: toggleTheme } = useTheme();
@@ -21,11 +23,70 @@ const Navbar = () => {
   const [activeSection, setActiveSection] = useState('home');
 
   const isArabic = i18n.language === 'ar';
+  const reduceMotion = useReducedMotion();
+  const menuButtonRef = useRef(null);
+
+  const headerRef = useRef(null);
+
+  // While the phone menu is open the floating contact dock steps aside (see
+  // .floating-dock in globals.css) so it cannot sit on top of the menu's last
+  // items.
+  useEffect(() => {
+    if (!isOpen) return undefined;
+    const root = document.documentElement;
+    root.setAttribute('data-menu-open', '');
+    return () => root.removeAttribute('data-menu-open');
+  }, [isOpen]);
+
+  // Escape closes the menu and puts focus back on its button, unless a layer
+  // opened on top of it (the command palette) takes the key first.
+  useEscapeLayer(isOpen, () => {
+    setIsOpen(false);
+    menuButtonRef.current?.focus();
+  });
+
+  // A disclosure, not a modal: once Tab carries focus out of the header (past
+  // the last menu item, into the page the menu covers) the menu closes, so
+  // focus never walks behind it. A tap on empty space moves focus to nothing
+  // (relatedTarget null) and is left alone, as is a move within the header
+  // or into a modal dialog opened on top of the menu (the command palette),
+  // which hands focus back to the header when it closes. A non-modal one,
+  // like the FAQ panel, is just somewhere else on the page: the menu closes.
+  useEffect(() => {
+    const header = headerRef.current;
+    if (!isOpen || !header) return undefined;
+    const onFocusOut = (event) => {
+      const next = event.relatedTarget;
+      if (!next || header.contains(next) || next.closest('[role="dialog"][aria-modal="true"]')) return;
+      setIsOpen(false);
+    };
+    header.addEventListener('focusout', onFocusOut);
+    return () => header.removeEventListener('focusout', onFocusOut);
+  }, [isOpen]);
+
+  // The phone menu is display:none from xl up, but would stay "open" (and
+  // keep its Escape layer and data-menu-open) if the window grew past it.
+  // Something else may also ask it to close: the command palette, after
+  // jumping to a section of this same page (no reload to close it).
+  useEffect(() => {
+    if (!isOpen) return undefined;
+    const desktop = window.matchMedia('(min-width: 1280px)');
+    const close = () => setIsOpen(false);
+    const onChange = () => {
+      if (desktop.matches) close();
+    };
+    onChange();
+    desktop.addEventListener('change', onChange);
+    window.addEventListener('menu:close', close);
+    return () => {
+      desktop.removeEventListener('change', onChange);
+      window.removeEventListener('menu:close', close);
+    };
+  }, [isOpen]);
 
   const toggleLanguage = () => {
-    const newLang = i18n.language === 'en' ? 'ar' : 'en';
-    // Fetches the other bundle on first use, then switches.
-    loadLanguage(i18n, newLang);
+    // A real navigation to the same page in the other language.
+    switchLanguage(i18n.language === 'en' ? 'ar' : 'en');
   };
 
   useEffect(() => {
@@ -34,12 +95,17 @@ const Navbar = () => {
       setScrolled(isScrolled);
     };
 
-    window.addEventListener('scroll', handleScroll);
+    // Passive: the handler never calls preventDefault, so the browser need not
+    // wait for it before scrolling. React skips the re-render when the flag
+    // has not changed, so most scroll events cost one comparison.
+    window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Intersection Observer for active section detection
+  // Intersection Observer for active section detection. Without one the nav
+  // simply never highlights a section; the page itself must not break.
   useEffect(() => {
+    if (typeof IntersectionObserver === 'undefined') return undefined;
     const observerOptions = {
       root: null,
       rootMargin: '-20% 0px -70% 0px',
@@ -123,35 +189,45 @@ const Navbar = () => {
   };
 
   return (
-    <nav
+    // <header> is the page's banner landmark; the link lists inside it are
+    // the navigation landmarks (desktop bar, phone menu).
+    <header
+      ref={headerRef}
       className={`fixed w-full z-50 transition-all duration-500 animate-fadeInDown ${
         scrolled
           ? 'bg-[rgb(var(--card))]/90 backdrop-blur-3xl shadow-2xl border-b border-[rgb(var(--border))]'
           : 'bg-transparent'
       }`}>
-      {/* Animated gradient line on top */}
-      <motion.div
+      {/* Gradient line on top. It breathes forever, so under reduced motion
+          it is simply shown, still (MotionConfig only drops the transform,
+          not the looping opacity). */}
+      <m.div
+        aria-hidden="true"
         className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-[rgb(var(--primary))] to-transparent"
-        animate={{
-          opacity: scrolled ? [0.3, 0.6, 0.3] : 0,
-          scaleX: scrolled ? [0.8, 1, 0.8] : 0,
-        }}
-        transition={{
-          duration: 3,
-          repeat: Infinity,
-          ease: 'easeInOut',
-        }}
+        animate={
+          reduceMotion
+            ? { opacity: scrolled ? 0.5 : 0, scaleX: 1 }
+            : {
+                opacity: scrolled ? [0.3, 0.6, 0.3] : 0,
+                scaleX: scrolled ? [0.8, 1, 0.8] : 0,
+              }
+        }
+        transition={
+          reduceMotion
+            ? { duration: 0 }
+            : { duration: 3, repeat: Infinity, ease: 'easeInOut' }
+        }
       />
 
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
         <div className="flex items-center justify-between h-20">
           {/* Logo with enhanced animation */}
-          <motion.a
+          <m.a
             href={`${home}/`}
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
-            aria-label="Belal Nagy — home"
-            className="flex items-center gap-3 cursor-pointer group relative">
+            aria-label={t('a11y.home_link')}
+            className="flex items-center gap-3 min-h-11 cursor-pointer group relative">
               {/* The mark spells B at rest and rearranges into N on hover. */}
               <Logo size={34} className="shrink-0" />
               <div className="relative">
@@ -162,36 +238,38 @@ const Navbar = () => {
                 </span>
 
                 {/* Animated underline */}
-                <motion.div
+                <m.div
                   className="absolute -bottom-1 left-0 h-[2px] bg-gradient-to-r from-[rgb(var(--primary))] via-[rgb(var(--accent-hover))] to-[rgb(var(--primary))] rounded-full"
                   initial={{ width: 0 }}
                   whileHover={{ width: '100%' }}
                   transition={{ duration: 0.4, ease: 'easeOut' }}
                 />
               </div>
-          </motion.a>
+          </m.a>
 
           {/* Desktop Navigation */}
           <div className="hidden xl:flex items-center gap-4">
-            <motion.div
+            <nav aria-label={t('a11y.main_nav')}>
+            <m.div
               className="relative flex items-center gap-1 px-3 py-2 rounded-full bg-[rgb(var(--card))]/80 backdrop-blur-xl border border-[rgb(var(--border))] shadow-lg"
               whileHover={{ scale: 1.02 }}
               transition={{ duration: 0.2 }}>
-              {desktopNavItems.map((item, index) => (
+              {desktopNavItems.map((item) => (
                 <a
                   key={item.label}
                   href={item.href}
-                  className="cursor-pointer relative">
-                  <motion.div
-                    whileHover={{ scale: 1.05, y: -2 }}
-                    whileTap={{ scale: 0.95 }}
-                    className={`relative px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 ${
+                  aria-current={isActive(item) ? (item.route ? 'page' : 'location') : undefined}
+                  className="cursor-pointer relative rounded-full">
+                  {/* A plain div: framer-motion gives any element with a tap
+                      gesture tabindex=0, which made every link two tab stops. */}
+                  <div
+                    className={`relative px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 motion-safe:hover:-translate-y-0.5 motion-safe:hover:scale-105 motion-safe:active:scale-95 ${
                       isActive(item)
                         ? 'text-[rgb(var(--primary))] font-semibold'
                         : 'text-[rgb(var(--muted-foreground))] hover:text-[rgb(var(--foreground))]'
                     }`}>
                     {isActive(item) && (
-                      <motion.div
+                      <m.div
                         layoutId="activeSection"
                         className="absolute inset-0 bg-gradient-to-r from-[rgb(var(--primary))]/10 to-[rgb(var(--primary))]/5 rounded-full border border-[rgb(var(--border))]"
                         transition={{
@@ -202,25 +280,33 @@ const Navbar = () => {
                       />
                     )}
                     <span className="relative z-10">{item.label}</span>
-                  </motion.div>
+                  </div>
                 </a>
               ))}
-            </motion.div>
+            </m.div>
+            </nav>
 
             {/* Language Switcher Toggle */}
-            <motion.button
+            {/* Same label as the phone toggle: the target language, written
+                in that language, and an accessible name that starts with the
+                visible word (WCAG 2.5.3). */}
+            <m.button
+              type="button"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               onClick={toggleLanguage}
-              className="flex items-center gap-2 px-4 py-2 rounded-full bg-[rgb(var(--card))]/80 border border-[rgb(var(--border))] text-[rgb(var(--foreground))] hover:border-[rgb(var(--primary))]/50 transition-all font-bold text-sm shadow-sm group">
-              <FaGlobe className="text-[rgb(var(--primary))] group-hover:rotate-12 transition-transform duration-300" />
-              <span>{i18n.language === 'en' ? 'AR' : 'EN'}</span>
-            </motion.button>
+              lang={isArabic ? 'en' : 'ar'}
+              aria-label={isArabic ? LANGUAGE_SWITCH_LABEL.en : LANGUAGE_SWITCH_LABEL.ar}
+              className="flex items-center gap-2 min-h-[44px] px-4 py-2 rounded-full bg-[rgb(var(--card))]/80 border border-[rgb(var(--border))] text-[rgb(var(--foreground))] hover:border-[rgb(var(--primary))]/50 transition-all font-bold text-sm shadow-sm group">
+              <FaGlobe aria-hidden="true" className="text-[rgb(var(--primary))] group-hover:rotate-12 transition-transform duration-300" />
+              <span>{isArabic ? 'EN' : 'عربي'}</span>
+            </m.button>
 
             {/* Resume Button */}
             <MagneticButton
+              type="button"
               onClick={downloadCV}
-              className="group relative px-6 py-2 rounded-full bg-[rgb(var(--primary))] text-[rgb(var(--accent-contrast))] font-semibold overflow-hidden transition-all duration-300 hover:shadow-xl flex items-center gap-2">
+              className="group relative min-h-[44px] px-6 py-2 rounded-full bg-[rgb(var(--primary))] text-[rgb(var(--accent-contrast))] font-semibold overflow-hidden transition-all duration-300 hover:shadow-xl flex items-center gap-2">
               <span className="relative z-10 flex items-center gap-2">
                 <FaDownload className="text-sm" />
                 {t('nav.download_cv')}
@@ -230,29 +316,38 @@ const Navbar = () => {
 
           {/* Mobile Navigation Button - Enhanced */}
           <div className="xl:hidden flex items-center gap-2">
+            {/* The desktop AR/EN pill is xl-only; without this, phones and
+                tablets had no way to switch language at all. */}
+            <LanguageToggle />
             {/* Theme lives here on phones; the floating toggle is desktop only. */}
-            <motion.button
+            <m.button
               whileTap={{ scale: 0.9 }}
               onClick={toggleTheme}
               className="w-11 h-11 flex items-center justify-center rounded-xl bg-[rgb(var(--card))]/80 border border-[rgb(var(--border))] text-[rgb(var(--accent))] hover:bg-[rgb(var(--muted))] transition-all duration-200"
               aria-label={t('theme.toggle')}>
               {isDark ? <FaMoon size={18} /> : <FaSun size={18} />}
-            </motion.button>
+            </m.button>
 
-            <motion.button
+            <m.button
+              ref={menuButtonRef}
+              type="button"
               whileTap={{ scale: 0.9 }}
               onClick={() => setIsOpen(!isOpen)}
               className="relative w-11 h-11 flex items-center justify-center rounded-xl bg-[rgb(var(--card))]/80 border border-[rgb(var(--border))] hover:bg-[rgb(var(--muted))] transition-all duration-200 overflow-hidden group"
-              aria-label="Toggle menu">
+              id="site-menu-button"
+              aria-expanded={isOpen}
+              // Only while the menu exists: it is unmounted when closed.
+              aria-controls={isOpen ? 'site-menu' : undefined}
+              aria-label={isOpen ? t('a11y.menu_close') : t('a11y.menu_open')}>
               {/* Glow effect on hover */}
-              <motion.div
+              <m.div
                 className="absolute inset-0 bg-[rgb(var(--accent))]/8 blur-md opacity-0 group-hover:opacity-100"
                 transition={{ duration: 0.3 }}
               />
 
               <AnimatePresence mode="wait">
                 {isOpen ? (
-                  <motion.div
+                  <m.div
                     key="close"
                     initial={{ rotate: -90, opacity: 0 }}
                     animate={{ rotate: 0, opacity: 1 }}
@@ -262,9 +357,9 @@ const Navbar = () => {
                       size={24}
                       className="text-[rgb(var(--foreground))] relative z-10"
                     />
-                  </motion.div>
+                  </m.div>
                 ) : (
-                  <motion.div
+                  <m.div
                     key="menu"
                     initial={{ rotate: 90, opacity: 0 }}
                     animate={{ rotate: 0, opacity: 1 }}
@@ -274,10 +369,10 @@ const Navbar = () => {
                       size={24}
                       className="text-[rgb(var(--foreground))] relative z-10"
                     />
-                  </motion.div>
+                  </m.div>
                 )}
               </AnimatePresence>
-            </motion.button>
+            </m.button>
           </div>
         </div>
       </div>
@@ -285,12 +380,17 @@ const Navbar = () => {
       {/* Mobile Navigation Menu - Enhanced with modern design */}
       <AnimatePresence>
         {isOpen && (
-          <motion.div
+          <m.nav
+            aria-label={t('a11y.main_nav')}
             initial={{ opacity: 0, y: -20, scale: 0.95 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: -20, scale: 0.95 }}
             transition={{ duration: 0.3, ease: 'easeOut' }}
-            className="xl:hidden absolute top-full left-0 right-0 mt-2 mx-4 rounded-2xl bg-[rgb(var(--card))]/95 backdrop-blur-2xl border border-[rgb(var(--border))] shadow-2xl overflow-hidden">
+            id="site-menu"
+            // Scrolls inside itself: on a phone held sideways (or zoomed) the
+            // list is taller than the screen, and the bar it hangs from is
+            // fixed, so page scrolling could never reach the last items.
+            className="xl:hidden absolute top-full left-0 right-0 mt-2 mx-4 rounded-2xl bg-[rgb(var(--card))] border border-[rgb(var(--border))] shadow-2xl max-h-[calc(100dvh-6.5rem)] overflow-y-auto overscroll-contain">
             {/* Gradient accent on top */}
             <div className="h-1 bg-gradient-to-r from-[rgb(var(--accent))] via-[rgb(var(--accent-hover))] to-[rgb(var(--accent))]" />
 
@@ -299,15 +399,16 @@ const Navbar = () => {
                 <a
                   key={item.label}
                   href={item.href}
+                  className="block rounded-xl"
                   onClick={() => setIsOpen(false)}>
-                  <motion.div
+                  {/* Entrance only, no tap gesture: see the desktop links. */}
+                  <m.div
                     initial={{ opacity: 0, x: isArabic ? 20 : -20 }}
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ delay: revealDelay(index), duration: 0.3 }}
-                    whileTap={{ scale: 0.95 }}
-                    className={`group relative block px-5 py-3 rounded-xl text-[rgb(var(--muted-foreground))] hover:text-[rgb(var(--foreground))] transition-all duration-200 cursor-pointer font-medium overflow-hidden ${isArabic ? 'text-right' : 'text-left'}`}>
+                    className="group relative block px-5 py-3 rounded-xl text-[rgb(var(--muted-foreground))] hover:text-[rgb(var(--foreground))] transition-all duration-200 cursor-pointer font-medium overflow-hidden text-start motion-safe:active:scale-95">
                     {/* Hover gradient background */}
-                    <motion.div
+                    <m.div
                       className="absolute inset-0 bg-gradient-to-r from-[rgb(var(--accent))]/10 to-[rgb(var(--accent-hover))]/10 opacity-0 group-hover:opacity-100"
                       transition={{ duration: 0.2 }}
                     />
@@ -316,28 +417,30 @@ const Navbar = () => {
                     <div className="absolute inset-0 rounded-xl border border-transparent group-hover:border-[rgb(var(--accent))]/30 transition-all duration-200" />
 
                     {/* Number indicator */}
-                    <span
-                      className={`relative z-10 flex items-center gap-3 ${isArabic ? 'flex-row-reverse' : ''}`}>
-                      <span className="text-xs text-[rgb(var(--accent))] font-mono opacity-50 group-hover:opacity-100 transition-opacity">
-                        0{index + 1}
+                    {/* Inline order follows the document direction, so in RTL
+                        the number sits at the right, before the label. */}
+                    <span className="relative z-10 flex items-center gap-3">
+                      <span aria-hidden="true" className="text-xs text-[rgb(var(--accent))] font-mono">
+                        {String(index + 1).padStart(2, '0')}
                       </span>
                       {item.label}
                     </span>
 
                     {/* Arrow indicator */}
-                    <motion.span
-                      className={`absolute ${isArabic ? 'left-4 rotate-180' : 'right-4'} top-1/2 -translate-y-1/2 text-[rgb(var(--accent))] opacity-0 group-hover:opacity-100`}
+                    <m.span
+                      aria-hidden="true"
+                      className={`absolute end-4 ${isArabic ? 'rotate-180' : ''} top-1/2 -translate-y-1/2 text-[rgb(var(--accent))] opacity-0 group-hover:opacity-100`}
                       initial={{ x: isArabic ? 10 : -10 }}
                       whileHover={{ x: 0 }}
                       transition={{ duration: 0.2 }}>
                       →
-                    </motion.span>
-                  </motion.div>
+                    </m.span>
+                  </m.div>
                 </a>
               ))}
 
               {/* Divider */}
-              <motion.div
+              <m.div
                 initial={{ opacity: 0, scaleX: 0 }}
                 animate={{ opacity: 1, scaleX: 1 }}
                 transition={{
@@ -347,7 +450,7 @@ const Navbar = () => {
                 className="h-px bg-gradient-to-r from-transparent via-[rgb(var(--foreground))]/20 to-transparent my-4"
               />
 
-              <motion.div
+              <m.div
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{
@@ -356,19 +459,24 @@ const Navbar = () => {
                 }}
                 className="pt-2">
                 <button
+                  type="button"
                   onClick={() => {
                     downloadCV();
                     setIsOpen(false);
+                    // The button unmounts with the menu; without this a
+                    // keyboard user is dropped onto <body>. Links are left
+                    // alone: they navigate, or the browser follows the hash.
+                    menuButtonRef.current?.focus();
                   }}
                   className="relative w-full px-5 py-3 rounded-xl bg-[rgb(var(--primary))] text-[rgb(var(--accent-contrast))] font-semibold overflow-hidden transition-all duration-300 flex items-center justify-center gap-2 group">
                   {/* Animated gradient on hover */}
-                  <motion.div
+                  <m.div
                     className="absolute inset-0 bg-gradient-to-r from-[rgb(var(--accent))] to-[rgb(var(--accent-hover))] opacity-0 group-hover:opacity-100"
                     transition={{ duration: 0.3 }}
                   />
 
                   {/* Shimmer effect */}
-                  <motion.div
+                  <m.div
                     className="absolute inset-0 bg-gradient-to-r from-transparent via-[rgb(var(--foreground))]/30 to-transparent"
                     animate={{ x: ['-100%', '200%'] }}
                     transition={{
@@ -383,12 +491,12 @@ const Navbar = () => {
                     {t('nav.download_cv')}
                   </span>
                 </button>
-              </motion.div>
+              </m.div>
             </div>
-          </motion.div>
+          </m.nav>
         )}
       </AnimatePresence>
-    </nav>
+    </header>
   );
 };
 

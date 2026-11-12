@@ -1,8 +1,10 @@
 "use client";
-import { motion, AnimatePresence } from 'framer-motion';
-import { REVEAL_VIEWPORT, revealDelay, REVEAL_DURATION } from '../lib/motion';
-import { useState, useMemo, useRef, useEffect } from 'react';
+import { m, AnimatePresence } from 'framer-motion';
+import Reveal from './Reveal';
+import { revealDelay, REVEAL_DURATION } from '../lib/motion';
+import { useState, useMemo, useRef } from 'react';
 import { useFocusTrap } from '../lib/useFocusTrap';
+import { useEscapeLayer } from '../lib/useEscapeLayer';
 import {
   FaCode,
   FaGraduationCap,
@@ -20,14 +22,7 @@ const Certifications = () => {
   const lightboxRef = useRef(null);
   useFocusTrap(lightboxRef, !!selectedCert);
 
-  useEffect(() => {
-    if (!selectedCert) return;
-    const onKeyDown = (event) => {
-      if (event.key === 'Escape') setSelectedCert(null);
-    };
-    window.addEventListener('keydown', onKeyDown);
-    return () => window.removeEventListener('keydown', onKeyDown);
-  }, [selectedCert]);
+  useEscapeLayer(!!selectedCert, () => setSelectedCert(null));
 
   const certificates = useMemo(
     () => [
@@ -40,6 +35,7 @@ const Certifications = () => {
         platform: 'Udemy',
         color: 'rose',
         image: '/certificates/python-django.webp',
+        imageSize: [900, 669],
       },
       {
         id: 2,
@@ -50,6 +46,7 @@ const Certifications = () => {
         platform: '365 Data Science',
         color: 'blue',
         image: '/certificates/intro-python.webp',
+        imageSize: [800, 565],
       },
       {
         id: 3,
@@ -60,6 +57,7 @@ const Certifications = () => {
         platform: 'KodeKloud',
         color: 'cyan',
         image: '/certificates/docker.webp',
+        imageSize: [900, 636],
       },
       {
         id: 4,
@@ -70,6 +68,7 @@ const Certifications = () => {
         platform: '365 Data Science',
         color: 'blue',
         image: '/certificates/git-github.webp',
+        imageSize: [800, 565],
       },
       {
         id: 5,
@@ -80,6 +79,7 @@ const Certifications = () => {
         platform: 'MCIT',
         color: 'green',
         image: '/certificates/web-dev.webp',
+        imageSize: [802, 618],
       },
       {
         id: 6,
@@ -90,6 +90,7 @@ const Certifications = () => {
         platform: 'Udemy',
         color: 'rose',
         image: '/certificates/ui-ux.webp',
+        imageSize: [900, 669],
       },
       {
         id: 7,
@@ -100,6 +101,7 @@ const Certifications = () => {
         platform: 'Mahara Tech',
         color: 'red',
         image: '/certificates/redhat.webp',
+        imageSize: [668, 472],
       },
       {
         id: 8,
@@ -110,6 +112,7 @@ const Certifications = () => {
         platform: 'SkillsDynamix',
         color: 'emerald',
         image: '/certificates/android.webp',
+        imageSize: [802, 562],
       },
     ],
     [t],
@@ -132,11 +135,7 @@ const Certifications = () => {
   return (
     <section id="certifications" className="py-20 relative">
       <div className="container mx-auto px-4 relative z-10">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={REVEAL_VIEWPORT}
-          transition={{ duration: 0.5 }}
+        <Reveal y={20} duration={0.5}
           className="text-center mb-16">
           <h2 className="text-5xl font-bold mb-4 text-[rgb(var(--foreground))]">
             {t('certifications.title')}
@@ -144,15 +143,16 @@ const Certifications = () => {
           <p className="text-[rgb(var(--muted-foreground))] text-lg max-w-2xl mx-auto">
             {t('certifications.subtitle')}
           </p>
-        </motion.div>
+        </Reveal>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
           {certificates.map((cert, index) => (
-            <motion.div
+            <Reveal
+              as={m.div}
+              y={20}
+              delay={revealDelay(index)}
               key={cert.id}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={REVEAL_VIEWPORT}
+              // Still read by Framer for the hover animation below.
               transition={{ duration: REVEAL_DURATION, delay: revealDelay(index) }}
               whileHover={{ y: -10, scale: 1.02 }}
               onClick={() => cert.image && setSelectedCert(cert)}
@@ -194,20 +194,20 @@ const Certifications = () => {
                 </div>
               )}
               <div className="absolute inset-0 rounded-xl bg-gradient-to-r from-[rgb(var(--primary))]/0 to-[rgb(var(--primary))]/0 opacity-0 group-hover:opacity-10 transition-opacity duration-300" />
-            </motion.div>
+            </Reveal>
           ))}
         </div>
 
         {/* Certificate Modal */}
         <AnimatePresence>
           {selectedCert && (
-            <motion.div
+            <m.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               onClick={() => setSelectedCert(null)}
               className="fixed inset-0 bg-[rgb(var(--scrim))]/80 z-50 flex items-center justify-center p-4">
-              <motion.div
+              <m.div
                 ref={lightboxRef}
                 tabIndex={-1}
                 role="dialog"
@@ -227,11 +227,13 @@ const Certifications = () => {
                 <img
                   src={selectedCert.image}
                   alt={selectedCert.title}
+                  width={selectedCert.imageSize[0]}
+                  height={selectedCert.imageSize[1]}
                   loading="lazy"
                   className="w-full h-auto rounded-lg"
                 />
-              </motion.div>
-            </motion.div>
+              </m.div>
+            </m.div>
           )}
         </AnimatePresence>
       </div>
