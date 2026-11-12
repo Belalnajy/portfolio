@@ -181,7 +181,7 @@ export const CASE_STUDIES = {
     stack: ['Next.js', 'NestJS', 'TypeORM', 'PostgreSQL', 'Tailwind', 'Radix UI', 'Framer Motion'],
     industry: 'commerce',
     updated: '2026-08-31',
-    gallery: ['/gallery/waferlee-d1.webp', '/gallery/waferlee-d2.webp', '/gallery/waferlee-m.webp'],
+    gallery: ['/gallery/waferlee-d1.webp', '/gallery/waferlee-d2.webp', '/gallery/waferlee-b-m.webp'],
   },
   baserah: {
     name: 'Baserah AI',

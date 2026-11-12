@@ -6,8 +6,9 @@ import { FaPause, FaPlay } from 'react-icons/fa';
 import { CASE_STUDIES } from '../lib/case-studies';
 
 // [file, intrinsic width, intrinsic height, flag?]. 'white': a white mark,
-// drawn dark on the light theme; 'dim': a navy or purple mark, drawn light on
-// the dark theme (see .logo-white / .logo-dim in globals.css). The size goes on the <img> so the
+// drawn as a dark silhouette on the light tiles (both themes); 'dim': a navy
+// or purple mark, which the old dark slate tiles had to lift and the light
+// tiles no longer do (see .logo-white in globals.css). The size goes on the <img> so the
 // browser knows each logo's shape before the file arrives; the CSS box still
 // decides how large it is drawn. The files are sized for the largest box they
 // are drawn in (192x80 CSS px on desktop at 2x with the hover zoom, 112x64 on
@@ -92,17 +93,17 @@ const MarqueeRow = ({ items, direction }) => {
   const animationClass = direction === 'left' ? 'animate-marquee-left' : 'animate-marquee-right';
   
   return (
-    <div className="marquee-container flex overflow-hidden w-full select-none py-3 relative" dir="ltr">
+    <div className="marquee-container flex overflow-hidden w-full select-none py-3 max-md:py-1.5 relative" dir="ltr">
       {/* Fading gradient masks for the edges */}
       <div className="absolute top-0 left-0 w-20 md:w-40 h-full bg-gradient-to-r from-[rgb(var(--background))] to-transparent z-20 pointer-events-none"></div>
       <div className="absolute top-0 right-0 w-20 md:w-40 h-full bg-gradient-to-l from-[rgb(var(--background))] to-transparent z-20 pointer-events-none"></div>
 
-      <div className={`flex w-max gap-4 md:gap-8 px-2 md:px-4 ${animationClass}`}>
+      <div className={`flex w-max gap-3 md:gap-8 px-1.5 md:px-4 ${animationClass}`}>
         {duplicatedItems.map(([logo, width, height, flag], index) => (
           <div
             key={index}
             aria-hidden={index >= items.length ? 'true' : undefined}
-            className={`logo-tile ${flag ? `logo-${flag}` : ''} w-40 md:w-64 h-28 md:h-36 flex-shrink-0 relative group glass-card p-5 md:p-7 rounded-2xl flex justify-center items-center transition-colors duration-300`}>
+            className={`logo-tile ${flag ? `logo-${flag}` : ''} w-36 md:w-64 h-24 md:h-36 flex-shrink-0 relative group glass-card p-4 md:p-7 rounded-2xl max-md:rounded-[1.125rem] flex justify-center items-center transition-[background-color,opacity] duration-300`}>
             <img
               src={`/logos/${logo}`}
               alt={index >= items.length ? '' : logoName(logo)}
@@ -149,7 +150,7 @@ const BrandLogos = () => {
       ref={sectionRef}
       data-offscreen={offscreen || undefined}
       data-paused={paused || undefined}
-      className="py-16 md:py-20 relative overflow-hidden"
+      className="m-section relative overflow-hidden"
       id="brands">
       {/* Injecting CSS Keyframes directly for the Marquee */}
       <style>
@@ -188,6 +189,7 @@ const BrandLogos = () => {
       {/* The heading shares the page column; the marquee below runs wider. */}
       <div className="shell relative z-10">
         <SectionHeading
+          eyebrow={t('mHome.eyebrow.brands')}
           title={t('brands.title')}
           subtitle={t('brands.subtitle')}
         />
@@ -196,7 +198,7 @@ const BrandLogos = () => {
       <div className="bleed container mx-auto px-0 md:px-4 relative z-10 w-full max-w-[100vw]">
 
         {/* The Marquee Display */}
-        <div className="flex flex-col gap-4 w-full">
+        <div className="flex flex-col gap-4 max-md:gap-1.5 w-full">
           <MarqueeRow items={row1} direction="left" />
           <MarqueeRow items={row2} direction="right" />
         </div>
@@ -204,11 +206,11 @@ const BrandLogos = () => {
         {/* Hidden when the rows do not move anyway (reduced motion). A
             Tailwind variant, so it sits in the same layer as `flex` and is
             ordered after it, instead of racing it from the inline <style>. */}
-        <div className="mt-6 flex motion-reduce:hidden justify-center px-4">
+        <div className="mt-6 max-md:mt-4 flex motion-reduce:hidden justify-center px-4">
           <button
             type="button"
             onClick={() => setPaused((was) => !was)}
-            className="inline-flex items-center gap-2 min-h-[44px] px-5 rounded-full border border-[rgb(var(--border-control))] text-sm font-semibold text-[rgb(var(--muted-foreground))] hover:text-[rgb(var(--foreground))] hover:border-[rgb(var(--primary))] transition-colors">
+            className="press inline-flex items-center gap-2 min-h-[44px] px-5 rounded-full border border-[rgb(var(--border-control))] text-sm font-semibold text-[rgb(var(--muted-foreground))] hover:text-[rgb(var(--foreground))] hover:border-[rgb(var(--primary))] transition-colors">
             {paused ? <FaPlay aria-hidden="true" className="text-xs" /> : <FaPause aria-hidden="true" className="text-xs" />}
             {paused ? t('a11y.logos_play') : t('a11y.logos_pause')}
           </button>

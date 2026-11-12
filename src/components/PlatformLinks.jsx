@@ -38,7 +38,7 @@ const Mark = ({ platform, className }) =>
     />
   );
 
-const PlatformLinks = ({ variant = 'default' }) => {
+const PlatformLinks = ({ variant = 'default', align = 'center' }) => {
   const { i18n } = useTranslation();
   const isArabic = i18n.language === 'ar';
   // Primary label follows the page language; the other script rides along in
@@ -75,7 +75,7 @@ const PlatformLinks = ({ variant = 'default' }) => {
   if (variant === 'footer') {
     // For Footer - simple links
     return (
-      <div className="flex flex-wrap items-center justify-center gap-4">
+      <div className={`flex flex-wrap items-center gap-4 ${align === 'start' ? 'justify-start' : 'justify-center'}`}>
         {platforms.map((platform) => (
           <m.a
             key={platform.url}

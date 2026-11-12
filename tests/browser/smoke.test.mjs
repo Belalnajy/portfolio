@@ -229,7 +229,8 @@ test('a miss under /ar ends up as an Arabic document, an English miss stays Engl
   assert.ok(snapshot.h1, 'the 404 renders a heading');
   assert.match(snapshot.title, /^Page not found/, 'the title does not change after hydration');
   assert.equal(details.theme, 'light', 'the stored theme applies on the 404 too');
-  assert.equal(details.home, '/ar/', 'links point into the Arabic tree');
+  // `/ar`, not `/ar/`: the trailing slash is a 308 redirect away.
+  assert.equal(details.home, '/ar', 'links point into the Arabic tree');
 
   const english = await open('/no-such-page');
   const englishState = await state(english.page);

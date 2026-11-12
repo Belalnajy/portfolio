@@ -116,10 +116,11 @@ const PlatformSuite = () => {
   const { t } = useTranslation();
 
   return (
-    <section id="platform-suite" className="py-16 md:py-24 relative overflow-hidden">
-      <div className="container mx-auto px-6 relative z-10">
+    <section id="platform-suite" className="py-16 md:py-24 max-md:py-14 relative overflow-hidden">
+      <div className="container mx-auto px-6 max-sm:px-5 relative z-10">
         <SectionHeading
           className="max-w-6xl mx-auto"
+          eyebrow={t('mPages.eyebrow.suite')}
           title={t('platform_suite.title')}
           subtitle={t('platform_suite.subtitle')}
         />
@@ -129,16 +130,16 @@ const PlatformSuite = () => {
 
         {/* Shared engine capabilities */}
         <Reveal y={20} duration={0.5} delay={0.1}
-          className="glass-card rounded-2xl border border-[rgb(var(--border))]/50 p-6 md:p-8 mb-12"
+          className="m-card glass-card rounded-2xl border border-[rgb(var(--border))]/50 p-6 md:p-8 mb-12 max-md:mb-8"
         >
-          <h3 className="text-lg font-bold text-[rgb(var(--foreground))] mb-6 text-center">
+          <h3 className="text-lg font-bold text-[rgb(var(--foreground))] mb-6 text-center max-md:mb-4 max-md:text-start">
             {t('platform_suite.shared_title')}
           </h3>
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 max-md:gap-2.5">
             {SHARED_CAPABILITIES.map((cap, index) => (
               <Reveal scale={0.95} delay={revealDelay(index)}
                 key={cap.key}
-                className="flex flex-col items-center text-center gap-3 p-4 rounded-xl bg-[rgb(var(--muted))]/10 border border-[rgb(var(--border))]/40"
+                className="flex flex-col items-center text-center gap-3 p-4 max-md:p-3 max-md:gap-2 rounded-xl bg-[rgb(var(--muted))]/10 border border-[rgb(var(--border))]/40"
               >
                 <span className="w-10 h-10 rounded-lg flex items-center justify-center bg-[rgb(var(--muted))]/40 text-[rgb(var(--muted-foreground))] border border-[rgb(var(--border))]">
                   {cap.icon}
@@ -151,8 +152,8 @@ const PlatformSuite = () => {
           </div>
         </Reveal>
 
-        {/* Branded deployments */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        {/* Branded deployments. On a phone a swipeable rail of cards. */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 m-rail">
           {LMS_SUITE.members.map((member, index) => (
             <Reveal
               as={m.a}
@@ -165,11 +166,11 @@ const PlatformSuite = () => {
               // Still read by Framer for the hover animation below.
               transition={{ duration: REVEAL_DURATION, delay: revealDelay(index) }}
               whileHover={{ y: -6 }}
-              className="group glass-card rounded-2xl overflow-hidden border border-[rgb(var(--border))]/50 hover:border-[rgb(var(--primary))]/40 transition-colors flex flex-col"
+              className="press group glass-card rounded-2xl overflow-hidden border border-[rgb(var(--border))]/50 hover:border-[rgb(var(--primary))]/40 transition-colors flex flex-col m-card-flush max-md:w-[80vw] max-md:max-w-[340px]"
             >
               {/* The deployment's accent runs along the top; the screen sits
                   in the browser frame every project picture uses. */}
-              <div className="relative p-3 pb-0">
+              <div className="relative p-3 pb-0 max-md:p-0">
                 <div
                   className="absolute inset-x-0 top-0 h-1 z-10"
                   style={{ backgroundColor: member.accent }}
@@ -179,7 +180,8 @@ const PlatformSuite = () => {
                   alt={member.name}
                   host={hostOf(member.url)}
                   // A third of the container from 768 up, less the margin.
-                  sizes="(min-width: 1280px) 390px, (min-width: 768px) 30vw, calc(100vw - 72px)"
+                  sizes="(min-width: 1280px) 390px, (min-width: 768px) 30vw, 80vw"
+                  className="max-md:rounded-none max-md:border-0 max-md:border-b max-md:shadow-none"
                   imageClassName="transition-transform duration-500 motion-safe:group-hover:scale-[1.03]"
                 />
               </div>

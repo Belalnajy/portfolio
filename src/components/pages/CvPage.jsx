@@ -7,9 +7,13 @@ import { FaDownload, FaPrint, FaEnvelope, FaGlobe, FaGithub, FaLinkedin, FaMapMa
 import { track } from '@vercel/analytics';
 import { buildCv, CV_UPDATED } from '../../lib/cv';
 
+// Phone layouts on this page use a screen-only variant instead of max-md:
+// an A4 page is narrower than 768px, so a max-md: class would also restyle
+// the printed CV.
 const Section = ({ title, children }) => (
-  <section className="cv-section mb-7 last:mb-0">
-    <h2 className="font-display text-sm font-bold uppercase tracking-[0.18em] text-[rgb(var(--primary))] border-b border-[rgb(var(--border))] pb-2 mb-4">
+  <section className="cv-section mb-7 last:mb-0 [@media_screen_and_(max-width:47.99rem)]:mb-8 [@media_screen_and_(max-width:47.99rem)]:last:mb-0">
+    {/* On a phone the label is the site's eyebrow. */}
+    <h2 className="font-display text-sm font-bold uppercase tracking-[0.18em] text-[rgb(var(--primary))] border-b border-[rgb(var(--border))] pb-2 mb-4 [@media_screen_and_(max-width:47.99rem)]:text-xs [@media_screen_and_(max-width:47.99rem)]:font-semibold [@media_screen_and_(max-width:47.99rem)]:tracking-[0.14em] [@media_screen_and_(max-width:47.99rem)]:border-[rgb(var(--border-subtle))]">
       {title}
     </h2>
     {children}
@@ -58,47 +62,50 @@ const CvContent = ({ bundle }) => {
   ];
 
   return (
-    <div className="container mx-auto px-4 sm:px-6 pt-28 pb-20 max-w-4xl text-start">
-      {/* Actions — screen only */}
-      <div className="print:hidden flex flex-wrap items-center justify-between gap-3 mb-8">
+    <div className="container mx-auto px-5 sm:px-6 pt-28 [@media_screen_and_(max-width:47.99rem)]:pt-[calc(var(--header-h)+2rem)] pb-20 [@media_screen_and_(max-width:47.99rem)]:pb-14 max-w-4xl text-start">
+      {/* Actions — screen only. On a phone: Download and Print as an
+          equal-width pair under the heading. */}
+      <div className="print:hidden flex flex-wrap items-center justify-between gap-3 mb-8 max-md:gap-5 max-md:mb-10">
         <div>
-          <h1 className="font-display text-3xl sm:text-4xl font-bold text-[rgb(var(--foreground))]">
+          <h1 className="font-display text-3xl sm:text-4xl font-bold text-[rgb(var(--foreground))] type-h1">
             {t('cv.title')}
           </h1>
-          <p className="text-[rgb(var(--muted-foreground))] mt-1">{t('cv.subtitle')}</p>
+          <p className="text-[rgb(var(--muted-foreground))] mt-1 max-md:mt-2 type-body">{t('cv.subtitle')}</p>
         </div>
-        <div className="flex gap-2">
+        <div className="flex gap-2 max-md:grid max-md:grid-cols-2 max-md:gap-3 max-md:w-full">
           <a
             href="/Belal_Nagy_CV.pdf"
             download
             onClick={() => track('cv_download', { placement: 'cv_page' })}
-            className="inline-flex items-center gap-2 min-h-[44px] px-5 rounded-xl font-semibold bg-[rgb(var(--primary))] text-[rgb(var(--accent-contrast))] shadow-lg transition-transform active:scale-[0.98]">
+            className="press max-md:justify-center max-md:min-h-12 max-md:px-3 max-md:rounded-[var(--radius-btn)] inline-flex items-center gap-2 min-h-[44px] px-5 rounded-xl font-semibold bg-[rgb(var(--primary))] text-[rgb(var(--accent-contrast))] shadow-lg transition-transform active:scale-[0.98]">
             <FaDownload className="text-sm" /> {t('cv.download')}
           </a>
           <button
             type="button"
             onClick={() => window.print()}
-            className="inline-flex items-center gap-2 min-h-[44px] px-5 rounded-xl font-semibold glass-card border border-[rgb(var(--border))] text-[rgb(var(--foreground))] transition-transform active:scale-[0.98]">
+            className="press max-md:justify-center max-md:min-h-12 max-md:px-3 max-md:rounded-[var(--radius-btn)] max-md:bg-[rgb(var(--surface))]! max-md:border-[rgb(var(--border-subtle))]! inline-flex items-center gap-2 min-h-[44px] px-5 rounded-xl font-semibold glass-card border border-[rgb(var(--border))] text-[rgb(var(--foreground))] transition-transform active:scale-[0.98]">
             <FaPrint className="text-sm" /> {t('cv.print')}
           </button>
         </div>
       </div>
 
       {/* The sheet. `cv-sheet` is what the print stylesheet keeps. */}
-      <article className="cv-sheet glass-card print:bg-transparent print:border-0 print:shadow-none rounded-2xl border border-[rgb(var(--border))]/60 p-6 sm:p-10">
-        <header className="pb-5 mb-6 border-b border-[rgb(var(--border))]">
+      {/* On a phone the sheet drops its card chrome (a padded card inside a
+          padded page): the CV runs on the page itself. */}
+      <article className="cv-sheet glass-card print:bg-transparent print:border-0 print:shadow-none rounded-2xl border border-[rgb(var(--border))]/60 p-6 sm:p-10 [@media_screen_and_(max-width:47.99rem)]:bg-transparent! [@media_screen_and_(max-width:47.99rem)]:border-0! [@media_screen_and_(max-width:47.99rem)]:shadow-none! [@media_screen_and_(max-width:47.99rem)]:rounded-none! [@media_screen_and_(max-width:47.99rem)]:p-0!">
+        <header className="pb-5 mb-6 border-b border-[rgb(var(--border))] [@media_screen_and_(max-width:47.99rem)]:pb-6 [@media_screen_and_(max-width:47.99rem)]:mb-8 [@media_screen_and_(max-width:47.99rem)]:border-[rgb(var(--border-subtle))]">
           {/* The name is written in Latin on both CVs; lang="en" keeps the
               display face's tracking, which :lang(ar) resets. */}
           <h2 lang="en" className="font-display text-3xl font-bold text-[rgb(var(--foreground))]">
             {cv.contact.name}
           </h2>
           <p className="text-[rgb(var(--primary))] font-semibold mt-1">{cv.contact.role}</p>
-          <ul className="flex flex-wrap gap-x-5 gap-y-1.5 mt-4 text-xs text-[rgb(var(--muted-foreground))]">
+          <ul className="flex flex-wrap gap-x-5 gap-y-1.5 mt-4 text-xs text-[rgb(var(--muted-foreground))] [@media_screen_and_(max-width:47.99rem)]:gap-y-0 [@media_screen_and_(max-width:47.99rem)]:text-sm [@media_screen_and_(max-width:47.99rem)]:mt-3">
             {contactItems.map((item) => (
-              <li key={item.text} className="flex items-center gap-1.5">
+              <li key={item.text} className="flex items-center gap-1.5 [@media_screen_and_(max-width:47.99rem)]:min-h-11 [@media_screen_and_(max-width:47.99rem)]:gap-2">
                 <span className="text-[rgb(var(--primary))]">{item.icon}</span>
                 {item.href ? (
-                  <a href={item.href} className="hover:text-[rgb(var(--primary))]" dir="ltr">
+                  <a href={item.href} className="hover:text-[rgb(var(--primary))] [@media_screen_and_(max-width:47.99rem)]:inline-flex [@media_screen_and_(max-width:47.99rem)]:items-center [@media_screen_and_(max-width:47.99rem)]:min-h-11" dir="ltr">
                     {item.text}
                   </a>
                 ) : (

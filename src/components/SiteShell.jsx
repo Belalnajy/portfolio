@@ -56,6 +56,23 @@ const ShellContent = ({ children }) => {
     });
   }, []);
 
+  // Smooth anchor scrolling switches on only after the page has loaded and
+  // the browser has settled on the URL's #section (see globals.css), so a
+  // link from another page lands on its section without a long glide.
+  useEffect(() => {
+    const root = document.documentElement;
+    let frame = 0;
+    const enable = () => {
+      frame = requestAnimationFrame(() => root.setAttribute('data-smooth', ''));
+    };
+    if (document.readyState === 'complete') enable();
+    else window.addEventListener('load', enable, { once: true });
+    return () => {
+      window.removeEventListener('load', enable);
+      cancelAnimationFrame(frame);
+    };
+  }, []);
+
   // One toast at a time: a new one restarts the clock, so it is never hidden
   // early by the timer of the toast it replaced.
   const hideTimer = useRef(null);
@@ -129,11 +146,11 @@ const ShellContent = ({ children }) => {
             {children}
           </main>
           <Footer />
-          {/* Keeps the footer's last line clear of the phone tab bar. */}
-          <div className="h-16 md:hidden" aria-hidden="true" />
           {/* Floating controls come after the page in the DOM, so the tab
               order is navigation, content, footer, then these; their fixed
-              positioning places them on screen regardless. */}
+              positioning places them on screen regardless. On phones the tab
+              bar's centre button is the way to get in touch (a sheet); from
+              md the floating dock below takes over. */}
           <MobileTabBar />
           {/* The ways to get in touch that float over every page, grouped as
               one complementary landmark rather than loose content. */}

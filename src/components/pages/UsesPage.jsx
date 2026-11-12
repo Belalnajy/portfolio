@@ -12,22 +12,22 @@ const UsesContent = () => {
   const groups = t('uses.groups', { returnObjects: true });
 
   return (
-    <div className="container mx-auto px-4 sm:px-6 pt-28 pb-20 max-w-4xl text-start">
-      <header className="mb-12">
-        <h1 className="font-display text-4xl sm:text-5xl font-bold text-[rgb(var(--foreground))]">
+    <div className="container mx-auto px-5 sm:px-6 pt-28 m-page-top pb-20 max-md:pb-14 max-w-4xl text-start">
+      <header className="mb-12 max-md:mb-8">
+        <h1 className="font-display text-4xl sm:text-5xl font-bold text-[rgb(var(--foreground))] type-h1">
           {t('uses.title')}
         </h1>
-        <p className="text-[rgb(var(--muted-foreground))] text-lg mt-3 leading-relaxed">
+        <p className="text-[rgb(var(--muted-foreground))] text-lg mt-3 leading-relaxed type-body">
           {t('uses.subtitle')}
         </p>
       </header>
 
-      <div className="grid sm:grid-cols-2 gap-5">
+      <div className="grid sm:grid-cols-2 gap-5 max-md:gap-3">
         {(Array.isArray(groups) ? groups : []).map((group, index) => (
           <Reveal as="section" y={20} delay={revealDelay(index)}
             key={group.heading}
-            className="glass-card rounded-2xl border border-[rgb(var(--border))]/60 p-6">
-            <h2 className="flex items-center gap-3 font-display text-lg font-bold text-[rgb(var(--foreground))] mb-4">
+            className="m-card glass-card rounded-2xl border border-[rgb(var(--border))]/60 p-6">
+            <h2 className="flex items-center gap-3 font-display text-lg font-bold text-[rgb(var(--foreground))] mb-4 type-h3">
               <span className="inline-flex items-center justify-center w-10 h-10 rounded-xl bg-[rgb(var(--muted))]/40 border border-[rgb(var(--border))] text-[rgb(var(--muted-foreground))]">
                 {ICONS[index % ICONS.length]}
               </span>
@@ -45,7 +45,7 @@ const UsesContent = () => {
         ))}
       </div>
 
-      <p className="text-center text-sm text-[rgb(var(--muted-foreground))] mt-10 max-w-2xl mx-auto leading-relaxed">
+      <p className="text-center text-sm text-[rgb(var(--muted-foreground))] mt-10 max-md:mt-8 max-md:text-start max-w-2xl mx-auto leading-relaxed">
         {t('uses.note')}
       </p>
     </div>

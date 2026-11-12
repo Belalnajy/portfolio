@@ -1248,6 +1248,26 @@ const ar = {
         subtitle: 'إجابات فورية عن بلال',
         tooltip: 'كيف أقدر أساعدك؟'
       },
+      // واجهة الهاتف: قائمة التنقل وشريط التبويب ونافذة التواصل.
+      shell: {
+        search: 'ابحث في الصفحات والمشاريع',
+        group_main: 'الأقسام الأساسية',
+        group_more: 'المزيد',
+        theme: 'المظهر',
+        theme_dark: 'داكن',
+        theme_light: 'فاتح',
+        language: 'اللغة',
+        start_project: 'ابدأ مشروعك',
+        tab_work: 'أعمالي',
+        contact_title: 'تواصل معي',
+        contact_subtitle: 'رد حقيقي خلال 24 ساعة.',
+        whatsapp_hint: 'تحدث معي مباشرة',
+        faq_hint: 'إجابات عن الأسئلة الشائعة',
+        message: 'اكتب رسالة',
+        message_hint: 'أخبرني عن مشروعك',
+        email: 'البريد الإلكتروني',
+        close_contact: 'إغلاق خيارات التواصل'
+      },
       // أسماء ونصوص لقارئات الشاشة فقط، لا تظهر على الصفحة.
       a11y: {
         skip_to_content: 'تخطَّ إلى المحتوى',
@@ -1270,6 +1290,44 @@ const ar = {
         review_n: 'المراجعة {{n}} من {{count}}',
         logos_pause: 'إيقاف حركة الشعارات',
         logos_play: 'تشغيل حركة الشعارات'
+      },
+      // أقسام الصفحة الرئيسية على الموبايل.
+      mHome: {
+        eyebrow: {
+          brands: 'العملاء',
+          testimonials: 'تقييمات العملاء',
+          process: 'خطوات العمل',
+          about: 'من أنا',
+          contact: 'ابدأ مشروعك'
+        },
+        reviewers: 'أصحاب التقييمات',
+        contact_ways: 'طرق التواصل',
+        form_title: 'أو اكتب لي رسالة'
+      },
+      // Inner pages and project UI on phones: the short labels of the
+      // two-up action rows and the few controls the mobile layouts add.
+      mPages: {
+        case_study_short: 'دراسة الحالة',
+        live_short: 'الموقع',
+        app_store_short: 'App Store',
+        source_short: 'الكود',
+        next_short: 'التالي',
+        share: 'مشاركة',
+        link_copied: 'تم نسخ الرابط',
+        // Section eyebrows on phones, in the voice of mHome.eyebrow.
+        eyebrow: {
+          featured: 'أعمال مختارة',
+          work: 'معرض الأعمال',
+          services: 'ما أقدّمه',
+          process: 'خطوات العمل',
+          packages: 'الباقات',
+          skills: 'المهارات',
+          certifications: 'الشهادات',
+          experience: 'الخبرة',
+          suite: 'منظومة المنتجات',
+          screens: 'الشاشات',
+          stack: 'التقنيات'
+        }
       }
     }
 };

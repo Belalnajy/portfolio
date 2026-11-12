@@ -6,13 +6,13 @@ import { useTranslation } from 'react-i18next';
 const TestimonialsContent = () => {
   const { t } = useTranslation();
   return (
-    <div className="pt-28">
-      <header className="container mx-auto px-6 text-start">
+    <div className="pt-28 m-page-top">
+      <header className="container mx-auto px-6 max-sm:px-5 text-start">
         <div className="max-w-6xl mx-auto">
-          <h1 className="font-display text-4xl sm:text-5xl font-bold text-[rgb(var(--foreground))]">
+          <h1 className="font-display text-4xl sm:text-5xl font-bold text-[rgb(var(--foreground))] type-h1">
             {t('testimonials_page.title')}
           </h1>
-          <p className="text-[rgb(var(--muted-foreground))] text-lg mt-3 leading-relaxed max-w-2xl">
+          <p className="text-[rgb(var(--muted-foreground))] text-lg mt-3 leading-relaxed max-w-2xl type-body">
             {t('testimonials_page.subtitle')}
           </p>
         </div>

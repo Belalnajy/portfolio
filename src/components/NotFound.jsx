@@ -31,9 +31,13 @@ const NotFound = () => {
         className="absolute inset-0 dot-grid [mask-image:radial-gradient(ellipse_60%_50%_at_50%_45%,black,transparent)]"
         aria-hidden="true"
       />
-      <div className="absolute -top-32 start-1/3 w-[30rem] h-[30rem] bg-[rgb(var(--accent))]/8 rounded-full blur-[130px] pointer-events-none" aria-hidden="true" />
+      <div className="max-md:hidden absolute -top-32 start-1/3 w-[30rem] h-[30rem] bg-[rgb(var(--accent))]/8 rounded-full blur-[130px] pointer-events-none" aria-hidden="true" />
+      {/* Phones: the same warm light as a gradient, not a 130px blur. */}
+      <div className="md:hidden absolute inset-x-0 top-0 h-[28rem] pointer-events-none bg-[radial-gradient(70%_60%_at_50%_10%,rgb(var(--accent)/0.12),transparent_72%)]" aria-hidden="true" />
 
-      <div className="container mx-auto px-6 relative z-10 text-center py-24">
+      {/* On a phone the page is a column the height of the screen, with the
+          way out at the bottom, under the thumb. */}
+      <div className="container mx-auto px-6 relative z-10 text-center py-24 max-md:px-5 max-md:pt-20 max-md:pb-[max(1.5rem,env(safe-area-inset-bottom))] max-md:min-h-[100svh] max-md:flex max-md:flex-col">
         <p className="font-display font-bold leading-none select-none mb-6" aria-hidden="true">
           <span className="block text-[7rem] sm:text-[11rem] text-outline">404</span>
         </p>
@@ -48,22 +52,22 @@ const NotFound = () => {
           The work, however, very much does.
         </p>
 
-        <div {...english} className="flex flex-col sm:flex-row gap-3 justify-center items-center mb-10">
+        <div {...english} className="flex flex-col sm:flex-row gap-3 justify-center items-center mb-10 max-md:mt-auto max-md:pt-10 max-md:items-stretch max-md:mb-6">
           <a
-            href={`${home}/`}
-            className="inline-flex items-center gap-2 min-h-[48px] px-7 rounded-xl font-semibold bg-[rgb(var(--primary))] text-[rgb(var(--accent-contrast))] hover:bg-[rgb(var(--primary))]/90 shadow-lg transition-all active:scale-[0.98]">
+            href={home || '/'}
+            className="press max-md:justify-center max-md:min-h-[52px] max-md:rounded-[var(--radius-btn)] inline-flex items-center gap-2 min-h-[48px] px-7 rounded-xl font-semibold bg-[rgb(var(--primary))] text-[rgb(var(--accent-contrast))] hover:bg-[rgb(var(--primary))]/90 shadow-lg transition-all active:scale-[0.98]">
             <FaHome aria-hidden="true" className="text-sm" />
             Home
           </a>
           <a
             href={`${home}/work`}
-            className="inline-flex items-center gap-2 min-h-[48px] px-7 rounded-xl font-semibold border border-[rgb(var(--border-control))] text-[rgb(var(--foreground))] hover:border-[rgb(var(--primary))] hover:text-[rgb(var(--primary))] transition-colors">
+            className="press max-md:justify-center max-md:min-h-[52px] max-md:rounded-[var(--radius-btn)] inline-flex items-center gap-2 min-h-[48px] px-7 rounded-xl font-semibold border border-[rgb(var(--border-control))] text-[rgb(var(--foreground))] hover:border-[rgb(var(--primary))] hover:text-[rgb(var(--primary))] transition-colors">
             <FaLayerGroup aria-hidden="true" className="text-sm" />
             Work
           </a>
           <a
-            href={`${home}/#contact`}
-            className="inline-flex items-center gap-2 min-h-[48px] px-7 rounded-xl font-semibold text-[rgb(var(--muted-foreground))] hover:text-[rgb(var(--foreground))] transition-colors">
+            href={home ? `${home}#contact` : '/#contact'}
+            className="press max-md:justify-center max-md:min-h-[52px] inline-flex items-center gap-2 min-h-[48px] px-7 rounded-xl font-semibold text-[rgb(var(--muted-foreground))] hover:text-[rgb(var(--foreground))] transition-colors">
             <FaEnvelope aria-hidden="true" className="text-sm" />
             Contact
           </a>

@@ -1,6 +1,6 @@
 "use client";
 import { useState, useEffect, useRef } from 'react';
-import { m, AnimatePresence, useReducedMotion } from 'framer-motion';
+import { m, AnimatePresence, useReducedMotion, useDragControls } from 'framer-motion';
 import {
   FaTimes,
   FaPaperPlane,
@@ -16,11 +16,29 @@ import {
 } from 'react-icons/fa';
 import { useTranslation } from 'react-i18next';
 import { useEscapeLayer } from '../lib/useEscapeLayer';
+import { useFocusTrap } from '../lib/useFocusTrap';
+
+// Below md the panel is a bottom sheet; from md it floats in the corner.
+const PHONE = '(max-width: 767.98px)';
+const SHEET_SPRING = { type: 'spring', stiffness: 420, damping: 40 };
 
 const FaqAssistant = () => {
   const { t } = useTranslation();
   const [isOpen, setIsOpen] = useState(false);
   const reduceMotion = useReducedMotion();
+  const dragControls = useDragControls();
+  // Read when the panel opens, which is when the choice matters.
+  const [isPhone, setIsPhone] = useState(false);
+  // The desktop launcher bobs gently; it only exists from xl up, and an
+  // animation loop on a hidden button would still run on every phone.
+  const [isDesktop, setIsDesktop] = useState(false);
+  useEffect(() => {
+    const desktop = window.matchMedia('(min-width: 1280px)');
+    const update = () => setIsDesktop(desktop.matches);
+    update();
+    desktop.addEventListener('change', update);
+    return () => desktop.removeEventListener('change', update);
+  }, []);
   const panelRef = useRef(null);
   const launcherRef = useRef(null);
   // Whatever had focus when the panel opened (the desktop launcher or the
@@ -29,21 +47,29 @@ const FaqAssistant = () => {
 
   const openPanel = () => {
     openerRef.current = document.activeElement;
+    setIsPhone(window.matchMedia(PHONE).matches);
     setIsOpen(true);
   };
 
-  // Below xl the contact dock owns the only visible launcher; it asks
-  // for the panel with an event so neither component has to know the other.
+  // Below xl the contact dock (md to xl) or the phone's contact sheet owns
+  // the only visible launcher; it asks for the panel with an event so neither
+  // component has to know the other.
   useEffect(() => {
     const open = () => {
       openerRef.current = document.activeElement;
+      setIsPhone(window.matchMedia(PHONE).matches);
       setIsOpen(true);
     };
     window.addEventListener('faq:open', open);
     return () => window.removeEventListener('faq:open', open);
   }, []);
 
-  // A non-modal dialog: focus moves into it on open, Escape closes it, and
+  // On phones the panel is a sheet over a scrim, so it is modal there: Tab
+  // stays inside it. Declared before the effect below, which then moves focus
+  // onto the panel itself.
+  useFocusTrap(panelRef, isOpen && isPhone);
+
+  // From md, a non-modal dialog: focus moves into it on open, Escape closes it, and
   // focus returns to the control that opened it (or, if that is gone, as the
   // dock's menu item is once the dock folds, to the dock's own button).
   useEffect(() => {
@@ -63,7 +89,11 @@ const FaqAssistant = () => {
       const visible = (el) => el && el.isConnected && el.getClientRects().length > 0;
       const target = visible(opener)
         ? opener
-        : [launcher, document.querySelector('#contact-dock > button[aria-expanded]')].find(visible);
+        : [
+            launcher,
+            document.querySelector('#contact-dock > button[aria-expanded]'),
+            document.getElementById('tabbar-contact'),
+          ].find(visible);
       target?.focus({ preventScroll: true });
     };
   }, [isOpen]);
@@ -72,7 +102,8 @@ const FaqAssistant = () => {
   const [messages, setMessages] = useState([
     {
       id: 1,
-      text: 'Welcome! Please choose your preferred language / أهلاً بك! يرجى اختيار اللغة المفضل',
+      // Shown as two lines, each in its own language and direction.
+      text: ['Welcome! Please choose your preferred language.', 'أهلاً بك! اختر لغتك المفضلة.'],
       sender: 'bot',
       isLanguageSelect: true,
     },
@@ -457,7 +488,7 @@ const FaqAssistant = () => {
       ...prev,
       {
         id: Date.now(),
-        text: lang === 'en' ? 'English 🇺🇸' : 'العربية 🇪🇬',
+        text: lang === 'en' ? 'English' : 'العربية',
         sender: 'user',
       },
       { id: Date.now() + 1, text: greeting, sender: 'bot' },
@@ -481,27 +512,67 @@ const FaqAssistant = () => {
   };
 
   return (
-    <div className="fixed bottom-[calc(max(1rem,env(safe-area-inset-bottom))+4.5rem)] md:bottom-6 xl:bottom-24 end-4 md:end-6 z-[9999] flex flex-col items-end">
+    <div className="fixed bottom-6 xl:bottom-24 end-4 md:end-6 z-[9999] flex flex-col items-end">
+      {/* Phones: a scrim behind the sheet; a tap on it closes the panel. */}
+      <AnimatePresence>
+        {isOpen && isPhone && (
+          <m.div
+            key="faq-scrim"
+            aria-hidden="true"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1, transition: { duration: 0.24 } }}
+            exit={{ opacity: 0, transition: { duration: 0.2 } }}
+            onClick={() => setIsOpen(false)}
+            className="md:hidden fixed inset-0 bg-[rgb(var(--scrim))]/60"
+          />
+        )}
+      </AnimatePresence>
       <AnimatePresence>
         {isOpen && (
           <m.div
             ref={panelRef}
             id="faq-panel"
             role="dialog"
+            aria-modal={isPhone ? 'true' : undefined}
             aria-labelledby="faq-panel-title"
             tabIndex={-1}
-            initial={{ opacity: 0, y: 20, scale: 0.95 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: 20, scale: 0.95 }}
-            className="focus:outline-none mb-4 w-[calc(100vw-2rem)] max-w-[350px] md:w-[400px] h-[70dvh] max-h-[500px] flex flex-col shadow-2xl rounded-2xl overflow-hidden border border-[rgb(var(--primary))]/40 bg-[rgb(var(--card))]">
+            initial={isPhone ? (reduceMotion ? { opacity: 0 } : { y: '100%' }) : { opacity: 0, y: 20, scale: 0.95 }}
+            animate={isPhone ? (reduceMotion ? { opacity: 1 } : { y: 0, transition: SHEET_SPRING }) : { opacity: 1, y: 0, scale: 1 }}
+            exit={
+              isPhone
+                ? reduceMotion
+                  ? { opacity: 0, transition: { duration: 0.16 } }
+                  : { y: '100%', transition: { duration: 0.24, ease: [0.4, 0, 1, 1] } }
+                : { opacity: 0, y: 20, scale: 0.95 }
+            }
+            // On phones the sheet can be pulled down by its header to close.
+            drag={isPhone && !reduceMotion ? 'y' : false}
+            dragListener={false}
+            dragControls={dragControls}
+            dragConstraints={{ top: 0, bottom: 0 }}
+            dragElastic={{ top: 0, bottom: 0.7 }}
+            dragSnapToOrigin
+            onDragEnd={(_, info) => {
+              if (info.offset.y > 90 || info.velocity.y > 600) setIsOpen(false);
+            }}
+            className="focus:outline-none mb-4 w-[calc(100vw-2rem)] max-w-[350px] md:w-[400px] h-[70dvh] max-h-[500px] flex flex-col shadow-2xl rounded-2xl overflow-hidden border border-[rgb(var(--primary))]/40 bg-[rgb(var(--card))] max-md:fixed max-md:inset-x-0 max-md:bottom-0 max-md:mb-0 max-md:w-full max-md:max-w-none max-md:h-auto max-md:max-h-[min(85dvh,640px)] max-md:rounded-none max-md:rounded-t-[24px] max-md:border-x-0 max-md:border-b-0 max-md:border-[rgb(var(--border-subtle))] max-md:bg-[rgb(var(--surface-raised))] max-md:shadow-[var(--elev-3)]">
+            {/* Grab handle (phones). The header below is the drag area. */}
+            <div
+              aria-hidden="true"
+              onPointerDown={(event) => isPhone && dragControls.start(event)}
+              className="md:hidden flex justify-center pt-2.5 pb-1 touch-none">
+              <span className="w-9 h-[5px] rounded-full bg-[rgb(var(--muted-foreground))]/35" />
+            </div>
             {/* Header */}
-            <div className="p-4 bg-gradient-to-r from-[rgb(var(--accent))]/15 to-[rgb(var(--accent-hover))]/10 flex items-center justify-between border-b border-[rgb(var(--border))]">
+            <div
+              onPointerDown={(event) => isPhone && !event.target.closest('button') && dragControls.start(event)}
+              className="p-4 max-md:px-[var(--m-gutter)] max-md:pt-2 max-md:pb-3 bg-gradient-to-r from-[rgb(var(--accent))]/15 to-[rgb(var(--accent-hover))]/10 max-md:bg-none max-md:touch-none flex items-center justify-between border-b border-[rgb(var(--border))] max-md:border-b-0">
               <div className="flex items-center gap-3">
-                <div aria-hidden="true" className="p-2 bg-gradient-to-r from-[rgb(var(--accent))] to-[rgb(var(--accent-hover))] rounded-lg text-[rgb(var(--accent-contrast))]">
+                <div aria-hidden="true" className="p-2 max-md:p-0 max-md:w-11 max-md:h-11 max-md:rounded-[13px] max-md:flex max-md:items-center max-md:justify-center max-md:text-xl bg-gradient-to-r from-[rgb(var(--accent))] to-[rgb(var(--accent-hover))] rounded-lg text-[rgb(var(--accent-contrast))]">
                   <FaUserAstronaut />
                 </div>
                 <div>
-                  <h2 id="faq-panel-title" className="font-bold text-[rgb(var(--foreground))]">
+                  <h2 id="faq-panel-title" className="font-bold text-[rgb(var(--foreground))] max-md:font-display max-md:text-[22px] max-md:leading-tight">
                     {t('faq.title')}
                   </h2>
                   <p className="text-xs text-[rgb(var(--success))]">
@@ -513,7 +584,7 @@ const FaqAssistant = () => {
                 type="button"
                 onClick={() => setIsOpen(false)}
                 aria-label={t('a11y.faq_close')}
-                className="shrink-0 w-11 h-11 -me-2 flex items-center justify-center rounded-lg text-[rgb(var(--muted-foreground))] hover:text-[rgb(var(--destructive))] transition-colors">
+                className="press shrink-0 w-11 h-11 -me-2 max-md:-me-1.5 flex items-center justify-center rounded-lg max-md:rounded-full max-md:bg-[rgb(var(--text))]/[0.06] text-[rgb(var(--muted-foreground))] hover:text-[rgb(var(--destructive))] transition-colors">
                 <FaTimes aria-hidden="true" size={18} />
               </button>
             </div>
@@ -526,7 +597,7 @@ const FaqAssistant = () => {
               aria-live="polite"
               aria-label={t('a11y.faq_conversation')}
               tabIndex={0}
-              className="flex-1 overflow-y-auto p-4 space-y-4 custom-scrollbar text-start">
+              className="flex-1 max-md:flex-auto min-h-0 overflow-y-auto focus-visible:outline-offset-[-2px]! p-4 max-md:px-[var(--m-gutter)] space-y-4 custom-scrollbar text-start">
               {messages.map((msg) => (
                 <div key={msg.id} className="space-y-3">
                   <m.div
@@ -546,9 +617,16 @@ const FaqAssistant = () => {
                       }`}
                       // Each bubble takes its direction from its own text and
                       // is voiced in the chat's language once one is chosen.
-                      dir="auto"
+                      dir={msg.isLanguageSelect ? undefined : 'auto'}
                       lang={msg.isLanguageSelect ? undefined : language || undefined}>
-                      {msg.text}
+                      {msg.isLanguageSelect ? (
+                        <>
+                          <span lang="en" dir="ltr" className="block text-start">{msg.text[0]}</span>
+                          <span lang="ar" dir="rtl" className="block text-start mt-1.5 font-[family-name:var(--font-cairo)]">{msg.text[1]}</span>
+                        </>
+                      ) : (
+                        msg.text
+                      )}
                     </div>
                   </m.div>
 
@@ -559,14 +637,14 @@ const FaqAssistant = () => {
                         lang="en"
                         onClick={() => handleLanguageSelect('en')}
                         className="min-h-[44px] px-4 py-2 bg-[rgb(var(--accent))] rounded-xl text-sm font-bold text-[rgb(var(--accent-contrast))] hover:bg-[rgb(var(--accent))] transition-all shadow-lg">
-                        English <span aria-hidden="true">🇺🇸</span>
+                        English
                       </button>
                       <button
                         type="button"
                         lang="ar"
                         onClick={() => handleLanguageSelect('ar')}
                         className="min-h-[44px] px-4 py-2 bg-[rgb(var(--accent))] rounded-xl text-sm font-bold text-[rgb(var(--accent-contrast))] hover:bg-[rgb(var(--accent))] transition-all shadow-lg font-arabic">
-                        العربية <span aria-hidden="true">🇪🇬</span>
+                        العربية
                       </button>
                     </div>
                   )}
@@ -602,7 +680,7 @@ const FaqAssistant = () => {
             {/* Suggestions (Only show if language is selected) */}
             {language && (
               <div
-                className="p-4 bg-[rgb(var(--background))]/50 border-t border-[rgb(var(--border))] space-y-3"
+                className="p-4 max-md:pb-[max(1rem,env(safe-area-inset-bottom))] bg-[rgb(var(--background))]/50 border-t border-[rgb(var(--border))] space-y-3"
                 lang={language}
                 dir={language === 'ar' ? 'rtl' : 'ltr'}>
                 <div
@@ -670,14 +748,14 @@ const FaqAssistant = () => {
       {/* Floating Button */}
       <m.button
         animate={
-          !isOpen && !reduceMotion
+          isDesktop && !isOpen && !reduceMotion
             ? {
                 y: [0, -10, 0],
               }
             : {}
         }
         transition={
-          !isOpen && !reduceMotion
+          isDesktop && !isOpen && !reduceMotion
             ? {
                 duration: 3,
                 repeat: Infinity,

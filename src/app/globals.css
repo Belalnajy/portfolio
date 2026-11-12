@@ -8,6 +8,10 @@
   max-width: 75rem;
   margin-inline: auto;
   padding-inline: 1.5rem;
+  /* Phones: the 20px mobile gutter (--m-gutter), the same on every page. */
+  @media (width < 40rem) {
+    padding-inline: var(--m-gutter);
+  }
 }
 /* Steps in with Tailwind's container below xl, so a .shell section and a
    `container` section start at the same x at every width, not only at 1440. */
@@ -92,42 +96,42 @@
     background-color: rgb(255 255 255);
   }
 
-  /* The client-logo wall (BrandLogos) in the dark theme. A light plate
-     hugging each mark made a patchwork of bright rectangles, and white parts
-     of a logo vanished on it. Instead every tile is one even, mid-dark slate
-     (about #5A6573 once over the page): black marks still read on it (about
-     3.4:1) and white ones clearly (about 6:1), and it stays quieter than the
-     content around it. Marks keep their colour at 90%. */
+  /* The client-logo wall (BrandLogos) in the dark theme. Grey slate tiles
+     read as placeholder slabs, and a light plate hugging each mark made a
+     patchwork. Instead every tile is the same white chip as on the light
+     theme, so each mark shows its own colours and a logo drawn on its own
+     white square melts into the chip. The whole tile is dimmed with opacity
+     (cheap, even inside the moving marquee), which dims the chip and any
+     white in the logo alike, so they stay one surface and sit under the
+     content instead of glaring. */
   :root:not([data-theme='light']) .logo-tile {
-    background: rgb(112 124 140 / 0.62);
-    border-color: rgb(112 124 140 / 0.35);
+    background: rgb(255 255 255);
+    border-color: transparent;
+    box-shadow: none;
+    opacity: 0.9;
   }
   :root:not([data-theme='light']) .logo-tile:hover {
-    background: rgb(112 124 140 / 0.75);
+    background: rgb(255 255 255);
+    opacity: 1;
   }
   :root:not([data-theme='light']) .logo-tile .logo-mark {
     background-color: transparent;
     padding: 0;
     filter: none;
-    opacity: 0.9;
-  }
-  :root:not([data-theme='light']) .logo-tile:hover .logo-mark {
     opacity: 1;
   }
   /* Per-logo flags from BrandLogos.jsx. A white mark ('white') would vanish
-     on the light theme's white tiles, and a navy or purple one ('dim') on the
-     dark theme's slate; each is drawn as a silhouette in the theme where it
-     would vanish, so every tile stays the same and every mark reads. */
-  :root[data-theme='light'] .logo-white .logo-mark {
+     on the light tiles (both themes now), so it is drawn as a dark
+     silhouette. 'dim' (navy or purple marks) needed lifting on the old slate
+     tiles; on light tiles they read as they are, so the flag no longer
+     changes anything and is kept only as a record. */
+  :root[data-theme='light'] .logo-white .logo-mark,
+  :root:not([data-theme='light']) .logo-tile.logo-white .logo-mark {
     filter: brightness(0);
     opacity: 0.8;
   }
-  :root:not([data-theme='light']) .logo-dim .logo-mark {
-    filter: brightness(0) invert(1);
-    opacity: 0.85;
-  }
   :root[data-theme='light'] .logo-white:hover .logo-mark,
-  :root:not([data-theme='light']) .logo-dim:hover .logo-mark {
+  :root:not([data-theme='light']) .logo-tile.logo-white:hover .logo-mark {
     opacity: 1;
   }
 
@@ -281,6 +285,39 @@
   --brand-js: 247 223 30;
   --brand-android: 61 220 132;
   --brand-neutral: 148 163 184;
+
+  /* --- mobile system (layout, motion, elevation) --- *
+   * Shared by every section; the utilities that use them are at the end of
+   * this file under MOBILE SYSTEM. */
+  --m-gutter: 1.25rem;               /* 20px page gutter below 640px */
+  --header-h: 56px;                  /* 64px from md, 80px from xl (below) */
+  --tabbar-h: 64px;
+  /* The floating tab bar plus the gap under it and the gap above it: what
+     content needs below it to clear the bar. 0 from md up (no tab bar). */
+  --tabbar-total: calc(var(--tabbar-h) + max(8px, env(safe-area-inset-bottom)) + 8px);
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --dur-press: 120ms;
+  --dur-ui: 220ms;
+  --dur-sheet: 320ms;
+  --radius-card: 1.25rem;
+  --radius-btn: 0.875rem;
+  /* Elevation on ink: black shadows are invisible on a near-black page, so a
+     surface lifts with a faint inner top highlight plus a soft shadow. */
+  --elev-1: inset 0 1px 0 rgb(255 255 255 / 0.04), 0 1px 2px rgb(0 0 0 / 0.22);
+  --elev-2: inset 0 1px 0 rgb(255 255 255 / 0.05), 0 10px 24px -10px rgb(0 0 0 / 0.5);
+  --elev-3: inset 0 1px 0 rgb(255 255 255 / 0.06), 0 18px 40px -14px rgb(0 0 0 / 0.65),
+    0 2px 6px rgb(0 0 0 / 0.3);
+}
+@media (min-width: 48rem) {
+  :root {
+    --header-h: 64px;
+    --tabbar-total: 0px;
+  }
+}
+@media (min-width: 80rem) {
+  :root {
+    --header-h: 80px;
+  }
 }
 
 /* Light Mode Colors */
@@ -308,6 +345,10 @@
   --scrim: 16 23 31;
   --on-scrim: 232 237 242;
   --on-scrim-muted: 190 200 211;
+  /* White cards on warm paper: a warm two-layer shadow (contact + ambient). */
+  --elev-1: 0 1px 2px rgb(74 52 24 / 0.06), 0 4px 14px -6px rgb(74 52 24 / 0.1);
+  --elev-2: 0 2px 4px rgb(74 52 24 / 0.06), 0 14px 30px -12px rgb(74 52 24 / 0.16);
+  --elev-3: 0 4px 10px rgb(74 52 24 / 0.08), 0 22px 46px -14px rgb(74 52 24 / 0.24);
 }
 
 /* Light Mode Specific Styles */
@@ -327,12 +368,18 @@
     font-family: var(--font-cairo), sans-serif;
   }
   html {
-    scroll-padding-top: 80px;
+    /* Anchors land below the fixed header at every width (56/64/80px). */
+    scroll-padding-top: var(--header-h);
+    /* The press states (.press, .press-tint) replace the grey tap flash. */
+    -webkit-tap-highlight-color: transparent;
   }
 
-  /* Anchor navigation animates only for visitors who welcome motion. */
+  /* Anchor navigation animates only for visitors who welcome motion, and
+     only within a page that has loaded: arriving from another page at
+     /#contact jumps straight there instead of gliding ~8000px down.
+     SiteShell sets data-smooth once the page has loaded. */
   @media (prefers-reduced-motion: no-preference) {
-    html {
+    html[data-smooth] {
       scroll-behavior: smooth;
     }
   }
@@ -483,11 +530,22 @@
     --reveal-scale: 1;
     --reveal-delay: 0s;
     --reveal-d: 0.45s;
+    /* What the keyframes actually use: the values above as given, except on
+       phones, where any reveal rises at most 12px over at most 280ms on the
+       app easing, whatever offset or duration the component asked for. */
+    --reveal-tx: var(--reveal-x);
+    --reveal-ty: var(--reveal-y);
+    --reveal-dur: var(--reveal-d);
+    --reveal-ease: ease-out;
   }
   @media (max-width: 767px) {
     .reveal,
     .reveal-rise {
-      --reveal-d: 0.3s;
+      --reveal-d: 0.28s;
+      --reveal-tx: clamp(-12px, var(--reveal-x), 12px);
+      --reveal-ty: clamp(-12px, var(--reveal-y), 12px);
+      --reveal-dur: min(var(--reveal-d), 0.28s);
+      --reveal-ease: var(--ease-out);
     }
   }
   .js .reveal:not([data-visible='done']) {
@@ -497,7 +555,7 @@
     animation: revealFailsafe 0s linear 8s forwards;
   }
   .reveal[data-visible='in'] {
-    animation: reveal var(--reveal-d) ease-out var(--reveal-delay) both;
+    animation: reveal var(--reveal-dur) var(--reveal-ease) var(--reveal-delay) both;
   }
   .reveal[data-visible='done'] {
     opacity: 1;
@@ -505,14 +563,14 @@
   /* Same movement with no fade: for the element that is the page's largest
      paint, which must be visible in the very first frame. */
   .reveal-rise {
-    animation: revealRise var(--reveal-d) ease-out var(--reveal-delay) backwards;
+    animation: revealRise var(--reveal-dur) var(--reveal-ease) var(--reveal-delay) backwards;
   }
 }
 
 @keyframes reveal {
   from {
     opacity: 0;
-    transform: translate(var(--reveal-x), var(--reveal-y)) scale(var(--reveal-scale));
+    transform: translate(var(--reveal-tx), var(--reveal-ty)) scale(var(--reveal-scale));
   }
   to {
     opacity: 1;
@@ -525,7 +583,7 @@
 }
 @keyframes revealRise {
   from {
-    transform: translate(var(--reveal-x), var(--reveal-y)) scale(var(--reveal-scale));
+    transform: translate(var(--reveal-tx), var(--reveal-ty)) scale(var(--reveal-scale));
   }
 }
 
@@ -995,5 +1053,299 @@
   .animate-bounce,
   .animate-spin {
     animation: none !important;
+  }
+}
+
+/* ============================================================================
+   MOBILE SYSTEM  ·  the shared vocabulary for phones (tokens are on :root)
+   ----------------------------------------------------------------------------
+   Every section composes these instead of inventing its own spacing, card or
+   press state. Unless a rule says otherwise they apply on screens below 768px
+   only (never in print), so a section keeps its md:/lg: classes for the
+   desktop layout. They sit after the generated utilities in the same layer,
+   so below 768px they win over a plain utility (p-6, rounded-2xl, bg-*,
+   grid ...), and a max-md: utility does NOT override them: to change one
+   property on one element, use the important form, e.g. `max-md:p-4!`. The
+   card surface (.m-card fill, border, radius, shadow) is raised further so
+   it also beats the theme-scoped .glass-card rules; no `!` patch is needed to
+   get the m-card look on an element that also carries .glass-card.
+   ========================================================================== */
+@layer utilities {
+  /* Section rhythm at every width: 56px on phones, 80px from md (a drop-in
+     for py-20). */
+  .m-section {
+    padding-block: 3.5rem;
+  }
+  @media (min-width: 48rem) {
+    .m-section {
+      padding-block: 5rem;
+    }
+  }
+
+  /* Eyebrow over a heading. Phones only: from md the desktop design has no
+     eyebrows, so the element is hidden there (it still prints). :lang(ar)
+     drops the tracking and uppercase is a no-op in Arabic. */
+  .m-eyebrow {
+    font-size: 0.75rem;
+    line-height: 1.4;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: rgb(var(--accent));
+  }
+  @media screen and (min-width: 48rem) {
+    .m-eyebrow {
+      display: none;
+    }
+  }
+
+  @media screen and (max-width: 47.99rem) {
+    /* Alternate section background for the proof sections. */
+    .m-band {
+      background-color: rgb(var(--surface) / 0.4);
+      border-block: 1px solid rgb(var(--border-subtle));
+    }
+
+    /* First block of an inner page: clears the header plus 32px. */
+    .m-page-top {
+      padding-top: calc(var(--header-h) + 2rem);
+    }
+
+    /* The one card surface. No backdrop-filter: the fill is opaque. The
+       :root:is(...) prefix only raises specificity (it matches in both
+       themes), so this beats `:root[data-theme='light'] .glass-card`. */
+    :root:is([data-theme], :not([data-theme])) :is(.m-card, .m-card-flush) {
+      background-color: rgb(var(--surface));
+      border: 1px solid rgb(var(--border-subtle));
+      border-radius: var(--radius-card);
+      box-shadow: var(--elev-1);
+      backdrop-filter: none;
+    }
+    .m-card {
+      padding: 1.25rem;
+    }
+    /* Media on top, flush to the card's edge. */
+    .m-card-flush {
+      padding: 0;
+      overflow: hidden;
+    }
+
+    /* Horizontal snap rail that bleeds to the screen edges from inside a
+       .shell (or any box padded by --m-gutter). Only the rail scrolls, never
+       the page. Logical properties throughout, so it runs right to left. */
+    .m-rail {
+      display: flex;
+      gap: 0.75rem;
+      overflow-x: auto;
+      overscroll-behavior-x: contain;
+      scroll-snap-type: x mandatory;
+      scrollbar-width: none;
+      margin-inline: calc(-1 * var(--m-gutter));
+      padding-inline: var(--m-gutter);
+      scroll-padding-inline: var(--m-gutter);
+    }
+    .m-rail::-webkit-scrollbar {
+      display: none;
+    }
+    .m-rail > * {
+      flex: none;
+      scroll-snap-align: start;
+    }
+
+    /* Type scale. Family and colour stay with the element. */
+    .type-display {
+      font-size: clamp(2.25rem, 1.2rem + 4.4vw, 2.5rem);
+      line-height: 1.08;
+      font-weight: 700;
+      letter-spacing: -0.025em;
+    }
+    .type-h1 {
+      font-size: 2rem;
+      line-height: 1.12;
+    }
+    .type-h2 {
+      font-size: 1.75rem;
+      line-height: 1.18;
+    }
+    .type-h3 {
+      font-size: 1.25rem;
+      line-height: 1.3;
+    }
+    .type-body {
+      font-size: 1rem;
+      line-height: 1.65;
+    }
+    .type-small {
+      font-size: 0.875rem;
+      line-height: 1.5;
+    }
+    [dir='rtl'] .type-display,
+    [dir='rtl'] .type-h1 {
+      line-height: 1.45;
+    }
+    [dir='rtl'] .type-h2 {
+      line-height: 1.5;
+    }
+    [dir='rtl'] .type-h3 {
+      line-height: 1.6;
+    }
+    [dir='rtl'] .type-body {
+      line-height: 1.85;
+    }
+    [dir='rtl'] .type-small {
+      line-height: 1.75;
+    }
+
+    /* A bar of actions pinned to the bottom of a page that has no tab bar
+       (case studies). It steps away while the keyboard is up. */
+    .m-sticky-actions {
+      position: fixed;
+      inset-inline: 0;
+      bottom: 0;
+      z-index: 40;
+      padding: 0.75rem var(--m-gutter) calc(0.75rem + env(safe-area-inset-bottom));
+      background-color: rgb(var(--surface) / 0.9);
+      backdrop-filter: blur(12px) saturate(160%);
+      border-top: 1px solid rgb(var(--border-subtle));
+      transition: transform var(--dur-ui) var(--ease-out), visibility 0s linear 0s;
+    }
+    :root[data-typing] .m-sticky-actions {
+      transform: translateY(100%);
+      visibility: hidden;
+      transition: transform var(--dur-ui) var(--ease-out), visibility 0s linear var(--dur-ui);
+    }
+  }
+
+  /* Touch feedback. Phones and any device without hover (tablets) only, so a
+     desktop element keeps its own transition timing. */
+  @media screen and (max-width: 47.99rem), screen and (hover: none) {
+    .press {
+      transition: scale var(--dur-press) var(--ease-out), translate var(--dur-ui) var(--ease-out),
+        background-color var(--dur-ui) var(--ease-out), border-color var(--dur-ui) var(--ease-out),
+        color var(--dur-ui) var(--ease-out), box-shadow var(--dur-ui) var(--ease-out),
+        opacity var(--dur-ui) var(--ease-out), filter var(--dur-press) var(--ease-out);
+    }
+    .press:active {
+      scale: 0.97;
+      filter: brightness(0.96);
+    }
+    :root:not([data-theme='light']) .press:active {
+      filter: brightness(1.12);
+    }
+    .press-tint {
+      transition: background-color var(--dur-press) var(--ease-out);
+    }
+    .press-tint:active {
+      background-color: rgb(var(--text) / 0.06);
+    }
+  }
+  /* Under reduced motion a press is a tint, never a change of size. */
+  @media (prefers-reduced-motion: reduce) {
+    .press:active {
+      scale: none;
+      filter: none;
+      box-shadow: inset 0 0 0 100vmax rgb(var(--text) / 0.06);
+    }
+  }
+
+  /* Touch screens never hover, so the client logos would stay grey forever. */
+  @media (hover: none) {
+    .logo-mark {
+      filter: grayscale(0);
+      opacity: 1;
+    }
+  }
+
+  /* The outline numerals were close to invisible on paper. */
+  :root[data-theme='light'] .text-outline {
+    -webkit-text-stroke-color: rgb(var(--muted-foreground) / 0.85);
+  }
+}
+
+/* ---------------------------------------------------------------------------
+   Shell state hooks (owned by the shell; other components may read them)
+   html[data-header='hidden']  the header slid away after a scroll down (phones)
+   html[data-menu-open]        the navigation sheet is open
+   html[data-typing]           a text field has focus below md (keyboard up)
+   html[data-faq-open]         the FAQ panel is open
+   html[data-sheet-open]       a bottom sheet (contact sheet) is open
+   --------------------------------------------------------------------------- */
+
+/* The header. Its blurred fill lives on a child (.site-header-bg): a
+   backdrop-filter or a transform on the header itself would make it the
+   containing block of the fixed menu sheet inside it. When shown it has
+   `transform: none`, never translateY(0), for the same reason. */
+.site-header {
+  transition: transform 260ms var(--ease-out);
+}
+@media screen and (max-width: 47.99rem) and (prefers-reduced-motion: no-preference) {
+  :root[data-header='hidden'] .site-header {
+    transform: translateY(-100%);
+  }
+}
+
+/* The page stays put under an open menu or sheet. */
+:root[data-menu-open],
+:root[data-sheet-open] {
+  overflow: hidden;
+}
+@media screen and (max-width: 47.99rem) {
+  :root[data-faq-open] {
+    overflow: hidden;
+  }
+}
+
+/* The keyboard never stacks with the floating chrome. */
+@media screen and (max-width: 47.99rem) {
+  .site-tabbar {
+    transition: transform var(--dur-ui) var(--ease-out), opacity var(--dur-ui) var(--ease-out),
+      visibility 0s linear 0s;
+  }
+  :root[data-typing] .site-tabbar,
+  :root[data-faq-open] .site-tabbar {
+    transform: translateY(calc(100% + 1rem));
+    opacity: 0;
+    visibility: hidden;
+    transition: transform var(--dur-ui) var(--ease-out), opacity var(--dur-ui) var(--ease-out),
+      visibility 0s linear var(--dur-ui);
+  }
+}
+@media screen and (max-width: 47.99rem) and (prefers-reduced-motion: reduce) {
+  .site-tabbar,
+  :root[data-typing] .site-tabbar,
+  :root[data-faq-open] .site-tabbar {
+    transform: none;
+  }
+}
+
+/* No scrollbar jump on desktop when an open menu locks the page. */
+html {
+  scrollbar-gutter: stable;
+}
+
+/* The command palette's search field: the focus ring goes round the rounded
+   field, not as a square outline clipped by the panel. */
+.cmdk-field:has(input:focus-visible) {
+  outline: 2px solid rgb(var(--accent));
+  outline-offset: 2px;
+}
+.cmdk-field input:focus-visible {
+  outline: none;
+}
+
+/* The tab bar's active pill grows in when the page loads (navigation is a
+   full page load, so nothing can carry it across). */
+@keyframes tabPillIn {
+  from {
+    opacity: 0;
+    transform: scale(0.6);
+  }
+}
+.tab-pill-in {
+  animation: tabPillIn var(--dur-ui) var(--ease-out) both;
+}
+@media (prefers-reduced-motion: reduce) {
+  .tab-pill-in {
+    animation: none;
   }
 }

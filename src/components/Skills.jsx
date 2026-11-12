@@ -51,20 +51,20 @@ import { brandColor } from '../lib/brand-colors';
 const SkillCard = ({ category, index }) => {
   return (
     <Reveal y={20} delay={revealDelay(index)}
-      className="bg-[rgb(var(--card))] p-6 rounded-xl border border-[rgb(var(--border))] hover:border-[rgb(var(--primary))] transition-all duration-300 hover:shadow-lg hover:shadow-[rgb(var(--primary))]/10">
-      <div className="flex items-center gap-4 mb-6">
+      className="m-card bg-[rgb(var(--card))] p-6 rounded-xl border border-[rgb(var(--border))] hover:border-[rgb(var(--primary))] transition-all duration-300 hover:shadow-lg hover:shadow-[rgb(var(--primary))]/10">
+      <div className="flex items-center gap-4 mb-6 max-md:mb-4 max-md:gap-3">
         <div className="bg-[rgb(var(--primary))]/10 p-3 rounded-lg">
           {category.icon}
         </div>
-        <h3 className="text-xl font-bold text-start">
+        <h3 className="text-xl font-bold text-start type-h3">
           {category.title}
         </h3>
       </div>
-      <div className="grid grid-cols-2 gap-3">
+      <div className="grid grid-cols-2 gap-3 max-md:gap-1.5">
         {category.skills.map((skill, i) => (
           <Reveal x={-20} delay={revealDelay(i)}
             key={i}
-            className="flex items-center gap-2 p-3 rounded-lg hover:bg-[rgb(var(--muted))] transition-colors duration-200 group text-start">
+            className="flex items-center gap-2 p-3 max-md:p-2 rounded-lg hover:bg-[rgb(var(--muted))] transition-colors duration-200 group text-start">
             <div className="bg-[rgb(var(--background))] p-2 rounded-lg group-hover:scale-110 transition-transform duration-200">
               {skill.icon}
             </div>
@@ -178,13 +178,13 @@ const Skills = () => {
   );
 
   return (
-    <section id="skills" className="py-20">
-      <div className="container mx-auto px-6">
-        <SectionHeading className="max-w-6xl mx-auto" title={t('skills.title')} subtitle={t('skills.subtitle')} />
+    <section id="skills" className="py-20 max-md:py-14">
+      <div className="container mx-auto px-6 max-sm:px-5">
+        <SectionHeading className="max-w-6xl mx-auto" eyebrow={t('mPages.eyebrow.skills')} title={t('skills.title')} subtitle={t('skills.subtitle')} />
 
-        {/* Category Filter Tabs */}
+        {/* Category Filter Tabs. On a phone one swipeable row of chips. */}
         <Reveal y={20} duration={0.5} delay={0.2}
-          className="flex flex-wrap gap-3 mb-12 max-w-6xl mx-auto">
+          className="flex flex-wrap gap-3 mb-12 max-md:mb-6 max-md:flex-nowrap max-md:gap-2 max-w-6xl mx-auto m-rail">
           {filterTabs.map((tab, index) => (
             <Reveal
               as={m.button}
@@ -196,7 +196,8 @@ const Skills = () => {
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               onClick={() => setSelectedCategory(tab.id)}
-              className={`px-4 sm:px-6 min-h-[44px] rounded-full font-semibold transition-all duration-300 ${
+              aria-pressed={selectedCategory === tab.id}
+              className={`px-4 sm:px-6 min-h-[44px] rounded-full font-semibold transition-all duration-300 whitespace-nowrap max-md:text-sm ${
                 selectedCategory === tab.id
                   ? 'bg-[rgb(var(--primary))] text-[rgb(var(--accent-contrast))] shadow-lg'
                   : 'bg-[rgb(var(--card))] text-[rgb(var(--foreground))] border border-[rgb(var(--border))] hover:border-[rgb(var(--primary))]'
@@ -210,7 +211,7 @@ const Skills = () => {
         <m.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-md:gap-3">
           {filteredCategories.map((category, index) => (
             <SkillCard key={category.id} category={category} index={index} />
           ))}

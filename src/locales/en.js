@@ -74,10 +74,10 @@ const en = {
         modal: {
           technologies: 'Technologies',
           features: 'Key features & highlights',
-          live_link: 'Visit Live Project',
-          source_code: 'View Source Code',
+          live_link: 'Visit live project',
+          source_code: 'View source code',
           app_store: 'On the App Store',
-          case_study: 'Read the Case Study',
+          case_study: 'Read the case study',
           close: 'Close',
           suite_title: 'Same engine, different brands',
           suite_desc: 'This platform is one deployment of a shared LMS engine I built and maintain. Each client runs its own branded instance, with its own visual identity, accreditation and content, on top of the same accredited training, payment and certification core.'
@@ -691,7 +691,7 @@ const en = {
         title: 'Services I offer',
         subtitle: 'Websites, platforms and internal systems in Arabic and English, built by one developer you deal with directly.',
         ready: 'Ready to start your project?',
-        get_in_touch: 'Get in Touch',
+        get_in_touch: 'Get in touch',
         rescue_cta: 'Project stuck? See how a rescue works →',
         list: [
           {
@@ -785,9 +785,9 @@ const en = {
       packages: {
         title: 'Ways we can work together',
         subtitle: 'Three common shapes for a project. Every engagement is scoped to what you actually need; these are starting points, not boxes.',
-        most_popular: 'Most Popular',
+        most_popular: 'Most popular',
         on_request: 'Quote on request',
-        cta: 'Request a Quote',
+        cta: 'Request a quote',
         footnote: 'Not sure which fits? Send me a short description of your project and I will reply with a recommended scope, timeline and price, with no obligation.',
         tiers: {
           landing: {
@@ -838,17 +838,17 @@ const en = {
       case_studies: {
         previous: 'Previous case study',
         next: 'Next case study',
-        label: 'Case Study',
-        back: 'Back to Projects',
-        visit: 'Visit Live Site',
+        label: 'Case study',
+        back: 'Back to projects',
+        visit: 'Visit live site',
         cta_title: 'Have a project like this in mind?',
         cta_subtitle: 'Tell me what you are building and I will come back with a recommended scope, timeline and price.',
-        cta_button: 'Start a Conversation',
+        cta_button: 'Start a conversation',
         screens_title: 'The product',
         screen_alt: '{{name}}, screen {{n}}',
         screen_mobile_alt: '{{name}} on a phone',
         facts: {
-          role: 'My Role',
+          role: 'My role',
           scope: 'Scope',
           audience: 'Audience'
         },
@@ -1024,7 +1024,7 @@ const en = {
         availability_cta: 'Start a conversation',
       },
       rescue_page: {
-        badge: 'Legacy Code Rescue',
+        badge: 'Legacy code rescue',
         title: 'Project stuck? I take it from here.',
         subtitle:
           'The developer disappeared, the bugs are piling up, and nobody dares to touch the code. I take over inherited and abandoned codebases, stabilize them, and get them moving again, without the "rewrite from scratch" that costs you six months and the product you already paid for.',
@@ -1248,6 +1248,26 @@ const en = {
         subtitle: 'Instant answers about Belal',
         tooltip: 'How can I help you?'
       },
+      // The phone shell: navigation sheet, tab bar and contact sheet.
+      shell: {
+        search: 'Search pages and projects',
+        group_main: 'Main',
+        group_more: 'More',
+        theme: 'Theme',
+        theme_dark: 'Dark',
+        theme_light: 'Light',
+        language: 'Language',
+        start_project: 'Start a project',
+        tab_work: 'Work',
+        contact_title: 'Get in touch',
+        contact_subtitle: 'A real reply within 24 hours.',
+        whatsapp_hint: 'Chat with me directly',
+        faq_hint: 'Answers to common questions',
+        message: 'Write a message',
+        message_hint: 'Tell me about your project',
+        email: 'Email',
+        close_contact: 'Close contact options'
+      },
       // Accessible names and announcements only: none of these is visible text.
       a11y: {
         skip_to_content: 'Skip to content',
@@ -1270,6 +1290,45 @@ const en = {
         review_n: 'Review {{n}} of {{count}}',
         logos_pause: 'Pause the logo scroll',
         logos_play: 'Play the logo scroll'
+      },
+      // Home page sections on phones: section eyebrows and the few labels
+      // the mobile layouts add.
+      mHome: {
+        eyebrow: {
+          brands: 'Clients',
+          testimonials: 'Client reviews',
+          process: 'Process',
+          about: 'About',
+          contact: 'Start a project'
+        },
+        reviewers: 'Reviewers',
+        contact_ways: 'Ways to reach me',
+        form_title: 'Or write me a message'
+      },
+      // Inner pages and project UI on phones: the short labels of the
+      // two-up action rows and the few controls the mobile layouts add.
+      mPages: {
+        case_study_short: 'Case study',
+        live_short: 'Live site',
+        app_store_short: 'App Store',
+        source_short: 'Source',
+        next_short: 'Next',
+        share: 'Share',
+        link_copied: 'Link copied',
+        // Section eyebrows on phones, in the voice of mHome.eyebrow.
+        eyebrow: {
+          featured: 'Selected work',
+          work: 'Portfolio',
+          services: 'What I do',
+          process: 'Process',
+          packages: 'Packages',
+          skills: 'Skills',
+          certifications: 'Credentials',
+          experience: 'Experience',
+          suite: 'Product suite',
+          screens: 'Screens',
+          stack: 'Stack'
+        }
       }
     }
 };

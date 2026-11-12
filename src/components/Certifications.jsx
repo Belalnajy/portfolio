@@ -134,11 +134,11 @@ const Certifications = () => {
   };
 
   return (
-    <section id="certifications" className="py-20 relative">
-      <div className="container mx-auto px-6 relative z-10">
-        <SectionHeading className="max-w-6xl mx-auto" title={t('certifications.title')} subtitle={t('certifications.subtitle')} />
+    <section id="certifications" className="py-20 max-md:py-14 relative">
+      <div className="container mx-auto px-6 max-sm:px-5 relative z-10">
+        <SectionHeading className="max-w-6xl mx-auto" eyebrow={t('mPages.eyebrow.certifications')} title={t('certifications.title')} subtitle={t('certifications.subtitle')} />
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 max-md:gap-3">
           {certificates.map((cert, index) => (
             <Reveal
               as={m.div}
@@ -149,17 +149,19 @@ const Certifications = () => {
               transition={{ duration: REVEAL_DURATION, delay: revealDelay(index) }}
               whileHover={{ y: -10, scale: 1.02 }}
               onClick={() => cert.image && setSelectedCert(cert)}
-              className="group relative glass-card glass-hover rounded-xl p-6 cursor-pointer">
+              // On a phone a compact row: the mark at the start, the
+              // details beside it.
+              className="m-card press group relative glass-card glass-hover rounded-xl p-6 cursor-pointer max-md:grid max-md:grid-cols-[auto_1fr] max-md:gap-x-4 max-md:items-start">
               <div
-                className={`w-12 h-12 rounded-lg flex items-center justify-center mb-4 transition-colors duration-300 ${getColorClasses(
+                className={`w-12 h-12 max-md:w-11 max-md:h-11 max-md:row-span-2 rounded-lg flex items-center justify-center mb-4 max-md:mb-0 transition-colors duration-300 ${getColorClasses(
                   cert.color,
                 )}`}>
                 {cert.icon}
               </div>
-              <h3 className="text-lg font-semibold mb-2 line-clamp-2 min-h-[3.5rem] text-start">
+              <h3 className="text-lg font-semibold mb-2 line-clamp-2 min-h-[3.5rem] text-start max-md:min-h-0 max-md:text-base max-md:leading-snug max-md:mb-1">
                 {cert.title}
               </h3>
-              <div className="text-[rgb(var(--muted-foreground))] text-sm space-y-1 text-start">
+              <div className="text-[rgb(var(--muted-foreground))] text-sm space-y-1 text-start max-md:space-y-0.5 max-md:text-[0.8125rem]">
                 <p>{cert.issuer}</p>
                 <p>{cert.platform}</p>
                 <p>{cert.date}</p>

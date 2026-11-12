@@ -22,17 +22,18 @@ const Packages = () => {
   const Arrow = isArabic ? FaArrowLeft : FaArrowRight;
 
   return (
-    <section id="packages" className="py-16 md:py-24 relative overflow-hidden">
-      <div className="absolute top-1/3 left-1/2 -translate-x-1/2 w-full max-w-4xl h-96 bg-[rgb(var(--primary))]/5 blur-[120px] rounded-full pointer-events-none z-0" />
+    <section id="packages" className="py-16 md:py-24 max-md:py-14 relative overflow-hidden">
+      <div className="max-md:hidden absolute top-1/3 left-1/2 -translate-x-1/2 w-full max-w-4xl h-96 bg-[rgb(var(--primary))]/5 blur-[120px] rounded-full pointer-events-none z-0" />
 
-      <div className="container mx-auto px-6 relative z-10">
+      <div className="container mx-auto px-6 max-sm:px-5 relative z-10">
         <SectionHeading
           className="max-w-6xl mx-auto"
+          eyebrow={t('mPages.eyebrow.packages')}
           title={t('packages.title')}
           subtitle={t('packages.subtitle')}
         />
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 max-w-6xl mx-auto items-start">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 max-md:gap-4 max-w-6xl mx-auto items-start">
           {TIERS.map((tier, index) => {
             const features = t(`packages.tiers.${tier.key}.features`, {
               returnObjects: true,
@@ -44,9 +45,9 @@ const Packages = () => {
             return (
               <Reveal y={26} delay={revealDelay(index)}
                 key={tier.key}
-                className={`relative glass-card rounded-2xl p-6 sm:p-8 flex flex-col h-full text-start transition-colors ${
+                className={`m-card relative glass-card rounded-2xl p-6 sm:p-8 flex flex-col h-full text-start transition-colors ${
                   tier.featured
-                    ? 'border-2 border-[rgb(var(--primary))] shadow-2xl lg:-translate-y-3'
+                    ? 'border-2 border-[rgb(var(--primary))] shadow-2xl lg:-translate-y-3 max-md:border-[rgb(var(--accent))]! max-md:shadow-[var(--elev-2)]! max-md:mt-3'
                     : 'border border-[rgb(var(--border))]/50 hover:border-[rgb(var(--primary))]/40'
                 }`}
               >
@@ -57,7 +58,7 @@ const Packages = () => {
                   </span>
                 )}
 
-                <h3 className="text-xl sm:text-2xl font-bold text-[rgb(var(--foreground))] mb-2">
+                <h3 className="text-xl sm:text-2xl font-bold text-[rgb(var(--foreground))] mb-2 max-md:font-display max-md:text-[1.375rem] max-md:leading-[1.3] max-md:rtl:leading-[1.6]">
                   {t(`packages.tiers.${tier.key}.name`)}
                 </h3>
                 <p className="text-sm text-[rgb(var(--muted-foreground))] leading-relaxed mb-5">
@@ -66,17 +67,17 @@ const Packages = () => {
 
                 {/* Price and timeline as one quiet line: the price is quoted
                     per project, so it should not shout like a number would. */}
-                <div className="mb-5 pb-5 border-b border-[rgb(var(--border))]/50 flex flex-wrap items-center gap-x-4 gap-y-1 text-sm">
+                <div className="mb-5 pb-5 border-b border-[rgb(var(--border))]/50 flex flex-wrap items-center gap-x-4 gap-y-1 text-sm max-md:flex-nowrap max-md:justify-between max-md:pb-4 max-md:mb-4">
                   <span className="font-semibold text-[rgb(var(--foreground))]">
                     {hasPrice ? price : t('packages.on_request')}
                   </span>
-                  <span className="inline-flex items-center gap-2 text-xs text-[rgb(var(--muted-foreground))]">
+                  <span className="inline-flex items-center gap-2 text-xs text-[rgb(var(--muted-foreground))] max-md:whitespace-nowrap">
                     <FaClock aria-hidden="true" className="text-[rgb(var(--primary))]" />
                     {t(`packages.tiers.${tier.key}.timeline`)}
                   </span>
                 </div>
 
-                <ul className="space-y-3 mb-8 flex-grow">
+                <ul className="space-y-3 mb-8 max-md:mb-6 flex-grow">
                   {(Array.isArray(features) ? features : []).map((feature, i) => (
                     <li
                       key={i}
@@ -88,7 +89,7 @@ const Packages = () => {
                   ))}
                 </ul>
 
-                <a href="#contact" className="block">
+                <a href="#contact" className="press block rounded-xl">
                   <span
                     className={`w-full min-h-[48px] rounded-xl font-semibold flex items-center justify-center gap-2 transition-all active:scale-[0.98] ${
                       tier.featured

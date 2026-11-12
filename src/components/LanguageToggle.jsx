@@ -20,7 +20,7 @@ const LanguageToggle = ({ className = '' }) => {
       onClick={() => switchLanguage(target)}
       lang={target}
       aria-label={LANGUAGE_SWITCH_LABEL[target]}
-      className={`w-11 h-11 flex items-center justify-center rounded-xl bg-[rgb(var(--card))]/80 border border-[rgb(var(--border))] text-[rgb(var(--foreground))] hover:bg-[rgb(var(--muted))] active:scale-90 transition-all duration-200 font-bold ${
+      className={`press h-11 min-w-11 px-3 flex items-center justify-center rounded-full bg-[rgb(var(--surface))]/70 border border-[rgb(var(--border-subtle))] text-[rgb(var(--foreground))] hover:bg-[rgb(var(--muted))] transition-colors duration-200 font-bold ${
         isArabic ? 'text-xs' : 'text-sm font-[family-name:var(--font-cairo)]'
       } ${className}`}>
       {isArabic ? 'EN' : 'عربي'}

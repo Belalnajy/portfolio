@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
-import { m, AnimatePresence, useDragControls } from 'framer-motion';
+import { m, AnimatePresence, useDragControls, useReducedMotion } from 'framer-motion';
 import {
   FaTimes,
   FaCode,
@@ -35,6 +35,7 @@ const useIsMobile = () => {
 const ProjectModal = ({ project, isOpen, onClose }) => {
   const { t, i18n } = useTranslation();
   const isMobile = useIsMobile();
+  const reduceMotion = useReducedMotion();
   const dragControls = useDragControls();
   const dialogRef = useRef(null);
   // Portals need a DOM target, so nothing renders until after mount.
@@ -66,20 +67,56 @@ const ProjectModal = ({ project, isOpen, onClose }) => {
   // Tab stays inside the sheet; focus returns to the card on close.
   useFocusTrap(dialogRef, active);
 
+  // The trap focuses the first control, the close button, which then wore
+  // a focus ring on every open. The sheet itself takes focus instead (it is
+  // the labelled dialog, so the title is what gets announced); Tab goes on
+  // to the close button as before. Runs after the trap's own effect.
+  useEffect(() => {
+    const dialog = dialogRef.current;
+    if (!active || !dialog) return undefined;
+    dialog.focus({ preventScroll: true, focusVisible: false });
+    // Shift+Tab from the sheet itself would leave it: the trap only wraps
+    // from its first control. Wrap to the last one here.
+    const onKeyDown = (event) => {
+      if (event.key !== 'Tab' || !event.shiftKey || document.activeElement !== dialog) return;
+      const controls = [...dialog.querySelectorAll('a[href], button:not([disabled]), [tabindex="0"]')].filter(
+        (el) => el.offsetParent !== null,
+      );
+      if (controls.length === 0) return;
+      event.preventDefault();
+      controls[controls.length - 1].focus();
+    };
+    document.addEventListener('keydown', onKeyDown);
+    return () => document.removeEventListener('keydown', onKeyDown);
+  }, [active]);
+
   useEscapeLayer(isOpen, onClose);
 
   if (!mounted || !project) return null;
 
   const secondary = secondaryLink(project);
+  const shortLabel = secondary && {
+    live: 'mPages.live_short',
+    app_store: 'mPages.app_store_short',
+    github: 'mPages.source_short',
+  }[secondary.type];
 
-  // On phones the sheet rises from the bottom edge; on wider screens it scales
-  // in as a centred dialog.
-  const sheetMotion = isMobile
+  // On phones the sheet rises from the bottom edge (the site's sheet
+  // spring); on wider screens it scales in as a centred dialog. With reduced
+  // motion it only fades.
+  const sheetMotion = reduceMotion
+    ? {
+        initial: { opacity: 0 },
+        animate: { opacity: 1 },
+        exit: { opacity: 0 },
+        transition: { duration: 0.2 },
+      }
+    : isMobile
     ? {
         initial: { y: '100%' },
         animate: { y: 0 },
         exit: { y: '100%' },
-        transition: { type: 'spring', damping: 32, stiffness: 320 },
+        transition: { type: 'spring', damping: 40, stiffness: 420 },
       }
     : {
         initial: { opacity: 0, scale: 0.96, y: 16 },
@@ -272,13 +309,15 @@ const ProjectModal = ({ project, isOpen, onClose }) => {
                   the live product (or the store, or the source when nothing
                   is live). The rest is on the case-study page. The case
                   study is the filled primary, as on the rows. */}
-              <div className="shrink-0 flex flex-col sm:flex-row gap-3 px-4 sm:px-8 py-4 border-t border-[rgb(var(--border))]/40 bg-[rgb(var(--background))]/95 backdrop-blur-xl pb-[max(1rem,env(safe-area-inset-bottom))]">
+              <div className={`shrink-0 grid ${secondary ? 'grid-cols-2' : 'grid-cols-1'} sm:flex sm:flex-row gap-3 px-4 sm:px-8 pt-3 sm:pt-4 border-t border-[rgb(var(--border))]/40 bg-[rgb(var(--background))]/95 backdrop-blur-md sm:backdrop-blur-xl pb-[max(0.75rem,env(safe-area-inset-bottom))] sm:pb-[max(1rem,env(safe-area-inset-bottom))]`}>
                 <a
                   href={i18n.language === 'ar' ? `/ar${project.caseStudy}` : project.caseStudy}
                   onClick={() => trackCaseStudy(project, 'sheet')}
-                  className="flex items-center justify-center gap-2 flex-1 min-h-[48px] px-4 bg-gradient-to-r from-[rgb(var(--accent))] to-[rgb(var(--accent-hover))] hover:from-[rgb(var(--accent-hover))] hover:to-[rgb(var(--accent))] text-[rgb(var(--accent-contrast))] rounded-xl font-semibold transition-all shadow-lg active:scale-[0.98]"
+                  className="press flex items-center justify-center gap-2 flex-1 min-h-[48px] px-3 sm:px-4 bg-gradient-to-r from-[rgb(var(--accent))] to-[rgb(var(--accent-hover))] hover:from-[rgb(var(--accent-hover))] hover:to-[rgb(var(--accent))] text-[rgb(var(--accent-contrast))] rounded-xl font-semibold transition-all shadow-lg active:scale-[0.98]"
                 >
-                  <FaBookOpen aria-hidden="true" /> {t('projects.modal.case_study')}
+                  <FaBookOpen aria-hidden="true" className="shrink-0" />
+                  <span className="sm:hidden">{t('mPages.case_study_short')}</span>
+                  <span className="max-sm:hidden">{t('projects.modal.case_study')}</span>
                 </a>
                 {secondary && (
                   <a
@@ -286,9 +325,11 @@ const ProjectModal = ({ project, isOpen, onClose }) => {
                     target="_blank"
                     rel="noopener noreferrer"
                     onClick={() => trackSecondary(project, secondary, 'sheet')}
-                    className="flex items-center justify-center gap-2 flex-1 min-h-[48px] px-4 border border-[rgb(var(--border-control))] text-[rgb(var(--foreground))] hover:border-[rgb(var(--primary))] hover:text-[rgb(var(--primary))] rounded-xl font-semibold transition-all active:scale-[0.98]"
+                    className="press flex items-center justify-center gap-2 flex-1 min-h-[48px] px-3 sm:px-4 border border-[rgb(var(--border-control))] text-[rgb(var(--foreground))] hover:border-[rgb(var(--primary))] hover:text-[rgb(var(--primary))] rounded-xl font-semibold transition-all active:scale-[0.98]"
                   >
-                    <secondary.Icon aria-hidden="true" /> {t(secondary.label)}
+                    <secondary.Icon aria-hidden="true" className="shrink-0" />
+                    <span className="sm:hidden">{t(shortLabel)}</span>
+                    <span className="max-sm:hidden">{t(secondary.label)}</span>
                   </a>
                 )}
               </div>

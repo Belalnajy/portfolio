@@ -68,14 +68,14 @@ const Toggle = ({ options, value, onChange, label }) => (
   <div
     role="group"
     aria-label={label}
-    className="inline-flex rounded-xl bg-[rgb(var(--muted))]/30 border border-[rgb(var(--border))] p-1">
+    className="inline-flex rounded-xl bg-[rgb(var(--muted))]/30 border border-[rgb(var(--border))] p-1 max-md:flex max-md:w-full">
     {options.map((option) => (
       <button
         key={String(option.value)}
         type="button"
         onClick={() => onChange(option.value)}
         aria-pressed={value === option.value}
-        className={`px-4 min-h-[44px] rounded-lg text-sm font-semibold transition-colors ${
+        className={`px-4 min-h-[44px] rounded-lg text-sm font-semibold transition-colors max-md:flex-1 max-md:px-2 ${
           value === option.value
             ? 'bg-[rgb(var(--primary))] text-[rgb(var(--accent-contrast))]'
             : 'text-[rgb(var(--muted-foreground))] hover:text-[rgb(var(--foreground))]'
@@ -102,12 +102,12 @@ const RtlDemo = () => {
     <Reveal as="section" y={24} duration={0.5}
       id="rtl-demo"
       className="scroll-mt-24">
-      <div className="text-center mb-8">
+      <div className="text-center mb-8 max-md:text-start max-md:mb-6">
         <span className="inline-flex items-center gap-2 text-[rgb(var(--primary))] font-bold tracking-widest uppercase text-xs sm:text-sm mb-3">
           <FaFileInvoiceDollar />
           {t('rtl_demo.label')}
         </span>
-        <h3 className="text-2xl sm:text-3xl font-bold text-[rgb(var(--foreground))] tracking-tight mb-3">
+        <h3 className="text-2xl sm:text-3xl font-bold text-[rgb(var(--foreground))] tracking-tight mb-3 max-md:font-display max-md:text-[1.75rem] max-md:leading-[1.18] max-md:rtl:leading-[1.5]">
           {t('rtl_demo.title')}
         </h3>
         <p className="text-[rgb(var(--muted-foreground))] max-w-2xl mx-auto leading-relaxed">
@@ -116,7 +116,7 @@ const RtlDemo = () => {
       </div>
 
       {/* Controls */}
-      <div className="flex flex-wrap items-center justify-center gap-3 mb-6">
+      <div className="flex flex-wrap items-center justify-center gap-3 mb-6 max-md:flex-col max-md:items-stretch max-md:gap-2 max-md:mb-4">
         <Toggle
           label={t('rtl_demo.direction')}
           value={dir}
@@ -142,7 +142,7 @@ const RtlDemo = () => {
         <div className="lg:col-span-2">
           <div
             dir={dir}
-            className={`rounded-2xl border p-5 sm:p-6 bg-[rgb(var(--card))] transition-colors ${
+            className={`rounded-2xl border p-5 sm:p-6 bg-[rgb(var(--card))] transition-colors max-md:p-4 max-md:rounded-[var(--radius-card)] ${
               broken
                 ? 'border-[rgb(var(--destructive))]/40'
                 : 'border-[rgb(var(--success))]/30'
@@ -239,7 +239,7 @@ const RtlDemo = () => {
         </div>
 
         {/* What to look at */}
-        <aside className="glass-card rounded-2xl border border-[rgb(var(--border))]/60 p-5 text-start">
+        <aside className="m-card glass-card rounded-2xl border border-[rgb(var(--border))]/60 p-5 text-start">
           <p className="font-bold text-[rgb(var(--foreground))] mb-4">
             {broken ? t('rtl_demo.breaking') : t('rtl_demo.holding')}
           </p>

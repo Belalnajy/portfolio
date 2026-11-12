@@ -15,6 +15,12 @@ import {
 import PlatformLinks from './PlatformLinks';
 import { useTranslation } from 'react-i18next';
 import { useMemo } from 'react';
+import { homeAnchor } from '../lib/home-anchor';
+
+// Column headings. Phones: the eyebrow style (12px, semibold, uppercase,
+// tracked, accent), no underline bar. From md: as before.
+const FOOTER_HEADING =
+  "max-md:text-xs max-md:font-semibold max-md:tracking-[0.14em] max-md:text-[rgb(var(--accent))] max-md:mb-3 max-md:after:hidden md:text-xl font-bold md:mb-8 text-[rgb(var(--foreground))] uppercase md:tracking-wider relative inline-block after:content-[''] after:absolute after:-bottom-2 after:start-0 after:w-12 after:h-1 after:bg-[rgb(var(--primary))] after:rounded-full";
 
 const Footer = () => {
   const { t, i18n } = useTranslation();
@@ -26,7 +32,7 @@ const Footer = () => {
   const quickLinks = useMemo(
     () => [
       { name: t('nav.home'), href: `${home}/` },
-      { name: t('nav.about'), href: `${home}/#about` },
+      { name: t('nav.about'), href: homeAnchor(isArabic, 'about') },
       // The timeline and the platform suite moved off the home page to /cv.
       { name: t('nav.timeline'), href: `${home}/cv#experience` },
       { name: t('nav.suite'), href: `${home}/cv#platform-suite` },
@@ -39,9 +45,9 @@ const Footer = () => {
       { name: t('nav.cv'), href: `${home}/cv` },
       { name: t('nav.uses'), href: `${home}/uses` },
       { name: t('nav.privacy'), href: `${home}/privacy` },
-      { name: t('nav.contact'), href: `${home}/#contact` },
+      { name: t('nav.contact'), href: homeAnchor(isArabic, 'contact') },
     ],
-    [t, home],
+    [t, home, isArabic],
   );
 
   const contactInfo = useMemo(
@@ -91,19 +97,29 @@ const Footer = () => {
 
   return (
     <footer
-      className={`relative bg-[rgb(var(--card))] text-[rgb(var(--foreground))] pt-16 pb-12 overflow-hidden border-t border-[rgb(var(--border))] text-start`}>
+      className={`relative bg-[rgb(var(--card))] text-[rgb(var(--foreground))] pt-12 md:pt-16 pb-[calc(var(--tabbar-total)+1.5rem)] md:pb-12 overflow-hidden border-t border-[rgb(var(--border))] text-start`}>
       {/* Background decoration */}
       <div className="absolute inset-0 bg-[radial-gradient(#1d4ed8_1px,transparent_1px)] bg-[size:20px_20px] opacity-5" />
 
-      <div className="container mx-auto px-6 relative z-10">
+      <div className="container mx-auto px-[var(--m-gutter)] sm:px-6 relative z-10">
         {/* Main Footer Content */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-16 mb-16">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 md:gap-16 md:mb-16">
           {/* About Section */}
           <Reveal y={20} duration={0.5}>
-            <h3 className="text-3xl font-bold mb-6 bg-gradient-to-r from-[rgb(var(--accent))] to-[rgb(var(--accent-hover))] bg-clip-text text-transparent">
-              {t('footer.about_title')}
-            </h3>
-            <p className="text-[rgb(var(--muted-foreground))] mb-8 leading-relaxed text-lg">
+            {/* Brand row: on phones it ends with the back-to-top button. */}
+            <div className="flex items-center justify-between gap-4 mb-4 md:mb-6">
+              <h3 className="text-2xl md:text-3xl font-bold bg-gradient-to-r from-[rgb(var(--accent))] to-[rgb(var(--accent-hover))] bg-clip-text text-transparent">
+                {t('footer.about_title')}
+              </h3>
+              <button
+                type="button"
+                onClick={scrollToTop}
+                aria-label={t('footer.back_to_top')}
+                className="press md:hidden shrink-0 w-11 h-11 rounded-full flex items-center justify-center bg-[rgb(var(--text))]/[0.06] border border-[rgb(var(--border-subtle))] text-[rgb(var(--foreground))]">
+                <FaArrowUp aria-hidden="true" size={14} />
+              </button>
+            </div>
+            <p className="text-[rgb(var(--muted-foreground))] mb-6 md:mb-8 leading-relaxed text-base md:text-lg">
               {t('footer.about_text')}
             </p>
             {/* Social Links */}
@@ -126,15 +142,15 @@ const Footer = () => {
 
           {/* Quick Links */}
           <Reveal y={20} duration={0.5} delay={0.1}>
-            <h3 className={`text-xl font-bold mb-8 text-[rgb(var(--foreground))] uppercase tracking-wider relative inline-block after:content-[''] after:absolute after:-bottom-2 after:start-0 after:w-12 after:h-1 after:bg-[rgb(var(--primary))] after:rounded-full`}>
+            <h3 className={FOOTER_HEADING}>
               {t('footer.quick_links')}
             </h3>
-            <ul className="grid grid-cols-2 gap-y-4 gap-x-8">
+            <ul className="grid grid-cols-2 gap-y-0 md:gap-y-4 gap-x-6 md:gap-x-8">
               {quickLinks.map((link, index) => (
                 <li key={index}>
                   <a
                     href={link.href}
-                    className={`text-[rgb(var(--muted-foreground))] hover:text-[rgb(var(--primary))] transition-all cursor-pointer flex items-center gap-2.5 group min-h-[44px] -my-1`}>
+                    className={`press-tint rounded-lg text-[rgb(var(--muted-foreground))] hover:text-[rgb(var(--primary))] transition-all cursor-pointer flex items-center gap-2.5 group min-h-[44px] md:-my-1`}>
                     <div className="transition-transform duration-300 group-hover:scale-125">
                       {isArabic ? (
                         <FaChevronLeft className="text-[10px]" />
@@ -151,10 +167,10 @@ const Footer = () => {
 
           {/* Contact Info */}
           <Reveal y={20} duration={0.5} delay={0.2}>
-            <h3 className={`text-xl font-bold mb-8 text-[rgb(var(--foreground))] uppercase tracking-wider relative inline-block after:content-[''] after:absolute after:-bottom-2 after:start-0 after:w-12 after:h-1 after:bg-[rgb(var(--primary))] after:rounded-full`}>
+            <h3 className={FOOTER_HEADING}>
               {t('footer.get_in_touch')}
             </h3>
-            <ul className="space-y-6">
+            <ul className="space-y-4 md:space-y-6">
               {contactInfo.map((info, index) => (
                 <li
                   key={index}
@@ -178,11 +194,21 @@ const Footer = () => {
               ))}
             </ul>
 
-            <div className="mt-10">
+            {/* Phones: where to follow, in the same block as the ways to
+                write (from md it has its own band below). */}
+            <div className="mt-6 md:hidden">
+              <p className="text-xs font-semibold uppercase tracking-[0.14em] text-[rgb(var(--accent))] mb-1">
+                {t('footer.follow_me')}
+              </p>
+              <PlatformLinks variant="footer" align="start" />
+            </div>
+
+            {/* Phones already have the tab bar's contact button. */}
+            <div className="mt-10 hidden md:block">
               {/* The contact section lives on the home page; a bare #contact was
                   a dead link everywhere else the footer renders. */}
               <m.a
-                href={`${home}/#contact`}
+                href={homeAnchor(isArabic, 'contact')}
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
                 className="block w-full text-center bg-gradient-to-r from-[rgb(var(--accent))] to-[rgb(var(--accent-hover))] text-[rgb(var(--accent-contrast))] px-6 py-4 rounded-xl font-bold transition-all shadow-lg hover:shadow-[rgb(var(--accent))]/20">
@@ -192,9 +218,10 @@ const Footer = () => {
           </Reveal>
         </div>
 
-        {/* Platform Links Section */}
+        {/* Platform Links Section (from md; phones have it in the contact
+            block above) */}
         <Reveal y={20} duration={0.5} delay={0.3}
-          className="py-12 border-t border-[rgb(var(--border))]/30">
+          className="hidden md:block py-12 border-t border-[rgb(var(--border))]/30">
           <div className="text-center mb-10">
             <span className="text-[rgb(var(--primary))] font-bold text-sm tracking-widest uppercase mb-2 block">
               {t('footer.connect')}
@@ -206,8 +233,8 @@ const Footer = () => {
           <PlatformLinks variant="footer" />
         </Reveal>
 
-        {/* Bottom Footer Section */}
-        <div className="pt-8 border-t border-[rgb(var(--border))]/30">
+        {/* Bottom Footer Section (from md; phones have it in the brand row) */}
+        <div className="hidden md:block pt-8 border-t border-[rgb(var(--border))]/30">
           <div className="flex justify-center items-center">
             {/* Back to Top Button */}
             <m.button

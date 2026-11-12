@@ -9,7 +9,9 @@ import { brandColor } from '../lib/brand-colors';
 import { useEscapeLayer } from '../lib/useEscapeLayer';
 
 /**
- * Below xl: one button instead of three.
+ * From md to xl: one button instead of three. Phones have no floating
+ * button at all: the tab bar's centre button opens the contact sheet
+ * (ContactSheet), so nothing floats over images and text.
  *
  * A 390px screen was carrying a tab bar plus a WhatsApp button, a FAQ button
  * and a theme toggle, and the floating three sat on top of the hero. The theme
@@ -72,7 +74,7 @@ const FloatingActions = () => {
   return (
     // .floating-dock hides while the phone menu or the FAQ panel is open, so
     // the button never covers their last items (globals.css).
-    <div ref={dockRef} id="contact-dock" hidden={overHeroCta} className="floating-dock xl:hidden fixed end-4 bottom-[calc(max(1rem,env(safe-area-inset-bottom))+4.5rem)] md:bottom-6 z-[9999] flex flex-col items-end gap-3">
+    <div ref={dockRef} id="contact-dock" hidden={overHeroCta} className="floating-dock hidden md:flex xl:hidden fixed end-4 bottom-6 z-[9999] flex-col items-end gap-3">
       <AnimatePresence>
         {open && (
           <>

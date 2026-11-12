@@ -9,8 +9,8 @@ import { asArray } from '../../lib/as-array';
 
 const NowSection = ({ icon, title, items, index }) => (
   <Reveal as="section" y={24} delay={revealDelay(index)}
-    className="glass-card rounded-2xl border border-[rgb(var(--border))]/60 p-6 sm:p-8 text-start">
-    <h2 className="flex items-center gap-3 font-display text-xl font-bold text-[rgb(var(--foreground))] mb-5">
+    className="m-card glass-card rounded-2xl border border-[rgb(var(--border))]/60 p-6 sm:p-8 text-start">
+    <h2 className="flex items-center gap-3 font-display text-xl font-bold text-[rgb(var(--foreground))] mb-5 max-md:mb-4 type-h3">
       <span className="inline-flex items-center justify-center w-10 h-10 rounded-xl bg-[rgb(var(--muted))]/40 border border-[rgb(var(--border))] text-[rgb(var(--muted-foreground))]">
         {icon}
       </span>
@@ -36,16 +36,16 @@ const NowContent = () => {
   const home = i18n.language === 'ar' ? '/ar' : '';
 
   return (
-    <div className="container mx-auto px-6 max-w-3xl pt-36 pb-24">
+    <div className="container mx-auto px-6 max-sm:px-5 max-w-3xl pt-36 m-page-top pb-24 max-md:pb-14">
       {/* First viewport: a CSS animation that runs from the first paint and
           moves without fading, so the page's largest text is on screen before
           any JavaScript has loaded (see Reveal). */}
       <Reveal as="header" rise y={16} duration={0.5}
-        className="text-start mb-12">
-        <h1 className="font-display text-display-lg font-bold text-[rgb(var(--foreground))] mb-3">
+        className="text-start mb-12 max-md:mb-8">
+        <h1 className="font-display text-display-lg type-h1 font-bold text-[rgb(var(--foreground))] mb-3">
           {t('now_page.title')}
         </h1>
-        <p className="text-lg text-[rgb(var(--muted-foreground))] leading-relaxed mb-3">
+        <p className="text-lg text-[rgb(var(--muted-foreground))] leading-relaxed mb-3 type-body">
           {t('now_page.subtitle')}
         </p>
         <p className="text-xs font-mono text-[rgb(var(--muted-foreground))]">
@@ -53,7 +53,7 @@ const NowContent = () => {
         </p>
       </Reveal>
 
-      <div className="space-y-6">
+      <div className="space-y-6 max-md:space-y-3">
         <NowSection
           icon={<FaBriefcase />}
           title={t('now_page.focus_title')}
@@ -68,8 +68,8 @@ const NowContent = () => {
         />
 
         <Reveal as="section" y={24} delay={revealDelay(2)}
-          className="glass-card rounded-2xl border border-[rgb(var(--border))] p-6 sm:p-8 text-start">
-          <h2 className="flex items-center gap-3 font-display text-xl font-bold text-[rgb(var(--foreground))] mb-3">
+          className="m-card glass-card rounded-2xl border border-[rgb(var(--border))] p-6 sm:p-8 text-start">
+          <h2 className="flex items-center gap-3 font-display text-xl font-bold text-[rgb(var(--foreground))] mb-3 type-h3">
             <span className="inline-flex items-center justify-center w-10 h-10 rounded-xl bg-[rgb(var(--muted))]/40 border border-[rgb(var(--border))] text-[rgb(var(--muted-foreground))]">
               <FaHandshake />
             </span>
@@ -80,8 +80,8 @@ const NowContent = () => {
           </p>
           {/* Contact lives on the home page; link there in the language being read. */}
           <a
-            href={`${home}/#contact`}
-            className="inline-flex items-center justify-center min-h-[48px] px-7 rounded-xl font-semibold bg-gradient-to-r from-[rgb(var(--accent))] to-[rgb(var(--accent-hover))] hover:from-[rgb(var(--accent-hover))] hover:to-[rgb(var(--accent))] text-[rgb(var(--accent-contrast))] shadow-lg transition-all active:scale-[0.98]">
+            href={home ? `${home}#contact` : '/#contact'}
+            className="press max-md:flex max-md:w-full max-md:min-h-[52px] max-md:rounded-[var(--radius-btn)] inline-flex items-center justify-center min-h-[48px] px-7 rounded-xl font-semibold bg-gradient-to-r from-[rgb(var(--accent))] to-[rgb(var(--accent-hover))] hover:from-[rgb(var(--accent-hover))] hover:to-[rgb(var(--accent))] text-[rgb(var(--accent-contrast))] shadow-lg transition-all active:scale-[0.98]">
             {t('now_page.availability_cta')}
           </a>
         </Reveal>

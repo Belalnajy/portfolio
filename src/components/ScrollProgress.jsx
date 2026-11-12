@@ -12,7 +12,7 @@ const ScrollProgress = () => {
   return (
     <m.div
       aria-hidden="true"
-      className="fixed top-0 left-0 right-0 h-1 bg-[rgb(var(--accent))] origin-left rtl:origin-right z-[9999]"
+      className="fixed top-0 left-0 right-0 h-0.5 md:h-1 bg-[rgb(var(--accent))] origin-left rtl:origin-right z-[9999]"
       style={{ scaleX }}
     />
   );

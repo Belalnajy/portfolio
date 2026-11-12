@@ -26,8 +26,10 @@ const MetaPills = ({ exp, compact = false }) => (
   </div>
 );
 
+// On a phone the rail marker already shows the kind of entry; the badge
+// stays for screen readers only, so the title gets the card's full width.
 const TypeBadge = ({ exp, t }) => (
-  <span className="px-3 py-1 rounded-full text-xs font-medium bg-[rgb(var(--muted))] text-[rgb(var(--muted-foreground))] border border-[rgb(var(--border))] whitespace-nowrap flex items-center gap-1.5">
+  <span className="max-md:sr-only px-3 py-1 rounded-full text-xs font-medium bg-[rgb(var(--muted))] text-[rgb(var(--muted-foreground))] border border-[rgb(var(--border))] whitespace-nowrap flex items-center gap-1.5">
     {exp.type === 'work' ? (
       <>
         <FaBriefcase className="text-[rgb(var(--primary))]" /> {t('timeline.labels.work')}
@@ -154,9 +156,9 @@ const InteractiveTimeline = () => {
   }, [t]);
 
   return (
-    <section id="experience" className="py-20 relative overflow-hidden text-start">
-      <div className="container mx-auto px-6 relative z-10">
-        <SectionHeading className="max-w-3xl lg:max-w-6xl mx-auto" title={t('timeline.title')} subtitle={t('timeline.subtitle')} />
+    <section id="experience" className="py-20 max-md:py-14 relative overflow-hidden text-start">
+      <div className="container mx-auto px-6 max-sm:px-5 relative z-10">
+        <SectionHeading className="max-w-3xl lg:max-w-6xl mx-auto" eyebrow={t('mPages.eyebrow.experience')} title={t('timeline.title')} subtitle={t('timeline.subtitle')} />
 
         {/* One list, two layouts. From `lg` up it is a bento grid, so the
             whole career is legible at a glance and tile size carries the
@@ -170,20 +172,20 @@ const InteractiveTimeline = () => {
           {/* The rail (phones and tablets only) */}
           <div className="lg:hidden absolute top-2 bottom-2 start-5 w-px bg-gradient-to-b from-[rgb(var(--primary))]/50 via-[rgb(var(--primary))]/20 to-transparent" />
 
-          <ol className="list-none space-y-8 lg:space-y-0 lg:grid lg:grid-cols-12 lg:gap-5">
+          <ol className="list-none space-y-8 max-md:space-y-4 lg:space-y-0 lg:grid lg:grid-cols-12 lg:gap-5">
             {experiences.map((exp, index) => (
               <Reveal
                 as="li"
                 key={exp.key || index}
                 delay={revealDelay(index)}
-                className={`${exp.span} relative ps-14 lg:ps-0 [--reveal-y:24px] lg:[--reveal-y:20px]`}>
+                className={`${exp.span} relative ps-14 max-md:ps-12 lg:ps-0 [--reveal-y:24px] lg:[--reveal-y:20px]`}>
                 {/* Rail marker */}
-                <div className="lg:hidden absolute start-0 top-4 w-10 h-10 rounded-full flex items-center justify-center text-base ring-4 ring-[rgb(var(--background))] bg-[rgb(var(--card))] text-[rgb(var(--primary))] border border-[rgb(var(--border))]">
+                <div className="lg:hidden absolute start-0 top-4 max-md:top-5 w-10 h-10 rounded-full flex items-center justify-center text-base ring-4 ring-[rgb(var(--background))] bg-[rgb(var(--card))] text-[rgb(var(--primary))] border border-[rgb(var(--border))]">
                   {exp.icon}
                 </div>
 
                 <div
-                  className={`group relative glass-card p-6 rounded-xl lg:rounded-2xl lg:h-full lg:flex lg:flex-col lg:border lg:transition-all lg:duration-300 lg:hover:-translate-y-1 ${
+                  className={`m-card group relative glass-card p-6 rounded-xl lg:rounded-2xl lg:h-full lg:flex lg:flex-col lg:border lg:transition-all lg:duration-300 lg:hover:-translate-y-1 ${
                     exp.current
                       ? 'lg:border-[rgb(var(--primary))]/30 lg:hover:border-[rgb(var(--primary))]/60'
                       : 'lg:border-[rgb(var(--border))]/50 lg:hover:border-[rgb(var(--primary))]/40'

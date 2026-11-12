@@ -7,6 +7,7 @@ import { useTranslation } from 'react-i18next';
 import { CASE_STUDIES } from '../lib/case-studies';
 import { switchLanguage } from '../lib/language';
 import { useEscapeLayer } from '../lib/useEscapeLayer';
+import { homeAnchor } from '../lib/home-anchor';
 
 /**
  * ⌘K / Ctrl+K command palette: jump to any section, open any case study,
@@ -37,8 +38,20 @@ const CommandPalette = () => {
         });
       }
     };
+    // The phone menu's search field asks for the palette with an event: on a
+    // touch screen there is no Ctrl+K.
+    const onOpen = () => {
+      setOpen((prev) => {
+        if (!prev) openerRef.current = document.activeElement;
+        return true;
+      });
+    };
     window.addEventListener('keydown', onKeyDown);
-    return () => window.removeEventListener('keydown', onKeyDown);
+    window.addEventListener('palette:open', onOpen);
+    return () => {
+      window.removeEventListener('keydown', onKeyDown);
+      window.removeEventListener('palette:open', onOpen);
+    };
   }, []);
 
   // Escape closes the palette only; a menu or sheet under it stays open.
@@ -61,7 +74,7 @@ const CommandPalette = () => {
   const items = useMemo(() => {
     const home = isArabic ? '/ar' : '';
     const sections = [
-      { id: 'about', label: t('nav.about'), href: `${home}/#about` },
+      { id: 'about', label: t('nav.about'), href: homeAnchor(isArabic, 'about') },
       { id: 'experience', label: t('nav.timeline'), href: `${home}/cv#experience` },
       { id: 'suite', label: t('nav.suite'), href: `${home}/cv#platform-suite` },
       { id: 'work', label: t('nav.projects'), href: `${home}/work` },
@@ -69,8 +82,8 @@ const CommandPalette = () => {
       { id: 'now', label: t('nav.now'), href: `${home}/now` },
       { id: 'blog', label: t('nav.blog'), href: `${home}/blog` },
       { id: 'rescue', label: t('nav.rescue'), href: `${home}/rescue` },
-      { id: 'testimonials', label: t('nav.testimonials'), href: `${home}/#testimonials` },
-      { id: 'contact', label: t('nav.contact'), href: `${home}/#contact` },
+      { id: 'testimonials', label: t('nav.testimonials'), href: homeAnchor(isArabic, 'testimonials') },
+      { id: 'contact', label: t('nav.contact'), href: homeAnchor(isArabic, 'contact') },
     ].map((section) => ({ ...section, group: 'sections', icon: <FaHashtag /> }));
 
     const caseStudies = Object.entries(CASE_STUDIES).map(([slug, { name }]) => ({
@@ -172,7 +185,9 @@ const CommandPalette = () => {
             onClick={() => setOpen(false)}
             className="fixed inset-0 z-[10000] bg-[rgb(var(--scrim))]/70 backdrop-blur-sm"
           />
-          <div className="fixed inset-x-0 top-[12vh] z-[10001] flex justify-center px-4 pointer-events-none">
+          {/* Phones: a full-width sheet from the top edge, so the keyboard
+              below leaves the results room. From md: a centred dialog. */}
+          <div className="fixed inset-x-0 top-0 md:top-[12vh] z-[10001] flex justify-center md:px-4 pointer-events-none">
             <m.div
               initial={{ opacity: 0, scale: 0.97, y: -8 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
@@ -182,9 +197,12 @@ const CommandPalette = () => {
               aria-modal="true"
               aria-label={t('cmdk.placeholder')}
               dir={isArabic ? 'rtl' : 'ltr'}
-              className="w-full max-w-xl glass-card bg-[rgb(var(--popover))] rounded-2xl border border-[rgb(var(--border))] shadow-2xl overflow-hidden pointer-events-auto"
+              className="w-full max-w-xl glass-card bg-[rgb(var(--popover))] rounded-2xl max-md:max-w-none max-md:rounded-t-none max-md:rounded-b-[24px] max-md:border-t-0 max-md:pt-[env(safe-area-inset-top)] border border-[rgb(var(--border))] shadow-2xl overflow-hidden pointer-events-auto"
               onKeyDown={onListKeyDown}>
-              <div className="flex items-center gap-3 px-4 border-b border-[rgb(var(--border))]/60">
+              <div className="p-3 border-b border-[rgb(var(--border))]/60">
+              {/* The focus ring goes round this rounded field (.cmdk-field in
+                  globals.css), not round the bare input. */}
+              <div className="cmdk-field flex items-center gap-3 px-4 rounded-2xl bg-[rgb(var(--text))]/[0.05] border border-[rgb(var(--border-subtle))]">
                 <FaSearch aria-hidden="true" className="text-[rgb(var(--muted-foreground))] text-sm shrink-0" />
                 {/* Combobox pattern: focus stays in the input, the highlighted
                     result is announced through aria-activedescendant. */}
@@ -204,11 +222,12 @@ const CommandPalette = () => {
                     setActive(0);
                   }}
                   placeholder={t('cmdk.placeholder')}
-                  className="w-full bg-transparent py-4 text-[rgb(var(--foreground))] placeholder:text-[rgb(var(--muted-foreground))] outline-none text-base sm:text-sm"
+                  className="w-full min-w-0 bg-transparent py-3 text-[rgb(var(--foreground))] placeholder:text-[rgb(var(--muted-foreground))] outline-none text-base sm:text-sm"
                 />
                 <kbd aria-hidden="true" className="hidden sm:block shrink-0 text-[10px] font-mono px-1.5 py-0.5 rounded border border-[rgb(var(--border))] text-[rgb(var(--muted-foreground))]">
                   ESC
                 </kbd>
+              </div>
               </div>
 
               {/* How many results the query left, for screen readers. */}
@@ -220,7 +239,7 @@ const CommandPalette = () => {
                 id="cmdk-results"
                 role="listbox"
                 aria-label={t('a11y.palette_results')}
-                className="max-h-[46vh] overflow-y-auto overscroll-contain py-2">
+                className="max-h-[46vh] max-md:max-h-[min(60dvh,32rem)] overflow-y-auto overscroll-contain py-2">
                 {filtered.length === 0 && (
                   <p aria-hidden="true" className="px-4 py-6 text-sm text-[rgb(var(--muted-foreground))] text-center">
                     {t('cmdk.no_results')}
@@ -256,7 +275,7 @@ const CommandPalette = () => {
                             </span>
                             <span className="flex-1 truncate">{item.label}</span>
                             {index === active && (
-                              <kbd aria-hidden="true" className="text-[10px] font-mono px-1.5 py-0.5 rounded border border-[rgb(var(--border))] text-[rgb(var(--muted-foreground))]">
+                              <kbd aria-hidden="true" className="[@media(hover:none)]:hidden text-[10px] font-mono px-1.5 py-0.5 rounded border border-[rgb(var(--border))] text-[rgb(var(--muted-foreground))]">
                                 ↵
                               </kbd>
                             )}

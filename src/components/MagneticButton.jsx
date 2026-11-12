@@ -2,6 +2,12 @@
 import { useRef, useState } from 'react';
 import { m } from 'framer-motion';
 
+// A precise pointer that can hover (mouse, trackpad). On a touch screen the
+// pull does nothing useful, and the compatibility mouse events a tap fires
+// made the button jump under the finger.
+const canPull = () =>
+  typeof window !== 'undefined' && window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+
 // Renders a real <a> when given an href (keyboard-focusable, native smooth
 // scroll via CSS scroll-behavior), and a <button> otherwise.
 const MagneticButton = ({ children, className = '', href, ...props }) => {
@@ -9,6 +15,7 @@ const MagneticButton = ({ children, className = '', href, ...props }) => {
   const [position, setPosition] = useState({ x: 0, y: 0 });
 
   const handleMouse = e => {
+    if (!canPull()) return;
     const { clientX, clientY } = e;
     const { width, height, left, top } = ref.current.getBoundingClientRect();
     const x = clientX - (left + width / 2);
@@ -17,7 +24,7 @@ const MagneticButton = ({ children, className = '', href, ...props }) => {
   };
 
   const reset = () => {
-    setPosition({ x: 0, y: 0 });
+    setPosition((current) => (current.x === 0 && current.y === 0 ? current : { x: 0, y: 0 }));
   };
 
   const { x, y } = position;

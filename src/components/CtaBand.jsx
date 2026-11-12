@@ -22,32 +22,35 @@ const CtaBand = ({ copy }) => {
 
   return (
     // A plain div: a band is a nudge between sections, not a landmark.
-    <div className="shell py-6">
+    // Phones: a plain .m-card, and the two actions stacked at full width in
+    // the thumb zone. The neighbouring sections bring their own 56px, so the
+    // band only adds a little air above itself.
+    <div className="shell py-6 max-md:pt-6 max-md:pb-0">
       <Reveal y={16}
-        className="flex flex-col md:flex-row md:items-center gap-5 md:gap-8 rounded-2xl border border-[rgb(var(--primary))]/25 bg-[rgb(var(--primary))]/[0.06] px-6 py-6 md:px-8 text-start">
+        className="m-card flex flex-col md:flex-row md:items-center gap-5 max-md:gap-4 md:gap-8 rounded-2xl border border-[rgb(var(--primary))]/25 bg-[rgb(var(--primary))]/[0.06] px-6 py-6 md:px-8 text-start">
         <div className="flex-1 min-w-0">
-          <p className="font-display text-lg sm:text-xl font-bold text-[rgb(var(--foreground))] leading-snug">
+          <p className="font-display text-lg sm:text-xl font-bold text-[rgb(var(--foreground))] leading-snug rtl:leading-[1.6]">
             {t(`cta_band.${copy}.title`)}
           </p>
-          <p className="text-sm text-[rgb(var(--muted-foreground))] mt-1">
+          <p className="text-sm text-[rgb(var(--muted-foreground))] mt-1 max-md:mt-2 type-small">
             {t(`cta_band.${copy}.body`)}
           </p>
         </div>
-        <div className="flex flex-wrap gap-3 shrink-0">
+        <div className="flex flex-wrap max-md:flex-col gap-3 max-md:gap-2.5 shrink-0">
           <a
             href={mounted ? whatsappUrl(t('whatsapp.message')) : undefined}
             target="_blank"
             rel="noopener noreferrer"
             onClick={() => track('whatsapp_click', { placement: `band_${copy}` })}
             style={{ backgroundColor: brandColor('WhatsApp') }}
-            className="inline-flex items-center gap-2 min-h-[48px] px-5 rounded-xl font-semibold text-[rgb(var(--scrim))] shadow-md transition-transform active:scale-[0.98]">
+            className="press inline-flex items-center justify-center gap-2 min-h-[48px] px-5 rounded-xl max-md:rounded-[var(--radius-btn)] font-semibold text-[rgb(var(--scrim))] shadow-md max-md:shadow-none transition-transform active:scale-[0.98]">
             <FaWhatsapp aria-hidden="true" className="text-lg" />
             {t('contact.info.whatsapp_cta')}
           </a>
           <a
             href="#contact"
             onClick={() => track('quote_click', { placement: `band_${copy}` })}
-            className="inline-flex items-center min-h-[48px] px-5 rounded-xl font-semibold border border-[rgb(var(--border-control))] text-[rgb(var(--foreground))] hover:border-[rgb(var(--primary))] hover:text-[rgb(var(--primary))] transition-colors">
+            className="press inline-flex items-center justify-center min-h-[48px] px-5 rounded-xl max-md:rounded-[var(--radius-btn)] font-semibold border border-[rgb(var(--border-control))] text-[rgb(var(--foreground))] hover:border-[rgb(var(--primary))] hover:text-[rgb(var(--primary))] transition-colors">
             {t('packages.cta')}
           </a>
         </div>

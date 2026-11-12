@@ -31,7 +31,7 @@ const Toast = ({ message, type, onClose, closeLabel }) => (
     transition={{ type: "spring", stiffness: 300, damping: 30 }}
     className={`pointer-events-auto bg-[rgb(var(--card))] border ${
       type === "error" ? "border-[rgb(var(--destructive))]" : "border-[rgb(var(--success))]"
-    } rounded-lg shadow-lg ps-4 pe-1 py-2 flex items-center gap-3 w-full sm:w-auto sm:min-w-[300px] max-w-md backdrop-blur-sm`}>
+    } rounded-lg max-md:rounded-2xl shadow-lg max-md:shadow-[var(--elev-3)] ps-4 pe-1 py-2 flex items-center gap-3 w-full sm:w-auto sm:min-w-[300px] max-w-md backdrop-blur-sm max-md:backdrop-blur-none`}>
     {type === "error" ? (
       <FaExclamationCircle aria-hidden="true" className="shrink-0 text-[rgb(var(--destructive))] text-xl" />
     ) : (
@@ -48,7 +48,8 @@ const Toast = ({ message, type, onClose, closeLabel }) => (
   </m.div>
 );
 
-const REGION = "fixed top-24 inset-x-0 z-50 flex justify-center px-4 pointer-events-none";
+// Phones: just under the 56px header; from md as before.
+const REGION = "fixed top-[calc(var(--header-h)+0.75rem)] md:top-24 inset-x-0 z-50 flex justify-center px-4 pointer-events-none";
 
 // Long enough for screen readers to register the emptied region as a change.
 const REANNOUNCE_DELAY = 100;
