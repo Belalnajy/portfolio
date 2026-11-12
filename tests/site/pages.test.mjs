@@ -173,11 +173,18 @@ test('unknown URLs get the static 404 document', options, async () => {
     '/ar/blog/no-such-post',
   ]) {
     const { status, headers, body } = await get(path);
+    // Vercel's firewall turns scanner paths (/wp-login.php) away before they
+    // reach the site; that is a stricter answer than our 404, not a miss.
+    if (status === 403 && headers.get('x-vercel-mitigated') === 'deny') continue;
     assert.equal(status, 404, path);
     // `next start` stamps no-store on every 404 response, prerendered or not,
-    // so Cache-Control cannot tell the two apart; this header can. A static
-    // host (Vercel) serves the prerendered file from its CDN.
-    assert.equal(headers.get('x-nextjs-prerender')?.split(',')[0].trim(), '1', `${path}: the 404 must be the prerendered document`);
+    // so Cache-Control cannot tell the two apart; x-nextjs-prerender can.
+    // Vercel drops that header and serves the prerendered file from its CDN,
+    // which x-vercel-cache reports (MISS would mean a function rendered it).
+    const prerendered =
+      headers.get('x-nextjs-prerender')?.split(',')[0].trim() === '1' ||
+      /^(HIT|STALE|PRERENDER)$/.test(headers.get('x-vercel-cache') ?? '');
+    assert.ok(prerendered, `${path}: the 404 must be the prerendered document`);
     assert.match(headers.get('content-security-policy') ?? '', /frame-ancestors 'none'/, `${path}: document headers`);
     assert.match(body, /<html[^>]*\slang="(en|ar)"[^>]*>/, `${path}: <html lang>`);
     assert.match(body, /<h1[\s>]/, `${path}: the raw HTML has a heading`);
