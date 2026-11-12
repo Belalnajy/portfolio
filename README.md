@@ -1,114 +1,76 @@
 # Belal Nagy's Portfolio
 
-A modern, responsive portfolio website showcasing my skills, projects, and experience. Built with React, Vite, and Tailwind CSS.
+The source of [belalnagy.com](https://www.belalnagy.com): a bilingual (English / Arabic) portfolio with a project archive, long-form case studies, a blog, a CV page and a contact form.
 
-## 🚀 Features
+## Stack
 
-- 📱 Fully responsive design
-- ✨ Smooth animations using Framer Motion
-- 📊 Interactive components and UI elements
-- 🎯 Project showcase with detailed descriptions
-- 💻 Skills section with technology stack
-- 📧 Contact form with EmailJS integration (sends emails directly)
-- 📄 CV download functionality
-- 📜 Scroll progress indicator
-- 🔔 Notification system for user feedback
-- 🌙 Dark theme optimized
+- [Next.js 16](https://nextjs.org/) (App Router, every page statically prerendered) and React 19, in JavaScript
+- [Tailwind CSS 4](https://tailwindcss.com/) (configured in `src/app/globals.css`, no `tailwind.config.js`)
+- [react-i18next](https://react.i18next.com/) for the two languages
+- [Framer Motion](https://www.framer.com/motion/) for animation, [React Icons](https://react-icons.github.io/react-icons/)
+- [EmailJS](https://www.emailjs.com/) for the contact form, [Vercel Analytics](https://vercel.com/analytics)
+- Deployed on [Vercel](https://vercel.com/)
 
-## 🛠️ Technologies Used
+## Getting started
 
-- [React](https://reactjs.org/) - Frontend library
-- [Vite](https://vitejs.dev/) - Build tool and development server
-- [Tailwind CSS](https://tailwindcss.com/) - Utility-first CSS framework
-- [Framer Motion](https://www.framer.com/motion/) - Animation library
-- [AOS](https://michalsnik.github.io/aos/) - Animate On Scroll library
-- [React Icons](https://react-icons.github.io/react-icons/) - Icon library
-- [EmailJS](https://www.emailjs.com/) - Email service for contact form
-
-## 📦 Installation
-
-1. Clone the repository
+Node 22 (see `.nvmrc`).
 
 ```bash
-git clone https://github.com/Belalnajy/portfolio.git
+npm ci
+cp .env.example .env   # then fill in the EmailJS values
+npm run dev            # http://localhost:3000
 ```
 
-2. Navigate to the project directory
+| Command | What it does |
+| --- | --- |
+| `npm run dev` | Development server |
+| `npm run build` / `npm start` | Production build / serve it |
+| `npm run lint` | ESLint (warnings fail) |
+| `npm test` | Unit checks: locale parity, project registry, language routing |
+| `npm run test:site` | Checks every sitemap URL against a running server (`BASE_URL`, default `http://127.0.0.1:3000`) |
+| `npm run test:browser` | Headless-Chrome smoke test against a running server |
+| `npm run lighthouse` | Lighthouse budget against a running server |
+| `npm run cover-meta` | Regenerate `src/lib/cover-meta.js` after adding or replacing a cover |
+| `node scripts/generate-cv.mjs` | Regenerate `public/Belal_Nagy_CV.pdf` from the site data |
+| `node scripts/contrast-report.mjs` | WCAG contrast report for both themes |
 
-```bash
-cd portfolio
-```
+## Environment variables
 
-3. Install dependencies
+`NEXT_PUBLIC_EMAILJS_SERVICE_ID`, `NEXT_PUBLIC_EMAILJS_TEMPLATE_ID` and `NEXT_PUBLIC_EMAILJS_PUBLIC_KEY` configure the contact form (set them in `.env` locally and in Vercel → Settings → Environment Variables). They are inlined at build time; a build without them works, but the form reports that it is unavailable. Setup guide: [docs/EMAILJS_SETUP.md](./docs/EMAILJS_SETUP.md).
 
-```bash
-npm install
-```
-
-4. Set up environment variables
-
-Copy `.env.example` to `.env` and fill in your EmailJS credentials:
-
-```bash
-cp .env.example .env
-```
-
-Then edit `.env` with your EmailJS values. See [EMAILJS_SETUP.md](./docs/EMAILJS_SETUP.md) for detailed instructions.
-
-5. Start the development server
-
-```bash
-npm run dev
-```
-
-6. Build for production
-
-```bash
-npm run build
-```
-
-## 📧 Contact Form Setup
-
-The contact form uses EmailJS to send emails directly to your inbox. To set it up:
-
-1. Create an account at [EmailJS](https://www.emailjs.com/)
-2. Set up a Gmail service with your email and app password
-3. Create an email template
-4. Copy your Service ID, Template ID, and Public Key to `.env`
-
-For detailed step-by-step instructions, see [EMAILJS_SETUP.md](./docs/EMAILJS_SETUP.md)
-
-## 🌐 Deployment
-
-This project is deployed on Vercel. Visit the live site at: [https://portfolio-belalnajy.vercel.app](https://portfolio-16ey.vercel.app/)
-
-**Important for Vercel deployment:**
-- Add your environment variables in Vercel Dashboard → Settings → Environment Variables
-- Add all three EmailJS variables (Service ID, Template ID, Public Key)
-
-## 🎨 Design
-
-- Modern and clean interface
-- Responsive layout for all devices
-- Smooth transitions and animations
-- Custom favicon and branding
-
-## 📝 Project Structure
+## How the site is organised
 
 ```
-portfolio/
-├── public/             # Static assets
-│   ├── components/     # React components
-│   ├── assets/         # Project assets
-│   ├── App.jsx         # Main application component
-│   └── main.jsx        # Entry point
-├── index.html          # HTML template
-├── package.json        # Project dependencies
-├── tailwind.config.js  # Tailwind configuration
-└── vercel.json         # Vercel deployment configuration
+src/
+├── app/
+│   ├── (en)/            # English pages, with their own root layout (<html lang="en">)
+│   ├── ar/              # Arabic pages under /ar, with their own root layout (<html lang="ar" dir="rtl">)
+│   ├── <route>/opengraph-image.jsx   # English share cards (kept outside the route group)
+│   └── robots.js, sitemap.js, llms.txt, llms-full.txt, feed.xml, og.png
+├── components/          # Sections and page shells (components/pages)
+├── content/             # Case-study narratives, blog articles, FAQ
+├── lib/                 # Registries and helpers
+│   ├── case-studies.js  # The one project registry (stack, links, cover, category)
+│   ├── blog.js          # Article registry
+│   ├── facts.js         # Headline numbers ({{projects}}, {{clients}} …)
+│   ├── metadata.js      # pageMetadata(): canonical, hreflang, Open Graph, Twitter
+│   └── language.js      # Language routing: the URL decides the language
+├── locales/             # en.js and ar.js translation bundles
+└── i18n.js
+public/                  # Covers, gallery, logos, CV PDF, service worker (sw.js)
+scripts/                 # Lighthouse, contrast report, CV and cover generators, IndexNow
+tests/                   # node --test checks
 ```
 
-## 🤝 Contact
+Things worth knowing before changing anything:
+
+- **Languages.** The URL decides the language: `/ar/*` is Arabic, everything else English. The language switch is a navigation to the same page in the other language (`src/lib/language.js`). Every English page has a twin under `src/app/ar`.
+- **Adding a project.** Add an entry to `src/lib/case-studies.js`, a narrative module in `src/content/case-studies/<slug>.js`, card wording under `projects.items.<slug>` in both locale files, and the cover in `public/` (then `npm run cover-meta`). `npm test` checks that these agree.
+- **Page metadata.** Use `pageMetadata()` from `src/lib/metadata.js` in every layout; Next replaces nested metadata objects rather than merging them, so hand-written blocks lose tags.
+- **Replacing an image.** Files in `public/` keep their names, so browsers and the image optimiser cache them: a cover, gallery screen or logo overwritten under the same name can take up to a day to reach returning visitors (`images.minimumCacheTTL` and the `Cache-Control` headers in `next.config.js`). Rename the file to make the change immediate.
+- **Service worker.** `public/sw.js` is hand-written; bump its `VERSION` when the caching logic changes.
+
+## Contact
 
 - GitHub: [@Belalnajy](https://github.com/Belalnajy)
 - LinkedIn: [Belal Nagy](https://linkedin.com/in/belalnajy)

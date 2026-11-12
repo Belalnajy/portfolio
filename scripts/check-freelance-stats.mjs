@@ -5,7 +5,8 @@
  *
  *   node scripts/check-freelance-stats.mjs
  *
- * It fetches the public profile pages on Khamsat, Mostaql and Nafezly and
+ * It fetches the public profile page on Khamsat (the Mostaql account is
+ * closed, so it is no longer checked) and
  * greps them for rating/review signals, then prints what it found next to
  * what the site currently claims — a reminder to update the copy when the
  * numbers move, not an automation that edits anything.
@@ -13,7 +14,7 @@
  * Honest caveats: these platforms render some stats client-side and change
  * markup without notice, so any pattern here can silently stop matching.
  * The script treats every failure as "couldn't verify" and exits 0 — it
- * must never break a build. It performs three plain GET requests to public
+ * must never break a build. It performs one plain GET request to a public
  * profile pages, nothing more.
  */
 
@@ -23,17 +24,6 @@ const PROFILES = [
     url: 'https://khamsat.com/user/belalnajy',
     // e.g. "التقييمات (27)" and percentage blocks on the profile card.
     patterns: [/التقييم[^<]{0,40}?(\d{1,3})\s*%/, /(\d{1,3})\s*%\s*<\/?/],
-  },
-  {
-    name: 'Mostaql',
-    url: 'https://mostaql.com/u/belalnagy',
-    // Profile shows a x.x/5 average when reviews exist.
-    patterns: [/([0-5](?:\.\d)?)\s*\/\s*5/, /rating[^0-9]{0,20}([0-5](?:\.\d)?)/i],
-  },
-  {
-    name: 'Nafezly',
-    url: 'https://www.nafezly.com/u/belalnajy',
-    patterns: [/([0-5](?:\.\d)?)\s*\/\s*5/, /(\d{1,3})\s*%/],
   },
 ];
 

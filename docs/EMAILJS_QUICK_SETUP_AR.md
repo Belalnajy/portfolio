@@ -30,9 +30,9 @@
 ### 5️⃣ تحديث .env
 افتح ملف `.env` وحط القيم:
 ```env
-VITE_EMAILJS_SERVICE_ID=service_xxxxxxx
-VITE_EMAILJS_TEMPLATE_ID=template_xxxxxxx
-VITE_EMAILJS_PUBLIC_KEY=your_public_key
+NEXT_PUBLIC_EMAILJS_SERVICE_ID=service_xxxxxxx
+NEXT_PUBLIC_EMAILJS_TEMPLATE_ID=template_xxxxxxx
+NEXT_PUBLIC_EMAILJS_PUBLIC_KEY=your_public_key
 ```
 
 ### 6️⃣ اختبار
@@ -52,9 +52,9 @@ npm run dev
 ## للـ Deployment على Vercel:
 1. Vercel Dashboard → Settings → Environment Variables
 2. أضف الـ 3 متغيرات:
-   - `VITE_EMAILJS_SERVICE_ID`
-   - `VITE_EMAILJS_TEMPLATE_ID`
-   - `VITE_EMAILJS_PUBLIC_KEY`
+   - `NEXT_PUBLIC_EMAILJS_SERVICE_ID`
+   - `NEXT_PUBLIC_EMAILJS_TEMPLATE_ID`
+   - `NEXT_PUBLIC_EMAILJS_PUBLIC_KEY`
 3. Redeploy
 
 ---
