@@ -1,0 +1,31 @@
+name: Live links
+
+# Weekly check that every client site and store page the portfolio links to
+# still answers (scripts/check-live-links.mjs). A dead link fails the job, and
+# GitHub emails the repo owner about the failed scheduled run. Warnings (bots
+# blocked, a redirect to another host) show in the job summary but pass.
+on:
+  schedule:
+    - cron: '17 6 * * 1' # Mondays 06:17 UTC
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: live-links
+  cancel-in-progress: true
+
+jobs:
+  live-links:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+      - run: npm ci
+      # Prints the table, appends it to the job summary, exits 1 on any dead link.
+      - run: npm run links

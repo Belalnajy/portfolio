@@ -13,7 +13,8 @@
     "indexnow": "node scripts/indexnow.mjs",
     "test": "node --test \"tests/unit/*.test.mjs\"",
     "test:site": "node --test \"tests/site/*.test.mjs\"",
-    "test:browser": "node --test \"tests/browser/*.test.mjs\""
+    "test:browser": "node --test \"tests/browser/*.test.mjs\"",
+    "links": "node scripts/check-live-links.mjs"
   },
   "dependencies": {
     "@emailjs/browser": "^4.4.1",
@@ -27,6 +28,7 @@
     "react-dom": "^19.0.0",
     "react-i18next": "^17.0.4",
     "react-icons": "^5.5.0",
+    "sharp": "^0.35.5",
     "tailwindcss": "^4.1.4"
   },
   "devDependencies": {
