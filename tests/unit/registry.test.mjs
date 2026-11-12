@@ -6,7 +6,7 @@ import assert from 'node:assert/strict';
 import { existsSync, readdirSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import path from 'node:path';
-import { CASE_STUDIES, CASE_STUDY_SLUGS, CLIENT_PROJECT_SLUGS, PROJECT_KINDS, COUNTED_KINDS } from '../../src/lib/case-studies.js';
+import { CASE_STUDIES, CASE_STUDY_SLUGS, CLIENT_PROJECT_SLUGS, PROJECT_KINDS, COUNTED_KINDS, INDUSTRIES } from '../../src/lib/case-studies.js';
 import { COVER_META } from '../../src/lib/cover-meta.js';
 import { BLOG_POSTS, BLOG_SLUGS } from '../../src/lib/blog.js';
 import { FACTS } from '../../src/lib/facts.js';
@@ -15,7 +15,6 @@ import ar from '../../src/locales/ar.js';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..');
 const inRepo = (...parts) => path.join(root, ...parts);
-const CATEGORIES = new Set(['Full Stack', 'Frontend', 'Backend', 'Mobile']);
 const SECTIONS = ['challenge', 'approach', 'delivered', 'outcome'];
 
 test('registry entries are complete and well-formed', () => {
@@ -24,7 +23,11 @@ test('registry entries are complete and well-formed', () => {
     const project = CASE_STUDIES[slug];
     if (!project.name) problems.push(`${slug}: no name`);
     if (!Array.isArray(project.stack) || project.stack.length === 0) problems.push(`${slug}: empty stack`);
-    if (!CATEGORIES.has(project.category)) problems.push(`${slug}: category "${project.category}"`);
+    if (!INDUSTRIES.includes(project.industry)) problems.push(`${slug}: industry "${project.industry}"`);
+    if ('category' in project) problems.push(`${slug}: "category" was replaced by "industry"`);
+    for (const file of project.mockups ?? []) {
+      if (file !== project.image && !project.gallery?.includes(file)) problems.push(`${slug}: mockup ${file} is not one of its pictures`);
+    }
     if (!/^\d{4}-\d{2}-\d{2}$/.test(project.updated ?? '')) problems.push(`${slug}: updated "${project.updated}"`);
     for (const key of ['liveUrl', 'appStoreUrl', 'github']) {
       if (key in project && !/^https:\/\/\S+$/.test(project[key])) problems.push(`${slug}: ${key} "${project[key]}"`);
@@ -89,6 +92,23 @@ test('every project has card wording in both locales, and no wording is orphaned
     for (const key of Object.keys(items)) {
       if (!CASE_STUDIES[key]) problems.push(`${lang}: projects.items.${key} has no registry entry`);
     }
+  }
+  assert.deepEqual(problems, []);
+});
+
+test('every industry is labelled in both languages and has at least one project', () => {
+  const problems = [];
+  for (const [lang, bundle] of [['en', en], ['ar', ar]]) {
+    const labels = bundle.translation.projects.industries ?? {};
+    for (const id of ['all', ...INDUSTRIES]) {
+      if (!labels[id]) problems.push(`${lang}: projects.industries.${id} missing`);
+    }
+    for (const id of Object.keys(labels)) {
+      if (id !== 'all' && !INDUSTRIES.includes(id)) problems.push(`${lang}: projects.industries.${id} is not an industry`);
+    }
+  }
+  for (const id of INDUSTRIES) {
+    if (!CASE_STUDY_SLUGS.some((slug) => CASE_STUDIES[slug].industry === id)) problems.push(`${id}: no project`);
   }
   assert.deepEqual(problems, []);
 });

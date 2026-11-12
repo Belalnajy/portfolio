@@ -83,6 +83,24 @@ const nextConfig = {
     // One prerendered 404 for the whole app; see src/app/global-not-found.jsx.
     globalNotFound: true,
   },
+  // The case-study share cards read their cover from public/ with sharp at
+  // build time, and the path is only known per slug, so the file tracer
+  // copies all of public/ (8 MB, mostly gallery screens) into both functions.
+  // They need the covers and nothing else: everything else is left out.
+  outputFileTracingExcludes: Object.fromEntries(
+    // Keys are picomatch globs, where "[slug]" would be a character class:
+    // "*" stands in for the slug segment.
+    ['/case-study/*/opengraph-image', '/ar/case-study/*/opengraph-image'].map((route) => [
+      route,
+      [
+        'public/gallery/**',
+        'public/logos/**',
+        'public/certificates/**',
+        'public/portrait.webp',
+        'public/*.{pdf,txt,png,ico,svg,js,webmanifest}',
+      ],
+    ]),
+  ),
   images: {
     // AVIF first for browsers that take it (smaller than WebP at the same
     // look), WebP for the rest.
@@ -96,7 +114,7 @@ const nextConfig = {
   async headers() {
     return [
       { source: '/:path*', headers: GLOBAL_HEADERS },
-      { source: '/:dir(logos|gallery|certificates)/:file*', headers: PUBLIC_ASSET_CACHE },
+      { source: '/:dir(logos|gallery|certificates|covers)/:file*', headers: PUBLIC_ASSET_CACHE },
       { source: '/:file([^/]+\\.webp)', headers: PUBLIC_ASSET_CACHE },
       // Pages: anything that is not under /_next/ and is not a static file.
       // Unknown URLs are pages too (the 404 document), whatever they end in,

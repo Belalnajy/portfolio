@@ -44,7 +44,7 @@ const content = {
     }
   },
   "ar": {
-    "title": "Alva AI، محتوى تسويقي بيتكلم سعودي بجد",
+    "title": "Alva AI، محتوى تسويقي بلهجة سعودية حقيقية",
     "summary": "منصة أتمتة تسويق بالذكاء الاصطناعي بتولّد محتوى معرّب للسوق السعودي على السوشيال (TikTok، Instagram، X، Snapchat، WhatsApp) باستخدام GPT-4o-mini مع إثراء هاشتاجات لحظي.",
     "facts": {
       "role": "مطور Full-Stack",

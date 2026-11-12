@@ -5,6 +5,7 @@ import { writeFileSync } from 'node:fs';
 const files = [
   ...readdirSync('public').filter(f => f.endsWith('.webp')),
   ...readdirSync('public/gallery').filter(f => f.endsWith('.webp')).map(f => 'gallery/' + f),
+  ...readdirSync('public/covers').filter(f => f.endsWith('.webp')).map(f => 'covers/' + f),
 ].sort();
 const out = {};
 for (const f of files) {

@@ -2,6 +2,7 @@ import { pageMetadata } from '../../../lib/metadata';
 import { FACTS } from '../../../lib/facts';
 import { workJsonLd } from '../../../lib/case-study-metadata';
 import JsonLd from '../../../components/JsonLd';
+import IndustryLinkGuard from '../../../components/IndustryLinkGuard';
 
 export const metadata = pageMetadata({
   lang: 'en',
@@ -18,6 +19,7 @@ export const metadata = pageMetadata({
 export default function WorkLayout({ children }) {
   return (
     <>
+      <IndustryLinkGuard />
       <JsonLd data={workJsonLd('en')} />
       {children}
     </>

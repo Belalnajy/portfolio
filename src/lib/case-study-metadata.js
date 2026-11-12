@@ -35,7 +35,7 @@ export const caseStudyMetadata = async (slug, lang = 'en') => {
     description: copy.summary,
     type: 'article',
     card: true,
-    cardAlt: 'A case study by Belal Nagy',
+    cardAlt: lang === 'ar' ? 'دراسة حالة من أعمال بلال ناجي' : 'A case study by Belal Nagy',
   });
 };
 

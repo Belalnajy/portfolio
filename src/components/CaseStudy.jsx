@@ -1,6 +1,6 @@
 "use client";
 import { useState } from 'react';
-import Image from 'next/image';
+import { track } from '@vercel/analytics';
 import { I18nextProvider } from 'react-i18next';
 import Reveal from './Reveal';
 import { revealDelay } from '../lib/motion';
@@ -16,12 +16,13 @@ import {
   FaLayerGroup,
   FaGooglePlay,
   FaApple,
+  FaGithub,
 } from 'react-icons/fa';
 import { getTechIcon } from './Projects';
 import IconDefaults from './IconDefaults';
 import LanguageToggle from './LanguageToggle';
 import ProjectKindLabel from './ProjectKindLabel';
-import { coverMeta } from '../lib/cover-meta';
+import DeviceFrame, { frameKind, hostOf } from './DeviceFrame';
 import { asArray } from '../lib/as-array';
 import { CASE_STUDIES } from '../lib/case-studies';
 import { createI18nInstance, DEFAULT_LANGUAGE } from '../i18n';
@@ -47,7 +48,7 @@ const CaseStudy = ({ lang = DEFAULT_LANGUAGE, bundle, ...props }) => {
   );
 };
 
-const CaseStudyContent = ({ slug, narrative, image, liveUrl, appStoreUrl, stack, gallery, nav, kind }) => {
+const CaseStudyContent = ({ slug, narrative, image, mockups = [], liveUrl, appStoreUrl, github, stack, gallery, nav, kind }) => {
   const { t, i18n } = useTranslation();
   const isArabic = i18n.language === 'ar';
   const Back = isArabic ? FaArrowRight : FaArrowLeft;
@@ -57,7 +58,9 @@ const CaseStudyContent = ({ slug, narrative, image, liveUrl, appStoreUrl, stack,
   // projects" goes to the full archive on /work, where every case study is
   // listed, not to the four-card section on the home page.
   const home = isArabic ? '/ar' : '';
-  const cover = coverMeta(image);
+  const host = hostOf(appStoreUrl ? null : liveUrl);
+  // Same event as the rows, cards and sheet (Projects.jsx), from this page.
+  const trackLink = (type) => track('project_link', { project: slug, type, placement: 'case_study' });
 
   const blocks = [
     { key: 'challenge', icon: <FaExclamationTriangle />, accent: 'text-[rgb(var(--accent))]' },
@@ -88,12 +91,13 @@ const CaseStudyContent = ({ slug, narrative, image, liveUrl, appStoreUrl, stack,
           {liveUrl && appStoreUrl && (
             <div className="flex items-center gap-2">
               {[
-                { href: liveUrl, label: 'Google Play', Icon: FaGooglePlay },
-                { href: appStoreUrl, label: 'App Store', Icon: FaApple },
-              ].map(({ href, label, Icon }) => (
+                { href: liveUrl, label: 'Google Play', Icon: FaGooglePlay, type: 'google_play' },
+                { href: appStoreUrl, label: 'App Store', Icon: FaApple, type: 'app_store' },
+              ].map(({ href, label, Icon, type }) => (
                 <a
                   key={label}
                   href={href}
+                  onClick={() => trackLink(type)}
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label={label}
@@ -108,6 +112,7 @@ const CaseStudyContent = ({ slug, narrative, image, liveUrl, appStoreUrl, stack,
           {liveUrl && !appStoreUrl && (
             <a
               href={liveUrl}
+              onClick={() => trackLink('live')}
               target="_blank"
               rel="noopener noreferrer"
               aria-label={t('case_studies.visit')}
@@ -115,6 +120,22 @@ const CaseStudyContent = ({ slug, narrative, image, liveUrl, appStoreUrl, stack,
             >
               <FaExternalLinkAlt className="text-xs" />
               <span className="hidden sm:inline">{t('case_studies.visit')}</span>
+            </a>
+          )}
+          {/* The source, for the training projects that publish it. Rows,
+              cards and the sheet offer one link besides the case study, so
+              this page is where the source of a live project is found. */}
+          {github && (
+            <a
+              href={github}
+              onClick={() => trackLink('github')}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label={`GitHub: ${t('projects.modal.source_code')}`}
+              className="inline-flex items-center gap-2 min-h-[44px] min-w-[44px] justify-center px-3 sm:px-4 rounded-xl text-sm font-semibold bg-[rgb(var(--muted))]/40 text-[rgb(var(--muted-foreground))] border border-[rgb(var(--border))] hover:bg-[rgb(var(--primary))]/20 transition-colors"
+            >
+              <FaGithub className="text-sm" />
+              <span className="hidden sm:inline">GitHub</span>
             </a>
           )}
           {/* Standalone page, no site navbar: the language switch lives here. */}
@@ -179,21 +200,23 @@ const CaseStudyContent = ({ slug, narrative, image, liveUrl, appStoreUrl, stack,
         </div>
       </section>
 
-      {/* Cover */}
-      <section className="container mx-auto px-4 sm:px-6 max-w-5xl">
-        <Reveal rise y={24} duration={0.6} delay={0.2}
-          className="rounded-2xl overflow-hidden border border-[rgb(var(--border))]/50 bg-[rgb(var(--scrim))] p-3 sm:p-5"
-        >
-          <Image
+      {/* Cover: the widest thing on the page, in the same frame as the
+          project's row and card, and the same view-transition name, so the
+          screen carries over from the row that linked here. */}
+      <section className="container mx-auto px-4 sm:px-6 max-w-6xl">
+        <Reveal rise y={24} duration={0.6} delay={0.2}>
+          <DeviceFrame
             src={image}
             alt={copy.title}
-            width={cover.w}
-            height={cover.h}
-            sizes="(min-width: 1024px) 960px, 100vw"
-            placeholder={cover.blur ? 'blur' : 'empty'}
-            blurDataURL={cover.blur}
+            kind={frameKind(image, mockups)}
+            host={host}
+            // The 1152px column less its gutters, then the viewport less them.
+            sizes="(min-width: 1152px) 1104px, (min-width: 640px) calc(100vw - 48px), calc(100vw - 32px)"
+            // In the first viewport at desktop widths, where it is the
+            // page's LCP element: the one image this page preloads.
+            preload
             style={{ viewTransitionName: `cover-${slug}` }}
-            className="w-full h-auto rounded-lg"
+            className="rounded-2xl"
           />
         </Reveal>
       </section>
@@ -271,61 +294,66 @@ const CaseStudyContent = ({ slug, narrative, image, liveUrl, appStoreUrl, stack,
       </section>
 
       {/* Screens from the live product. Desktop views run down the main
-          column; the phone view sits beside them in a device frame, so the
-          responsive claim in the narrative is something you can see. */}
+          column in the browser frame; the phone view sits beside them in a
+          phone frame, so the responsive claim in the narrative is something
+          you can see. Each opens the full-size capture.
+          On a phone the phone view comes first. A composed mockup board (a
+          row of app screens, the registry's `mockups`) would shrink each
+          screen to a thumbnail at phone width, so below 768px it keeps a
+          readable 720px and scrolls sideways instead. */}
       {gallery?.length > 0 && (() => {
         const name = CASE_STUDIES[slug]?.name || copy.title;
         const desktop = gallery.filter((src) => !src.endsWith('-m.webp'));
         const phone = gallery.find((src) => src.endsWith('-m.webp'));
-        const Shot = ({ src, alt, sizes, className = '' }) => {
-          const meta = coverMeta(src);
-          return (
-            <a
-              href={src}
-              target="_blank"
-              rel="noopener noreferrer"
-              className={`block rounded-xl overflow-hidden border border-[rgb(var(--border))]/60 bg-[rgb(var(--scrim))] hover:border-[rgb(var(--primary))]/50 transition-colors ${className}`}>
-              <Image
-                src={src}
-                alt={alt}
-                width={meta.w}
-                height={meta.h}
-                sizes={sizes}
-                placeholder={meta.blur ? 'blur' : 'empty'}
-                blurDataURL={meta.blur}
-                className="w-full h-auto"
-              />
-            </a>
-          );
-        };
+        const Shot = ({ src, alt, sizes, className = '' }) => (
+          <a
+            href={src}
+            target="_blank"
+            rel="noopener noreferrer"
+            className={`group block rounded-xl ${className}`}>
+            <DeviceFrame
+              src={src}
+              alt={alt}
+              kind={frameKind(src, mockups)}
+              host={host}
+              ratio="natural"
+              sizes={sizes}
+              className="transition-colors group-hover:border-[rgb(var(--primary))]/50"
+            />
+          </a>
+        );
         return (
-          <section className="container mx-auto px-4 sm:px-6 max-w-5xl pb-16 md:pb-20">
+          <section className="container mx-auto px-4 sm:px-6 max-w-6xl pb-16 md:pb-20">
             <div className="flex items-end justify-between gap-4 mb-6">
               <h2 className="font-display text-xl sm:text-2xl md:text-3xl font-bold tracking-tight text-start">
                 {t('case_studies.screens_title')}
               </h2>
             </div>
-            <div className={`grid gap-4 ${phone ? 'md:grid-cols-3' : ''} items-start`}>
-              <div className={`grid gap-4 ${phone ? 'md:col-span-2' : 'sm:grid-cols-2'}`}>
-                {desktop.map((src, i) => (
-                  <Shot
-                    key={src}
-                    src={src}
-                    alt={t('case_studies.screen_alt', { name, n: i + 1 })}
-                    sizes="(min-width: 1024px) 640px, 100vw"
-                  />
-                ))}
+            <div className={`grid gap-6 ${phone ? 'md:grid-cols-3' : ''} items-start`}>
+              <div className={`grid gap-6 min-w-0 ${phone ? 'md:col-span-2' : 'sm:grid-cols-2'}`}>
+                {desktop.map((src, i) => {
+                  const alt = t('case_studies.screen_alt', { name, n: i + 1 });
+                  const sizes = phone
+                    ? '(min-width: 1152px) 731px, (min-width: 768px) 66vw'
+                    : '(min-width: 1152px) 544px, (min-width: 640px) 50vw';
+                  if (!mockups.includes(src)) {
+                    return <Shot key={src} src={src} alt={alt} sizes={`${sizes}, calc(100vw - 32px)`} />;
+                  }
+                  return (
+                    <div key={src} className="-mx-4 px-4 sm:-mx-6 sm:px-6 md:mx-0 md:px-0 overflow-x-auto md:overflow-visible pb-2 md:pb-0">
+                      <Shot src={src} alt={alt} sizes={`${sizes}, 720px`} className="w-[720px] md:w-auto" />
+                    </div>
+                  );
+                })}
               </div>
               {phone && (
-                <div className="md:sticky md:top-24 max-w-[280px] w-full mx-auto">
-                  <div className="rounded-[2rem] border-[6px] border-[rgb(var(--surface-raised))] shadow-xl overflow-hidden">
-                    <Shot
-                      src={phone}
-                      alt={t('case_studies.screen_mobile_alt', { name })}
-                      sizes="280px"
-                      className="rounded-none border-0"
-                    />
-                  </div>
+                <div className="order-first md:order-none md:sticky md:top-24 max-w-[280px] w-full mx-auto">
+                  <Shot
+                    src={phone}
+                    alt={t('case_studies.screen_mobile_alt', { name })}
+                    sizes="268px"
+                    className="rounded-[1.75rem]"
+                  />
                 </div>
               )}
             </div>

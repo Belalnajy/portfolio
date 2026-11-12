@@ -311,7 +311,8 @@ test('the skip link is the first stop and moves focus to the page content', { sk
 
 test('archive cards on /work open by keyboard, and focus comes back on Escape', { skip }, async () => {
   const { page, errors, close } = await open('/work');
-  const toggle = 'button[aria-controls="project-results"]';
+  // The archive toggle (the industry buttons are aria-pressed, not aria-expanded).
+  const toggle = 'button[aria-expanded][aria-controls="project-results"]';
   await page.focus(toggle);
   await page.keyboard.press('Enter');
   await settle(1200);

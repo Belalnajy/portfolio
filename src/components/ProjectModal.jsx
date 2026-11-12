@@ -1,20 +1,16 @@
 "use client";
 import { useEffect, useRef, useState } from 'react';
-import Image from 'next/image';
 import { createPortal } from 'react-dom';
 import { m, AnimatePresence, useDragControls } from 'framer-motion';
 import {
-  FaGithub,
-  FaExternalLinkAlt,
   FaTimes,
   FaCode,
   FaLayerGroup,
   FaBookOpen,
 } from 'react-icons/fa';
-import { getTechIcon } from './Projects';
+import { getTechIcon, secondaryLink, trackCaseStudy, trackSecondary } from './Projects';
 import { useTranslation } from 'react-i18next';
-import { track } from '@vercel/analytics';
-import { coverMeta } from '../lib/cover-meta';
+import DeviceFrame, { frameKind, hostOf } from './DeviceFrame';
 import { useFocusTrap } from '../lib/useFocusTrap';
 import { useEscapeLayer } from '../lib/useEscapeLayer';
 import ProjectKindLabel from './ProjectKindLabel';
@@ -74,7 +70,7 @@ const ProjectModal = ({ project, isOpen, onClose }) => {
 
   if (!mounted || !project) return null;
 
-  const cover = coverMeta(project.image);
+  const secondary = secondaryLink(project);
 
   // On phones the sheet rises from the bottom edge; on wider screens it scales
   // in as a centred dialog.
@@ -141,7 +137,7 @@ const ProjectModal = ({ project, isOpen, onClose }) => {
 
                 <div className="flex items-center gap-3 px-4 sm:px-6 py-3">
                   <span className="shrink-0 px-3 py-1 rounded-full text-[11px] sm:text-xs font-semibold bg-[rgb(var(--muted))]/40 text-[rgb(var(--muted-foreground))] border border-[rgb(var(--border))]">
-                    {project.category}
+                    {t(`projects.industries.${project.industry}`)}
                   </span>
                   <h2 className="flex-1 min-w-0 truncate text-sm sm:text-base font-bold text-[rgb(var(--foreground))] text-start">
                     {project.title}
@@ -160,23 +156,16 @@ const ProjectModal = ({ project, isOpen, onClose }) => {
               {/* Scrollable body. Focusable so it can be scrolled with the
                   arrow keys when it holds no link to tab to. */}
               <div tabIndex={0} className="flex-1 overflow-y-auto overscroll-contain focus:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-[rgb(var(--accent))]">
-                {/* Cover image */}
-                <div className="relative w-full bg-[rgb(var(--scrim))] border-b border-[rgb(var(--border))]/30">
-                  {/* Covers are wide (~2.4:1), so a shallow box on phones avoids
-                      dead space above the screenshot. */}
-                  <div className="w-full aspect-[2/1] sm:aspect-[21/9] relative flex items-center sm:items-end justify-center p-3 sm:p-4 sm:pb-0">
-                    <div className="absolute inset-0 bg-gradient-to-t from-[rgb(var(--scrim))]/85 via-[rgb(var(--scrim))]/35 to-transparent z-[1]" />
-                    <Image
-                      src={project.image}
-                      alt={project.title}
-                      width={cover.w}
-                      height={cover.h}
-                      sizes="(min-width: 640px) 850px, 100vw"
-                      placeholder={cover.blur ? 'blur' : 'empty'}
-                      blurDataURL={cover.blur}
-                      className="relative z-0 max-w-full max-h-full w-auto h-auto object-contain rounded-lg sm:rounded-t-lg shadow-2xl"
-                    />
-                  </div>
+                {/* Cover, in the same frame as the card that opened the sheet. */}
+                <div className="px-3 pt-3 sm:px-5 sm:pt-5">
+                  <DeviceFrame
+                    src={project.image}
+                    alt={project.title}
+                    kind={frameKind(project.image, project.mockups)}
+                    host={hostOf(project.live)}
+                    // The sheet is 896px wide from 640 up, less its margin.
+                    sizes="(min-width: 640px) 856px, calc(100vw - 24px)"
+                  />
                 </div>
 
                 <div className="p-5 sm:p-8 md:p-10">
@@ -278,40 +267,31 @@ const ProjectModal = ({ project, isOpen, onClose }) => {
                 </div>
               </div>
 
-              {/* Sticky action bar — thumb-reachable on mobile, clears the home indicator */}
-              {(project.live || project.github || project.caseStudy) && (
-                <div className="shrink-0 flex flex-col sm:flex-row gap-3 px-4 sm:px-8 py-4 border-t border-[rgb(var(--border))]/40 bg-[rgb(var(--background))]/95 backdrop-blur-xl pb-[max(1rem,env(safe-area-inset-bottom))]">
-                  {project.caseStudy && (
-                    <a
-                      href={i18n.language === 'ar' ? `/ar${project.caseStudy}` : project.caseStudy}
-                      onClick={() => track('case_study_open', { project: project.slug })}
-                      className="flex items-center justify-center gap-2 flex-1 min-h-[48px] px-4 bg-[rgb(var(--primary))]/10 text-[rgb(var(--primary))] border border-[rgb(var(--primary))]/30 hover:bg-[rgb(var(--primary))]/20 rounded-xl font-semibold transition-all active:scale-[0.98]"
-                    >
-                      <FaBookOpen /> {t('projects.modal.case_study')}
-                    </a>
-                  )}
-                  {project.live && (
-                    <a
-                      href={project.live}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="flex items-center justify-center gap-2 flex-1 min-h-[48px] px-4 bg-gradient-to-r from-[rgb(var(--accent))] to-[rgb(var(--accent-hover))] hover:from-[rgb(var(--accent-hover))] hover:to-[rgb(var(--accent))] text-[rgb(var(--accent-contrast))] rounded-xl font-semibold transition-all shadow-lg active:scale-[0.98]"
-                    >
-                      <FaExternalLinkAlt /> {t('projects.modal.live_link')}
-                    </a>
-                  )}
-                  {project.github && (
-                    <a
-                      href={project.github}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="flex items-center justify-center gap-2 flex-1 min-h-[48px] px-4 glass-card hover:bg-[rgb(var(--muted))] text-[rgb(var(--foreground))] border border-[rgb(var(--border))] rounded-xl font-semibold transition-all active:scale-[0.98]"
-                    >
-                      <FaGithub size={20} /> {t('projects.modal.source_code')}
-                    </a>
-                  )}
-                </div>
-              )}
+              {/* Sticky action bar, thumb-reachable on mobile, clear of the
+                  home indicator. Two actions at most: the case study, and
+                  the live product (or the store, or the source when nothing
+                  is live). The rest is on the case-study page. The case
+                  study is the filled primary, as on the rows. */}
+              <div className="shrink-0 flex flex-col sm:flex-row gap-3 px-4 sm:px-8 py-4 border-t border-[rgb(var(--border))]/40 bg-[rgb(var(--background))]/95 backdrop-blur-xl pb-[max(1rem,env(safe-area-inset-bottom))]">
+                <a
+                  href={i18n.language === 'ar' ? `/ar${project.caseStudy}` : project.caseStudy}
+                  onClick={() => trackCaseStudy(project, 'sheet')}
+                  className="flex items-center justify-center gap-2 flex-1 min-h-[48px] px-4 bg-gradient-to-r from-[rgb(var(--accent))] to-[rgb(var(--accent-hover))] hover:from-[rgb(var(--accent-hover))] hover:to-[rgb(var(--accent))] text-[rgb(var(--accent-contrast))] rounded-xl font-semibold transition-all shadow-lg active:scale-[0.98]"
+                >
+                  <FaBookOpen aria-hidden="true" /> {t('projects.modal.case_study')}
+                </a>
+                {secondary && (
+                  <a
+                    href={secondary.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={() => trackSecondary(project, secondary, 'sheet')}
+                    className="flex items-center justify-center gap-2 flex-1 min-h-[48px] px-4 border border-[rgb(var(--border-control))] text-[rgb(var(--foreground))] hover:border-[rgb(var(--primary))] hover:text-[rgb(var(--primary))] rounded-xl font-semibold transition-all active:scale-[0.98]"
+                  >
+                    <secondary.Icon aria-hidden="true" /> {t(secondary.label)}
+                  </a>
+                )}
+              </div>
             </m.div>
           </div>
         </>

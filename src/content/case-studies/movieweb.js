@@ -43,7 +43,7 @@ const content = {
     }
   },
   "ar": {
-    "title": "تطبيق أفلام مبني من غير Framework",
+    "title": "تطبيق أفلام مبني دون إطار عمل",
     "summary": "تطبيق أفلام ديناميكي عملته وأنا بتعلم HTML، CSS، JavaScript، jQuery، Tailwind: تصفح متجاوب وخصائص تفاعلية وتحديثات لحظية، من غير framework يعمل الشغل بدالي.",
     "facts": {
       "role": "مطور واجهات أمامية",

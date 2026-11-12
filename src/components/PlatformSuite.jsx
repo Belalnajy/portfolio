@@ -1,6 +1,5 @@
 "use client";
 import { Fragment, useEffect, useRef, useState } from 'react';
-import Image from 'next/image';
 import { m, useScroll, useTransform, useReducedMotion } from 'framer-motion';
 import Reveal from './Reveal';
 import SectionHeading from './SectionHeading';
@@ -16,7 +15,7 @@ import {
   FaShieldAlt,
 } from 'react-icons/fa';
 import { LMS_SUITE } from './Projects';
-import { coverMeta } from '../lib/cover-meta';
+import DeviceFrame, { hostOf } from './DeviceFrame';
 
 const SHARED_CAPABILITIES = [
   { key: 'engine', icon: <FaServer /> },
@@ -168,20 +167,20 @@ const PlatformSuite = () => {
               whileHover={{ y: -6 }}
               className="group glass-card rounded-2xl overflow-hidden border border-[rgb(var(--border))]/50 hover:border-[rgb(var(--primary))]/40 transition-colors flex flex-col"
             >
-              <div className="relative aspect-video bg-[rgb(var(--scrim))] overflow-hidden border-b border-[rgb(var(--border))]/30 flex items-center justify-center p-4">
+              {/* The deployment's accent runs along the top; the screen sits
+                  in the browser frame every project picture uses. */}
+              <div className="relative p-3 pb-0">
                 <div
                   className="absolute inset-x-0 top-0 h-1 z-10"
                   style={{ backgroundColor: member.accent }}
                 />
-                <Image
+                <DeviceFrame
                   src={member.image}
                   alt={member.name}
-                  width={coverMeta(member.image).w}
-                  height={coverMeta(member.image).h}
-                  sizes="(min-width: 768px) 30vw, 90vw"
-                  placeholder={coverMeta(member.image).blur ? 'blur' : 'empty'}
-                  blurDataURL={coverMeta(member.image).blur}
-                  className="max-w-full max-h-full w-auto h-auto object-contain rounded-lg opacity-85 group-hover:opacity-100 group-hover:scale-[1.03] transition-all duration-500"
+                  host={hostOf(member.url)}
+                  // A third of the container from 768 up, less the margin.
+                  sizes="(min-width: 1280px) 390px, (min-width: 768px) 30vw, calc(100vw - 72px)"
+                  imageClassName="transition-transform duration-500 motion-safe:group-hover:scale-[1.03]"
                 />
               </div>
 

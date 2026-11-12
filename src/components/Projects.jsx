@@ -1,7 +1,7 @@
 "use client";
 import { useState, useEffect, useMemo, useRef } from 'react';
-import Image from 'next/image';
-import { m, AnimatePresence } from 'framer-motion';
+import { m } from 'framer-motion';
+import { track } from '@vercel/analytics';
 import Reveal from './Reveal';
 import { revealDelay } from '../lib/motion';
 import {
@@ -81,6 +81,7 @@ import {
   FaCogs,
   FaSlidersH,
   FaCubes,
+  FaApple,
 } from 'react-icons/fa';
 import { useTranslation } from 'react-i18next';
 import dynamic from 'next/dynamic';
@@ -88,8 +89,8 @@ import dynamic from 'next/dynamic';
 // Only needed once a card is opened, so it stays out of the first load.
 const ProjectModal = dynamic(() => import('./ProjectModal'), { ssr: false });
 import { brandColor } from '../lib/brand-colors';
-import { coverMeta } from '../lib/cover-meta';
-import { CASE_STUDIES, CASE_STUDY_SLUGS } from '../lib/case-studies';
+import { CASE_STUDIES, CASE_STUDY_SLUGS, INDUSTRIES } from '../lib/case-studies';
+import DeviceFrame, { frameKind, hostOf } from './DeviceFrame';
 import { asArray } from '../lib/as-array';
 import ProjectKindLabel from './ProjectKindLabel';
 import SectionHeading from './SectionHeading';
@@ -232,21 +233,21 @@ export const LMS_SUITE = {
       slug: 'injaz',
       name: 'Injaz',
       url: 'https://lms-injaz.com/',
-      image: '/injaz.webp',
+      image: '/covers/injaz.webp',
       accent: 'rgb(var(--accent))',
     },
     {
       slug: 'hcholding',
       name: 'HC Holding',
       url: 'https://lms-hcholding.org/',
-      image: '/hcholding.webp',
+      image: '/covers/hcholding.webp',
       accent: 'rgb(var(--success))',
     },
     {
       slug: 'mada',
       name: 'Mada Education',
       url: 'https://mada-education.com/',
-      image: '/mada.webp',
+      image: '/covers/mada.webp',
       accent: 'rgb(var(--accent-hover))',
     },
   ],
@@ -303,141 +304,148 @@ const featuredRank = (slug) => {
 
 const byFeaturedOrder = (a, b) => featuredRank(a.slug) - featuredRank(b.slug);
 
-const ProjectCard = ({ project, index, onClick, headingAs: CardHeading = 'h3' }) => {
-  const { t } = useTranslation();
-  const cover = coverMeta(project.image);
+/**
+ * The one secondary link a project gets beside "Case study": the live site,
+ * or the App Store for the mobile app, or the source only when nothing is
+ * live. Anything else (the second store, the source of a live project) is on
+ * the case-study page, so no row, card or sheet offers more than two actions.
+ */
+export const secondaryLink = (project) => {
+  if (project.appStore) return { href: project.appStore, type: 'app_store', label: 'projects.modal.app_store', Icon: FaApple };
+  if (project.live) return { href: project.live, type: 'live', label: 'projects.modal.live_link', Icon: FaExternalLinkAlt };
+  if (project.github) return { href: project.github, type: 'github', label: 'projects.modal.source_code', Icon: FaGithub };
+  return null;
+};
 
-  return (
-    // The whole card opens the details, through one real button: the title.
-    // Its ::after stretches over the card, so a click anywhere still works,
-    // while keyboard and screen-reader users get a named, focusable control
-    // (the card used to be a clickable <div> nobody could reach by keyboard).
-    <Reveal y={20} delay={revealDelay(index)} long
-      className="focus-card group relative glass-card rounded-2xl overflow-hidden shadow-lg transition-all duration-300 cursor-pointer border border-transparent hover:border-[rgb(var(--primary))]/30 hover:-translate-y-1 flex flex-col h-full bg-[rgb(var(--background))]">
-      {/* Sleek Image Container with inner padding */}
-      <div className="relative w-full aspect-video bg-[rgb(var(--scrim))] p-4 pb-0 flex items-end justify-center overflow-hidden border-b border-[rgb(var(--border))]/30">
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-[rgb(var(--accent))]/10 via-[rgb(var(--scrim))]/0 to-[rgb(var(--scrim))] opacity-50 z-0" />
+/** Analytics for the two project actions; `placement` says which surface. */
+export const trackCaseStudy = (project, placement) =>
+  track('case_study_open', { project: project.slug, placement });
+export const trackSecondary = (project, link, placement) =>
+  track('project_link', { project: project.slug, type: link.type, placement });
 
-        <Image
-          src={project.image}
-          alt={project.title}
-          width={cover.w}
-          height={cover.h}
-          sizes="(min-width: 1280px) 400px, (min-width: 768px) 45vw, 90vw"
-          placeholder={cover.blur ? 'blur' : 'empty'}
-          blurDataURL={cover.blur}
-          className="relative z-10 w-[90%] h-auto object-contain rounded-t-xl transform group-hover:-translate-y-2 transition-transform duration-500 will-change-transform drop-shadow-[0_-5px_15px_rgba(0,0,0,0.5)]"
-        />
+const ProjectCard = ({ project, index, onClick, headingAs: CardHeading = 'h3' }) => (
+  // The whole card opens the details, through one real button: the title.
+  // Its ::after stretches over the card, so a click anywhere still works,
+  // while keyboard and screen-reader users get a named, focusable control
+  // (the card used to be a clickable <div> nobody could reach by keyboard).
+  <Reveal y={20} delay={revealDelay(index)} long
+    className="focus-card group relative glass-card rounded-2xl overflow-hidden shadow-lg transition-all duration-300 cursor-pointer border border-transparent hover:border-[rgb(var(--primary))]/30 motion-safe:hover:-translate-y-1 flex flex-col h-full bg-[rgb(var(--background))]">
+    {/* The screen fills the card's width: a thin margin, no letterbox. */}
+    <div className="p-3 pb-0">
+      <DeviceFrame
+        src={project.image}
+        alt={project.title}
+        kind={frameKind(project.image, project.mockups)}
+        host={hostOf(project.live)}
+        // A third of the 1152px column from 1280, half of the container
+        // from 768, all of it below; less the card's margin.
+        sizes="(min-width: 1280px) 344px, (min-width: 768px) 452px, calc(100vw - 72px)"
+        imageClassName="transition-transform duration-500 motion-safe:group-hover:scale-[1.02]"
+        alignBar
+      />
+    </div>
 
-        {/* One concrete outcome, so the card says what the project did and
-            not only what it was built with. */}
-        {project.impact && (
-          <span className="absolute top-3 start-3 z-20 px-2.5 py-1 rounded-full text-[11px] font-semibold bg-[rgb(var(--scrim))]/80 text-[rgb(var(--on-scrim))] border border-[rgb(var(--on-scrim))]/15 backdrop-blur-sm">
-            {project.impact}
+    {/* Content */}
+    <div className="p-5 sm:p-6 flex flex-col flex-grow text-start">
+      {/* One concrete outcome, so the card says what the project did and
+          not only what it was built with. */}
+      {project.impact && (
+        <span className="self-start mb-3 px-2.5 py-1 rounded-full text-[11px] font-semibold bg-[rgb(var(--muted))]/40 text-[rgb(var(--muted-foreground))] border border-[rgb(var(--border))]">
+          {project.impact}
+        </span>
+      )}
+      <div className="flex justify-between items-start mb-2">
+        <CardHeading className="text-xl font-bold text-[rgb(var(--foreground))] group-hover:text-[rgb(var(--primary))] transition-colors line-clamp-1">
+          <button
+            type="button"
+            onClick={() => onClick(project)}
+            className="text-start rounded-md after:absolute after:inset-0 after:z-30 after:content-[''] after:rounded-2xl focus-visible:outline-none">
+            {project.title}
+          </button>
+        </CardHeading>
+      </div>
+
+      {/* Training, event and learning work is labelled, not passed off as client work. */}
+      <ProjectKindLabel kind={project.kind} className="self-start mb-3" />
+
+      {/* No flex-grow here: a clamped paragraph taller than its two lines
+          shows the third line under the ellipsis. The icons' mt-auto
+          keeps the rows aligned instead. */}
+      <p className="text-[rgb(var(--muted-foreground))] text-sm mb-6 line-clamp-2 leading-relaxed">
+        {project.description}
+      </p>
+
+      {/* Minimal Tech Icons only (No redundant text pills) */}
+      <div className="flex flex-wrap items-center gap-3 mt-auto relative z-10 pointer-events-none">
+        {project.tags.slice(0, 6).map((tech) => (
+          <TechMark
+            key={tech}
+            tech={tech}
+            className="text-lg opacity-70 group-hover:opacity-100 transition-opacity"
+          />
+        ))}
+        {project.tags.length > 6 && (
+          <span className="text-xs text-[rgb(var(--muted-foreground))] flex items-center font-medium">
+            +{project.tags.length - 6}
           </span>
         )}
-
-        {/* Hover Glass Overlay - Click to View */}
-        <div aria-hidden="true" className="absolute inset-0 z-20 flex items-center justify-center opacity-0 group-hover:opacity-100 group-focus-within:opacity-100 transition-opacity duration-300 bg-[rgb(var(--scrim))]/60 backdrop-blur-[2px]">
-          <span className="px-6 py-2 rounded-full bg-[rgb(var(--scrim))]/85 border border-[rgb(var(--on-scrim))]/20 text-[rgb(var(--on-scrim))] text-sm font-semibold tracking-wider flex items-center gap-2 transform translate-y-4 group-hover:translate-y-0 transition-all duration-300">
-            {t('projects.view_details')}
-          </span>
-        </div>
       </div>
-
-      {/* Content */}
-      <div className="p-6 flex flex-col flex-grow text-start">
-        <div className="flex justify-between items-start mb-2">
-          <CardHeading className="text-xl font-bold text-[rgb(var(--foreground))] group-hover:text-[rgb(var(--primary))] transition-colors line-clamp-1">
-            <button
-              type="button"
-              onClick={() => onClick(project)}
-              className="text-start rounded-md after:absolute after:inset-0 after:z-30 after:content-[''] after:rounded-2xl focus-visible:outline-none">
-              {project.title}
-            </button>
-          </CardHeading>
-        </div>
-
-        {/* Training, event and learning work is labelled, not passed off as client work. */}
-        <ProjectKindLabel kind={project.kind} className="self-start mb-3" />
-
-        <p className="text-[rgb(var(--muted-foreground))] text-sm mb-6 line-clamp-2 leading-relaxed flex-grow">
-          {project.description}
-        </p>
-
-        {/* Minimal Tech Icons only (No redundant text pills) */}
-        <div className="flex flex-wrap items-center gap-3 mt-auto relative z-10 pointer-events-none">
-          {project.tags.slice(0, 6).map((tech) => (
-            <TechMark
-              key={tech}
-              tech={tech}
-              className="text-lg opacity-70 group-hover:opacity-100 transition-opacity"
-            />
-          ))}
-          {project.tags.length > 6 && (
-            <span className="text-xs text-[rgb(var(--muted-foreground))] flex items-center font-medium">
-              +{project.tags.length - 6}
-            </span>
-          )}
-        </div>
-      </div>
-    </Reveal>
-  );
-};
+    </div>
+  </Reveal>
+);
 
 /**
  * Editorial row for the curated default view: oversized index, screenshot,
- * one-line impact and direct routes into the case study. The archive and any
- * filtered view keep the denser card grid.
+ * one-line impact and two routes out: the case study, and the live product
+ * (see secondaryLink). The archive and any filtered view keep the denser
+ * card grid.
  */
-const FeaturedRow = ({ project, index, onClick, isArabic, headingAs: RowHeading = 'h3', eager = false }) => {
+const FeaturedRow = ({ project, index, isArabic, headingAs: RowHeading = 'h3', eager = false, rise = false }) => {
   const { t } = useTranslation();
-  const cover = coverMeta(project.image);
   const flip = index % 2 === 1;
-  const caseStudyHref = project.caseStudy
-    ? `${isArabic ? '/ar' : ''}${project.caseStudy}`
-    : null;
+  const caseStudyHref = `${isArabic ? '/ar' : ''}${project.caseStudy}`;
+  const secondary = secondaryLink(project);
+  const placement = 'row';
 
   return (
     // The first row of /work is the page's largest paint: it rises in from the
     // first frame instead of waiting, transparent, for the scroll observer.
-    <Reveal as="article" y={32} duration={0.55} rise={eager}
-      className="group grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-12 items-center">
-      {/* Screenshot */}
-      <div className={`lg:col-span-7 ${flip ? 'lg:order-2' : ''}`}>
-        {/* A pointer shortcut to "View details" below; kept out of the tab
-            order and the accessibility tree so each row is not three stops
-            and two identical announcements. */}
-        <button
-          type="button"
-          onClick={() => onClick(project)}
+    <Reveal as="article" y={32} duration={0.55} rise={rise}
+      className="group grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-10 items-center">
+      {/* Screenshot: the larger share of the row from 1280 up. */}
+      <div className={`lg:col-span-7 xl:col-span-8 ${flip ? 'lg:order-2' : ''}`}>
+        {/* A pointer shortcut to the case study; kept out of the tab order
+            and the accessibility tree, since the "Case study" link below is
+            the same destination with a name. */}
+        <a
+          href={caseStudyHref}
+          onClick={() => trackCaseStudy(project, 'row_screen')}
           tabIndex={-1}
           aria-hidden="true"
-          className="block w-full cursor-pointer">
-          <div className="relative rounded-2xl overflow-hidden border border-[rgb(var(--border))]/60 bg-[rgb(var(--scrim))] p-3 sm:p-4 transition-colors duration-300 group-hover:border-[rgb(var(--primary))]/40">
-            <Image
-              src={project.image}
-              alt={project.title}
-              width={cover.w}
-              height={cover.h}
-              sizes="(min-width: 1024px) 640px, 100vw"
-              placeholder={cover.blur ? 'blur' : 'empty'}
-              blurDataURL={cover.blur}
-              // The first row is the LCP element on /work: fetch it with the
-              // document instead of waiting for lazy-load to discover it.
-              {...(eager && { loading: 'eager', fetchPriority: 'high' })}
-              style={{ viewTransitionName: `cover-${project.slug}` }}
-              className="w-full h-auto rounded-lg transition-transform duration-500 group-hover:scale-[1.015]"
-            />
-          </div>
-        </button>
+          className="block">
+          <DeviceFrame
+            src={project.image}
+            alt={project.title}
+            kind={frameKind(project.image, project.mockups)}
+            host={hostOf(project.live)}
+            // 8 of 12 columns of the 1152px column from 1280, 7 of 12 from
+            // 1024, then the full container width.
+            sizes="(min-width: 1280px) 755px, (min-width: 1024px) 560px, (min-width: 768px) 720px, calc(100vw - 48px)"
+            // The first row is the LCP element: fetched with the document
+            // instead of waiting for lazy-load to discover it.
+            preload={eager}
+            style={{ viewTransitionName: `cover-${project.slug}` }}
+            className="transition-colors duration-300 group-hover:border-[rgb(var(--primary))]/40"
+            imageClassName="transition-transform duration-500 motion-safe:group-hover:scale-[1.015]"
+          />
+        </a>
       </div>
 
       {/* Copy */}
-      <div className={`lg:col-span-5 text-start ${flip ? 'lg:order-1' : ''}`}>
+      <div className={`lg:col-span-5 xl:col-span-4 text-start ${flip ? 'lg:order-1' : ''}`}>
         {/* The block follows the page direction (start side in Arabic too);
             only the digits themselves are marked left-to-right. */}
-        <p className="font-display text-6xl md:text-7xl font-bold text-outline leading-none mb-4 select-none">
+        <p className="font-display text-5xl md:text-6xl font-bold text-outline leading-none mb-4 select-none">
           <span dir="ltr">{String(index + 1).padStart(2, '0')}</span>
         </p>
         {project.impact && (
@@ -459,36 +467,27 @@ const FeaturedRow = ({ project, index, onClick, isArabic, headingAs: RowHeading 
           ))}
         </div>
         <div className="flex flex-wrap gap-3">
-          {caseStudyHref && (
+          <a
+            href={caseStudyHref}
+            onClick={() => trackCaseStudy(project, placement)}
+            className="inline-flex items-center gap-2 min-h-[44px] px-5 py-2.5 rounded-xl font-semibold text-sm bg-[rgb(var(--primary))]/10 text-[rgb(var(--primary))] border border-[rgb(var(--primary))]/30 hover:bg-[rgb(var(--primary))]/20 transition-colors">
+            {t('projects.modal.case_study')}
+            {/* Every row has these controls: the project name makes each
+                one distinct in a links list. */}
+            <span className="sr-only">: {project.title}</span>
+          </a>
+          {secondary && (
             <a
-              href={caseStudyHref}
-              className="inline-flex items-center gap-2 min-h-[44px] px-5 py-2.5 rounded-xl font-semibold text-sm bg-[rgb(var(--primary))]/10 text-[rgb(var(--primary))] border border-[rgb(var(--primary))]/30 hover:bg-[rgb(var(--primary))]/20 transition-colors">
-              {t('projects.modal.case_study')}
-              {/* Every row has these three controls: the project name makes
-                  each one distinct in a links list. */}
-              <span className="sr-only">: {project.title}</span>
-            </a>
-          )}
-          {project.live && (
-            <a
-              href={project.live}
+              href={secondary.href}
               target="_blank"
               rel="noopener noreferrer"
+              onClick={() => trackSecondary(project, secondary, placement)}
               className="inline-flex items-center gap-2 min-h-[44px] px-5 py-2.5 rounded-xl font-semibold text-sm border border-[rgb(var(--border-control))] text-[rgb(var(--foreground))] hover:border-[rgb(var(--primary))] hover:text-[rgb(var(--primary))] transition-colors">
-              <FaExternalLinkAlt aria-hidden="true" className="text-xs" />
-              {t('projects.modal.live_link')}
+              <secondary.Icon aria-hidden="true" className="text-xs" />
+              {t(secondary.label)}
               <span className="sr-only">: {project.title}</span>
             </a>
           )}
-          {/* No padding of its own: when it wraps under the buttons its text
-              lines up with their edge, not 20px inside it. */}
-          <button
-            type="button"
-            onClick={() => onClick(project)}
-            className="inline-flex items-center min-h-[44px] px-0 font-semibold text-sm text-[rgb(var(--muted-foreground))] hover:text-[rgb(var(--foreground))] transition-colors">
-            {t('projects.view_details')}
-            <span className="sr-only">: {project.title}</span>
-          </button>
         </div>
       </div>
     </Reveal>
@@ -510,7 +509,7 @@ const Projects = ({ variant = 'full' }) => {
   const isHome = variant === 'home';
   const Heading = isHome ? 'h2' : 'h1';
   const itemHeading = isHome ? 'h3' : 'h2';
-  const [filter, setFilter] = useState('All');
+  const [industry, setIndustry] = useState('all');
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedProject, setSelectedProject] = useState(null);
   const [showArchive, setShowArchive] = useState(false);
@@ -520,11 +519,15 @@ const Projects = ({ variant = 'full' }) => {
   // Set when the archive toggle opens the full grid, so focus can follow the
   // content instead of staying on a button now 38 cards further down.
   const focusResultsRef = useRef(false);
+  const searchRef = useRef(null);
+  // True once a ?industry= link has been applied (or found absent); until
+  // then the results are hidden (see IndustryLinkGuard).
+  const [linkResolved, setLinkResolved] = useState(false);
 
   // A new filter, search or archive toggle starts the grid from page one again.
   useEffect(() => {
     setGridLimit(GRID_PAGE_SIZE);
-  }, [filter, searchTerm, showArchive]);
+  }, [industry, searchTerm, showArchive]);
 
   // Lock scroll when modal is open
   useEffect(() => {
@@ -535,23 +538,49 @@ const Projects = ({ variant = 'full' }) => {
     }
   }, [selectedProject]);
 
-  const categories = [
-    { id: 'All', label: t('projects.categories.all') },
-    { id: 'Full Stack', label: t('projects.categories.fullstack') },
-    { id: 'Frontend', label: t('projects.categories.frontend') },
-    { id: 'Backend', label: t('projects.categories.backend') },
-    { id: 'Mobile', label: t('projects.categories.mobile') },
-  ];
+  // A filter can be linked to: /work?industry=healthcare opens on it, and
+  // choosing one updates the address (replaceState: no history entry per
+  // click). Read after hydration, so the prerendered page stays static and
+  // unfiltered; IndustryLinkGuard keeps the results hidden until the filter
+  // has been applied here, so the featured rows do not flash first.
+  useEffect(() => {
+    if (isHome) return;
+    const wanted = new URLSearchParams(window.location.search).get('industry');
+    if (INDUSTRIES.includes(wanted)) setIndustry(wanted);
+    setLinkResolved(true);
+  }, [isHome]);
+
+  // Runs after the commit that rendered the filtered grid, so the results
+  // are shown already filtered.
+  useEffect(() => {
+    if (linkResolved) document.documentElement.removeAttribute('data-industry-link');
+  }, [linkResolved]);
+
+  const chooseIndustry = (id) => {
+    setIndustry(id);
+    const url = new URL(window.location.href);
+    if (id === 'all') url.searchParams.delete('industry');
+    else url.searchParams.set('industry', id);
+    window.history.replaceState(window.history.state, '', url);
+  };
+
+  // The empty state's way out: everything back to the default view, and
+  // focus to the search, since the button that was pressed disappears.
+  const clearFilters = () => {
+    chooseIndustry('all');
+    setSearchTerm('');
+    searchRef.current?.focus();
+  };
 
   // Every card is derived from the case-study registry: slug, cover, stack,
-  // live URL, category and featured flag are typed once, in
+  // links, industry and featured flag are typed once, in
   // src/lib/case-studies.js, and only the wording comes from the locale
   // bundle. The cards used to carry their own copy of those facts, and 12
   // stacks and one live URL had drifted from the registry.
   const projectsData = useMemo(
     () =>
       CASE_STUDY_SLUGS.map((slug) => {
-        const { image, stack, liveUrl, github, category, featured, kind } = CASE_STUDIES[slug];
+        const { image, mockups, stack, liveUrl, appStoreUrl, github, industry: sector, featured, kind } = CASE_STUDIES[slug];
         return {
           slug,
           featured: Boolean(featured),
@@ -560,11 +589,13 @@ const Projects = ({ variant = 'full' }) => {
           description: t(`projects.items.${slug}.desc`),
           features: asArray(t(`projects.items.${slug}.features`, { returnObjects: true })),
           image,
+          mockups: mockups ?? [],
           tags: stack,
           // null, not a '#' placeholder, when there is nothing to link to.
           live: liveUrl ?? null,
+          appStore: appStoreUrl ?? null,
           github: github ?? null,
-          category,
+          industry: sector,
           kind,
           caseStudy: `/case-study/${slug}`,
           ...(LMS_SUITE_SLUGS.has(slug) && { suite: LMS_SUITE }),
@@ -573,17 +604,31 @@ const Projects = ({ variant = 'full' }) => {
     [t],
   );
 
+  // Industry buttons, each with how many projects it holds. "All" has no
+  // count: unfiltered, /work shows the featured rows, not all 38, and the
+  // archive toggle below already says how many there are in total.
+  const industries = [
+    { id: 'all', count: null },
+    ...INDUSTRIES.map((id) => ({ id, count: projectsData.filter((project) => project.industry === id).length })),
+  ];
+
+  // The search also reads the stack, which is where the old Full Stack /
+  // Frontend / Backend buttons went: "Django" or "React Native" still finds
+  // the work, without a row of buttons that only meant something to developers.
+  const query = searchTerm.trim().toLowerCase();
   const filteredProjects = projectsData.filter((project) => {
-    const matchesFilter = filter === 'All' || project.category === filter;
+    const matchesFilter = industry === 'all' || project.industry === industry;
     const matchesSearch =
-      project.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      project.description.toLowerCase().includes(searchTerm.toLowerCase());
+      !query ||
+      project.title.toLowerCase().includes(query) ||
+      project.description.toLowerCase().includes(query) ||
+      project.tags.some((tech) => tech.toLowerCase().includes(query));
     return matchesFilter && matchesSearch;
   });
 
   // The default view curates the strongest work; filtering or searching always
   // looks through the complete archive so nothing becomes unreachable.
-  const isDefaultView = filter === 'All' && searchTerm.trim() === '';
+  const isDefaultView = industry === 'all' && query === '';
   const visibleProjects = isHome
     ? projectsData.filter((project) => project.featured).sort(byFeaturedOrder).slice(0, 4)
     : isDefaultView && !showArchive
@@ -634,50 +679,77 @@ const Projects = ({ variant = 'full' }) => {
           subtitle={t('projects.subtitle')}
         />
 
-        {/* Filter & Search - Premium Segmented Control */}
+        {/* Industry filter and search. From 640 up the industries are
+            toggle buttons that wrap onto a second line rather than scroll off
+            it; on a phone the same choice is one native select, since seven
+            wrapped buttons pushed the work a screen further down. The search
+            sits at the end of the row from lg up. */}
         {!isHome && (
         <Reveal y={20} duration={0.5} delay={0.2} immediate
-          className="mb-12 flex flex-col md:flex-row gap-6 items-center justify-between max-w-6xl mx-auto">
-          {/* Segmented control — wraps into rows on phones instead of scrolling
-              off-screen, so every category stays reachable. */}
+          className="mb-12 flex flex-col lg:flex-row gap-4 lg:gap-8 lg:items-start lg:justify-between max-w-6xl mx-auto">
+          <select
+            aria-label={t('a11y.filter_projects')}
+            value={industry}
+            onChange={(e) => chooseIndustry(e.target.value)}
+            // The focus outline comes from the global :focus-visible rule
+            // in globals.css, as on every other control.
+            className="sm:hidden w-full min-h-[44px] px-4 rounded-full bg-[rgb(var(--background))] border border-[rgb(var(--border-control))] text-base text-[rgb(var(--foreground))] focus:border-[rgb(var(--primary))]">
+            {industries.map(({ id, count }) => (
+              <option key={id} value={id}>
+                {t(`projects.industries.${id}`)}{count === null ? '' : ` (${count})`}
+              </option>
+            ))}
+          </select>
           <div
             role="group"
             aria-label={t('a11y.filter_projects')}
-            className="flex flex-wrap justify-center gap-1 p-1 bg-[rgb(var(--muted))]/30 backdrop-blur-md rounded-2xl md:rounded-full border border-[rgb(var(--border))]/50 relative w-full md:w-auto">
-            {categories.map((category) => (
-              <button
-                key={category.id}
-                type="button"
-                aria-pressed={filter === category.id}
-                onClick={() => setFilter(category.id)}
-                className={`relative px-4 sm:px-6 min-h-[44px] rounded-full text-sm font-medium transition-colors z-10 whitespace-nowrap ${
-                  filter === category.id
-                    ? 'text-[rgb(var(--accent-contrast))]'
-                    : 'text-[rgb(var(--muted-foreground))] hover:text-[rgb(var(--foreground))]'
+            className="hidden sm:flex flex-wrap gap-2">
+            {industries.map(({ id, count }) => {
+              const active = industry === id;
+              return (
+                <button
+                  key={id}
+                  type="button"
+                  aria-pressed={active}
+                  onClick={() => chooseIndustry(id)}
+                  className={`relative inline-flex items-center gap-2 px-4 min-h-[44px] rounded-full text-sm font-medium border transition-colors whitespace-nowrap ${
+                    active
+                      ? 'border-transparent text-[rgb(var(--accent-contrast))]'
+                      : 'border-[rgb(var(--border))] bg-[rgb(var(--muted))]/20 text-[rgb(var(--muted-foreground))] hover:text-[rgb(var(--foreground))] hover:border-[rgb(var(--border-control))]'
                   }`}>
-                {filter === category.id && (
-                  <m.div
-                    layoutId="activeFilter"
-                    className="absolute inset-0 bg-[rgb(var(--primary))] shadow-lg rounded-full -z-10"
-                    transition={{ type: 'spring', stiffness: 400, damping: 30 }}
-                  />
-                )}
-                <span className="relative z-10">{category.label}</span>
-              </button>
-            ))}
+                  {active && (
+                    <m.span
+                      aria-hidden="true"
+                      layoutId="activeFilter"
+                      className="absolute inset-0 bg-[rgb(var(--primary))] shadow-md rounded-full"
+                      transition={{ type: 'spring', stiffness: 400, damping: 30 }}
+                    />
+                  )}
+                  <span className="relative">{t(`projects.industries.${id}`)}</span>
+                  {/* The count is a visual hint; the status line below
+                      announces the result once a button is chosen. */}
+                  {count !== null && (
+                    <span aria-hidden="true" dir="ltr" className={`relative text-xs tabular-nums ${active ? 'opacity-80' : 'opacity-60'}`}>
+                      {count}
+                    </span>
+                  )}
+                </button>
+              );
+            })}
           </div>
 
           {/* Search */}
-          <div className="relative w-full md:w-auto shrink-0">
+          <div className="relative w-full lg:w-72 shrink-0">
             {/* 16px text: anything smaller makes iOS zoom the page on focus. */}
             <input
+              ref={searchRef}
               type="search"
               aria-label={t('a11y.search_projects')}
               aria-controls="project-results"
               placeholder={t('projects.search_placeholder')}
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full md:w-72 min-h-[44px] px-5 py-2.5 rounded-full bg-[rgb(var(--background))] border border-[rgb(var(--border-control))] focus:border-[rgb(var(--primary))] focus:ring-1 focus:ring-[rgb(var(--primary))]/50 outline-none transition-all shadow-sm text-base text-[rgb(var(--foreground))]"
+              className="w-full min-h-[44px] px-5 py-2.5 rounded-full bg-[rgb(var(--background))] border border-[rgb(var(--border-control))] focus:border-[rgb(var(--primary))] focus:ring-1 focus:ring-[rgb(var(--primary))]/50 outline-none transition-all shadow-sm text-base text-[rgb(var(--foreground))]"
             />
           </div>
         </Reveal>
@@ -700,16 +772,24 @@ const Projects = ({ variant = 'full' }) => {
                 key={project.slug}
                 project={project}
                 index={index}
-                onClick={setSelectedProject}
                 isArabic={isArabic}
                 headingAs={itemHeading}
+                // On /work the first screen is the page's LCP element (measured
+                // at 390 and 1440), so it alone is preloaded and rises
+                // in without a fade. On the home page it is not: the hero
+                // heading is the LCP at 390 and 1440 and the first row sits
+                // below the fold, so preloading it would only compete with
+                // the hero's fonts.
                 eager={!isHome && index === 0}
+                rise={!isHome && index === 0}
               />
             ))}
           </div>
         ) : (
           <>
-          <div id="project-results" ref={resultsRef} className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8">
+          {/* The same 1152px column as the heading, filters and rows, so
+              the grid no longer starts left of everything above it. */}
+          <div id="project-results" ref={resultsRef} className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 max-w-6xl mx-auto">
             {gridProjects.length > 0 ? (
               gridProjects.map((project, index) => (
                 <ProjectCard
@@ -723,11 +803,17 @@ const Projects = ({ variant = 'full' }) => {
               ))
             ) : (
               <m.div
-                aria-hidden="true"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
-                className="col-span-full flex flex-col items-center justify-center py-20 text-[rgb(var(--muted-foreground))]">
-                <p className="text-xl">{t('projects.no_results')}</p>
+                className="col-span-full flex flex-col items-center justify-center gap-6 py-20 text-[rgb(var(--muted-foreground))]">
+                {/* The status line already announces this. */}
+                <p aria-hidden="true" className="text-xl">{t('projects.no_results')}</p>
+                <button
+                  type="button"
+                  onClick={clearFilters}
+                  className="min-h-[44px] px-6 rounded-full border border-[rgb(var(--border-control))] text-sm font-semibold text-[rgb(var(--foreground))] hover:border-[rgb(var(--primary))] hover:text-[rgb(var(--primary))] transition-colors">
+                  {t('projects.clear_filters')}
+                </button>
               </m.div>
             )}
           </div>
@@ -784,11 +870,15 @@ const Projects = ({ variant = 'full' }) => {
         )}
       </div>
 
-      <ProjectModal
-        project={selectedProject}
-        isOpen={!!selectedProject}
-        onClose={() => setSelectedProject(null)}
-      />
+      {/* Only the archive cards open the sheet; the home rows link straight
+          to the case study, so the home page never loads it. */}
+      {!isHome && (
+        <ProjectModal
+          project={selectedProject}
+          isOpen={!!selectedProject}
+          onClose={() => setSelectedProject(null)}
+        />
+      )}
     </section>
   );
 };

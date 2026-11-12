@@ -48,12 +48,12 @@ const en = {
         title: 'Featured projects',
         archive_title: 'Projects & case studies',
         subtitle: 'Selected projects, each with a case study on what I built and why.',
-        search_placeholder: 'Search projects by name...',
+        search_placeholder: 'Search by name or technology...',
         no_results: 'No projects found matching your criteria',
-        view_details: 'View Details',
         view_all: 'Explore all {{count}} projects',
         show_all: 'Show the full archive ({{count}} projects)',
         show_featured: 'Show featured only',
+        clear_filters: 'Clear search and filters',
         load_more: 'Load more ({{count}} remaining)',
         featured_note: 'A hand-picked selection. The full archive is one click away.',
         kinds: {
@@ -62,18 +62,21 @@ const en = {
           learning: 'Learning project',
           venture: 'Co-founded venture'
         },
-        categories: {
+        industries: {
           all: 'All',
-          fullstack: 'Full Stack',
-          frontend: 'Frontend',
-          backend: 'Backend',
-          mobile: 'Mobile'
+          education: 'Education & training',
+          healthcare: 'Healthcare',
+          commerce: 'Commerce & marketplaces',
+          systems: 'Systems & dashboards',
+          company: 'Company & brand sites',
+          media: 'Media & entertainment'
         },
         modal: {
           technologies: 'Technologies',
           features: 'Key features & highlights',
           live_link: 'Visit Live Project',
           source_code: 'View Source Code',
+          app_store: 'On the App Store',
           case_study: 'Read the Case Study',
           close: 'Close',
           suite_title: 'Same engine, different brands',
@@ -1260,7 +1263,7 @@ const en = {
         palette_results: 'Results',
         palette_count: 'Results: {{count}}',
         search_projects: 'Search projects',
-        filter_projects: 'Filter projects',
+        filter_projects: 'Filter projects by industry',
         projects_count: 'Projects shown: {{count}}',
         review_prev: 'Previous review',
         review_next: 'Next review',

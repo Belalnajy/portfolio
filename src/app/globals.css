@@ -147,6 +147,7 @@
   a:focus-visible,
   button:focus-visible,
   input:focus-visible,
+  select:focus-visible,
   textarea:focus-visible,
   [tabindex]:focus-visible {
     outline: 2px solid rgb(var(--accent));
@@ -934,6 +935,15 @@
   transform: none;
   outline: 2px solid rgb(var(--text));
   outline-offset: 2px;
+}
+
+/* /work?industry=… opens on a filtered grid, but the prerendered page is the
+   unfiltered one (featured rows). Until Projects.jsx has applied the filter,
+   the results stay hidden, so the rows do not flash up and get swapped out.
+   Set by IndustryLinkGuard before the results are parsed; it clears itself
+   after 3s if the script never takes over. */
+:root[data-industry-link] #project-results {
+  visibility: hidden;
 }
 
 /* A card whose title button stretches over it (Projects.jsx): the card
