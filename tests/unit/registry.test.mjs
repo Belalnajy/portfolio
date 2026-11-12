@@ -8,6 +8,7 @@ import { fileURLToPath } from 'node:url';
 import path from 'node:path';
 import { CASE_STUDIES, CASE_STUDY_SLUGS, CLIENT_PROJECT_SLUGS, PROJECT_KINDS, COUNTED_KINDS, INDUSTRIES } from '../../src/lib/case-studies.js';
 import { COVER_META } from '../../src/lib/cover-meta.js';
+import { GALLERY_META } from '../../src/lib/gallery-meta.js';
 import { BLOG_POSTS, BLOG_SLUGS } from '../../src/lib/blog.js';
 import { FACTS } from '../../src/lib/facts.js';
 import en from '../../src/locales/en.js';
@@ -42,7 +43,12 @@ test('every cover and gallery image exists and has cover metadata', () => {
     const { image, gallery = [] } = CASE_STUDIES[slug];
     for (const file of [image, ...gallery]) {
       if (!existsSync(inRepo('public', file))) problems.push(`${slug}: missing public${file}`);
-      if (!COVER_META[file]) problems.push(`${slug}: ${file} not in cover-meta.js (run npm run cover-meta)`);
+    }
+    // Covers in cover-meta.js; gallery screens in gallery-meta.js, which is
+    // what the case-study page hands DeviceFrame for them.
+    if (!COVER_META[image]) problems.push(`${slug}: ${image} not in cover-meta.js (run npm run cover-meta)`);
+    for (const file of gallery) {
+      if (!GALLERY_META[file]) problems.push(`${slug}: ${file} not in gallery-meta.js (run npm run cover-meta)`);
     }
   }
   assert.deepEqual(problems, []);

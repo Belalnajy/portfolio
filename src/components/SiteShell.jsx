@@ -6,7 +6,6 @@ import { createI18nInstance, DEFAULT_LANGUAGE } from '../i18n';
 import IconDefaults from './IconDefaults';
 import Navbar from './Navbar';
 import Footer from './Footer';
-import ScrollProgress from './ScrollProgress';
 import Notification from './Notification';
 import { track } from '@vercel/analytics';
 import WhatsAppButton from './WhatsAppButton';
@@ -20,6 +19,10 @@ import dynamic from 'next/dynamic';
 // presses Ctrl+K. Both load after hydration in their own chunks.
 const FaqAssistant = dynamic(() => import('./FaqAssistant'), { ssr: false });
 const CommandPalette = dynamic(() => import('./CommandPalette'), { ssr: false });
+// The reading-progress bar is a zero-width line until the page scrolls, and
+// its scroll tracking and spring pull most of Framer Motion's animation
+// engine into the first download. Loaded after hydration like the two above.
+const ScrollProgress = dynamic(() => import('./ScrollProgress'), { ssr: false });
 
 /**
  * Everything a page needs from the shell: toasts and the CV download, without

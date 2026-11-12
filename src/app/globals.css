@@ -383,6 +383,66 @@
       scroll-behavior: smooth;
     }
   }
+
+  /* Rendering deferred while the page loads. Parts of a page that start
+     below the first screen (the home page's sections after the project rows,
+     the archive rows of /work after the second and the sections under them,
+     and every page's footer) start as `content-visibility: auto`: the
+     browser skips their style, layout and paint, and the lazy images inside
+     them, until they near the viewport, so the first paint only lays out
+     the first screen. Measured on the mobile Lighthouse run: about 200ms off
+     the home page's LCP.
+     It is a loading measure only, controlled by the pre-paint script in
+     RootDocument (RENDER_CONTROL): it never applies to a visit that has to
+     land somewhere (a #section in the URL, a reload, back/forward), it ends
+     at once on the visitor's first input (key, wheel, touch, pointer, a
+     same-page anchor) or a scroll of more than a screen, and otherwise after
+     the load event, one part per idle moment, then for good (`data-rendered`
+     on <html>). Each time, the scroll offset is corrected by however much
+     the parts above the viewport grew or shrank, so what is on screen stays
+     where it is. From then on the page is exactly as it was without it:
+     reveal lead distances, anchor offsets, the document's height, rows a
+     filter adds later. The estimated height only stands in for a part until
+     it is drawn. Only under `.js`: without JavaScript nothing would end it.
+     A browser without `:has()` skips the two parts that need it (`:is()`
+     forgives them), one without `:is()` the whole rule. */
+  .js:not([data-rendered])
+    :is(
+      .site-main:has(> #home) > :not(#home, #projects),
+      .m-page-top:has(> #projects) > :not(#projects),
+      #project-results > article:nth-child(n + 3),
+      .site-main + footer
+    ):not([data-rendered]) {
+    content-visibility: auto;
+    contain-intrinsic-size: auto var(--defer-h, 1000px);
+  }
+  /* Each part's stand-in height: its real height at 390px and at 1440px
+     (English; Arabic is within a few percent), so the page is about as tall
+     before the parts are drawn as after, and a jump into it lands close. */
+  #project-results > article { --defer-h: 600px; }
+  #brands { --defer-h: 540px; }
+  #testimonials { --defer-h: 800px; }
+  .site-main > .shell { --defer-h: 280px; }
+  #how-we-start { --defer-h: 1250px; }
+  #about { --defer-h: 1500px; }
+  #faq { --defer-h: 840px; }
+  #contact { --defer-h: 1130px; }
+  #skills { --defer-h: 2380px; }
+  #certifications { --defer-h: 1420px; }
+  .site-main + footer { --defer-h: 1020px; }
+  @media (min-width: 48rem) {
+    #project-results > article { --defer-h: 460px; }
+    #brands { --defer-h: 740px; }
+    #testimonials { --defer-h: 1280px; }
+    .site-main > .shell { --defer-h: 160px; }
+    #how-we-start { --defer-h: 810px; }
+    #about { --defer-h: 940px; }
+    #faq { --defer-h: 940px; }
+    #contact { --defer-h: 1040px; }
+    #skills { --defer-h: 1520px; }
+    #certifications { --defer-h: 860px; }
+    .site-main + footer { --defer-h: 915px; }
+  }
 }
 
 @layer components {

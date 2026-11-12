@@ -53,6 +53,9 @@ const BrowserBar = ({ host }) => (
  * - `host`: shown in the browser bar's address pill.
  * - `ratio`: the screen box, width / height. Defaults to the cover ratio;
  *   pass 'natural' to use the picture's own (gallery captures, phones).
+ * - `meta`: the picture's size and blur placeholder. Defaults to its entry in
+ *   cover-meta.js; the case-study gallery passes its own (gallery-meta.js),
+ *   which is kept out of every other page's bundle.
  * - `preload`: the page's LCP image only. Fetched with the document.
  * - `className`: the outer frame; `imageClassName`: the <img>.
  * - `style`: the outer frame (a view-transition name goes here).
@@ -67,13 +70,14 @@ const DeviceFrame = ({
   kind = 'browser',
   host = '',
   ratio = COVER_RATIO,
+  meta: metaProp,
   preload = false,
   className = '',
   imageClassName = '',
   style,
   alignBar = false,
 }) => {
-  const meta = coverMeta(src);
+  const meta = metaProp ?? coverMeta(src);
   const box = ratio === 'natural' ? meta.w / meta.h : ratio;
   const fit = fitFor(meta, box);
   const phone = kind === 'phone';

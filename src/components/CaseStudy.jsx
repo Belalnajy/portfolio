@@ -28,6 +28,7 @@ import IconDefaults from './IconDefaults';
 import LanguageToggle from './LanguageToggle';
 import ProjectKindLabel from './ProjectKindLabel';
 import DeviceFrame, { frameKind, hostOf } from './DeviceFrame';
+import { galleryMeta } from '../lib/gallery-meta';
 import { asArray } from '../lib/as-array';
 import { useTheme } from '../lib/useTheme';
 import { CASE_STUDIES } from '../lib/case-studies';
@@ -140,6 +141,7 @@ const ScreenRail = ({ shots, host, mockups, name }) => {
               kind={frameKind(src, mockups)}
               host={host}
               ratio="natural"
+              meta={galleryMeta(src)}
               // A slide is 85vw; a lone screen spans the column.
               sizes={single ? 'calc(100vw - 40px)' : '85vw'}
             />
@@ -486,6 +488,7 @@ const CaseStudyContent = ({ slug, narrative, image, mockups = [], liveUrl, appSt
               kind={frameKind(src, mockups)}
               host={host}
               ratio="natural"
+              meta={galleryMeta(src)}
               sizes={sizes}
               className="transition-colors group-hover:border-[rgb(var(--primary))]/50"
             />
