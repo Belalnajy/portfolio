@@ -267,6 +267,7 @@ const FEATURED_ORDER = [
   'oxgym',
   'medicta',
   'bilqalam',
+  'coach-nasser',
   'injaz',
   'opptmakers',
   'toyo228',
@@ -282,7 +283,7 @@ const FEATURED_ORDER = [
  * shows up without touching this file.
  */
 const ARCHIVE_ORDER = [
-  'opptmakers', 'opptmakers-platforms', 'bilqalam', 'medicta', 'toyo228',
+  'opptmakers', 'opptmakers-platforms', 'bilqalam', 'medicta', 'coach-nasser', 'toyo228',
   'injaz', 'hcholding', 'mada', 'mutlq', 'indstrz', 'sonomedix', 'kmbc',
   'rabzan', 'manqla', 'sems', 'nextstop', 'quotemate', 'dmagni', 'cme',
   'dpms', 'motors', 'uduipa', 'waferlee', 'baserah', 'sf_portal', 'journal',

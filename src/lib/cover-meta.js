@@ -16,6 +16,7 @@ export const COVER_META = {
   '/covers/cinemascore.webp': { w: 1200, h: 706, blur: 'data:image/webp;base64,UklGRmQAAABXRUJQVlA4IFgAAADwAQCdASoQAAkAA4BaJZQCw7D2CTGQwQAA/vMvWNryw0Y3WZn2c3Ep5VssSpqRaLKxzeR4J3fY2K76w5XU5ovwlyz/xNOy1McuG1fLx0RhBLSkWTkUAAAA' },
   '/covers/clinic.webp': { w: 1200, h: 603, blur: 'data:image/webp;base64,UklGRiwAAABXRUJQVlA4ICAAAAAwAQCdASoQAAgAA4BaJaQAA3AA/vSrgtC23M71yAAAAA==' },
   '/covers/cme.webp': { w: 1920, h: 1000, blur: 'data:image/webp;base64,UklGRlAAAABXRUJQVlA4IEQAAADwAQCdASoQAAgAA4BaJYwAAxU+uF6g5KgA/vP24Z2GCOdDKtdt2ANqlvbTXQRwzo3RyhgyhN8UhEIdA1wX6ybe3tmAAA==' },
+  '/covers/coach-nasser.webp': { w: 1920, h: 1000, blur: 'data:image/webp;base64,UklGRkoAAABXRUJQVlA4ID4AAADQAQCdASoQAAgAA4BaJZwAAudriac0AAD+9K+lZIry74DVLUYnlDdW1uMV6fr+430tAAOTsp8udktPkAAAAA==' },
   '/covers/dmagni.webp': { w: 1920, h: 1000, blur: 'data:image/webp;base64,UklGRjIAAABXRUJQVlA4ICYAAADQAQCdASoQAAgAA4BaJaQAAxedakdu3AD++GOOpusU2kB7n6woAA==' },
   '/covers/dpms.webp': { w: 1920, h: 1000, blur: 'data:image/webp;base64,UklGRi4AAABXRUJQVlA4ICIAAAAwAQCdASoQAAgAA4BaJaQAA3AA/vSrktEkHoHNbt5huQAA' },
   '/covers/hcholding.webp': { w: 1920, h: 1000, blur: 'data:image/webp;base64,UklGRlYAAABXRUJQVlA4IEoAAAAwAgCdASoQAAgAA4BaJZACdAYr7kouIrHdAADOPbbpjkG4GGKji3pY/Pil58hn8xP4nSNpR1C9GP2CW4d4WYQjT9RXKL0FGaQAAA==' },

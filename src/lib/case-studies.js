@@ -46,6 +46,17 @@ export const CASE_STUDIES = {
     updated: '2026-11-11',
     gallery: ['/gallery/oxgym-d1.webp', '/gallery/oxgym-d2.webp', '/gallery/oxgym-b-d3.webp', '/gallery/oxgym-d4.webp', '/gallery/oxgym-m.webp'],
   },
+  'coach-nasser': {
+    name: 'Coach Mohamed Nasser',
+    image: '/covers/coach-nasser.webp',
+    liveUrl: 'https://coach-site-mauve.vercel.app',
+    github: 'https://github.com/Belalnajy/coach-site',
+    stack: ['Next.js', 'React', 'TypeScript', 'Tailwind', 'Vercel', 'RTL', 'SEO'],
+    industry: 'company',
+    featured: true,
+    updated: '2026-11-14',
+    gallery: ['/gallery/coach-nasser-d1.webp', '/gallery/coach-nasser-d2.webp', '/gallery/coach-nasser-d3.webp', '/gallery/coach-nasser-m.webp'],
+  },
   opptmakers: {
     name: 'Opportunities Makers',
     image: '/covers/opptmakers.webp',

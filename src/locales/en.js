@@ -159,6 +159,18 @@ const en = {
               'Integrated contact and enquiry flow'
             ]
           },
+          'coach-nasser': {
+            impact: 'Bookings straight to WhatsApp',
+            title: 'Coach Mohamed Nasser – Coaching Website',
+            desc: 'An Arabic-first website for a fitness coach, with English at /en: 29 real client results, four fitness calculators and a booking sheet that opens WhatsApp with a ready message. Fully static, built on a reusable coach template.',
+            features: [
+              'Booking sheet that writes the WhatsApp message in the visitor\'s language',
+              'Results gallery with a touch-safe before/after slider and goal filters',
+              'Calories, protein, BMI and body-fat calculators that feed the booking',
+              'Separate Arabic and English layouts with hreflang, share images and JSON-LD',
+              'One validated config folder; empty sections hide themselves'
+            ]
+          },
           oxgym: {
             impact: 'Website + system + members app',
             title: 'OX GYM – Complete Gym Package',

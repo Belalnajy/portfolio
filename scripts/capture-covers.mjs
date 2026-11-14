@@ -195,6 +195,9 @@ const TARGETS = [
   { slug: 'dmagni', url: 'https://dmagni-project.vercel.app/', colorScheme: 'dark', clickText: 'العربية' },
   { slug: 'cme', url: 'https://cmehours.online/' },
   { slug: 'dpms', url: 'https://dpms-rust.vercel.app/' },
+  // The Arabic home page (the site is Arabic-first): the hero with the
+  // coach's own portrait. No client photos on the cover.
+  { slug: 'coach-nasser', url: 'https://coach-site-mauve.vercel.app/', colorScheme: 'dark' },
 ];
 
 /** No public website to capture; these keep their hand-made covers. */
