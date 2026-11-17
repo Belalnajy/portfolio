@@ -33,6 +33,7 @@ const en = {
         title: 'About me',
         portrait_alt: 'Belal Nagy, a black-and-white studio portrait',
         cv_link: 'The full CV: experience and the platform suite',
+        teaching_link: 'I teach front-end at ITI: watch the lectures',
         subtitle: 'Full-stack developer in Alexandria, Egypt. I work in Next.js, Laravel, NestJS, Node.js, Django and PostgreSQL.',
         professional_summary: 'Professional Summary',
         values: {
@@ -982,6 +983,7 @@ const en = {
         contact_short: 'Contact',
         cv: 'CV',
         uses: 'Uses',
+        teaching: 'Teaching',
         privacy: 'Privacy',
         contact: 'Contact',
         download_cv: 'Download CV'
@@ -1225,12 +1227,69 @@ const en = {
         ],
         contact_line: 'Questions about any of this: {{email}}'
       },
+      teaching: {
+        eyebrow: 'Teaching · ITI',
+        title: 'Teaching at ITI',
+        intro: 'I teach front-end development as an external instructor at ITI, the Information Technology Institute in Egypt: HTML, CSS and JavaScript, from the first tag to the DOM and browser events. More than {{students}} students have learned it with me there. These are my recorded lectures, my slides and the code we write in class, open to anyone.',
+        stats: {
+          courses: 'Courses',
+          lectures: 'Lectures',
+          decks: 'Slide decks',
+          code: 'Demo and lab files'
+        },
+        choose_course: 'Choose a course',
+        courses: {
+          videos: {
+            title: 'HTML, CSS and JavaScript: recorded lectures',
+            short: 'Recorded lectures',
+            meta: '{{count}} videos · recorded July to September 2026',
+            desc: 'The front-end foundation on video: HTML4, CSS2, JavaScript (ES5) and modern JavaScript (ES6+).'
+          },
+          cst: {
+            title: 'Client-Side Technologies (CST)',
+            short: 'CST lectures',
+            meta: '{{count}} lectures · 2026 Vue and React track',
+            desc: 'The client-side course of the 2026 Vue and React track: eight lectures, each with its slides, the demos written in class and a lab.'
+          }
+        },
+        sections: {
+          html4: 'HTML4 fundamentals',
+          css: 'CSS2 styling',
+          javascript: 'JavaScript (ES5) core',
+          es6: 'Modern JavaScript (ES6+)'
+        },
+        part: 'Part {{n}}',
+        lecture: 'Lecture {{n}}',
+        topics: {
+          cst1: 'Client-side basics and an introduction to HTML',
+          cst2: 'Tables, forms and div layout',
+          cst3: 'Introduction to CSS: the cascade, specificity, selectors, the box model, display and position',
+          cst4: 'Introduction to JavaScript (ES5)',
+          cst5: 'Control flow and functions',
+          cst6: 'Arrays and objects',
+          cst7: 'The DOM',
+          cst8: 'The BOM and events'
+        },
+        actions: {
+          watch: 'Watch',
+          now_playing: 'Playing',
+          slides: 'Slides',
+          demos: 'Demos & lab',
+          lab_video: 'Lab video',
+          open_drive: 'Open in Drive',
+          whole_course: 'Whole course on Drive'
+        },
+        play_label: 'Play: {{name}}',
+        iframe_title: '{{name}}, a video on Google Drive',
+        player_note: 'The video plays from Google Drive. Some recordings are large; if it does not start, open it in Drive.'
+      },
       cv: {
         title: 'Curriculum vitae',
         subtitle: 'The same facts as the site, on one printable page.',
         download: 'Download PDF',
         print: 'Print',
         updated: 'Updated {{date}}',
+        teaching_link: 'Recorded lectures, slides and class code',
         sections: {
           summary: 'Profile',
           highlights: 'Highlights',

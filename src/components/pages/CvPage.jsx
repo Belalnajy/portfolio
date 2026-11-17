@@ -20,7 +20,7 @@ const Section = ({ title, children }) => (
   </section>
 );
 
-const Entry = ({ item }) => (
+const Entry = ({ item, link }) => (
   <div className="mb-5 last:mb-0 break-inside-avoid">
     <div className="flex flex-wrap items-baseline justify-between gap-x-3 gap-y-1">
       <p className="font-bold text-[rgb(var(--foreground))]">
@@ -44,6 +44,14 @@ const Entry = ({ item }) => (
           </li>
         ))}
       </ul>
+    )}
+    {/* The teaching entry points at the lectures themselves. It prints too,
+        as the address, so a paper CV still leads there. */}
+    {link && (
+      <a href={link.href} className="mt-2 inline-flex items-center min-h-11 text-sm font-semibold text-[rgb(var(--primary))] hover:underline underline-offset-4 print:min-h-0">
+        {link.label}
+        <span className="hidden print:inline" dir="ltr">&nbsp;· belalnagy.com{link.href}</span>
+      </a>
     )}
   </div>
 );
@@ -137,7 +145,11 @@ const CvContent = ({ bundle }) => {
 
         <Section title={s('experience')}>
           {cv.experience.map((item) => (
-            <Entry key={item.key} item={item} />
+            <Entry
+              key={item.key}
+              item={item}
+              link={item.key === 'iti_instructor' ? { href: `${i18n.language === 'ar' ? '/ar' : ''}/teaching`, label: t('cv.teaching_link') } : undefined}
+            />
           ))}
         </Section>
 

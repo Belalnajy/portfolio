@@ -20,6 +20,7 @@ import {
   FiSun,
   FiDownload,
   FiArrowRight,
+  FiMonitor,
 } from 'react-icons/fi';
 import { FaSun, FaMoon } from 'react-icons/fa';
 import { useTheme } from '../lib/useTheme';
@@ -241,6 +242,8 @@ const Navbar = () => {
     { label: t('nav.now'), href: `${home}/now`, route: '/now', icon: <FiClock />, group: 'more', desktop: true },
     { label: t('nav.blog'), href: `${home}/blog`, route: '/blog', icon: <FiBookOpen />, group: 'more', desktop: true },
     { label: t('nav.testimonials'), href: `${home}/testimonials`, route: '/testimonials', icon: <FiMessageSquare />, group: 'more' },
+    // Not in the desktop bar: it already holds eight items.
+    { label: t('nav.teaching'), href: `${home}/teaching`, route: '/teaching', icon: <FiMonitor />, group: 'more' },
     { label: t('nav.timeline'), href: `${home}/cv#experience`, icon: <FiTrendingUp />, group: 'more' },
     { label: t('nav.suite'), href: `${home}/cv#platform-suite`, icon: <FiBox />, group: 'more' },
     { label: t('nav.contact'), href: homeAnchor(isArabic, 'contact'), anchor: 'contact', icon: <FiMail />, group: 'main', desktop: true },

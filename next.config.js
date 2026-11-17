@@ -30,6 +30,8 @@ if (isProduction && missingEmailJs.length) {
  *   Analytics (same-origin /_vercel/insights on Vercel).
  * - connect-src: EmailJS is the contact form's only cross-origin call.
  * - img-src: own files plus the inline blur placeholders (data:).
+ * - frame-src: drive.google.com only, for the lecture videos on /teaching
+ *   (Drive's player in an iframe, loaded when someone presses play).
  *
  * Production only: `next dev` needs eval and a websocket for fast refresh.
  */
@@ -38,6 +40,7 @@ const CONTENT_SECURITY_POLICY = [
   "script-src 'self' 'unsafe-inline'",
   "style-src 'self' 'unsafe-inline'",
   "img-src 'self' data: blob:",
+  "frame-src https://drive.google.com",
   "font-src 'self' data:",
   "connect-src 'self' https://api.emailjs.com",
   "worker-src 'self'",

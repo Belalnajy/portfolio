@@ -88,12 +88,20 @@ const About = () => {
             <p className="text-[rgb(var(--foreground))] leading-relaxed type-body">
               <Trans i18nKey="about.summary_p2" components={emphasis} />
             </p>
-            <a
-              href={`${home}/cv#experience`}
-              className="inline-flex items-center gap-2 min-h-[44px] text-sm font-semibold text-[rgb(var(--primary))] hover:underline underline-offset-4">
-              {t('about.cv_link')}
-              <Arrow aria-hidden="true" className="text-xs" />
-            </a>
+            <div className="flex flex-wrap gap-x-6">
+              <a
+                href={`${home}/cv#experience`}
+                className="inline-flex items-center gap-2 min-h-[44px] text-sm font-semibold text-[rgb(var(--primary))] hover:underline underline-offset-4">
+                {t('about.cv_link')}
+                <Arrow aria-hidden="true" className="text-xs" />
+              </a>
+              <a
+                href={`${home}/teaching`}
+                className="inline-flex items-center gap-2 min-h-[44px] text-sm font-semibold text-[rgb(var(--primary))] hover:underline underline-offset-4">
+                {t('about.teaching_link')}
+                <Arrow aria-hidden="true" className="text-xs" />
+              </a>
+            </div>
           </Cell>
 
           {/* Now */}

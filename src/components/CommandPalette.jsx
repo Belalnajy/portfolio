@@ -81,6 +81,7 @@ const CommandPalette = () => {
       { id: 'services', label: t('nav.services'), href: `${home}/services` },
       { id: 'now', label: t('nav.now'), href: `${home}/now` },
       { id: 'blog', label: t('nav.blog'), href: `${home}/blog` },
+      { id: 'teaching', label: t('nav.teaching'), href: `${home}/teaching` },
       { id: 'rescue', label: t('nav.rescue'), href: `${home}/rescue` },
       { id: 'testimonials', label: t('nav.testimonials'), href: homeAnchor(isArabic, 'testimonials') },
       { id: 'contact', label: t('nav.contact'), href: homeAnchor(isArabic, 'contact') },

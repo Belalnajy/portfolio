@@ -140,6 +140,7 @@ test('the language switch navigates to the twin page, keeping query and hash', {
     ['/case-study/oxgym', '/ar/case-study/oxgym'],
     ['/blog/legacy-takeover-playbook', '/ar/blog/legacy-takeover-playbook'],
     ['/cv', '/ar/cv'],
+    ['/teaching', '/ar/teaching'],
   ];
   for (const [english, arabic] of cases) {
     const { page, errors, close } = await open(english, { mobile: true });
@@ -422,5 +423,39 @@ test('one Escape closes only the topmost layer: the palette, not the menu under 
   assert.ok(palette, 'the palette opened over the menu');
   assert.deepEqual(once, { palette: false, menu: true, focusInHeader: true }, 'first Escape closes the palette only and focus returns to the header');
   assert.equal(twice, false, 'second Escape closes the menu');
+  assert.deepEqual(errors, []);
+});
+
+test('/teaching asks nothing of Google Drive until a video is played', { skip }, async () => {
+  // Drive's player is heavy and some recordings are gigabytes: the page shows
+  // a drawn placeholder and loads the iframe only on a press.
+  const context = await browser.createBrowserContext();
+  const page = await context.newPage();
+  const errors = [];
+  page.on('pageerror', (error) => errors.push(String(error)));
+  const drive = [];
+  page.on('request', (request) => {
+    if (/(^|\.)google\.com$/.test(new URL(request.url()).hostname)) drive.push(request.url());
+  });
+  await page.goto(`${BASE}/teaching`, { waitUntil: 'networkidle2' });
+  await settle();
+  const before = await page.evaluate(() => ({
+    frames: document.querySelectorAll('iframe').length,
+    h1: document.querySelectorAll('h1').length,
+    play: Boolean(document.querySelector('#course-videos button[aria-label]')),
+  }));
+  const requestsBefore = drive.length;
+  await page.evaluate(() => document.querySelector('#course-videos button[aria-label]').click());
+  await page.waitForSelector('#course-videos iframe', { timeout: 5000 });
+  const after = await page.evaluate(() => {
+    const frame = document.querySelector('#course-videos iframe');
+    return { src: frame.getAttribute('src'), title: Boolean(frame.title), allow: frame.getAttribute('allow') };
+  });
+  await context.close();
+  assert.deepEqual(before, { frames: 0, h1: 1, play: true });
+  assert.equal(requestsBefore, 0, 'no request to Google before a press');
+  assert.match(after.src, /^https:\/\/drive\.google\.com\/file\/d\/[\w-]+\/preview$/);
+  assert.ok(after.title, 'the iframe has a title');
+  assert.equal(after.allow, 'autoplay; fullscreen');
   assert.deepEqual(errors, []);
 });
