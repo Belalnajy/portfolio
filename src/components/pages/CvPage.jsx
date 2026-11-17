@@ -6,6 +6,7 @@ import { useTranslation } from 'react-i18next';
 import { FaDownload, FaPrint, FaEnvelope, FaGlobe, FaGithub, FaLinkedin, FaMapMarkerAlt } from 'react-icons/fa';
 import { track } from '@vercel/analytics';
 import { buildCv, CV_UPDATED } from '../../lib/cv';
+import { TEACHING_PUBLIC } from '../../lib/teaching';
 
 // Phone layouts on this page use a screen-only variant instead of max-md:
 // an A4 page is narrower than 768px, so a max-md: class would also restyle
@@ -148,7 +149,7 @@ const CvContent = ({ bundle }) => {
             <Entry
               key={item.key}
               item={item}
-              link={item.key === 'iti_instructor' ? { href: `${i18n.language === 'ar' ? '/ar' : ''}/teaching`, label: t('cv.teaching_link') } : undefined}
+              link={TEACHING_PUBLIC && item.key === 'iti_instructor' ? { href: `${i18n.language === 'ar' ? '/ar' : ''}/teaching`, label: t('cv.teaching_link') } : undefined}
             />
           ))}
         </Section>

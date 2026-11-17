@@ -1,6 +1,7 @@
 import { CASE_STUDIES } from '../lib/case-studies';
 import { BLOG_POSTS } from '../lib/blog';
 import { SITE_URL, HOME_UPDATED } from '../lib/site';
+import { TEACHING_PUBLIC } from '../lib/teaching';
 
 const entry = (path, lastModified, priority, alternates) => ({
   url: `${SITE_URL}${path}`,
@@ -21,7 +22,7 @@ const STATIC_PAGES = [
   { path: '/cv', priority: 0.8 },
   { path: '/testimonials', priority: 0.7 },
   { path: '/blog', priority: 0.7 },
-  { path: '/teaching', priority: 0.6 },
+  ...(TEACHING_PUBLIC ? [{ path: '/teaching', priority: 0.6 }] : []),
   { path: '/now', priority: 0.6 },
   { path: '/uses', priority: 0.5 },
   { path: '/privacy', priority: 0.3 },

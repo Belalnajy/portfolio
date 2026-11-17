@@ -16,6 +16,7 @@ import PlatformLinks from './PlatformLinks';
 import { useTranslation } from 'react-i18next';
 import { useMemo } from 'react';
 import { homeAnchor } from '../lib/home-anchor';
+import { TEACHING_PUBLIC } from '../lib/teaching';
 
 // Column headings. Phones: the eyebrow style (12px, semibold, uppercase,
 // tracked, accent), no underline bar. From md: as before.
@@ -40,7 +41,7 @@ const Footer = () => {
       { name: t('nav.services'), href: `${home}/services` },
       { name: t('nav.now'), href: `${home}/now` },
       { name: t('nav.blog'), href: `${home}/blog` },
-      { name: t('nav.teaching'), href: `${home}/teaching` },
+      ...(TEACHING_PUBLIC ? [{ name: t('nav.teaching'), href: `${home}/teaching` }] : []),
       { name: t('nav.rescue'), href: `${home}/rescue` },
       { name: t('nav.testimonials'), href: `${home}/testimonials` },
       { name: t('nav.cv'), href: `${home}/cv` },

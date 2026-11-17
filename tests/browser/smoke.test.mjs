@@ -10,6 +10,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { existsSync } from 'node:fs';
+import { TEACHING_PUBLIC } from '../../src/lib/teaching.js';
 
 const BASE = (process.env.BASE_URL || 'http://127.0.0.1:3000').replace(/\/$/, '');
 const CHROME = [
@@ -140,7 +141,7 @@ test('the language switch navigates to the twin page, keeping query and hash', {
     ['/case-study/oxgym', '/ar/case-study/oxgym'],
     ['/blog/legacy-takeover-playbook', '/ar/blog/legacy-takeover-playbook'],
     ['/cv', '/ar/cv'],
-    ['/teaching', '/ar/teaching'],
+    ...(TEACHING_PUBLIC ? [['/teaching', '/ar/teaching']] : []),
   ];
   for (const [english, arabic] of cases) {
     const { page, errors, close } = await open(english, { mobile: true });
@@ -426,7 +427,7 @@ test('one Escape closes only the topmost layer: the palette, not the menu under 
   assert.deepEqual(errors, []);
 });
 
-test('/teaching asks nothing of Google Drive until a video is played', { skip }, async () => {
+test('/teaching asks nothing of Google Drive until a video is played', { skip: skip || (!TEACHING_PUBLIC && 'the teaching page is hidden') }, async () => {
   // Drive's player is heavy and some recordings are gigabytes: the page shows
   // a drawn placeholder and loads the iframe only on a press.
   const context = await browser.createBrowserContext();
@@ -460,7 +461,7 @@ test('/teaching asks nothing of Google Drive until a video is played', { skip },
   assert.deepEqual(errors, []);
 });
 
-test('on a phone, Watch opens the lecture in Drive instead of the inline player', { skip }, async () => {
+test('on a phone, Watch opens the lecture in Drive instead of the inline player', { skip: skip || (!TEACHING_PUBLIC && 'the teaching page is hidden') }, async () => {
   // Drive's mobile preview does not fit a 16:9 box (its video was cut off), so
   // phones get a link to the video in Drive, which also hands off to the app.
   const context = await browser.createBrowserContext();

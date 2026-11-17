@@ -15,6 +15,13 @@
  * checks the pairing).
  */
 
+/**
+ * Whether /teaching is public. Off: the pages return 404 and every link to
+ * them (nav, footer, palette, About, CV, sitemap, llms.txt) is hidden. The
+ * owner asked to hide it for now (2026-11-17); flip to true to publish.
+ */
+export const TEACHING_PUBLIC = false;
+
 export const driveFolder = (id) => `https://drive.google.com/drive/folders/${id}`;
 export const driveFile = (id) => `https://drive.google.com/file/d/${id}/view`;
 /** The embeddable player; loaded only when someone presses play. */

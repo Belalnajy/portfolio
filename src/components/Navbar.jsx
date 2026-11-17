@@ -33,6 +33,7 @@ import { useSite } from './SiteShell';
 import { useEscapeLayer } from '../lib/useEscapeLayer';
 import { homeAnchor } from '../lib/home-anchor';
 import { registerChrome, showChrome } from '../lib/scroll-chrome';
+import { TEACHING_PUBLIC } from '../lib/teaching';
 
 // Hide-on-scroll (phones) lives in src/lib/scroll-chrome.js, shared with
 // the tab bar's compact state: one scroll listener for both.
@@ -243,7 +244,7 @@ const Navbar = () => {
     { label: t('nav.blog'), href: `${home}/blog`, route: '/blog', icon: <FiBookOpen />, group: 'more', desktop: true },
     { label: t('nav.testimonials'), href: `${home}/testimonials`, route: '/testimonials', icon: <FiMessageSquare />, group: 'more' },
     // Not in the desktop bar: it already holds eight items.
-    { label: t('nav.teaching'), href: `${home}/teaching`, route: '/teaching', icon: <FiMonitor />, group: 'more' },
+    ...(TEACHING_PUBLIC ? [{ label: t('nav.teaching'), href: `${home}/teaching`, route: '/teaching', icon: <FiMonitor />, group: 'more' }] : []),
     { label: t('nav.timeline'), href: `${home}/cv#experience`, icon: <FiTrendingUp />, group: 'more' },
     { label: t('nav.suite'), href: `${home}/cv#platform-suite`, icon: <FiBox />, group: 'more' },
     { label: t('nav.contact'), href: homeAnchor(isArabic, 'contact'), anchor: 'contact', icon: <FiMail />, group: 'main', desktop: true },

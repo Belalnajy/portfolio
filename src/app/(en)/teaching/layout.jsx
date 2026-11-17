@@ -1,6 +1,8 @@
 import { pageMetadata } from '../../../lib/metadata';
 import { teachingJsonLd } from '../../../lib/teaching-jsonld';
 import JsonLd from '../../../components/JsonLd';
+import { notFound } from 'next/navigation';
+import { TEACHING_PUBLIC } from '../../../lib/teaching';
 
 export const metadata = pageMetadata({
   lang: 'en',
@@ -13,6 +15,7 @@ export const metadata = pageMetadata({
 });
 
 export default function Layout({ children }) {
+  if (!TEACHING_PUBLIC) notFound();
   return (
     <>
       <JsonLd data={teachingJsonLd('en')} />

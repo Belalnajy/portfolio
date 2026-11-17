@@ -7,6 +7,7 @@ import { FaBriefcase, FaMapMarkerAlt, FaLayerGroup, FaArrowRight, FaArrowLeft } 
 import { useTranslation, Trans } from 'react-i18next';
 import { getTechIcon } from './Projects';
 import { coverMeta } from '../lib/cover-meta';
+import { TEACHING_PUBLIC } from '../lib/teaching';
 
 // A black-and-white studio portrait on a dark backdrop. It sits on a mat (the
 // cell's padding) with a hairline ring, so on the light theme's white cards it
@@ -95,12 +96,14 @@ const About = () => {
                 {t('about.cv_link')}
                 <Arrow aria-hidden="true" className="text-xs" />
               </a>
+              {TEACHING_PUBLIC && (
               <a
-                href={`${home}/teaching`}
-                className="inline-flex items-center gap-2 min-h-[44px] text-sm font-semibold text-[rgb(var(--primary))] hover:underline underline-offset-4">
-                {t('about.teaching_link')}
-                <Arrow aria-hidden="true" className="text-xs" />
-              </a>
+                  href={`${home}/teaching`}
+                  className="inline-flex items-center gap-2 min-h-[44px] text-sm font-semibold text-[rgb(var(--primary))] hover:underline underline-offset-4">
+                  {t('about.teaching_link')}
+                  <Arrow aria-hidden="true" className="text-xs" />
+                </a>
+              )}
             </div>
           </Cell>
 

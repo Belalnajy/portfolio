@@ -8,6 +8,7 @@ import { CASE_STUDIES } from '../lib/case-studies';
 import { switchLanguage } from '../lib/language';
 import { useEscapeLayer } from '../lib/useEscapeLayer';
 import { homeAnchor } from '../lib/home-anchor';
+import { TEACHING_PUBLIC } from '../lib/teaching';
 
 /**
  * ⌘K / Ctrl+K command palette: jump to any section, open any case study,
@@ -81,7 +82,7 @@ const CommandPalette = () => {
       { id: 'services', label: t('nav.services'), href: `${home}/services` },
       { id: 'now', label: t('nav.now'), href: `${home}/now` },
       { id: 'blog', label: t('nav.blog'), href: `${home}/blog` },
-      { id: 'teaching', label: t('nav.teaching'), href: `${home}/teaching` },
+      ...(TEACHING_PUBLIC ? [{ id: 'teaching', label: t('nav.teaching'), href: `${home}/teaching` }] : []),
       { id: 'rescue', label: t('nav.rescue'), href: `${home}/rescue` },
       { id: 'testimonials', label: t('nav.testimonials'), href: homeAnchor(isArabic, 'testimonials') },
       { id: 'contact', label: t('nav.contact'), href: homeAnchor(isArabic, 'contact') },

@@ -3,6 +3,7 @@ import { loadNarrative, projectKindLabel } from '../../lib/case-study-metadata';
 import { BLOG_POSTS, BLOG_SLUGS } from '../../lib/blog';
 import { SITE_URL } from '../../lib/site';
 import { FACTS } from '../../lib/facts';
+import { TEACHING_PUBLIC } from '../../lib/teaching';
 
 export const dynamic = 'force-static';
 
@@ -65,8 +66,7 @@ NestJS، Node.js، Django، PostgreSQL، ويدعم العربية والـ RTL 
 - [Legacy Code Rescue](${SITE_URL}/rescue): the dedicated page for taking over stuck or abandoned projects: audit first, stabilize, no forced rewrite
 - [Now](${SITE_URL}/now): what he is focused on right now, updated regularly
 - [Blog](${SITE_URL}/blog): engineering write-ups from shipped projects
-- [Teaching at ITI](${SITE_URL}/teaching): the front-end courses he teaches at ITI as an external instructor: recorded lectures (HTML4, CSS2, JavaScript, ES6), Client-Side Technologies slides, and the demos and labs from class
-- [CV](${SITE_URL}/cv): the CV in the browser, with the full experience timeline (#experience) and the one-engine LMS platform suite (#platform-suite)
+${TEACHING_PUBLIC ? `- [Teaching at ITI](${SITE_URL}/teaching): the front-end courses he teaches at ITI as an external instructor: recorded lectures (HTML4, CSS2, JavaScript, ES6), Client-Side Technologies slides, and the demos and labs from class\n` : ''}- [CV](${SITE_URL}/cv): the CV in the browser, with the full experience timeline (#experience) and the one-engine LMS platform suite (#platform-suite)
 - [CV (PDF)](${SITE_URL}/Belal_Nagy_CV.pdf)
 - [Full site content (llms-full.txt)](${SITE_URL}/llms-full.txt): every article, case study and FAQ answer as plain markdown, in one file
 
