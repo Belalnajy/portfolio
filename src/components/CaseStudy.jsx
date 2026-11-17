@@ -32,6 +32,8 @@ import { galleryMeta } from '../lib/gallery-meta';
 import { asArray } from '../lib/as-array';
 import { useTheme } from '../lib/useTheme';
 import { CASE_STUDIES } from '../lib/case-studies';
+import Engagement from './engage/LazyEngagement';
+import { caseTarget } from '../lib/engage/shared';
 import { createI18nInstance, DEFAULT_LANGUAGE } from '../i18n';
 
 /**
@@ -543,6 +545,11 @@ const CaseStudyContent = ({ slug, narrative, image, mockups = [], liveUrl, appSt
           </section>
         );
       })()}
+
+      {/* Reactions and comments, before the closing call to action. */}
+      <div className="container mx-auto px-5 sm:px-6 max-w-4xl [&:has(section)]:pb-16 [&:has(section)]:max-md:pb-10">
+        <Engagement target={caseTarget(slug)} />
+      </div>
 
       {/* Closing CTA */}
       <section ref={ctaRef} className="container mx-auto px-5 sm:px-6 max-w-4xl pb-20 max-md:pb-10">

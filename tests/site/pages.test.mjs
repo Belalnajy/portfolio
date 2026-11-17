@@ -225,3 +225,37 @@ test('security headers are sent', options, async () => {
     assert.equal(asset.headers.get('content-security-policy'), null, path);
   }
 });
+
+// Reactions and comments (src/lib/engage). Without storage configured the
+// feature is off: every endpoint answers 503 and the pages are unchanged
+// (the page checks above still pass). With it on, only invalid requests are
+// sent here, so running this against production never posts anything.
+test('the comments API is off cleanly, or refuses bad input, and never fails with a 500', options, async () => {
+  const engage = await get('/api/engage?target=case:oxgym');
+  const on = engage.status === 200;
+  if (!on) {
+    assert.equal(engage.status, 503, 'GET /api/engage');
+    assert.deepEqual(JSON.parse(engage.body), { enabled: false });
+  } else {
+    const thread = JSON.parse(engage.body);
+    assert.equal(thread.enabled, true);
+    assert.deepEqual(Object.keys(thread.reactions).sort(), ['clap', 'fire', 'idea', 'like', 'love']);
+    for (const comment of thread.comments) assert.deepEqual(Object.keys(comment).sort(), ['createdAt', 'id', 'name', 'text']);
+  }
+  assert.equal(engage.headers.get('cache-control'), 'no-store');
+
+  const expect = (status, onStatus, label) => assert.equal(status, on ? onStatus : 503, label);
+  expect((await get('/api/engage?target=case:no-such-project')).status, 400, 'unknown target');
+  const post = (path, body, type = 'application/json') =>
+    fetch(`${BASE}${path}`, { method: 'POST', headers: { 'Content-Type': type }, body }).then((res) => res.status);
+  expect(await post('/api/comment', JSON.stringify({ target: 'case:oxgym', text: 'x'.repeat(2000) })), 413, 'body over 1 KB');
+  expect(await post('/api/comment', '{not json'), 400, 'not JSON');
+  expect(await post('/api/comment', 'name=a', 'application/x-www-form-urlencoded'), 415, 'not a JSON request');
+  expect(await post('/api/react', JSON.stringify({ target: 'case:oxgym', emoji: 'poop', on: true, visitor: '0123456789abcdef' })), 400, 'unknown reaction');
+  expect((await get('/api/comments/moderate?action=approve&id=abcdefgh&sig=forged')).status, 403, 'forged moderation link');
+
+  const admin = await get('/admin/comments');
+  assert.equal(admin.status, 200);
+  assert.match(admin.body, /<meta name="robots" content="noindex, nofollow/);
+  assert.doesNotMatch(admin.body, /Waiting for approval/, 'nothing listed without signing in');
+});

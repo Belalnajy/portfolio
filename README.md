@@ -40,6 +40,28 @@ npm run dev            # http://localhost:3000
 
 `NEXT_PUBLIC_EMAILJS_SERVICE_ID`, `NEXT_PUBLIC_EMAILJS_TEMPLATE_ID` and `NEXT_PUBLIC_EMAILJS_PUBLIC_KEY` configure the contact form (set them in `.env` locally and in Vercel → Settings → Environment Variables). They are inlined at build time; a build without them works, but the form reports that it is unavailable. Setup guide: [docs/EMAILJS_SETUP.md](./docs/EMAILJS_SETUP.md).
 
+## Reactions and comments
+
+Case studies, articles and each course on `/teaching` carry a reaction bar (👍 ❤️ 🔥 👏 💡) and comments. No login: a comment needs a name, waits for the owner's approval, and he gets an email for each one with approve and delete links. Pages stay static; the block loads from `/api/engage` when it nears the viewport. Code: `src/lib/engage/` (storage, validation, signing, email) and `src/components/engage/`.
+
+**Without configuration the feature is off.** A production build with no storage or no `COMMENTS_SECRET` renders nothing where the block would be, and the API answers 503. `next dev` and `npm test` use an in-memory store instead, so they work with no setup.
+
+| Variable | What it is |
+| --- | --- |
+| `KV_REST_API_URL`, `KV_REST_API_TOKEN` | Upstash Redis over REST, set by the Vercel integration (`UPSTASH_REDIS_REST_URL` / `UPSTASH_REDIS_REST_TOKEN` also work) |
+| `COMMENTS_SECRET` | Signs the email links and the admin cookie, salts the IP hashes, and is the password of `/admin/comments`. At least 16 characters; use 32+ |
+| `RESEND_API_KEY` | Sends the notification email. Without it, comments are still stored and wait on `/admin/comments` |
+| `OWNER_EMAIL` | Where the notification goes (default belalnajy9@gmail.com). Server-only, never in the browser bundle |
+
+Setup, once:
+
+1. **Storage.** In Vercel: the project → Storage → Create / Connect → **Upstash for Redis** (free plan), connect it to the project for Production (and Preview if wanted). It adds `KV_REST_API_URL` and `KV_REST_API_TOKEN`.
+2. **Secret.** Generate one, e.g. `node -e "console.log(require('crypto').randomBytes(32).toString('base64url'))"`, and add it as `COMMENTS_SECRET` (Settings → Environment Variables, Production). Keep it in a password manager: it is the admin password. Changing it invalidates every email link and signs you out.
+3. **Email.** Create a free account at resend.com with the owner's address, then API Keys → Create (sending access). Add it as `RESEND_API_KEY`. Mail is sent from `onboarding@resend.dev`, which Resend allows only to the account's own address, so `OWNER_EMAIL` must be that address (or verify a domain in Resend and change the sender in `src/lib/engage/http.js`).
+4. Redeploy. Moderate from the email links (each opens a confirmation page with one button, so mail scanners that follow links cannot approve anything) or at `/admin/comments`.
+
+Spam and abuse: a hidden honeypot field, a 3-second minimum on the form, 5 comments and 60 reactions an hour per connection (by a salted hash of the IP; raw IPs are never stored), 10 admin sign-ins an hour, 1 KB request bodies, at most two links per comment. Comments are shown as plain text only.
+
 ## How the site is organised
 
 ```

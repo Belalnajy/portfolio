@@ -28,16 +28,21 @@ const AI_CRAWLERS = [
   'MistralAI-User',
 ];
 
+// The comments API and the owner's moderation page are not content.
+const PRIVATE = ['/api/', '/admin/'];
+
 export default function robots() {
   return {
     rules: [
       {
         userAgent: '*',
         allow: '/',
+        disallow: PRIVATE,
       },
       ...AI_CRAWLERS.map((userAgent) => ({
         userAgent,
         allow: '/',
+        disallow: PRIVATE,
       })),
     ],
     sitemap: `${SITE_URL}/sitemap.xml`,

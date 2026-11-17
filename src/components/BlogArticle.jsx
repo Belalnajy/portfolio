@@ -7,6 +7,8 @@ import { FaArrowRight, FaArrowLeft, FaShareAlt } from 'react-icons/fa';
 import { useTranslation } from 'react-i18next';
 import SiteShell from './SiteShell';
 import { BLOG_POSTS } from '../lib/blog';
+import Engagement from './engage/LazyEngagement';
+import { postTarget } from '../lib/engage/shared';
 
 const formatDate = (iso, lang) =>
   // `-u-nu-latn`: Arabic month names with Western digits, as everywhere else
@@ -198,6 +200,9 @@ const ArticleContent = ({ slug, article, nextSlug }) => {
           <Arrow className="shrink-0 text-[rgb(var(--muted-foreground))] group-hover:text-[rgb(var(--primary))] transition-colors" />
         </Link>
       )}
+
+      {/* Reactions and comments: last on the page, so loading them moves nothing above. */}
+      <Engagement target={postTarget(slug)} className="mt-14 max-md:mt-10" />
     </article>
   );
 };

@@ -1191,14 +1191,42 @@ const en = {
         title: 'Client reviews',
         subtitle: 'Every review, in full, from the freelance platforms I work through.'
       },
+      engage: {
+        title: 'Reactions and comments',
+        reactions_label: 'React to this',
+        reactions: {
+          like: 'Like',
+          love: 'Love',
+          fire: 'Fire',
+          clap: 'Applause',
+          idea: 'Insightful'
+        },
+        reaction_error: 'Your reaction could not be saved. Try again.',
+        comments_count: 'Comments ({{count}})',
+        empty: 'No comments yet. Be the first.',
+        name: 'Your name',
+        comment: 'Your comment',
+        privacy: 'Your name and comment appear after review.',
+        submit: 'Send comment',
+        sending: 'Sending…',
+        sent: 'Thanks! Your comment will appear after review.',
+        more: 'Show more comments',
+        errors: {
+          name: 'Write a name between 2 and 40 characters, with no links.',
+          text: 'Write a comment between 3 and 1000 characters.',
+          links: 'Two links at most, please.',
+          rate: 'Too many comments from your connection. Try again in an hour.',
+          generic: 'Something went wrong. Try again in a moment.'
+        }
+      },
       privacy: {
         title: 'Privacy',
         subtitle: 'What this site collects, what it does not, and who else sees it.',
-        updated: 'Last updated: September 2026',
+        updated: 'Last updated: November 2026',
         sections: [
           {
             heading: 'The short version',
-            body: 'This is a portfolio, not a product. There is no account to create, no tracking cookie, no advertising network and nothing sold or shared. The only personal data that reaches me is what you type into the contact form or send over WhatsApp.'
+            body: 'This is a portfolio, not a product. There is no account to create, no tracking cookie, no advertising network and nothing sold or shared. The only personal data that reaches me is what you type into the contact form or a comment, or send over WhatsApp.'
           },
           {
             heading: 'The contact form',
@@ -1207,6 +1235,10 @@ const en = {
           {
             heading: 'WhatsApp',
             body: 'The WhatsApp button opens a chat in your own WhatsApp with a message already typed. Nothing is sent until you send it, and the conversation lives in WhatsApp under their terms, not mine.'
+          },
+          {
+            heading: 'Reactions and comments',
+            body: 'Case studies, articles and the teaching page take reactions and comments, with no account. When you react, your browser keeps a random anonymous id in localStorage so the same reaction is not counted twice, and the server stores the reaction against a hash of that id and of your IP address. When you comment, I store the name you give, your comment, the date and a salted hash of your IP address; the hash is only used to stop spam and floods, and your IP address itself is never stored. Comments are moderated: nothing appears until I approve it, and I get an email for each one. The data is kept in an Upstash Redis database. To have a comment of yours removed, email me at the address below.'
           },
           {
             heading: 'Analytics',

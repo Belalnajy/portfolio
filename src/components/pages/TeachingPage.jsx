@@ -6,6 +6,8 @@ import { FaPlay, FaFilePdf, FaFolderOpen, FaExternalLinkAlt, FaGoogleDrive, FaVi
 import SiteShell from '../SiteShell';
 import Reveal from '../Reveal';
 import { COURSES, VIDEOS, TEACHING_STATS, driveFolder, driveFile, drivePreview } from '../../lib/teaching';
+import Engagement from '../engage/LazyEngagement';
+import { teachTarget } from '../../lib/engage/shared';
 
 /**
  * /teaching: the course material Belal teaches with at ITI, from his Google
@@ -399,6 +401,8 @@ const TeachingContent = () => {
               shown === course.id ? '' : 'max-md:hidden'
             }`}>
             {course.kind === 'videos' ? <VideoCourse course={course} /> : <LectureCourse course={course} />}
+            {/* One thread per course. */}
+            <Engagement target={teachTarget(course.id)} headingAs="h3" className="mt-10 pt-8 border-t border-[rgb(var(--border-subtle))]" />
           </Reveal>
         ))}
       </div>

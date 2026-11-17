@@ -24,7 +24,7 @@
  * Bump VERSION whenever the caching logic changes; old caches are dropped on
  * activate.
  */
-const VERSION = 'v3';
+const VERSION = 'v4';
 const STATIC_CACHE = `static-${VERSION}`;
 const ASSET_CACHE = `assets-${VERSION}`;
 const PAGE_CACHE = `pages-${VERSION}`;
@@ -135,6 +135,8 @@ self.addEventListener('fetch', (event) => {
 
   const url = new URL(request.url);
   if (url.origin !== self.location.origin) return;
+  // Live data and the owner's moderation pages are never cached.
+  if (url.pathname.startsWith('/api/') || url.pathname.startsWith('/admin/')) return;
 
   if (request.mode === 'navigate') {
     event.respondWith(networkFirst(event));
