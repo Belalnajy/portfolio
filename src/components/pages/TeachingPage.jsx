@@ -20,9 +20,50 @@ import { COURSES, VIDEOS, TEACHING_STATS, driveFolder, driveFile, drivePreview }
  *
  * Phones get one course at a time behind a two-way switch; from 768px both
  * courses are on the page.
+ *
+ * On phones (below 768px, or any coarse pointer) "Watch" opens the video in
+ * Drive instead, in a new tab, which also hands it to the Drive app. Drive's
+ * mobile preview does not fit a 16:9 box: it draws a toolbar band over a
+ * player with its own minimum height, so in the box the video was cut at the
+ * bottom (play button sliced in half), and the band and height differ between
+ * headless Chrome and a real Android phone, so no fixed box fits reliably.
+ * Desktop keeps the inline player.
  */
 
 const pad = (n) => String(n).padStart(2, '0');
+
+const OPEN_IN_DRIVE_QUERY = '(max-width: 47.99rem), (pointer: coarse)';
+
+/** True on phones and touch-first screens, where videos open in Drive. Starts false, as the prerendered page does. */
+const useOpensInDrive = () => {
+  const [inDrive, setInDrive] = useState(false);
+  useEffect(() => {
+    const query = window.matchMedia(OPEN_IN_DRIVE_QUERY);
+    const sync = () => setInDrive(query.matches);
+    sync();
+    query.addEventListener('change', sync);
+    return () => query.removeEventListener('change', sync);
+  }, []);
+  return inDrive;
+};
+
+// A Latin run: a word that starts with a Latin letter, with its brackets,
+// and the Latin words or numbers right after it: "JavaScript (ES5)" is one
+// run, "Vue و React" two.
+const LATIN_RUN = /(\(?[A-Za-z][\w.+#-]*\)?(?:[ \t]+\(?[A-Za-z0-9][\w.+#-]*\)?)*)/;
+
+/**
+ * Arabic copy with the technology names left in Latin: each Latin run is
+ * marked lang="en", so it keeps the Latin face's spacing and is read out as
+ * English. English copy is returned as it is.
+ */
+const Mixed = ({ text }) => {
+  const { i18n } = useTranslation();
+  if (i18n.language !== 'ar') return text;
+  return String(text)
+    .split(LATIN_RUN)
+    .map((part, i) => (i % 2 === 1 ? <span key={i} lang="en">{part}</span> : part));
+};
 
 const ExternalLink = ({ href, icon, children, label, onClick, variant = 'quiet' }) => (
   <a
@@ -36,7 +77,7 @@ const ExternalLink = ({ href, icon, children, label, onClick, variant = 'quiet' 
         : 'border-[rgb(var(--border-control))]/60 text-[rgb(var(--foreground))] hover:border-[rgb(var(--primary))] hover:text-[rgb(var(--primary))]'
     }`}>
     <span aria-hidden="true" className="text-xs shrink-0">{icon}</span>
-    {children}
+    {typeof children === 'string' ? <Mixed text={children} /> : children}
     {label && <span className="sr-only">: {label}</span>}
   </a>
 );
@@ -47,13 +88,13 @@ const CourseHeader = ({ course, count }) => {
     <header className="flex flex-col md:flex-row md:items-start md:justify-between gap-4 mb-6 max-md:mb-5">
       <div className="min-w-0">
         <h2 id={`course-${course.id}-title`} className="font-display text-2xl md:text-3xl font-bold text-[rgb(var(--foreground))] type-h2">
-          {t(`teaching.courses.${course.id}.title`)}
+          <Mixed text={t(`teaching.courses.${course.id}.title`)} />
         </h2>
         <p className="mt-1.5 text-sm font-semibold text-[rgb(var(--primary))]">
-          {t(`teaching.courses.${course.id}.meta`, { count })}
+          <Mixed text={t(`teaching.courses.${course.id}.meta`, { count })} />
         </p>
         <p className="mt-2 text-[rgb(var(--muted-foreground))] leading-relaxed type-body max-w-2xl">
-          {t(`teaching.courses.${course.id}.desc`)}
+          <Mixed text={t(`teaching.courses.${course.id}.desc`)} />
         </p>
       </div>
       <ExternalLink
@@ -66,6 +107,21 @@ const CourseHeader = ({ course, count }) => {
   );
 };
 
+/**
+ * The press that plays a lecture: a button that loads the inline player on
+ * desktop, a link that opens the video in Drive on phones.
+ */
+const PlayTarget = ({ inDrive, href, onPlay, onDrive, children, ...rest }) =>
+  inDrive ? (
+    <a href={href} target="_blank" rel="noopener noreferrer" onClick={onDrive} {...rest}>
+      {children}
+    </a>
+  ) : (
+    <button type="button" onClick={onPlay} {...rest}>
+      {children}
+    </button>
+  );
+
 const VideoCourse = ({ course }) => {
   const { t, i18n } = useTranslation();
   const [current, setCurrent] = useState(0);
@@ -74,6 +130,7 @@ const VideoCourse = ({ course }) => {
   const frameRef = useRef(null);
   // Set by a press, so focus moves into the player only when a person asked.
   const focusFrame = useRef(false);
+  const inDrive = useOpensInDrive();
 
   const comma = i18n.language === 'ar' ? '، ' : ', ';
   const titleOf = (video) => `${t(`teaching.sections.${video.section}`)}${comma}${t('teaching.part', { n: video.part })}`;
@@ -83,13 +140,16 @@ const VideoCourse = ({ course }) => {
     focusFrame.current = true;
     setCurrent(index);
     setPlaying(true);
-    track('lecture_play', { course: course.id, lecture: VIDEOS[index].file });
+    track('lecture_play', { course: course.id, lecture: VIDEOS[index].file, mode: 'inline' });
     // On a phone the list sits under the player: bring the player back up.
     if (window.matchMedia('(max-width: 1023.98px)').matches) {
       const smooth = !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
       playerRef.current?.scrollIntoView({ block: 'start', behavior: smooth ? 'smooth' : 'auto' });
     }
   };
+
+  // Phones: the press follows the link to Drive; it is only counted here.
+  const watchInDrive = (index) => track('lecture_play', { course: course.id, lecture: VIDEOS[index].file, mode: 'drive' });
 
   useEffect(() => {
     if (!playing || !focusFrame.current) return;
@@ -106,7 +166,7 @@ const VideoCourse = ({ course }) => {
           {/* Fixed 16:9 box: the placeholder and the iframe take the same
               space, so loading the video moves nothing. */}
           <div className="relative aspect-video rounded-xl overflow-hidden bg-[rgb(var(--scrim))] ring-1 ring-[rgb(var(--border-subtle))]">
-            {playing ? (
+            {playing && !inDrive ? (
               <iframe
                 key={video.drive}
                 ref={frameRef}
@@ -118,41 +178,49 @@ const VideoCourse = ({ course }) => {
                 className="absolute inset-0 w-full h-full border-0"
               />
             ) : (
-              <button
-                type="button"
-                onClick={() => play(current)}
-                aria-label={t('teaching.play_label', { name: titleOf(video) })}
+              <PlayTarget
+                inDrive={inDrive}
+                href={driveFile(video.drive)}
+                onPlay={() => play(current)}
+                onDrive={() => watchInDrive(current)}
+                aria-label={t(inDrive ? 'teaching.play_drive_label' : 'teaching.play_label', { name: titleOf(video) })}
                 className="group absolute inset-0 w-full h-full text-start text-[rgb(var(--on-scrim))] bg-[radial-gradient(ellipse_at_top_right,rgb(var(--accent)/0.28),transparent_60%)] focus-visible:outline-offset-[-4px]">
                 {/* A faint grid: a whiteboard, not a photo. */}
                 <span
                   aria-hidden="true"
                   className="absolute inset-0 opacity-[0.07] bg-[linear-gradient(rgb(var(--on-scrim))_1px,transparent_1px),linear-gradient(90deg,rgb(var(--on-scrim))_1px,transparent_1px)] bg-[size:32px_32px]"
                 />
-                <span aria-hidden="true" className="absolute top-4 start-4 px-2.5 py-1 rounded-full text-[11px] font-semibold bg-[rgb(var(--scrim))]/70 border border-[rgb(var(--on-scrim))]/15">
-                  {t(`teaching.sections.${video.section}`)}
+                <span aria-hidden="true" className="absolute top-3 start-3 sm:top-4 sm:start-4 px-2.5 py-1 rounded-full text-[11px] font-semibold bg-[rgb(var(--scrim))]/70 border border-[rgb(var(--on-scrim))]/15">
+                  <Mixed text={t(`teaching.sections.${video.section}`)} />
                 </span>
+                {inDrive && (
+                  <span aria-hidden="true" className="absolute top-3 end-3 sm:top-4 sm:end-4 inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-semibold bg-[rgb(var(--scrim))]/70 border border-[rgb(var(--on-scrim))]/15">
+                    <FaExternalLinkAlt className="text-[9px]" />
+                    <Mixed text={t('teaching.actions.watch_drive')} />
+                  </span>
+                )}
                 <span aria-hidden="true" className="absolute inset-0 flex items-center justify-center">
-                  <span className="flex items-center justify-center size-16 sm:size-20 rounded-full bg-[rgb(var(--primary))] text-[rgb(var(--accent-contrast))] shadow-xl transition-transform motion-safe:group-hover:scale-105">
-                    <FaPlay className="text-xl sm:text-2xl translate-x-0.5" />
+                  <span className="flex items-center justify-center size-12 sm:size-16 md:size-20 rounded-full bg-[rgb(var(--primary))] text-[rgb(var(--accent-contrast))] shadow-xl transition-transform motion-safe:group-hover:scale-105">
+                    <FaPlay className="text-base sm:text-xl md:text-2xl translate-x-0.5" />
                   </span>
                 </span>
-                <span aria-hidden="true" className="absolute bottom-4 inset-x-4 flex items-end gap-3">
-                  <span className="font-display text-4xl sm:text-5xl font-bold leading-none text-[rgb(var(--primary))]" dir="ltr">
+                <span aria-hidden="true" className="absolute bottom-3 inset-x-3 sm:bottom-4 sm:inset-x-4 flex items-end gap-3">
+                  <span className="font-display text-3xl sm:text-5xl font-bold leading-none text-[rgb(var(--primary))]" dir="ltr">
                     {pad(video.number)}
                   </span>
                   <span className="min-w-0 pb-0.5">
-                    <span className="block font-semibold leading-snug truncate">{titleOf(video)}</span>
+                    <span className="block font-semibold leading-snug truncate"><Mixed text={titleOf(video)} /></span>
                     <span className="block text-xs text-[rgb(var(--on-scrim-muted))] font-mono truncate" dir="ltr">
                       {video.file}
                     </span>
                   </span>
                 </span>
-              </button>
+              </PlayTarget>
             )}
           </div>
           <div className="mt-3 flex flex-wrap items-center justify-between gap-x-4 gap-y-2">
             <p className="text-xs text-[rgb(var(--muted-foreground))] leading-relaxed max-w-md">
-              {t('teaching.player_note')}
+              <Mixed text={t(inDrive ? 'teaching.player_note_phone' : 'teaching.player_note')} />
             </p>
             <ExternalLink href={driveFile(video.drive)} icon={<FaExternalLinkAlt />} label={titleOf(video)}>
               {t('teaching.actions.open_drive')}
@@ -165,18 +233,20 @@ const VideoCourse = ({ course }) => {
           {course.sections.map((section) => (
             <div key={section.id}>
               <h3 className="text-xs font-bold uppercase tracking-[0.14em] text-[rgb(var(--muted-foreground))] mb-2 px-1">
-                {t(`teaching.sections.${section.id}`)}
+                <Mixed text={t(`teaching.sections.${section.id}`)} />
               </h3>
               <ol className="rounded-xl border border-[rgb(var(--border-subtle))] divide-y divide-[rgb(var(--border-subtle))] overflow-hidden">
                 {VIDEOS.map((item, index) => ({ item, index }))
                   .filter(({ item }) => item.section === section.id)
                   .map(({ item, index }) => {
-                    const active = index === current && playing;
+                    const active = index === current && playing && !inDrive;
                     return (
                       <li key={item.drive}>
-                        <button
-                          type="button"
-                          onClick={() => play(index)}
+                        <PlayTarget
+                          inDrive={inDrive}
+                          href={driveFile(item.drive)}
+                          onPlay={() => play(index)}
+                          onDrive={() => watchInDrive(index)}
                           aria-current={active ? 'true' : undefined}
                           className={`press w-full flex items-center gap-3 min-h-14 px-3 py-2.5 text-start transition-colors ${
                             active ? 'bg-[rgb(var(--primary))]/10' : 'hover:bg-[rgb(var(--muted))]/30'
@@ -200,11 +270,11 @@ const VideoCourse = ({ course }) => {
                             </span>
                           </span>
                           <span className={`shrink-0 inline-flex items-center gap-1.5 text-xs font-semibold ${active ? 'text-[rgb(var(--primary))]' : 'text-[rgb(var(--muted-foreground))]'}`}>
-                            <FaPlay aria-hidden="true" className="text-[9px]" />
-                            {active ? t('teaching.actions.now_playing') : t('teaching.actions.watch')}
+                            {inDrive ? <FaExternalLinkAlt aria-hidden="true" className="text-[9px]" /> : <FaPlay aria-hidden="true" className="text-[9px]" />}
+                            <Mixed text={active ? t('teaching.actions.now_playing') : t(inDrive ? 'teaching.actions.watch_drive' : 'teaching.actions.watch')} />
                           </span>
                           <span className="sr-only">: {titleOf(item)}</span>
-                        </button>
+                        </PlayTarget>
                       </li>
                     );
                   })}
@@ -235,7 +305,7 @@ const LectureCourse = ({ course }) => {
                 <div className="min-w-0">
                   <p className="text-xs font-semibold text-[rgb(var(--muted-foreground))]">{name}</p>
                   <h3 className="font-semibold text-[rgb(var(--foreground))] leading-snug">
-                    {t(`teaching.topics.${lecture.id}`)}
+                    <Mixed text={t(`teaching.topics.${lecture.id}`)} />
                   </h3>
                 </div>
               </div>
@@ -275,12 +345,12 @@ const TeachingContent = () => {
   return (
     <div className="container mx-auto px-5 sm:px-6 pt-28 m-page-top pb-20 max-md:pb-14 max-w-6xl text-start">
       <header className="mb-10 max-md:mb-8">
-        <p className="m-eyebrow mb-2.5">{t('teaching.eyebrow')}</p>
+        <p className="m-eyebrow mb-2.5"><Mixed text={t('teaching.eyebrow')} /></p>
         <h1 className="font-display text-4xl sm:text-5xl font-bold text-[rgb(var(--foreground))] type-h1">
-          {t('teaching.title')}
+          <Mixed text={t('teaching.title')} />
         </h1>
         <p className="text-[rgb(var(--muted-foreground))] text-lg mt-3 leading-relaxed type-body max-w-3xl">
-          {t('teaching.intro')}
+          <Mixed text={t('teaching.intro')} />
         </p>
         {/* Counted from src/lib/teaching.js. The label (dt) comes first in
             the source, as a description list wants; the number is drawn
@@ -288,7 +358,7 @@ const TeachingContent = () => {
         <dl className="grid grid-cols-2 sm:grid-cols-4 gap-3 mt-8 max-md:mt-6">
           {stats.map(({ key, value }) => (
             <div key={key} className="m-card flex flex-col-reverse gap-1 rounded-2xl border border-[rgb(var(--border-subtle))] bg-[rgb(var(--surface))]/60 px-4 py-3.5">
-              <dt className="text-xs sm:text-sm text-[rgb(var(--muted-foreground))]">{t(`teaching.stats.${key}`)}</dt>
+              <dt className="text-xs sm:text-sm text-[rgb(var(--muted-foreground))]"><Mixed text={t(`teaching.stats.${key}`)} /></dt>
               <dd className="font-display text-2xl sm:text-3xl font-bold text-[rgb(var(--foreground))] tabular-nums">
                 <span dir="ltr">{value}</span>
               </dd>
@@ -311,7 +381,7 @@ const TeachingContent = () => {
                 ? 'bg-[rgb(var(--primary))] text-[rgb(var(--accent-contrast))]'
                 : 'text-[rgb(var(--muted-foreground))]'
             }`}>
-            {t(`teaching.courses.${course.id}.short`)}
+            <Mixed text={t(`teaching.courses.${course.id}.short`)} />
           </button>
         ))}
       </div>

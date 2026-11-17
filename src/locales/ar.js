@@ -33,7 +33,7 @@ const ar = {
         title: 'عني',
         portrait_alt: 'بلال ناجي، صورة شخصية بالأبيض والأسود',
         cv_link: 'السيرة الذاتية كاملة: الخبرات وحزمة المنصات',
-        teaching_link: 'أدرّس تطوير الواجهات في ITI: شاهد المحاضرات',
+        teaching_link: 'بدرّس Front-End في ITI: شوف المحاضرات',
         subtitle: 'مطور Full-Stack من الإسكندرية، مصر. أعمل بتقنيات: Next.js، Laravel، NestJS، Node.js، Django، PostgreSQL.',
         professional_summary: 'الملخص المهني',
         values: {
@@ -1230,58 +1230,61 @@ const ar = {
       teaching: {
         eyebrow: 'التدريس · ITI',
         title: 'التدريس في ITI',
-        intro: 'أدرّس تطوير واجهات المواقع كمحاضر خارجي في ITI (معهد تكنولوجيا المعلومات في مصر): HTML و CSS و JavaScript، من أول وسم حتى DOM وأحداث المتصفح. تعلّم معي هناك أكثر من {{students}} طالباً. هنا محاضراتي المسجّلة وشرائحي والأكواد التي نكتبها في المحاضرة، متاحة للجميع.',
+        intro: 'بدرّس Front-End في ITI (معهد تكنولوجيا المعلومات) كمحاضر خارجي: HTML و CSS و JavaScript، من أول tag لحد الـ DOM والـ Events. اتعلّم معايا هناك أكتر من {{students}} طالب. هنا المحاضرات المسجّلة والسلايدز والكود اللي بنكتبه في المحاضرة، متاحين لأي حد.',
         stats: {
-          courses: 'المقررات',
-          lectures: 'المحاضرات',
-          decks: 'عروض الشرائح',
-          code: 'ملفات الأمثلة والمعامل'
+          courses: 'كورس',
+          lectures: 'محاضرة',
+          decks: 'سلايدز',
+          code: 'ملف كود ولابات'
         },
-        choose_course: 'اختر المقرر',
+        choose_course: 'اختار الكورس',
         courses: {
           videos: {
             title: 'محاضرات مسجّلة: HTML و CSS و JavaScript',
             short: 'المحاضرات المسجّلة',
-            meta: '{{count}} فيديو · سُجّلت بين يوليو وسبتمبر 2026',
-            desc: 'أساس تطوير الواجهات بالفيديو: HTML4 و CSS2 و JavaScript (ES5) و JavaScript الحديثة (ES6+).'
+            meta: '{{count}} فيديو · اتسجّلت بين يوليو وسبتمبر 2026',
+            desc: 'أساسيات الـ Front-End بالفيديو: HTML4 و CSS2 و JavaScript (ES5) و JavaScript الحديثة (ES6+).'
           },
           cst: {
-            title: 'تقنيات جهة العميل (CST)',
+            title: 'كورس Client-Side Technologies (CST)',
             short: 'محاضرات CST',
-            meta: '{{count}} محاضرات · مسار Vue و React لعام 2026',
-            desc: 'مقرر تقنيات جهة العميل في مسار Vue و React لعام 2026: ثماني محاضرات، لكل منها الشرائح والأمثلة التي كتبناها في المحاضرة ومعمل تطبيقي.'
+            meta: '{{count}} محاضرات · تراك Vue و React لسنة 2026',
+            desc: 'كورس الـ Client-Side في تراك Vue و React لسنة 2026: تمن محاضرات، كل واحدة معاها السلايدز والكود اللي كتبناه في المحاضرة واللاب.'
           }
         },
         sections: {
           html4: 'أساسيات HTML4',
-          css: 'التنسيق بـ CSS2',
+          css: 'CSS2 والتنسيق',
           javascript: 'أساسيات JavaScript (ES5)',
           es6: 'JavaScript الحديثة (ES6+)'
         },
-        part: 'الجزء {{n}}',
-        lecture: 'المحاضرة {{n}}',
+        part: 'بارت {{n}}',
+        lecture: 'محاضرة {{n}}',
         topics: {
-          cst1: 'أساسيات الويب من جهة العميل ومقدمة في HTML',
-          cst2: 'الجداول والنماذج وتخطيط الصفحة بعناصر div',
-          cst3: 'مقدمة في CSS: التتابع والأولوية والمحددات ونموذج الصندوق وخاصيتا display و position',
+          cst1: 'أساسيات الـ Client-Side ومقدمة في HTML',
+          cst2: 'الـ Tables والـ Forms وتقسيم الصفحة بالـ div',
+          cst3: 'مقدمة في CSS: الـ Cascade والـ Specificity والـ Selectors والـ Box Model والـ display والـ position',
           cst4: 'مقدمة في JavaScript (ES5)',
-          cst5: 'التحكم في سير البرنامج والدوال',
-          cst6: 'المصفوفات والكائنات',
-          cst7: 'التعامل مع DOM',
-          cst8: 'نموذج BOM والأحداث'
+          cst5: 'الـ Control Flow والـ Functions',
+          cst6: 'الـ Arrays والـ Objects',
+          cst7: 'الـ DOM',
+          cst8: 'الـ BOM والـ Events'
         },
         actions: {
           watch: 'شاهد',
-          now_playing: 'قيد التشغيل',
-          slides: 'الشرائح',
-          demos: 'الأمثلة والمعمل',
-          lab_video: 'فيديو المعمل',
-          open_drive: 'افتح في Drive',
-          whole_course: 'المقرر كاملاً على Drive'
+          watch_drive: 'شاهد على Drive',
+          now_playing: 'شغّال دلوقتي',
+          slides: 'السلايدز',
+          demos: 'الكود واللاب',
+          lab_video: 'فيديو اللاب',
+          open_drive: 'افتح على Drive',
+          whole_course: 'الكورس كامل على Drive'
         },
-        play_label: 'تشغيل: {{name}}',
+        play_label: 'شغّل: {{name}}',
+        play_drive_label: 'شاهد على Drive: {{name}}',
         iframe_title: '{{name}}، فيديو على Google Drive',
-        player_note: 'يُعرض الفيديو من Google Drive. بعض التسجيلات كبيرة الحجم؛ إن لم يبدأ التشغيل فافتحه في Drive.'
+        player_note: 'الفيديو بيشتغل من Google Drive. بعض التسجيلات حجمها كبير، فلو مشتغلش افتحه على Drive.',
+        player_note_phone: 'على الموبايل الفيديو بيفتح على Drive، أو في تطبيق Drive لو عندك.'
       },
       cv: {
         title: 'السيرة الذاتية',
@@ -1289,7 +1292,7 @@ const ar = {
         download: 'تحميل PDF',
         print: 'طباعة',
         updated: 'آخر تحديث {{date}}',
-        teaching_link: 'المحاضرات المسجّلة والشرائح وأكواد المحاضرات',
+        teaching_link: 'المحاضرات المسجّلة والسلايدز والكود',
         sections: {
           summary: 'نبذة',
           highlights: 'أبرز النقاط',

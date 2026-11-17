@@ -7,7 +7,7 @@ export const metadata = pageMetadata({
   path: '/teaching',
   title: 'التدريس في ITI',
   description:
-    'محاضرات مسجّلة وشرائح وأكواد من مقررات تطوير الواجهات التي يدرّسها بلال ناجي في ITI: HTML و CSS و JavaScript، من أول وسم حتى DOM والأحداث.',
+    'محاضرات مسجّلة وسلايدز وكود من كورسات الـ Front-End اللي بيدرّسها بلال ناجي في ITI: HTML و CSS و JavaScript، من أول tag لحد الـ DOM والـ Events.',
   shareTitle: 'التدريس في ITI | بلال ناجي',
   card: true,
 });

@@ -1272,6 +1272,7 @@ const en = {
         },
         actions: {
           watch: 'Watch',
+          watch_drive: 'Watch on Drive',
           now_playing: 'Playing',
           slides: 'Slides',
           demos: 'Demos & lab',
@@ -1280,8 +1281,10 @@ const en = {
           whole_course: 'Whole course on Drive'
         },
         play_label: 'Play: {{name}}',
+        play_drive_label: 'Watch on Drive: {{name}}',
         iframe_title: '{{name}}, a video on Google Drive',
-        player_note: 'The video plays from Google Drive. Some recordings are large; if it does not start, open it in Drive.'
+        player_note: 'The video plays from Google Drive. Some recordings are large; if it does not start, open it in Drive.',
+        player_note_phone: 'On a phone the video opens in Drive, or in the Drive app if you have it.'
       },
       cv: {
         title: 'Curriculum vitae',

@@ -459,3 +459,41 @@ test('/teaching asks nothing of Google Drive until a video is played', { skip },
   assert.equal(after.allow, 'autoplay; fullscreen');
   assert.deepEqual(errors, []);
 });
+
+test('on a phone, Watch opens the lecture in Drive instead of the inline player', { skip }, async () => {
+  // Drive's mobile preview does not fit a 16:9 box (its video was cut off), so
+  // phones get a link to the video in Drive, which also hands off to the app.
+  const context = await browser.createBrowserContext();
+  const page = await context.newPage();
+  await page.setViewport({ width: 390, height: 800, isMobile: true, hasTouch: true });
+  const errors = [];
+  page.on('pageerror', (error) => errors.push(String(error)));
+  const google = [];
+  page.on('request', (request) => {
+    if (/(^|\.)google\.com$/.test(new URL(request.url()).hostname)) google.push(request.url());
+  });
+  await page.goto(`${BASE}/ar/teaching`, { waitUntil: 'networkidle2' });
+  await settle();
+  const links = await page.evaluate(() => {
+    const player = document.querySelector('#course-videos a[aria-label]');
+    const rows = [...document.querySelectorAll('#course-videos ol a')];
+    return {
+      player: player && { href: player.getAttribute('href'), target: player.target },
+      rows: rows.length,
+      rowsToDrive: rows.every((a) => /^https:\/\/drive\.google\.com\/file\/d\/[\w-]+\/view$/.test(a.getAttribute('href')) && a.target === '_blank'),
+      buttons: document.querySelectorAll('#course-videos ol button').length,
+    };
+  });
+  const opened = new Promise((resolve) => browser.once('targetcreated', (target) => resolve(target.url())));
+  await page.evaluate(() => document.querySelectorAll('#course-videos ol a')[2].click());
+  const url = await Promise.race([opened, settle(5000).then(() => null)]);
+  const frames = await page.evaluate(() => document.querySelectorAll('iframe').length);
+  await context.close();
+  assert.equal(google.length, 0, 'no request to Google from the page itself');
+  assert.match(links.player?.href ?? '', /^https:\/\/drive\.google\.com\/file\/d\/[\w-]+\/view$/);
+  assert.equal(links.player.target, '_blank');
+  assert.deepEqual({ rows: links.rows, rowsToDrive: links.rowsToDrive, buttons: links.buttons }, { rows: 19, rowsToDrive: true, buttons: 0 });
+  assert.match(url ?? '', /drive\.google\.com|accounts\.google\.com|about:blank/, 'the press opened a new tab towards Drive');
+  assert.equal(frames, 0, 'no inline player on a phone');
+  assert.deepEqual(errors, []);
+});
