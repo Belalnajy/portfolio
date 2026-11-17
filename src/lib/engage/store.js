@@ -18,7 +18,19 @@ export const createMemoryStore = () => {
   const hashes = new Map();
   const zsets = new Map();
   const counters = new Map();
-  const set = (key) => sets.get(key) ?? sets.set(key, new Set()).get(key);
+  const expiries = new Map();
+  // Keys given a lifetime with expire() vanish once it has passed.
+  const fresh = (key) => {
+    const until = expiries.get(key);
+    if (until !== undefined && until <= Date.now()) {
+      expiries.delete(key);
+      sets.delete(key);
+    }
+  };
+  const set = (key) => {
+    fresh(key);
+    return sets.get(key) ?? sets.set(key, new Set()).get(key);
+  };
   const zset = (key) => zsets.get(key) ?? zsets.set(key, new Map()).get(key);
   return {
     kind: 'memory',
@@ -36,6 +48,11 @@ export const createMemoryStore = () => {
     },
     async sismember(key, member) {
       return set(key).has(member) ? 1 : 0;
+    },
+    /** Sets a lifetime on a set, unless it already has one (Redis EXPIRE NX). */
+    async expire(key, seconds) {
+      fresh(key);
+      if (!expiries.has(key)) expiries.set(key, Date.now() + seconds * 1000);
     },
     /** Increments a counter that expires `seconds` after it was created. */
     async incrWindow(key, seconds, now = Date.now()) {
@@ -84,6 +101,7 @@ export const createRedisStore = ({ url, token }) => {
     srem: (key, member) => redis.srem(key, member),
     scard: (key) => redis.scard(key),
     sismember: (key, member) => redis.sismember(key, member),
+    expire: (key, seconds) => redis.expire(key, seconds, 'NX'),
     async incrWindow(key, seconds) {
       const [value] = await redis.multi().incr(key).expire(key, seconds, 'NX').exec();
       return Number(value);

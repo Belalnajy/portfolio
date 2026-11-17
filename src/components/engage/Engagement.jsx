@@ -3,6 +3,7 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { REACTIONS, LIMITS } from '../../lib/engage/shared';
 import { validateComment } from '../../lib/engage/validate';
+import { ago, displayCount, mergeComments } from '../../lib/engage/client';
 
 /**
  * Reactions and comments for one thread (`target`: case:<slug>,
@@ -10,10 +11,14 @@ import { validateComment } from '../../lib/engage/validate';
  *
  * Nothing is requested until the block is within about a screen of the
  * viewport, and nothing is drawn until the API answers: when the feature is
- * off (no storage configured, the API answers 503) the block stays an empty
- * div, so pages without it look exactly as before. Because it loads ahead of
- * the reader, it is in place before it scrolls into view and shifts nothing
- * on screen.
+ * off (no storage configured, or storage not answering: the API says 503)
+ * the block stays an empty div, so pages look exactly as before. Because it
+ * loads ahead of the reader, it is in place before it scrolls into view and
+ * shifts nothing on screen.
+ *
+ * The thread itself is the same for everyone and cached by the CDN; this
+ * browser's own reactions live in localStorage (and the anonymous visitor id
+ * is only created on the first reaction).
  *
  * Comment names and text are only ever React text nodes, shown with
  * `white-space: pre-line`: nothing a visitor types is parsed as HTML or
@@ -21,9 +26,11 @@ import { validateComment } from '../../lib/engage/validate';
  */
 
 const VISITOR_KEY = 'engage-visitor';
+const MINE_KEY = 'engage-mine';
 let sessionVisitor = '';
+let sessionMine = {};
 
-/** An anonymous id for this browser, kept in localStorage when allowed. */
+/** An anonymous id for this browser, created on its first reaction. */
 const visitorId = () => {
   const fresh = () => (crypto.randomUUID ? crypto.randomUUID() : `${Date.now().toString(16)}-${Math.random().toString(16).slice(2)}`);
   try {
@@ -39,112 +46,157 @@ const visitorId = () => {
   }
 };
 
+/** This browser's reactions: { [target]: { [key]: true } }. */
+const readMine = () => {
+  try {
+    return JSON.parse(localStorage.getItem(MINE_KEY) ?? '{}') ?? {};
+  } catch {
+    return sessionMine;
+  }
+};
+const writeMine = (target, key, on) => {
+  const all = readMine();
+  const forTarget = { ...(all[target] ?? {}) };
+  if (on) forTarget[key] = true;
+  else delete forTarget[key];
+  const next = { ...all, [target]: forTarget };
+  try {
+    localStorage.setItem(MINE_KEY, JSON.stringify(next));
+  } catch {
+    sessionMine = next;
+  }
+};
+
 const postJson = (url, body) =>
   fetch(url, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) });
 
-const relativeTime = (ms, lang) => {
-  const seconds = Math.round((ms - Date.now()) / 1000);
-  const units = [
-    ['year', 31536000],
-    ['month', 2592000],
-    ['week', 604800],
-    ['day', 86400],
-    ['hour', 3600],
-    ['minute', 60],
-  ];
-  const format = new Intl.RelativeTimeFormat(lang === 'ar' ? 'ar-EG-u-nu-latn' : 'en', { numeric: 'auto' });
-  for (const [unit, size] of units) {
-    if (Math.abs(seconds) >= size) return format.format(Math.round(seconds / size), unit);
-  }
-  return format.format(0, 'minute');
+const When = ({ ms }) => {
+  const { t, i18n } = useTranslation();
+  const span = ago(ms);
+  const label = span
+    ? new Intl.RelativeTimeFormat(i18n.language === 'ar' ? 'ar-EG-u-nu-latn' : 'en', { numeric: 'auto' }).format(span.value, span.unit)
+    : t('engage.just_now');
+  return (
+    <time dateTime={new Date(ms).toISOString()} className="text-xs text-[rgb(var(--muted-foreground))]">
+      {label}
+    </time>
+  );
 };
 
-const ReactionBar = ({ target, reactions, setReactions, visitor }) => {
+const ReactionBar = ({ target, reactions, setReactions }) => {
   const { t, i18n } = useTranslation();
   const [notice, setNotice] = useState('');
+  // Keys with a request in flight: further presses on them wait it out.
+  const pending = useRef(new Set());
+  const [busy, setBusy] = useState({});
   const comma = i18n.language === 'ar' ? '، ' : ', ';
 
   const toggle = async (key) => {
-    const before = reactions[key];
+    if (pending.current.has(key)) return;
+    pending.current.add(key);
+    setBusy((all) => ({ ...all, [key]: true }));
+    const before = reactions[key] ?? { count: 0, mine: false };
     const on = !before.mine;
-    // Optimistic: the press shows at once, and is rolled back if refused.
+    // Optimistic: the press shows at once, and only this key is rolled back if refused.
     setReactions((all) => ({ ...all, [key]: { mine: on, count: Math.max(0, before.count + (on ? 1 : -1)) } }));
     setNotice('');
     try {
-      const response = await postJson('/api/react', { target, emoji: key, on, visitor });
+      const response = await postJson('/api/react', { target, emoji: key, on, visitor: visitorId() });
       if (!response.ok) throw new Error(String(response.status));
       const result = await response.json();
+      writeMine(target, key, result.mine);
       setReactions((all) => ({ ...all, [key]: { mine: result.mine, count: result.count } }));
     } catch {
       setReactions((all) => ({ ...all, [key]: before }));
       setNotice(t('engage.reaction_error'));
+    } finally {
+      pending.current.delete(key);
+      setBusy((all) => ({ ...all, [key]: false }));
     }
   };
 
   return (
     <div>
-      <div role="group" aria-label={t('engage.reactions_label')} className="flex flex-wrap gap-2">
+      {/* Phones: all five in one row. */}
+      <div role="group" aria-label={t('engage.reactions_label')} className="grid grid-cols-5 gap-1.5 sm:flex sm:flex-wrap sm:gap-2">
         {REACTIONS.map(({ key, emoji }) => {
           const { count, mine } = reactions[key] ?? { count: 0, mine: false };
+          const shown = displayCount(count, mine);
           return (
             <button
               key={key}
               type="button"
               aria-pressed={mine}
-              aria-label={`${t(`engage.reactions.${key}`)}${comma}${count}`}
+              aria-busy={busy[key] || undefined}
+              aria-label={`${t(`engage.reactions.${key}`)}${comma}${shown}`}
               onClick={() => toggle(key)}
-              className={`press inline-flex items-center gap-2 min-h-11 px-4 rounded-full border text-sm font-semibold transition-colors ${
+              className={`press inline-flex items-center justify-center gap-1.5 sm:gap-2 min-h-11 max-md:min-h-12 px-2 sm:px-4 rounded-full border text-sm font-semibold transition-colors ${
                 mine
                   ? 'border-[rgb(var(--primary))] bg-[rgb(var(--primary))]/12 text-[rgb(var(--foreground))]'
-                  : 'border-[rgb(var(--border-subtle))] bg-[rgb(var(--muted))]/20 text-[rgb(var(--muted-foreground))] hover:border-[rgb(var(--border-control))]'
+                  : 'border-[rgb(var(--border-control))] bg-[rgb(var(--muted))]/20 text-[rgb(var(--muted-foreground))] hover:border-[rgb(var(--primary))]/60'
               }`}>
               <span aria-hidden="true" className="text-base leading-none">{emoji}</span>
-              <span aria-hidden="true" dir="ltr" className="tabular-nums">{count}</span>
+              <span aria-hidden="true" dir="ltr" className="tabular-nums">{shown}</span>
             </button>
           );
         })}
       </div>
-      <p role="status" className="sr-only">{notice}</p>
-      {notice && <p className="mt-2 text-sm text-[rgb(var(--danger))]">{notice}</p>}
+      {/* One message, always in the page, so it is announced when it changes. */}
+      <p role="status" className="mt-2 min-h-5 text-sm text-[rgb(var(--danger))]">{notice}</p>
     </div>
   );
 };
 
-const CommentList = ({ comments }) => {
-  const { i18n } = useTranslation();
-  return (
-    <ol className="space-y-3">
-      {comments.map((comment) => (
-        <li key={comment.id} className="rounded-xl border border-[rgb(var(--border-subtle))] bg-[rgb(var(--surface))]/50 p-4">
-          <p className="flex flex-wrap items-baseline gap-x-2 text-sm">
-            <span dir="auto" className="font-semibold text-[rgb(var(--foreground))] break-words">{comment.name}</span>
-            <time dateTime={new Date(comment.createdAt).toISOString()} className="text-xs text-[rgb(var(--muted-foreground))]">
-              {relativeTime(comment.createdAt, i18n.language)}
-            </time>
-          </p>
-          {/* dir="auto": each comment reads in its own language's direction. */}
-          <p dir="auto" className="mt-1.5 text-start text-[rgb(var(--foreground))]/90 leading-relaxed whitespace-pre-line break-words">{comment.text}</p>
-        </li>
-      ))}
-    </ol>
-  );
-};
+const CommentList = ({ comments }) => (
+  <ol className="space-y-3">
+    {comments.map((comment) => (
+      <li key={comment.id} className="m-card rounded-xl border border-[rgb(var(--border-subtle))] bg-[rgb(var(--surface))]/50 p-4">
+        <p className="flex flex-wrap items-baseline gap-x-2 text-sm">
+          <span dir="auto" className="font-semibold text-[rgb(var(--foreground))] break-words">{comment.name}</span>
+          <When ms={comment.createdAt} />
+        </p>
+        {/* dir="auto": each comment reads in its own language's direction. */}
+        <p dir="auto" className="mt-1.5 text-start text-[rgb(var(--foreground))]/90 leading-relaxed whitespace-pre-line break-words">{comment.text}</p>
+      </li>
+    ))}
+  </ol>
+);
 
-const CommentForm = ({ target, shownAt }) => {
+const CommentForm = ({ target }) => {
   const { t } = useTranslation();
   const [name, setName] = useState('');
   const [text, setText] = useState('');
   const [state, setState] = useState({ status: 'idle', error: '' });
+  const nameRef = useRef(null);
+  const textRef = useRef(null);
+  const token = useRef(null);
   const ids = `engage-${target.replace(/[^\w-]/g, '-')}`;
+
+  // The timing token is fetched when someone starts writing (no request
+  // before that); the server drops comments sent too soon after it.
+  const getToken = () => {
+    token.current ??= fetch(`/api/comment?${new URLSearchParams({ target })}`)
+      .then((response) => (response.ok ? response.json() : Promise.reject(new Error(String(response.status)))))
+      .then((body) => body.token)
+      .catch((error) => {
+        token.current = null;
+        throw error;
+      });
+    return token.current;
+  };
+  const warmToken = () => getToken().catch(() => {});
+
+  const fail = (error) => {
+    setState({ status: 'error', error });
+    (error === 'name' ? nameRef : textRef).current?.focus();
+  };
 
   const submit = async (event) => {
     event.preventDefault();
+    if (state.status === 'sending') return;
     const form = event.currentTarget;
     const checked = validateComment({ name, text });
-    if (!checked.ok) {
-      setState({ status: 'error', error: checked.error });
-      return;
-    }
+    if (!checked.ok) return fail(checked.error);
     setState({ status: 'sending', error: '' });
     try {
       const response = await postJson('/api/comment', {
@@ -152,26 +204,29 @@ const CommentForm = ({ target, shownAt }) => {
         name: checked.name,
         text: checked.text,
         website: form.elements.website?.value ?? '',
-        elapsed: Date.now() - shownAt,
+        token: await getToken(),
       });
       if (response.status === 202) {
         setText('');
+        token.current = null;
         setState({ status: 'sent', error: '' });
         return;
       }
       const body = await response.json().catch(() => ({}));
-      setState({ status: 'error', error: ['name', 'text', 'links', 'rate'].includes(body.error) ? body.error : 'generic' });
+      if (['name', 'text', 'links'].includes(body.error)) return fail(body.error);
+      setState({ status: 'error', error: body.error === 'rate' ? 'rate' : 'generic' });
     } catch {
       setState({ status: 'error', error: 'generic' });
     }
   };
 
   const field =
-    'w-full rounded-xl border border-[rgb(var(--border-control))] bg-[rgb(var(--background))] px-4 py-2.5 text-base text-[rgb(var(--foreground))] focus:border-[rgb(var(--primary))]';
-  const invalid = (which) => state.status === 'error' && state.error === which;
+    'w-full rounded-xl max-md:rounded-[0.875rem] border border-[rgb(var(--border-control))] bg-[rgb(var(--background))] px-4 py-2.5 text-base text-[rgb(var(--foreground))] focus:border-[rgb(var(--primary))]';
+  const invalid = (...which) => state.status === 'error' && which.includes(state.error);
+  const sending = state.status === 'sending';
 
   return (
-    <form onSubmit={submit} noValidate className="relative space-y-3" aria-describedby={`${ids}-note`}>
+    <form onSubmit={submit} noValidate className="relative space-y-3">
       {/* Honeypot: invisible to people and to assistive tech; bots fill it. */}
       <div aria-hidden="true" className="absolute -start-[10000px] top-0 w-px h-px overflow-hidden">
         <label>
@@ -184,16 +239,19 @@ const CommentForm = ({ target, shownAt }) => {
           {t('engage.name')}
         </label>
         <input
+          ref={nameRef}
           id={`${ids}-name`}
           name="name"
           type="text"
+          dir="auto"
           autoComplete="name"
           maxLength={LIMITS.nameMax}
           value={name}
           onChange={(e) => setName(e.target.value)}
+          onFocus={warmToken}
           aria-invalid={invalid('name') || undefined}
           aria-describedby={invalid('name') ? `${ids}-error` : undefined}
-          className={`${field} min-h-11`}
+          className={`${field} min-h-11 max-md:min-h-12`}
         />
       </div>
       <div>
@@ -201,26 +259,28 @@ const CommentForm = ({ target, shownAt }) => {
           {t('engage.comment')}
         </label>
         <textarea
+          ref={textRef}
           id={`${ids}-text`}
           name="text"
+          dir="auto"
           rows={4}
           maxLength={LIMITS.textMax}
           value={text}
           onChange={(e) => setText(e.target.value)}
-          aria-invalid={invalid('text') || invalid('links') || undefined}
-          aria-describedby={invalid('text') || invalid('links') ? `${ids}-error` : undefined}
+          onFocus={warmToken}
+          aria-invalid={invalid('text', 'links') || undefined}
+          aria-describedby={`${ids}-note${invalid('text', 'links') ? ` ${ids}-error` : ''}`}
           className={`${field} resize-y`}
         />
       </div>
       <p id={`${ids}-note`} className="text-xs text-[rgb(var(--muted-foreground))]">{t('engage.privacy')}</p>
-      <div className="flex flex-wrap items-center gap-3">
-        <button
-          type="submit"
-          disabled={state.status === 'sending'}
-          className="press inline-flex items-center justify-center min-h-11 px-6 rounded-xl font-semibold bg-[rgb(var(--primary))] text-[rgb(var(--accent-contrast))] disabled:opacity-60">
-          {state.status === 'sending' ? t('engage.sending') : t('engage.submit')}
-        </button>
-      </div>
+      {/* aria-disabled, not disabled: focus stays on the button while it sends. */}
+      <button
+        type="submit"
+        aria-disabled={sending || undefined}
+        className={`press inline-flex items-center justify-center min-h-11 max-md:min-h-12 px-6 rounded-xl max-md:rounded-[var(--radius-btn)] font-semibold bg-[rgb(var(--primary))] text-[rgb(var(--accent-contrast))] ${sending ? 'opacity-60 cursor-wait' : ''}`}>
+        {sending ? t('engage.sending') : t('engage.submit')}
+      </button>
       <p role="status" className="text-sm font-semibold text-[rgb(var(--success))]">
         {state.status === 'sent' ? t('engage.sent') : ''}
       </p>
@@ -238,29 +298,53 @@ const Engagement = ({ target, headingAs: Heading = 'h2', className = '' }) => {
   const [reactions, setReactions] = useState({});
   const [comments, setComments] = useState([]);
   const [paging, setPaging] = useState({ page: 1, pages: 1, total: 0 });
-  const [visitor, setVisitor] = useState('');
+  const [more, setMore] = useState({ loading: false, error: false });
+  const loadingMore = useRef(false);
 
-  const load = useCallback(
-    async (page = 1) => {
-      const id = visitorId();
-      setVisitor(id);
-      const query = new URLSearchParams({ target, v: id, page: String(page) });
-      const response = await fetch(`/api/engage?${query}`);
-      if (response.status === 503) return setState({ status: 'off' });
-      if (!response.ok) throw new Error(String(response.status));
-      const thread = await response.json();
-      setReactions(thread.reactions);
-      setComments((previous) => (page === 1 ? thread.comments : [...previous, ...thread.comments]));
+  const fetchPage = useCallback(async (page) => {
+    const response = await fetch(`/api/engage?${new URLSearchParams({ target, page: String(page) })}`);
+    if (response.status === 503) return null;
+    if (!response.ok) throw new Error(String(response.status));
+    return response.json();
+  }, [target]);
+
+  const loadFirst = useCallback(async () => {
+    const thread = await fetchPage(1);
+    if (!thread) return setState({ status: 'off' });
+    const mine = readMine()[target] ?? {};
+    setReactions(
+      Object.fromEntries(Object.entries(thread.reactions).map(([key, { count }]) => [key, { count, mine: Boolean(mine[key]) }])),
+    );
+    setComments(thread.comments);
+    setPaging({ page: thread.page, pages: thread.pages, total: thread.total });
+    setState({ status: 'ready' });
+  }, [fetchPage, target]);
+
+  // "Show more": one request at a time; reactions are left alone, a page the
+  // server clamped (the thread shrank) is not appended twice, and comments
+  // already shown are skipped.
+  const loadMore = async () => {
+    if (loadingMore.current) return;
+    loadingMore.current = true;
+    const wanted = paging.page + 1;
+    setMore({ loading: true, error: false });
+    try {
+      const thread = await fetchPage(wanted);
+      if (!thread) throw new Error('off');
+      if (thread.page === wanted) setComments((shown) => mergeComments(shown, thread.comments));
       setPaging({ page: thread.page, pages: thread.pages, total: thread.total });
-      setState((previous) => (previous.status === 'ready' ? previous : { status: 'ready', shownAt: Date.now() }));
-    },
-    [target],
-  );
+      setMore({ loading: false, error: false });
+    } catch {
+      setMore({ loading: false, error: true });
+    } finally {
+      loadingMore.current = false;
+    }
+  };
 
   useEffect(() => {
     const element = root.current;
     if (!element) return undefined;
-    const start = () => load().catch(() => setState({ status: 'off' }));
+    const start = () => loadFirst().catch(() => setState({ status: 'off' }));
     if (typeof IntersectionObserver === 'undefined') {
       start();
       return undefined;
@@ -275,7 +359,7 @@ const Engagement = ({ target, headingAs: Heading = 'h2', className = '' }) => {
     );
     observer.observe(element);
     return () => observer.disconnect();
-  }, [load]);
+  }, [loadFirst]);
 
   if (state.status !== 'ready') return <div ref={root} data-engage={target} />;
 
@@ -284,9 +368,9 @@ const Engagement = ({ target, headingAs: Heading = 'h2', className = '' }) => {
       <Heading id={`engage-${target}-title`} className="font-display text-xl sm:text-2xl font-bold text-[rgb(var(--foreground))] mb-4 type-h3">
         {t('engage.title')}
       </Heading>
-      <ReactionBar target={target} reactions={reactions} setReactions={setReactions} visitor={visitor} />
+      <ReactionBar target={target} reactions={reactions} setReactions={setReactions} />
 
-      <div className="mt-8 grid gap-8 md:grid-cols-2 md:gap-10 items-start">
+      <div className="mt-6 grid gap-8 md:grid-cols-2 md:gap-10 items-start">
         <div className="min-w-0">
           <p className="text-sm font-semibold text-[rgb(var(--muted-foreground))] mb-3">
             {t('engage.comments_count', { count: paging.total })}
@@ -299,13 +383,15 @@ const Engagement = ({ target, headingAs: Heading = 'h2', className = '' }) => {
           {paging.page < paging.pages && (
             <button
               type="button"
-              onClick={() => load(paging.page + 1).catch(() => {})}
-              className="press mt-3 inline-flex items-center min-h-11 px-4 rounded-xl border border-[rgb(var(--border-control))] text-sm font-semibold text-[rgb(var(--foreground))]">
+              onClick={loadMore}
+              aria-disabled={more.loading || undefined}
+              className={`press mt-3 inline-flex items-center min-h-11 max-md:min-h-12 px-4 rounded-xl max-md:rounded-[var(--radius-btn)] border border-[rgb(var(--border-control))] text-sm font-semibold text-[rgb(var(--foreground))] ${more.loading ? 'opacity-60 cursor-wait' : ''}`}>
               {t('engage.more')}
             </button>
           )}
+          <p role="status" className="mt-2 text-sm text-[rgb(var(--danger))]">{more.error ? t('engage.load_error') : ''}</p>
         </div>
-        <CommentForm target={target} shownAt={state.shownAt} />
+        <CommentForm target={target} />
       </div>
     </section>
   );

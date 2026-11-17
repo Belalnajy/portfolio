@@ -1,5 +1,6 @@
 import { LIMITS } from './shared.js';
 import { hashIp, signAction } from './crypto.js';
+import { SITE_URL } from '../site.js';
 
 /** Helpers shared by the /api routes of the comments feature. Server-only. */
 
@@ -8,14 +9,44 @@ const NO_STORE = { 'Cache-Control': 'no-store', 'X-Robots-Tag': 'noindex' };
 export const json = (body, status = 200, headers = {}) =>
   Response.json(body, { status, headers: { ...NO_STORE, ...headers } });
 
-/** The feature is off in this environment (no storage or no secret). */
+/** The feature is off in this environment, or its storage is not answering. */
 export const off = () => json({ enabled: false }, 503);
+
+/**
+ * Runs a route body; any storage failure (Upstash down, the monthly budget
+ * spent) becomes the "off" answer, never a 500.
+ */
+export const guarded = async (handler) => {
+  try {
+    return await handler();
+  } catch (error) {
+    console.error('[engage]', error?.message ?? error);
+    return off();
+  }
+};
 
 /** The client IP as Vercel reports it. Only ever used hashed. */
 export const clientIp = (request) =>
   request.headers.get('x-real-ip') || request.headers.get('x-forwarded-for')?.split(',')[0]?.trim() || 'unknown';
 
-export const ipHashOf = (request, secret) => hashIp(secret, clientIp(request));
+/**
+ * The network an IP belongs to, for rate limits: an IPv4 address as it is,
+ * an IPv6 address by its /64 (one household or phone usually has a whole
+ * /64, and can pick any address in it). IPv4-mapped IPv6 counts as IPv4.
+ */
+export const networkOf = (ip) => {
+  const value = String(ip).trim().toLowerCase().replace(/^\[|\]$/g, '').replace(/%.*$/, '');
+  if (!value.includes(':')) return value;
+  const mapped = value.match(/^::ffff:(\d+\.\d+\.\d+\.\d+)$/);
+  if (mapped) return mapped[1];
+  const [head, tail = ''] = value.split('::');
+  const left = head ? head.split(':') : [];
+  const right = value.includes('::') && tail ? tail.split(':') : [];
+  const groups = value.includes('::') ? [...left, ...Array(Math.max(0, 8 - left.length - right.length)).fill('0'), ...right] : left;
+  return `${groups.slice(0, 4).map((group) => (parseInt(group, 16) || 0).toString(16)).join(':')}::/64`;
+};
+
+export const ipHashOf = (request, keys) => hashIp(keys, networkOf(clientIp(request)));
 
 /**
  * Reads a small JSON body. Anything over the limit, or not JSON, is refused
@@ -49,39 +80,47 @@ export const sameOrigin = (request, { required = false } = {}) => {
   }
 };
 
-export const moderationLink = (origin, secret, action, id) =>
-  `${origin}/api/comments/moderate?action=${action}&id=${encodeURIComponent(id)}&sig=${signAction(secret, action, id)}`;
+/** Always on the canonical site (src/lib/site.js), never on a host taken from the request. */
+export const moderationLink = (keys, action, id) =>
+  `${SITE_URL}/api/comments/moderate?action=${action}&id=${encodeURIComponent(id)}&sig=${signAction(keys, action, id)}`;
 
 /**
- * Emails the owner about a new comment through Resend's REST API. Plain
- * text, so nothing in the comment can become markup. Never throws: a failed
- * email leaves the comment pending, visible on /admin/comments.
+ * The notification email, as plain text: the real links first, then the
+ * comment with every line quoted ("> "), so nothing a visitor typed can pass
+ * for a link or an instruction from the site.
  */
-export const notifyOwner = async ({ resendKey, ownerEmail, secret }, comment, origin) => {
+export const buildEmail = (keys, comment) => {
+  const oneLine = (value) => String(value).replace(/\s+/g, ' ').trim().slice(0, 60);
+  const quote = (value) => String(value).split('\n').map((line) => `> ${line}`).join('\n');
+  return {
+    subject: `New comment from ${oneLine(comment.name)} on ${comment.target}`,
+    text: [
+      `Approve: ${moderationLink(keys, 'approve', comment.id)}`,
+      `Delete:  ${moderationLink(keys, 'delete', comment.id)}`,
+      `All pending comments: ${SITE_URL}/admin/comments`,
+      '',
+      `New comment on ${comment.target}, waiting for your approval. Name and text as sent:`,
+      '',
+      quote(comment.name),
+      '',
+      quote(comment.text),
+    ].join('\n'),
+  };
+};
+
+/**
+ * Emails the owner about a new comment through Resend's REST API. Never
+ * throws: a failed email leaves the comment pending, visible on
+ * /admin/comments.
+ */
+export const notifyOwner = async ({ resendKey, ownerEmail, keys }, comment) => {
   if (!resendKey) return false;
-  const oneLine = (value) => String(value).replace(/\s+/g, ' ').slice(0, 60);
-  const text = [
-    `New comment on ${comment.target}, waiting for your approval.`,
-    '',
-    `From: ${comment.name}`,
-    '',
-    comment.text,
-    '',
-    `Approve: ${moderationLink(origin, secret, 'approve', comment.id)}`,
-    `Delete:  ${moderationLink(origin, secret, 'delete', comment.id)}`,
-    '',
-    `All pending comments: ${origin}/admin/comments`,
-  ].join('\n');
+  const { subject, text } = buildEmail(keys, comment);
   try {
     const response = await fetch('https://api.resend.com/emails', {
       method: 'POST',
       headers: { Authorization: `Bearer ${resendKey}`, 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        from: 'Portfolio comments <onboarding@resend.dev>',
-        to: [ownerEmail],
-        subject: `New comment from ${oneLine(comment.name)} on ${comment.target}`,
-        text,
-      }),
+      body: JSON.stringify({ from: 'Portfolio comments <onboarding@resend.dev>', to: [ownerEmail], subject, text }),
       signal: AbortSignal.timeout(5000),
     });
     return response.ok;
@@ -97,6 +136,6 @@ export { escapeHtml };
 /** A minimal HTML page for the moderation links (no script, noindex). */
 export const htmlPage = (title, body, status = 200) =>
   new Response(
-    `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,nofollow"><title>${escapeHtml(title)}</title><style>body{font:16px/1.6 system-ui,sans-serif;max-width:40rem;margin:3rem auto;padding:0 1rem;background:#0b0f14;color:#e8edf2}blockquote{white-space:pre-line;border-left:3px solid #c87f1e;margin:1rem 0;padding:.5rem 1rem;background:#121821}button{font:inherit;padding:.6rem 1.2rem;border-radius:.6rem;border:0;background:#c87f1e;color:#10171f;cursor:pointer}a{color:#e0a03c}</style></head><body>${body}</body></html>`,
+    `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,nofollow"><title>${escapeHtml(title)}</title><style>body{font:16px/1.6 system-ui,sans-serif;max-width:40rem;margin:3rem auto;padding:0 1rem;background:#0b0f14;color:#e8edf2}blockquote{white-space:pre-line;border-left:3px solid #c87f1e;margin:1rem 0;padding:.5rem 1rem;background:#121821}button{font:inherit;padding:.6rem 1.2rem;border-radius:.6rem;border:0;background:#c87f1e;color:#10171f;cursor:pointer;min-height:44px}a{color:#e0a03c}</style></head><body>${body}</body></html>`,
     { status, headers: { 'Content-Type': 'text/html; charset=utf-8', 'Cache-Control': 'no-store', 'X-Robots-Tag': 'noindex' } },
   );

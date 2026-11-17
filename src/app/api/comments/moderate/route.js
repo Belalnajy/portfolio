@@ -1,13 +1,13 @@
 import { engageConfig, moderate } from '../../../../lib/engage/server';
 import { verifyAction } from '../../../../lib/engage/crypto';
-import { escapeHtml, htmlPage, off } from '../../../../lib/engage/http';
+import { escapeHtml, guarded, htmlPage, off } from '../../../../lib/engage/http';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
 
 const ACTIONS = new Set(['approve', 'delete']);
 
-const checked = (config, action, id, sig) => ACTIONS.has(action) && typeof id === 'string' && verifyAction(config.secret, action, id, sig);
+const checked = (config, action, id, sig) => ACTIONS.has(action) && typeof id === 'string' && verifyAction(config.keys, action, id, sig);
 
 /**
  * The links in the notification email. GET only shows what the link will do
@@ -39,7 +39,8 @@ export async function POST(request) {
   const id = form?.get('id');
   const sig = form?.get('sig');
   if (!checked(config, action, id, sig)) return htmlPage('Invalid link', '<h1>This link is not valid.</h1>', 403);
-  const comment = await moderate(config, action, id);
+  const comment = await guarded(() => moderate(config, action, id));
+  if (comment instanceof Response) return comment;
   if (!comment) return htmlPage('Not found', '<h1>That comment no longer exists.</h1><p><a href="/admin/comments">All comments</a></p>', 404);
   return htmlPage(
     'Done',

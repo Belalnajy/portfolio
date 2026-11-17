@@ -242,10 +242,18 @@ test('the comments API is off cleanly, or refuses bad input, and never fails wit
     assert.deepEqual(Object.keys(thread.reactions).sort(), ['clap', 'fire', 'idea', 'like', 'love']);
     for (const comment of thread.comments) assert.deepEqual(Object.keys(comment).sort(), ['createdAt', 'id', 'name', 'text']);
   }
-  assert.equal(engage.headers.get('cache-control'), 'no-store');
+  // On, the thread is the same for everyone and the CDN keeps it briefly;
+  // off, nothing is cached.
+  assert.equal(engage.headers.get('cache-control'), on ? 'public, max-age=0, must-revalidate' : 'no-store');
+  // Vercel's CDN consumes CDN-Cache-Control itself, so in production it may
+  // not reach the client; when it does, it must be the 30 s rule.
+  if (on && engage.headers.get('cdn-cache-control')) {
+    assert.equal(engage.headers.get('cdn-cache-control'), 'public, s-maxage=30, stale-while-revalidate=300');
+  }
 
   const expect = (status, onStatus, label) => assert.equal(status, on ? onStatus : 503, label);
   expect((await get('/api/engage?target=case:no-such-project')).status, 400, 'unknown target');
+  expect((await get('/api/comment?target=case:no-such-project')).status, 400, 'no form token for an unknown thread');
   const post = (path, body, type = 'application/json') =>
     fetch(`${BASE}${path}`, { method: 'POST', headers: { 'Content-Type': type }, body }).then((res) => res.status);
   expect(await post('/api/comment', JSON.stringify({ target: 'case:oxgym', text: 'x'.repeat(2000) })), 413, 'body over 1 KB');

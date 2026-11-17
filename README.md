@@ -42,14 +42,14 @@ npm run dev            # http://localhost:3000
 
 ## Reactions and comments
 
-Case studies, articles and each course on `/teaching` carry a reaction bar (👍 ❤️ 🔥 👏 💡) and comments. No login: a comment needs a name, waits for the owner's approval, and he gets an email for each one with approve and delete links. Pages stay static; the block loads from `/api/engage` when it nears the viewport. Code: `src/lib/engage/` (storage, validation, signing, email) and `src/components/engage/`.
+Case studies and articles carry a reaction bar (👍 ❤️ 🔥 👏 💡) and comments, and so does each course on `/teaching` whenever that page is public (`TEACHING_PUBLIC` in `src/lib/teaching.js`; while it is hidden, its threads are not accepted). No login: a comment needs a name, waits for the owner's approval, and he gets an email for each one with approve and delete links. Pages stay static; the block loads from `/api/engage` when it nears the viewport. Code: `src/lib/engage/` (storage, validation, signing, email) and `src/components/engage/`.
 
 **Without configuration the feature is off.** A production build with no storage or no `COMMENTS_SECRET` renders nothing where the block would be, and the API answers 503. `next dev` and `npm test` use an in-memory store instead, so they work with no setup.
 
 | Variable | What it is |
 | --- | --- |
 | `KV_REST_API_URL`, `KV_REST_API_TOKEN` | Upstash Redis over REST, set by the Vercel integration (`UPSTASH_REDIS_REST_URL` / `UPSTASH_REDIS_REST_TOKEN` also work) |
-| `COMMENTS_SECRET` | Signs the email links and the admin cookie, salts the IP hashes, and is the password of `/admin/comments`. At least 16 characters; use 32+ |
+| `COMMENTS_SECRET` | The password of `/admin/comments`. Separate keys are derived from it (HKDF) to sign the email links, the admin cookie and the form timing token, and to key the IP and visitor hashes. At least 16 characters; use 32+. Required wherever Redis is configured: the development fallback is never used next to real data |
 | `RESEND_API_KEY` | Sends the notification email. Without it, comments are still stored and wait on `/admin/comments` |
 | `OWNER_EMAIL` | Where the notification goes (default belalnajy9@gmail.com). Server-only, never in the browser bundle |
 
@@ -60,7 +60,9 @@ Setup, once:
 3. **Email.** Create a free account at resend.com with the owner's address, then API Keys → Create (sending access). Add it as `RESEND_API_KEY`. Mail is sent from `onboarding@resend.dev`, which Resend allows only to the account's own address, so `OWNER_EMAIL` must be that address (or verify a domain in Resend and change the sender in `src/lib/engage/http.js`).
 4. Redeploy. Moderate from the email links (each opens a confirmation page with one button, so mail scanners that follow links cannot approve anything) or at `/admin/comments`.
 
-Spam and abuse: a hidden honeypot field, a 3-second minimum on the form, 5 comments and 60 reactions an hour per connection (by a salted hash of the IP; raw IPs are never stored), 10 admin sign-ins an hour, 1 KB request bodies, at most two links per comment. Comments are shown as plain text only.
+Spam and abuse: a hidden honeypot field; a signed timing token the form fetches when someone starts writing (a comment sent under 3 seconds after it, or without one, is dropped); per connection (a keyed hash of the IP, the /64 for IPv6; raw IPs are never stored) 10 comments, 60 reactions and 10 admin sign-ins an hour, and at most 10 new reaction voters per thread a day; at most 500 comments waiting and 20 notification emails an hour site-wide (past that, comments are still stored without an email); 1 KB request bodies; at most two links per comment. Comments are shown as plain text only. Reactions are keyed on an anonymous id the browser creates on its first reaction, so changing networks does not count twice.
+
+Cost: the thread endpoint (`GET /api/engage`) is the same for every visitor and cached by Vercel's CDN for 30 seconds (served stale for up to 5 minutes while it refreshes; set with `CDN-Cache-Control`, so browsers still ask every time), so page views barely touch the Upstash free budget (500K commands a month). If Upstash stops answering, every endpoint answers 503 and the block simply does not show.
 
 ## How the site is organised
 

@@ -71,6 +71,31 @@ test('a reaction toggles, and is still on after a reload', { skip }, async () =>
   assert.deepEqual(reloaded, after, 'the same visitor sees the same state after a reload');
 });
 
+test('a double tap on one reaction counts once', { skip }, async () => {
+  const context = await browser.createBrowserContext();
+  const page = await context.newPage();
+  await openThread(page);
+  const label = (key) => `section[data-engage="${TARGET}"] [role=group] button:nth-child(${key})`;
+  const read = () => page.$eval(label(1), (b) => ({ pressed: b.getAttribute('aria-pressed'), label: b.getAttribute('aria-label') }));
+  const before = await read();
+  // Two presses inside one request: the second waits out the first, so the
+  // button ends pressed with one more, not toggled back.
+  await page.$eval(label(1), (b) => {
+    b.click();
+    b.click();
+  });
+  await settle(1200);
+  const after = await read();
+  await openThread(page);
+  const reloaded = await read();
+  await context.close();
+  const count = (state) => Number(state.label.split(', ')[1]);
+  assert.equal(before.pressed, 'false');
+  assert.equal(after.pressed, 'true');
+  assert.equal(count(after), count(before) + 1);
+  assert.deepEqual(reloaded, after);
+});
+
 test('a comment waits for approval, then shows as plain text', { skip }, async () => {
   const payload = `Nice <img src=x onerror="window.__xss=1"> work ${Date.now()}`;
   const context = await browser.createBrowserContext();
@@ -81,11 +106,13 @@ test('a comment waits for approval, then shows as plain text', { skip }, async (
   await settle(3200); // the form refuses (silently) anything sent in under 3 s
   await page.click(`section[data-engage="${TARGET}"] button[type=submit]`);
   await page.waitForFunction(
-    (target) => /appear after review/.test(document.querySelector(`section[data-engage="${target}"] [role=status]:not(.sr-only)`)?.textContent ?? ''),
+    (target) => /appear after review/.test(document.querySelector(`section[data-engage="${target}"] form [role=status]`)?.textContent ?? ''),
     { timeout: 8000 },
     TARGET,
   );
-  const pendingShown = await page.evaluate((text) => document.body.innerText.includes(text), payload);
+  // Not public yet: ask the API itself (the page would only show what it already had).
+  const before = await fetch(`${BASE}/api/engage?target=${TARGET}&page=1`).then((res) => res.json());
+  const pendingShown = before.comments.some((comment) => comment.text === payload);
 
   // The owner approves it.
   await page.goto(`${BASE}/admin/comments`, { waitUntil: 'networkidle2' });
