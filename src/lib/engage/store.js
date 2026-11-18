@@ -93,6 +93,18 @@ export const createMemoryStore = () => {
   };
 };
 
+/** A flat [field, value, ...] reply (or an object) as an object; null when empty. */
+export const pairsToObject = (value) => {
+  if (!value) return null;
+  if (Array.isArray(value)) {
+    if (value.length === 0) return null;
+    const out = {};
+    for (let i = 0; i + 1 < value.length; i += 2) out[String(value[i])] = String(value[i + 1]);
+    return out;
+  }
+  return Object.keys(value).length ? value : null;
+};
+
 export const createRedisStore = ({ url, token }) => {
   const redis = new Redis({ url, token, automaticDeserialization: false });
   return {
@@ -108,8 +120,10 @@ export const createRedisStore = ({ url, token }) => {
     },
     hset: (key, fields) => redis.hset(key, fields),
     async hgetall(key) {
-      const value = await redis.hgetall(key);
-      return value && Object.keys(value).length ? value : null;
+      // With automaticDeserialization off, Upstash returns HGETALL as the
+      // raw flat reply ['field', 'value', ...] (and [] for a missing key),
+      // not an object.
+      return pairsToObject(await redis.hgetall(key));
     },
     del: (key) => redis.del(key),
     zadd: (key, score, member) => redis.zadd(key, { score, member }),

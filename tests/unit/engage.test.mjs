@@ -3,7 +3,7 @@
 // on the in-memory store.
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { createMemoryStore, getStore } from '../../src/lib/engage/store.js';
+import { createMemoryStore, getStore, pairsToObject } from '../../src/lib/engage/store.js';
 import { validateComment, normaliseName, normaliseText, countLinks, isReactionKey, cleanVisitorId } from '../../src/lib/engage/validate.js';
 import {
   deriveKeys, signAction, verifyAction, hashIp, voterKey, signSession, verifySession, safeEqual, signFormToken, formTokenAge,
@@ -259,4 +259,12 @@ test('production without storage or secret turns the feature off', () => {
   assert.equal(engageConfig({ NODE_ENV: 'production', UPSTASH_REDIS_REST_URL: 'https://x.upstash.io', UPSTASH_REDIS_REST_TOKEN: 't', COMMENTS_SECRET: SECRET }).store.kind, 'redis');
   assert.equal(engageConfig({ NODE_ENV: 'development' }).secret, DEV_SECRET);
   assert.equal(engageConfig({ NODE_ENV: 'test' }).store.kind, 'memory');
+});
+
+test('Upstash raw HGETALL replies become objects', () => {
+  assert.deepEqual(pairsToObject(['id', 'abc', 'createdAt', '1794930084709']), { id: 'abc', createdAt: '1794930084709' });
+  assert.equal(pairsToObject([]), null, 'a missing key');
+  assert.equal(pairsToObject(null), null);
+  assert.deepEqual(pairsToObject({ id: 'abc' }), { id: 'abc' }, 'an object passes through');
+  assert.equal(pairsToObject({}), null);
 });
