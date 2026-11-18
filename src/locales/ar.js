@@ -1195,6 +1195,13 @@ const ar = {
         title: 'رأيك يهمني',
         reactions_label: 'رد فعلك',
         add_reaction: 'ضيف رد فعلك',
+        reactions_unavailable: 'التفاعلات مش متاحة دلوقتي',
+        comments_on_zero: 'مفيش تعليقات على {{title}}',
+        comments_on_one: 'تعليق واحد على {{title}}',
+        comments_on_two: 'تعليقين على {{title}}',
+        comments_on_few: '{{count}} تعليقات على {{title}}',
+        comments_on_many: '{{count}} تعليق على {{title}}',
+        comments_on_other: '{{count}} تعليق على {{title}}',
         reactions: {
           like: 'أعجبني',
           love: 'حبيته',

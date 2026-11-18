@@ -13,14 +13,16 @@ export const json = (body, status = 200, headers = {}) =>
 export const off = () => json({ enabled: false }, 503);
 
 /**
- * Runs a route body; any storage failure (Upstash down, the monthly budget
- * spent) becomes the "off" answer, never a 500.
+ * Runs a route body; any database failure (Neon unreachable or still waking,
+ * the free plan's limits reached) becomes the "off" answer, never a 500.
+ * Only the error's name or code is logged: a driver message can quote the
+ * connection string.
  */
 export const guarded = async (handler) => {
   try {
     return await handler();
   } catch (error) {
-    console.error('[engage]', error?.message ?? error);
+    console.error('[engage] storage error:', error?.code ?? error?.name ?? 'unknown');
     return off();
   }
 };

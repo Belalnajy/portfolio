@@ -8,8 +8,8 @@ export const maxDuration = 30;
 
 /**
  * GET /api/engage/summary: reaction and approved-comment counts for every
- * case study, for the project lists on the home page and /work. One Redis
- * command (HGETALL on a counter hash kept by react/moderate), cached by the
+ * case study, for the project lists on the home page and /work. One SQL
+ * query (a GROUP BY over reactions and approved comments), cached by the
  * CDN like GET /api/engage. Takes no parameters: any query string would be
  * a CDN cache miss, so it is refused.
  */

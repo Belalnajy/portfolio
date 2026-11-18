@@ -253,6 +253,7 @@ test('the comments API is off cleanly, or refuses bad input, and never fails wit
 
   const expect = (status, onStatus, label) => assert.equal(status, on ? onStatus : 503, label);
   expect((await get('/api/engage?target=case:no-such-project')).status, 400, 'unknown target');
+  expect((await get('/api/engage?target=case:oxgym&page=51')).status, 400, 'pages stop at 50');
   const summary = await get('/api/engage/summary');
   expect(summary.status, 200, 'the project-list summary');
   if (on) {

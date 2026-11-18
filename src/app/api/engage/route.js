@@ -10,7 +10,7 @@ export const maxDuration = 30;
  * GET /api/engage?target=case:oxgym&page=1: reaction counts and approved
  * comments. The same answer for everyone (each browser remembers its own
  * reactions), so Vercel's CDN keeps it for 30 seconds and serves it stale
- * for up to 5 minutes while it refreshes: repeated loads cost the Redis
+ * for up to 5 minutes while it refreshes: repeated loads cost the database
  * budget almost nothing.
  */
 export async function GET(request) {
@@ -21,10 +21,11 @@ export async function GET(request) {
     const target = params.get('target');
     const page = params.get('page') ?? '1';
     // Only the exact shape the page sends: a random extra parameter would
-    // miss the CDN cache on every request and spend the Redis budget.
+    // miss the CDN cache on every request and reach the database. Pages stop
+    // at 50 (1000 comments): anything further is refused, not queried.
     const names = [...params.keys()];
     const extra = names.length > 2 || new Set(names).size !== names.length || names.some((name) => name !== 'target' && name !== 'page');
-    if (extra || !isTarget(target) || !/^[1-9]\d{0,2}$/.test(page)) return json({ error: 'target' }, 400);
+    if (extra || !isTarget(target) || !/^([1-9]|[1-4]\d|50)$/.test(page)) return json({ error: 'target' }, 400);
     const thread = await getThread(config, { target, page });
     return json({ enabled: true, ...thread }, 200, {
       // The CDN caches; browsers do not. With stale-while-revalidate in the

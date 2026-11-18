@@ -60,7 +60,7 @@ export default async function AdminComments({ searchParams }) {
     return (
       <main style={box}>
         <h1>Comments are off</h1>
-        <p>Storage (Upstash Redis) or COMMENTS_SECRET is not configured for this deployment. See the README.</p>
+        <p>The database (DATABASE_URL) or COMMENTS_SECRET is not configured for this deployment. See the README.</p>
       </main>
     );
   }

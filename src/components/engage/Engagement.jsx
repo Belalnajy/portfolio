@@ -3,7 +3,7 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { REACTIONS, LIMITS } from '../../lib/engage/shared';
 import { validateComment } from '../../lib/engage/validate';
-import { ago, displayCount, mergeComments, postJson, readMine, sendReaction } from '../../lib/engage/client';
+import { MINE_STORAGE_KEY, ago, effectiveCount, mergeComments, postJson, readMine, sendReaction } from '../../lib/engage/client';
 
 /**
  * Reactions and comments for one thread (`target`: case:<slug>,
@@ -50,14 +50,17 @@ const ReactionBar = ({ target, reactions, setReactions }) => {
     if (pending.current.has(key)) return;
     pending.current.add(key);
     setBusy((all) => ({ ...all, [key]: true }));
-    const before = reactions[key] ?? { count: 0, mine: false };
-    const on = !before.mine;
+    // `count` is the fetched count (maybe a stale CDN copy), `mine` this
+    // browser's record { on, count, at }: what shows is effectiveCount().
+    const before = reactions[key] ?? { count: 0, mine: undefined };
+    const shown = effectiveCount(before.count, before.mine);
+    const on = !before.mine?.on;
     // Optimistic: the press shows at once, and only this key is rolled back if refused.
-    setReactions((all) => ({ ...all, [key]: { mine: on, count: Math.max(0, before.count + (on ? 1 : -1)) } }));
+    setReactions((all) => ({ ...all, [key]: { count: before.count, mine: { on, count: Math.max(0, shown + (on ? 1 : -1)), at: Date.now() } } }));
     setNotice('');
     try {
       const result = await sendReaction(target, key, on);
-      setReactions((all) => ({ ...all, [key]: { mine: result.mine, count: result.count } }));
+      setReactions((all) => ({ ...all, [key]: { count: result.count, mine: { on: result.mine, count: result.count, at: Date.now() } } }));
     } catch {
       setReactions((all) => ({ ...all, [key]: before }));
       setNotice(t('engage.reaction_error'));
@@ -72,8 +75,9 @@ const ReactionBar = ({ target, reactions, setReactions }) => {
       {/* Phones: all five in one row. */}
       <div role="group" aria-label={t('engage.reactions_label')} className="grid grid-cols-5 gap-1.5 sm:flex sm:flex-wrap sm:gap-2">
         {REACTIONS.map(({ key, emoji }) => {
-          const { count, mine } = reactions[key] ?? { count: 0, mine: false };
-          const shown = displayCount(count, mine);
+          const { count, mine: entry } = reactions[key] ?? { count: 0 };
+          const shown = effectiveCount(count, entry);
+          const mine = Boolean(entry?.on);
           return (
             <button
               key={key}
@@ -265,9 +269,7 @@ const Engagement = ({ target, headingAs: Heading = 'h2', className = '' }) => {
     const thread = await fetchPage(1);
     if (!thread) return setState({ status: 'off' });
     const mine = readMine()[target] ?? {};
-    setReactions(
-      Object.fromEntries(Object.entries(thread.reactions).map(([key, { count }]) => [key, { count, mine: Boolean(mine[key]) }])),
-    );
+    setReactions(Object.fromEntries(Object.entries(thread.reactions).map(([key, { count }]) => [key, { count, mine: mine[key] }])));
     setComments(thread.comments);
     setPaging({ page: thread.page, pages: thread.pages, total: thread.total });
     setState({ status: 'ready' });
@@ -293,6 +295,17 @@ const Engagement = ({ target, headingAs: Heading = 'h2', className = '' }) => {
       loadingMore.current = false;
     }
   };
+
+  // A reaction made in another tab (or on a project list there) shows here too.
+  useEffect(() => {
+    const onStorage = (event) => {
+      if (event.key !== MINE_STORAGE_KEY) return;
+      const mine = readMine()[target] ?? {};
+      setReactions((all) => Object.fromEntries(Object.entries(all).map(([key, value]) => [key, { ...value, mine: mine[key] }])));
+    };
+    window.addEventListener('storage', onStorage);
+    return () => window.removeEventListener('storage', onStorage);
+  }, [target]);
 
   useEffect(() => {
     const element = root.current;

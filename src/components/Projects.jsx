@@ -383,7 +383,7 @@ const ProjectCard = ({ project, index, onClick, headingAs: CardHeading = 'h3' })
         </span>
       )}
       <div className="flex justify-between items-start mb-2">
-        <CardHeading className="text-xl font-bold text-[rgb(var(--foreground))] group-hover:text-[rgb(var(--primary))] transition-colors line-clamp-1">
+        <CardHeading id={`card-title-${project.slug}`} className="text-xl font-bold text-[rgb(var(--foreground))] group-hover:text-[rgb(var(--primary))] transition-colors line-clamp-1">
           <button
             type="button"
             onClick={() => onClick(project)}
@@ -420,7 +420,7 @@ const ProjectCard = ({ project, index, onClick, headingAs: CardHeading = 'h3' })
       </div>
       {/* Reactions in their own quiet row, above the card's stretched title
           link (z-40). The card clips its overflow, so the picker opens up. */}
-      <ProjectReactions slug={project.slug} className="mt-3" />
+      <ProjectReactions slug={project.slug} title={project.title} describedBy={`card-title-${project.slug}`} className="mt-3" />
     </div>
   </Reveal>
 );
@@ -493,7 +493,7 @@ const FeaturedRow = ({ project, index, isArabic, headingAs: RowHeading = 'h3', e
           {/* Featured rows are client work today; the label keeps it honest if that changes. */}
           <ProjectKindLabel kind={project.kind} />
         </div>
-        <RowHeading className="font-display text-2xl md:text-3xl font-bold text-[rgb(var(--foreground))] mb-3 leading-tight max-md:text-[1.375rem] max-md:leading-[1.3] max-md:mb-2 max-md:rtl:leading-[1.6]">
+        <RowHeading id={`row-title-${project.slug}`} className="font-display text-2xl md:text-3xl font-bold text-[rgb(var(--foreground))] mb-3 leading-tight max-md:text-[1.375rem] max-md:leading-[1.3] max-md:mb-2 max-md:rtl:leading-[1.6]">
           {project.title}
         </RowHeading>
         <p className={`text-[rgb(var(--muted-foreground))] leading-relaxed mb-5 max-md:mb-4 ${clamp ? 'max-md:line-clamp-3' : ''}`}>
@@ -505,7 +505,13 @@ const FeaturedRow = ({ project, index, isArabic, headingAs: RowHeading = 'h3', e
           ))}
         </div>
         {/* Reactions: a quiet row of their own, not a third route out. */}
-        <ProjectReactions slug={project.slug} waitForScroll={waitForScroll} className="-mt-3 mb-4 max-md:-mt-2" />
+        <ProjectReactions
+          slug={project.slug}
+          title={project.title}
+          describedBy={`row-title-${project.slug}`}
+          waitForScroll={waitForScroll}
+          className="-mt-3 mb-4 max-md:-mt-2"
+        />
         {/* Two routes out. On phones they are an equal-width pair, the case
             study filled as the primary. */}
         <div className={`flex flex-wrap gap-3 max-md:grid ${secondary ? 'max-md:grid-cols-2' : 'max-md:grid-cols-1'}`}>

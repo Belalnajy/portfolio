@@ -26,26 +26,78 @@ export const visitorId = () => {
   }
 };
 
-/** This browser's reactions: { [target]: { [key]: true } }. */
+/**
+ * How long this browser trusts its own reaction over a fetched count: the
+ * CDN may serve a copy up to 5 minutes stale (30 s fresh + stale while
+ * revalidating), plus a margin.
+ */
+export const OWN_WINDOW_MS = 6 * 60 * 1000;
+
+/** One remembered reaction: { on, count, at } (the count the server gave back, when). Older records stored `true`. */
+const entryOf = (value) =>
+  value && typeof value === 'object'
+    ? { on: Boolean(value.on), count: Number(value.count) || 0, at: Number(value.at) || 0 }
+    : { on: value === true, count: 0, at: 0 };
+
+/** This browser's reactions: { [target]: { [key]: { on, count, at } } }. */
 export const readMine = () => {
+  let all;
   try {
-    return JSON.parse(localStorage.getItem(MINE_KEY) ?? '{}') ?? {};
+    all = JSON.parse(localStorage.getItem(MINE_KEY) ?? '{}') ?? {};
   } catch {
-    return sessionMine;
+    all = sessionMine;
   }
+  return Object.fromEntries(
+    Object.entries(all).map(([target, keys]) => [
+      target,
+      Object.fromEntries(Object.entries(keys ?? {}).map(([key, value]) => [key, entryOf(value)])),
+    ]),
+  );
 };
 
-export const writeMine = (target, key, on) => {
+export const writeMine = (target, key, entry) => {
   const all = readMine();
   const forTarget = { ...(all[target] ?? {}) };
-  if (on) forTarget[key] = true;
-  else delete forTarget[key];
+  forTarget[key] = entryOf(entry);
   const next = { ...all, [target]: forTarget };
   try {
     localStorage.setItem(MINE_KEY, JSON.stringify(next));
   } catch {
     sessionMine = next;
   }
+};
+
+/** The storage key, for `storage` events from other tabs. */
+export const MINE_STORAGE_KEY = MINE_KEY;
+
+/**
+ * The count to show for one reaction, given the fetched count (possibly a
+ * stale CDN copy) and this browser's own record. For a few minutes after the
+ * visitor's own press, the cached copy cannot undo it: on, the larger of the
+ * two counts; off, the smaller. After that the fetched count wins, though a
+ * reaction that is on always shows at least 1.
+ */
+export const effectiveCount = (fetched, entry, now = Date.now()) => {
+  const count = Math.max(0, Number(fetched) || 0);
+  if (!entry) return count;
+  if (entry.at && now - entry.at < OWN_WINDOW_MS) {
+    return entry.on ? Math.max(count, entry.count, 1) : Math.min(count, entry.count);
+  }
+  return entry.on ? Math.max(count, 1) : count;
+};
+
+/**
+ * A fetched summary merged into what the page already has: every case study
+ * in the new summary takes its new counts, and one the summary no longer
+ * lists (its counts fell to zero) keeps its keys at 0 rather than vanishing.
+ */
+export const mergeSummary = (current, fetched) => {
+  const merged = {};
+  for (const [slug, counts] of Object.entries(current ?? {})) {
+    merged[slug] = Object.fromEntries(Object.keys(counts).map((key) => [key, 0]));
+  }
+  for (const [slug, counts] of Object.entries(fetched ?? {})) merged[slug] = { ...(merged[slug] ?? {}), ...counts };
+  return merged;
 };
 
 export const postJson = (url, body) =>
@@ -59,7 +111,7 @@ export const sendReaction = async (target, key, on) => {
   const response = await postJson('/api/react', { target, emoji: key, on, visitor: visitorId() });
   if (!response.ok) throw new Error(String(response.status));
   const result = await response.json();
-  writeMine(target, key, result.mine);
+  writeMine(target, key, { on: result.mine, count: result.count, at: Date.now() });
   return { count: result.count, mine: result.mine };
 };
 
@@ -69,12 +121,6 @@ export const mergeComments = (shown, incoming) => {
   return [...shown, ...incoming.filter((comment) => !seen.has(comment.id))];
 };
 
-/**
- * The count to show for a reaction. The counts come through a CDN cache up
- * to a few minutes old, while this browser's own reaction is known at once:
- * if it reacted, the count is at least 1.
- */
-export const displayCount = (count, mine) => Math.max(Number(count) || 0, mine ? 1 : 0);
 
 const UNITS = [
   ['year', 31536000],

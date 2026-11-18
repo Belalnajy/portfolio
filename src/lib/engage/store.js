@@ -212,7 +212,8 @@ export const createSqlStore = ({ url, sql: given }) => {
           ON CONFLICT (target, ip_hash, voter) DO NOTHING`,
         sql`SELECT EXISTS (SELECT 1 FROM engage_voters WHERE target = ${target} AND ip_hash = ${ipHash} AND voter = ${voter}) AS ok`,
       ]);
-      await sweep();
+      // Housekeeping only: a failed sweep never fails the request.
+      await sweep().catch(() => {});
       return Boolean(results[3][0]?.ok);
     },
 
@@ -226,7 +227,7 @@ export const createSqlStore = ({ url, sql: given }) => {
           count = CASE WHEN engage_limits.expires_at <= now() THEN 1 ELSE engage_limits.count + 1 END,
           expires_at = CASE WHEN engage_limits.expires_at <= now() THEN EXCLUDED.expires_at ELSE engage_limits.expires_at END
         RETURNING count`;
-      await sweep();
+      await sweep().catch(() => {});
       return Number(count);
     },
 
@@ -303,6 +304,16 @@ export const createSqlStore = ({ url, sql: given }) => {
   };
 };
 
+/** A postgres:// (or postgresql://) URL with a host; anything else would only fail later, loudly. */
+const usableUrl = (url) => {
+  try {
+    const parsed = new URL(url);
+    return /^postgres(ql)?:$/.test(parsed.protocol) && Boolean(parsed.hostname);
+  } catch {
+    return false;
+  }
+};
+
 /** The Postgres URL from the environment, or empty. */
 export const databaseUrl = (env = process.env) => env.DATABASE_URL || env.POSTGRES_URL || '';
 
@@ -319,7 +330,24 @@ const sqlStores = new Map();
  */
 export const getStore = (env = process.env) => {
   const url = databaseUrl(env);
-  if (url) return sqlStores.get(url) ?? sqlStores.set(url, createSqlStore({ url })).get(url);
+  if (url) {
+    if (sqlStores.has(url)) return sqlStores.get(url);
+    try {
+      // The driver only checks the URL on the first query, and then throws
+      // with the whole string in its message: check it here first.
+      if (!usableUrl(url)) throw new Error('unusable');
+      const store = createSqlStore({ url });
+      sqlStores.set(url, store);
+      return store;
+    } catch {
+      // A malformed URL makes the driver throw with the whole connection
+      // string, password included: log a fixed line, never the error, and
+      // leave the feature off.
+      console.error('[engage] DATABASE_URL could not be used; reactions and comments are off.');
+      sqlStores.set(url, null);
+      return null;
+    }
+  }
   if (env.NODE_ENV !== 'production') return memory();
   return null;
 };

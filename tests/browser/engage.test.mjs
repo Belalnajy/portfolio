@@ -142,12 +142,15 @@ test('a reaction from a /work row is the same reaction on the case study', { ski
   const context = await browser.createBrowserContext();
   const page = await context.newPage();
   await page.setViewport({ width: 1440, height: 900 });
+  // The summary is asked for once, when the first strip nears the viewport
+  // (on /work that is on load).
+  const summary = page.waitForResponse((response) => response.url().includes('/api/engage/summary'), { timeout: 15000 });
   await page.goto(`${BASE}/work`, { waitUntil: 'networkidle2' });
   // The row's strip: the article that links to the case study.
   const strip = `article:has(a[href="/case-study/${SLUG}"]) [aria-expanded]`;
   await page.$eval(strip, (el) => el.scrollIntoView({ block: 'center' }));
-  // The counts have arrived when the comments link shows.
-  await page.waitForSelector(`article:has(a[href="/case-study/${SLUG}"]) a[href="/case-study/${SLUG}#comments"]`, { timeout: 15000 });
+  await summary;
+  await settle(300);
 
   // The picker is a disclosure: it opens, Escape closes it, focus comes back.
   await page.click(strip);
@@ -192,3 +195,42 @@ test('a reaction from a /work row is the same reaction on the case study', { ski
   assert.equal(onCard?.pressed, 'true', 'the row shows the reaction');
   assert.deepEqual(onPage, onCard, 'the case study shows the same reaction and count');
 });
+
+test('taking back the last reaction from its chip keeps focus on the strip', { skip }, async () => {
+  const SLUG = 'injaz';
+  const context = await browser.createBrowserContext();
+  const page = await context.newPage();
+  await page.setViewport({ width: 1440, height: 900 });
+  const summary = page.waitForResponse((response) => response.url().includes('/api/engage/summary'), { timeout: 15000 });
+  await page.goto(`${BASE}/work`, { waitUntil: 'networkidle2' });
+  const row = `article:has(a[href="/case-study/${SLUG}"])`;
+  const trigger = `${row} [aria-expanded]`;
+  await page.$eval(trigger, (el) => el.scrollIntoView({ block: 'center' }));
+  await summary;
+  await settle(300);
+  // Idea, from the picker: its chip appears with 1.
+  await page.click(trigger);
+  await page.$eval(trigger, (el) => {
+    const picker = document.getElementById(el.getAttribute('aria-controls'));
+    [...picker.querySelectorAll('button')].find((b) => b.getAttribute('aria-label').startsWith('Insightful')).click();
+  });
+  await settle(1000);
+  const chip = await page.$eval(row, (article) => {
+    const button = [...article.querySelectorAll('button[aria-pressed]')].find((b) => b.getAttribute('aria-label').startsWith('Insightful'));
+    button.focus();
+    return { label: button.getAttribute('aria-label'), described: Boolean(document.getElementById(button.getAttribute('aria-describedby'))) };
+  });
+  // Take it back by keyboard: the chip disappears.
+  await page.keyboard.press('Enter');
+  await settle(1000);
+  const after = await page.$eval(row, (article) => ({
+    chip: [...article.querySelectorAll('button[aria-pressed]')].some((b) => b.getAttribute('aria-label').startsWith('Insightful')),
+    focusOnTrigger: document.activeElement === article.querySelector('[aria-expanded]'),
+    focusOnBody: document.activeElement === document.body,
+  }));
+  await context.close();
+  assert.equal(chip.label, 'Insightful, 1');
+  assert.ok(chip.described, 'the chip is described by the project heading');
+  assert.deepEqual(after, { chip: false, focusOnTrigger: true, focusOnBody: false });
+});
+

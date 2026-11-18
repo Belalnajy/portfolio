@@ -211,7 +211,7 @@ const ProjectModal = ({ project, isOpen, onClose }) => {
                     {/* Main details */}
                     <div className="flex-1 space-y-6 min-w-0">
                       <div>
-                        <h3 className="text-2xl sm:text-3xl md:text-4xl font-bold text-[rgb(var(--foreground))] mb-3 text-start leading-tight">
+                        <h3 id={`sheet-title-${project.slug}`} className="text-2xl sm:text-3xl md:text-4xl font-bold text-[rgb(var(--foreground))] mb-3 text-start leading-tight">
                           {project.title}
                         </h3>
                         <ProjectKindLabel kind={project.kind} className="mb-3 sm:mb-4" />
@@ -219,7 +219,7 @@ const ProjectModal = ({ project, isOpen, onClose }) => {
                           {project.description}
                         </p>
                         {/* The same reactions as the card that opened the sheet. */}
-                        <ProjectReactions slug={project.slug} opens="down" className="mt-4" />
+                        <ProjectReactions slug={project.slug} title={project.title} describedBy={`sheet-title-${project.slug}`} className="mt-4" />
                       </div>
 
                       {/* Features list */}

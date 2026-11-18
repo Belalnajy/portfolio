@@ -1195,6 +1195,13 @@ const en = {
         title: 'Reactions and comments',
         reactions_label: 'React to this',
         add_reaction: 'Add your reaction',
+        reactions_unavailable: 'Reactions are not available right now',
+        comments_on_zero: 'No comments on {{title}}',
+        comments_on_one: 'One comment on {{title}}',
+        comments_on_two: 'Two comments on {{title}}',
+        comments_on_few: '{{count}} comments on {{title}}',
+        comments_on_many: '{{count}} comments on {{title}}',
+        comments_on_other: '{{count}} comments on {{title}}',
         reactions: {
           like: 'Like',
           love: 'Love',

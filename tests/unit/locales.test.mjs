@@ -58,7 +58,7 @@ test('each string uses the same placeholders in both languages', () => {
 // Placeholders are either facts (filled by i18next's defaultVariables) or one
 // of the few values a call site passes. Anything else, such as a typo like
 // {{project}}, would render literally; add a new call-site name here.
-const CALL_SITE_VARIABLES = new Set(['count', 'date', 'n', 'name', 'platform', 'email']);
+const CALL_SITE_VARIABLES = new Set(['count', 'date', 'n', 'name', 'platform', 'email', 'title']);
 test('every placeholder is a fact from src/lib/facts.js or a known call-site value', () => {
   const unknown = [...strings(en.translation), ...strings(ar.translation)].flatMap(([path, text]) =>
     [...text.matchAll(/\{\{\s*(\w+)\s*\}\}/g)]

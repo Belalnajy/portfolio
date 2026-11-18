@@ -14,7 +14,7 @@ import {
 } from '../../src/lib/engage/server.js';
 import { networkOf, buildEmail } from '../../src/lib/engage/http.js';
 import { adminError } from '../../src/lib/engage/admin.js';
-import { mergeComments, displayCount, ago } from '../../src/lib/engage/client.js';
+import { mergeComments, effectiveCount, mergeSummary, OWN_WINDOW_MS, ago } from '../../src/lib/engage/client.js';
 import { SITE_URL } from '../../src/lib/site.js';
 import { CASE_STUDIES, CASE_STUDY_SLUGS } from '../../src/lib/case-studies.js';
 import { BLOG_POSTS, BLOG_SLUGS } from '../../src/lib/blog.js';
@@ -242,10 +242,23 @@ test('the admin page knows its own errors only', () => {
 });
 
 test('shown counts include this browser\'s own reaction, and times never run ahead', () => {
-  assert.equal(displayCount(0, true), 1, 'the CDN copy may not have counted it yet');
-  assert.equal(displayCount(5, true), 5);
-  assert.equal(displayCount(0, false), 0);
   const now = Date.now();
+  // Just pressed: a stale CDN copy cannot undo it.
+  assert.equal(effectiveCount(0, { on: true, count: 4, at: now - 1000 }, now), 4, 'on: the larger');
+  assert.equal(effectiveCount(7, { on: true, count: 4, at: now - 1000 }, now), 7, 'others reacted since');
+  assert.equal(effectiveCount(5, { on: false, count: 4, at: now - 1000 }, now), 4, 'off: the smaller');
+  assert.equal(effectiveCount(0, { on: true, count: 0, at: now - 1000 }, now), 1, 'on is at least one');
+  // After the window the fetched count wins, but "on" still means at least 1.
+  assert.equal(effectiveCount(2, { on: true, count: 9, at: now - OWN_WINDOW_MS - 1 }, now), 2);
+  assert.equal(effectiveCount(0, { on: true, count: 9, at: now - OWN_WINDOW_MS - 1 }, now), 1);
+  assert.equal(effectiveCount(3, { on: false, count: 0, at: 0 }, now), 3, 'an old record without a time');
+  assert.equal(effectiveCount(3, undefined, now), 3);
+  // A fetched summary merges into what the page has.
+  assert.deepEqual(
+    mergeSummary({ oxgym: { like: 2, comments: 1 }, motors: { fire: 1 } }, { oxgym: { like: 3 }, kmbc: { idea: 1 } }),
+    { oxgym: { like: 3, comments: 0 }, motors: { fire: 0 }, kmbc: { idea: 1 } },
+  );
+  assert.deepEqual(mergeSummary({}, {}), {});
   assert.equal(ago(now - 30_000, now), null, 'under a minute is "just now"');
   assert.equal(ago(now + 3_600_000, now), null, 'a time in the future is now');
   assert.deepEqual(ago(now - 2 * 3_600_000, now), { value: -2, unit: 'hour' });
@@ -360,3 +373,42 @@ test('the SQL store sends every value as a parameter', async () => {
   assert.ok(queries.some(({ text }) => /CREATE TABLE IF NOT EXISTS engage_comments/.test(text)), 'the tables are created on first use');
   assert.equal(queries.filter(({ text }) => /CREATE TABLE IF NOT EXISTS engage_comments/.test(text)).length, 1, 'once per process');
 });
+
+test('a malformed DATABASE_URL turns the feature off without printing it', () => {
+  const logged = [];
+  const original = console.error;
+  console.error = (...args) => logged.push(args.map(String).join(' '));
+  try {
+    for (const url of ['not a url SuperSecretPw', 'postgres://user:SuperSecretPw@host:notaport/db', 'postgres://user:SuperSecretPw@/db', 'https://user:SuperSecretPw@host/db']) {
+      let thrown = null;
+      let config;
+      try {
+        config = engageConfig({ NODE_ENV: 'production', DATABASE_URL: url, COMMENTS_SECRET: SECRET });
+      } catch (error) {
+        thrown = error;
+      }
+      assert.equal(thrown, null, 'nothing thrown');
+      assert.equal(config, null, `off for ${url.split('@')[0].slice(0, 8)}…`);
+    }
+  } finally {
+    console.error = original;
+  }
+  assert.ok(logged.length > 0, 'a fixed line is logged');
+  for (const line of logged) {
+    assert.ok(!/SuperSecretPw|user:|notaport|not a url/.test(line), `no URL text in: ${line}`);
+  }
+});
+
+test('pages stop at fifty and a page past the end costs no extra query', async () => {
+  const c = config();
+  let calls = 0;
+  const thread = c.store.thread;
+  c.store.thread = (...args) => {
+    calls += 1;
+    return thread(...args);
+  };
+  const far = await getThread(c, { target: 'case:oxgym', page: 9 });
+  assert.deepEqual([far.page, far.pages, far.comments.length, calls], [9, 1, 0, 1]);
+  assert.equal((await getThread(c, { target: 'case:oxgym', page: 5000 })).page, 50);
+});
+

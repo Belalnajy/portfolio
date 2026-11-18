@@ -33,6 +33,8 @@ export const RATE_LIMITS = { comment: 10, react: 60, login: 10, email: 20 };
 export const VOTERS_PER_NETWORK = 10;
 /** Past this many comments waiting for approval, new ones are refused. */
 export const PENDING_MAX = 500;
+/** The furthest page of comments anyone can ask for (the API refuses beyond it). */
+export const MAX_PAGE = 50;
 const HOUR = 3600;
 const DAY = 86400;
 
@@ -73,14 +75,13 @@ const publicComment = (c) => ({ id: c.id, name: c.name, text: c.text, createdAt:
  * CDN; each browser remembers its own reactions.
  */
 export const getThread = async ({ store }, { target, page = 1 }) => {
-  const wanted = Math.max(1, Math.floor(Number(page)) || 1);
-  let result = await store.thread(target, (wanted - 1) * LIMITS.pageSize, LIMITS.pageSize);
+  const wanted = Math.min(MAX_PAGE, Math.max(1, Math.floor(Number(page)) || 1));
+  // One round trip, whatever the page: past the end there are simply no
+  // comments on it (never a second query for the last page).
+  const result = await store.thread(target, (wanted - 1) * LIMITS.pageSize, LIMITS.pageSize);
   const pages = Math.max(1, Math.ceil(result.total / LIMITS.pageSize));
-  const current = Math.min(wanted, pages);
-  // Past the end (the thread shrank): the last page instead.
-  if (current !== wanted) result = await store.thread(target, (current - 1) * LIMITS.pageSize, LIMITS.pageSize);
   const reactions = Object.fromEntries(REACTION_KEYS.map((key) => [key, { count: Number(result.reactions[key] ?? 0) }]));
-  return { reactions, comments: result.comments.map(publicComment), total: result.total, page: current, pages };
+  return { reactions, comments: result.comments.map(publicComment), total: result.total, page: wanted, pages };
 };
 
 /**
