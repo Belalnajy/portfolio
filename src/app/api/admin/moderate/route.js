@@ -4,6 +4,8 @@ import { backToAdmin, commentId, isAdmin, requestCookies, sessionFrom } from '..
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
+// Neon's free plan wakes from idle in up to a few seconds: room for that.
+export const maxDuration = 30;
 
 /**
  * POST /api/admin/moderate (form: action, id, confirm), from

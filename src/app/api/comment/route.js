@@ -1,9 +1,11 @@
-import { emailAllowed, engageConfig, isTarget, submitComment } from '../../../lib/engage/server';
+import { emailAllowed, engageConfig, isTarget, submitComment, threadInfo } from '../../../lib/engage/server';
 import { signFormToken } from '../../../lib/engage/crypto';
 import { guarded, ipHashOf, json, notifyOwner, off, readJson, sameOrigin } from '../../../lib/engage/http';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
+// Neon's free plan wakes from idle in up to a few seconds: room for that.
+export const maxDuration = 30;
 
 /**
  * GET /api/comment?target=…: a signed timing token, fetched when someone
@@ -19,7 +21,7 @@ export async function GET(request) {
 }
 
 /**
- * POST /api/comment {target, name, text, website, token}: stores the comment
+ * POST /api/comment {target, name, text, website, token, lang}: stores the comment
  * as pending and emails the owner (at most 20 emails an hour site-wide; past
  * that comments are still stored and wait on /admin/comments). `website` is
  * the honeypot.
@@ -38,6 +40,7 @@ export async function POST(request) {
       website: typeof body.website === 'string' ? body.website.trim() : body.website,
       token: body.token,
       ipHash: ipHashOf(request, config.keys),
+      lang: body.lang,
     });
     if (result.error === 'rate') return json({ error: 'rate' }, 429);
     if (result.error) return json({ error: result.error }, 400);
@@ -45,7 +48,7 @@ export async function POST(request) {
     // an error the visitor retries (which would store a duplicate).
     if (result.comment) {
       try {
-        if (await emailAllowed(config.store)) await notifyOwner(config, result.comment);
+        if (await emailAllowed(config.store)) await notifyOwner(config, result.comment, threadInfo(result.comment.target, result.comment.lang));
       } catch {
         // It still waits on /admin/comments.
       }

@@ -14,6 +14,7 @@ import DeviceFrame, { frameKind, hostOf } from './DeviceFrame';
 import { useFocusTrap } from '../lib/useFocusTrap';
 import { useEscapeLayer } from '../lib/useEscapeLayer';
 import ProjectKindLabel from './ProjectKindLabel';
+import ProjectReactions from './engage/ProjectReactions';
 
 const MOBILE_QUERY = '(max-width: 639px)';
 
@@ -217,6 +218,8 @@ const ProjectModal = ({ project, isOpen, onClose }) => {
                         <p className="text-base sm:text-lg text-[rgb(var(--muted-foreground))] leading-relaxed text-start">
                           {project.description}
                         </p>
+                        {/* The same reactions as the card that opened the sheet. */}
+                        <ProjectReactions slug={project.slug} opens="down" className="mt-4" />
                       </div>
 
                       {/* Features list */}

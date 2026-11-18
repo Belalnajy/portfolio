@@ -546,8 +546,10 @@ const CaseStudyContent = ({ slug, narrative, image, mockups = [], liveUrl, appSt
         );
       })()}
 
-      {/* Reactions and comments, before the closing call to action. */}
-      <div className="container mx-auto px-5 sm:px-6 max-w-4xl [&:has(section)]:pb-16 [&:has(section)]:max-md:pb-10">
+      {/* Reactions and comments, before the closing call to action. The
+          project lists link here (#comments); scroll-mt clears the sticky
+          header. */}
+      <div id="comments" className="container mx-auto px-5 sm:px-6 max-w-4xl scroll-mt-20 [&:has(section)]:pb-16 [&:has(section)]:max-md:pb-10">
         <Engagement target={caseTarget(slug)} />
       </div>
 

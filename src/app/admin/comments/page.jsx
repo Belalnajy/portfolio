@@ -3,6 +3,7 @@ import { engageConfig, listPending, listRecent } from '../../../lib/engage/serve
 import { adminError, commentId, isAdmin, sessionFrom } from '../../../lib/engage/admin';
 
 export const dynamic = 'force-dynamic';
+export const maxDuration = 30;
 
 const box = { maxWidth: '48rem', margin: '0 auto', padding: '2rem 1rem 4rem' };
 const card = { background: '#121821', border: '1px solid #1f2933', borderRadius: '0.75rem', padding: '1rem', margin: '0 0 0.75rem' };

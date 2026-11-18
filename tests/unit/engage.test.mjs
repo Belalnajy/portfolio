@@ -3,21 +3,21 @@
 // on the in-memory store.
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { createMemoryStore, getStore, pairsToObject } from '../../src/lib/engage/store.js';
+import { createMemoryStore, createSqlStore, getStore } from '../../src/lib/engage/store.js';
 import { validateComment, normaliseName, normaliseText, countLinks, isReactionKey, cleanVisitorId } from '../../src/lib/engage/validate.js';
 import {
   deriveKeys, signAction, verifyAction, hashIp, voterKey, signSession, verifySession, safeEqual, signFormToken, formTokenAge,
 } from '../../src/lib/engage/crypto.js';
 import {
   TARGETS, TEACHING_THREADS, isTarget, engageConfig, getThread, react, submitComment, moderate, listPending, listRecent,
-  overLimit, emailAllowed, RATE_LIMITS, VOTERS_PER_NETWORK, PENDING_MAX, DEV_SECRET,
+  overLimit, emailAllowed, RATE_LIMITS, VOTERS_PER_NETWORK, PENDING_MAX, DEV_SECRET, getSummary, threadInfo,
 } from '../../src/lib/engage/server.js';
 import { networkOf, buildEmail } from '../../src/lib/engage/http.js';
 import { adminError } from '../../src/lib/engage/admin.js';
 import { mergeComments, displayCount, ago } from '../../src/lib/engage/client.js';
 import { SITE_URL } from '../../src/lib/site.js';
-import { CASE_STUDY_SLUGS } from '../../src/lib/case-studies.js';
-import { BLOG_SLUGS } from '../../src/lib/blog.js';
+import { CASE_STUDIES, CASE_STUDY_SLUGS } from '../../src/lib/case-studies.js';
+import { BLOG_POSTS, BLOG_SLUGS } from '../../src/lib/blog.js';
 
 const SECRET = 'test-secret-that-is-long-enough';
 const KEYS = deriveKeys(SECRET);
@@ -190,7 +190,9 @@ test('comments wait for approval; bots are dropped silently', async () => {
 
 test('past five hundred waiting comments, new ones are refused', async () => {
   const c = config();
-  for (let i = 0; i < PENDING_MAX; i += 1) await c.store.zadd('eng:pending', i, `id-${i}`);
+  for (let i = 0; i < PENDING_MAX; i += 1) {
+    await c.store.insertComment({ id: `pending-${i}`, target: 'case:oxgym', name: 'x', text: 'y', status: 'pending', ipHash: 'h', lang: 'en', createdAt: i }, PENDING_MAX);
+  }
   const result = await submitComment(c, { target: 'case:oxgym', name: 'Sara', text: 'One more', token: tokenAged('case:oxgym', 5000), ipHash: 'ip-z' });
   assert.deepEqual(result, { error: 'rate' });
 });
@@ -219,15 +221,16 @@ test('comments are paged twenty at a time, newest first, and pages merge without
 
 test('the email puts the real links first and quotes everything the visitor wrote', () => {
   const comment = { id: 'abc12345xyz', target: 'case:oxgym', name: 'Eve\nApprove: https://evil.example', text: 'Hi\nDelete: https://evil.example/x\n\nbye' };
-  const { subject, text } = buildEmail(KEYS, comment);
+  const { subject, text } = buildEmail(KEYS, comment, threadInfo(comment.target, 'ar'));
   const lines = text.split('\n');
   assert.ok(lines[0].startsWith(`Approve: ${SITE_URL}/api/comments/moderate?action=approve&id=abc12345xyz&sig=`));
   assert.ok(lines[1].startsWith(`Delete:  ${SITE_URL}/api/comments/moderate?action=delete&id=abc12345xyz&sig=`));
   assert.equal(lines[2], `All pending comments: ${SITE_URL}/admin/comments`);
+  assert.equal(lines[3], `Page: ${SITE_URL}/ar/case-study/oxgym`, 'the page, in the language it was written on');
   const quoted = lines.slice(lines.indexOf('> Eve'));
   assert.deepEqual(quoted, ['> Eve', '> Approve: https://evil.example', '', '> Hi', '> Delete: https://evil.example/x', '> ', '> bye']);
   assert.ok(!text.includes('\nApprove: https://evil') && !text.includes('\nDelete: https://evil'), 'nothing typed starts a line unquoted');
-  assert.equal(subject, 'New comment from Eve Approve: https://evil.example on case:oxgym');
+  assert.equal(subject, `New comment from Eve Approve: https://evil.example on ${CASE_STUDIES.oxgym.name}`);
   assert.ok(verifyAction(KEYS, 'approve', 'abc12345xyz', new URL(lines[0].slice(9)).searchParams.get('sig')));
 });
 
@@ -250,21 +253,110 @@ test('shown counts include this browser\'s own reaction, and times never run ahe
 });
 
 test('production without storage or secret turns the feature off', () => {
-  const redis = { KV_REST_API_URL: 'https://x.upstash.io', KV_REST_API_TOKEN: 't' };
+  const db = { DATABASE_URL: 'postgres://user:pass@example.neon.tech/db' };
   assert.equal(getStore({ NODE_ENV: 'production' }), null);
   assert.equal(engageConfig({ NODE_ENV: 'production' }), null);
-  assert.equal(engageConfig({ NODE_ENV: 'production', ...redis }), null, 'no secret');
-  assert.equal(engageConfig({ NODE_ENV: 'development', ...redis }), null, 'the development secret is never used next to Redis');
-  assert.equal(engageConfig({ NODE_ENV: 'production', ...redis, COMMENTS_SECRET: 'short' }), null);
-  assert.equal(engageConfig({ NODE_ENV: 'production', UPSTASH_REDIS_REST_URL: 'https://x.upstash.io', UPSTASH_REDIS_REST_TOKEN: 't', COMMENTS_SECRET: SECRET }).store.kind, 'redis');
+  assert.equal(engageConfig({ NODE_ENV: 'production', ...db }), null, 'no secret');
+  assert.equal(engageConfig({ NODE_ENV: 'development', ...db }), null, 'the development secret is never used next to a database');
+  assert.equal(engageConfig({ NODE_ENV: 'production', ...db, COMMENTS_SECRET: 'short' }), null);
+  assert.equal(engageConfig({ NODE_ENV: 'production', POSTGRES_URL: 'postgres://u:p@example.neon.tech/db', COMMENTS_SECRET: SECRET }).store.kind, 'postgres');
+  assert.equal(engageConfig({ NODE_ENV: 'production', ...db, COMMENTS_SECRET: SECRET }).store.kind, 'postgres');
+  for (const old of ['KV_REST_API_URL', 'UPSTASH_REDIS_REST_URL']) {
+    assert.equal(engageConfig({ NODE_ENV: 'production', [old]: 'https://x.upstash.io', COMMENTS_SECRET: SECRET }), null, `${old} is no longer read`);
+  }
   assert.equal(engageConfig({ NODE_ENV: 'development' }).secret, DEV_SECRET);
   assert.equal(engageConfig({ NODE_ENV: 'test' }).store.kind, 'memory');
 });
 
-test('Upstash raw HGETALL replies become objects', () => {
-  assert.deepEqual(pairsToObject(['id', 'abc', 'createdAt', '1794930084709']), { id: 'abc', createdAt: '1794930084709' });
-  assert.equal(pairsToObject([]), null, 'a missing key');
-  assert.equal(pairsToObject(null), null);
-  assert.deepEqual(pairsToObject({ id: 'abc' }), { id: 'abc' }, 'an object passes through');
-  assert.equal(pairsToObject({}), null);
+test('the email names the thread by its title and links its page', () => {
+  const post = BLOG_SLUGS[0];
+  assert.deepEqual(threadInfo('case:oxgym', 'en'), { title: CASE_STUDIES.oxgym.name, path: '/case-study/oxgym' });
+  assert.deepEqual(threadInfo(`post:${post}`, 'ar'), { title: BLOG_POSTS[post].ar.title, path: `/ar/blog/${post}` });
+  assert.deepEqual(threadInfo(`post:${post}`, 'en'), { title: BLOG_POSTS[post].en.title, path: `/blog/${post}` });
+  assert.equal(threadInfo('teach:cst', 'en').path, '/teaching');
+  assert.ok(threadInfo('teach:cst', 'ar').title.includes('CST'));
+  const { subject } = buildEmail(KEYS, { id: 'abc12345xyz', target: 'case:oxgym', name: 'اختبار من Claude', text: 'x' }, threadInfo('case:oxgym', 'ar'));
+  assert.equal(subject, `New comment from اختبار من Claude on ${CASE_STUDIES.oxgym.name}`);
+});
+
+test('the summary follows every real change, and nothing else', async () => {
+  const c = config();
+  const summary = async () => (await getSummary(c)).oxgym ?? {};
+  const like = (on, visitorId = 'v1', ipHash = 'ip') => react(c, { target: 'case:oxgym', key: 'like', on, visitorId, ipHash });
+  assert.deepEqual(await summary(), {}, 'empty');
+  await like(true);
+  await like(true); // the same voter again: no change
+  assert.deepEqual(await summary(), { like: 1 });
+  await like(false);
+  await like(false); // already off: no change
+  assert.deepEqual(await summary(), {});
+  await like(true);
+  await like(true, 'v2');
+  assert.deepEqual(await summary(), { like: 2 });
+
+  const token = signFormToken(KEYS, 'case:oxgym', Date.now() - 5000);
+  const first = await submitComment(c, { target: 'case:oxgym', name: 'Sara', text: 'Nice work', token, ipHash: 'ip' });
+  const second = await submitComment(c, { target: 'case:oxgym', name: 'Omar', text: 'Agreed', token, ipHash: 'ip' });
+  assert.equal((await summary()).comments, undefined, 'pending comments are not counted');
+  await moderate(c, 'approve', first.comment.id);
+  await moderate(c, 'approve', first.comment.id); // approving twice counts once
+  assert.equal((await summary()).comments, 1);
+  await moderate(c, 'delete', second.comment.id); // a pending one: no change
+  assert.equal((await summary()).comments, 1);
+  await moderate(c, 'delete', first.comment.id); // an approved one
+  assert.equal((await summary()).comments, undefined);
+  // Only case studies are summarised.
+  await react(c, { target: `post:${BLOG_SLUGS[0]}`, key: 'fire', on: true, visitorId: 'v1', ipHash: 'ip' });
+  assert.deepEqual(Object.keys(await getSummary(c)), ['oxgym']);
+});
+
+test('the SQL store sends every value as a parameter', async () => {
+  // A stand-in for Neon's `sql` tag: records each query's text and values,
+  // and answers with rows shaped like Postgres (counts as numbers, bigint
+  // created_at as strings).
+  const queries = [];
+  const answer = (text) => {
+    if (/RETURNING count/.test(text)) return [{ count: 1 }];
+    if (/AS ok/.test(text)) return [{ ok: true }];
+    if (/RETURNING 1 AS done/.test(text)) return [{ done: 1 }];
+    if (/json_object_agg/.test(text)) return [{ reactions: { like: 2 }, total: 1 }];
+    if (/count\(\*\)::int AS n FROM engage_reactions/.test(text)) return [{ n: 3 }];
+    if (/UNION ALL/.test(text)) return [{ target: 'case:oxgym', key: 'like', count: 2 }];
+    if (/FROM engage_comments/.test(text) || /RETURNING id/.test(text)) {
+      return [{ id: 'abc12345xyz', target: 'case:oxgym', name: 'Sara', text: 'Hi', status: 'approved', ip_hash: 'h', lang: 'ar', created_at: '1794930084709' }];
+    }
+    return [];
+  };
+  const sql = (strings, ...values) => {
+    const query = { text: strings.join('$?'), values };
+    queries.push(query);
+    return { query, then: (resolve, reject) => Promise.resolve(answer(query.text)).then(resolve, reject) };
+  };
+  sql.transaction = async (list) => list.map(({ query }) => answer(query.text));
+  const store = createSqlStore({ sql });
+
+  const evil = "x'); DROP TABLE engage_comments; --";
+  assert.deepEqual(await store.react(`case:${evil}`, evil, evil, true), { changed: true, count: 3 });
+  assert.equal(await store.admitVoter(evil, evil, evil, 10, 86400), true);
+  assert.equal(await store.hit(evil, 3600), 1);
+  const thread = await store.thread(evil, 20, 20);
+  assert.deepEqual(thread.reactions, { like: 2 });
+  assert.equal(thread.comments[0].createdAt, 1794930084709, 'bigint read back as a number');
+  assert.equal(thread.comments[0].ipHash, 'h');
+  assert.deepEqual(await store.summary(), [{ target: 'case:oxgym', key: 'like', count: 2 }]);
+  assert.equal(await store.insertComment({ id: evil, target: evil, name: evil, text: evil, status: 'pending', ipHash: evil, lang: 'en', createdAt: 1 }, 500), true);
+  assert.equal((await store.getComment(evil)).lang, 'ar');
+  assert.equal((await store.approve(evil)).id, 'abc12345xyz');
+  assert.equal((await store.remove(evil)).target, 'case:oxgym');
+  assert.equal((await store.list('pending', 5)).length, 1);
+
+  assert.ok(queries.length > 10);
+  for (const { text, values } of queries) {
+    assert.ok(!text.includes('DROP TABLE'), `nothing interpolated into: ${text.slice(0, 60)}`);
+    assert.ok(!/engage_comments; --/.test(text));
+    for (const value of values) assert.ok(['string', 'number', 'boolean'].includes(typeof value), 'only plain values travel');
+  }
+  assert.ok(queries.some(({ values }) => values.includes(evil)), 'the hostile value went as a parameter');
+  assert.ok(queries.some(({ text }) => /CREATE TABLE IF NOT EXISTS engage_comments/.test(text)), 'the tables are created on first use');
+  assert.equal(queries.filter(({ text }) => /CREATE TABLE IF NOT EXISTS engage_comments/.test(text)).length, 1, 'once per process');
 });

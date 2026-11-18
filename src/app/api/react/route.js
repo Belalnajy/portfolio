@@ -4,6 +4,8 @@ import { guarded, ipHashOf, json, off, readJson, sameOrigin } from '../../../lib
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
+// Neon's free plan wakes from idle in up to a few seconds: room for that.
+export const maxDuration = 30;
 
 /**
  * POST /api/react {target, emoji, on, visitor}: `emoji` is a reaction key

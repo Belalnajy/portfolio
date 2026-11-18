@@ -1,24 +1,21 @@
-import { CASE_STUDY_SLUGS } from '../case-studies.js';
-import { BLOG_SLUGS } from '../blog.js';
+import { CASE_STUDIES, CASE_STUDY_SLUGS } from '../case-studies.js';
+import { BLOG_POSTS, BLOG_SLUGS } from '../blog.js';
+import en from '../../locales/en.js';
+import ar from '../../locales/ar.js';
 import { COURSES, TEACHING_PUBLIC } from '../teaching.js';
 import { LIMITS, REACTION_KEYS, caseTarget, postTarget, teachTarget } from './shared.js';
 import { validateComment, isReactionKey } from './validate.js';
 import { deriveKeys, formTokenAge, newCommentId, voterKey } from './crypto.js';
-import { getStore, redisEnv } from './store.js';
+import { getStore, databaseUrl } from './store.js';
 
 /**
  * Reactions and comments, server side. Everything here works on a store
- * (src/lib/engage/store.js) and keys derived from the secret, both passed in, so the unit tests
- * run it on the memory store.
+ * (src/lib/engage/store.js: Postgres, or memory in development and tests)
+ * and on keys derived from the secret, both passed in, so the unit tests run
+ * it on the memory store.
  *
- * Keys (all under `eng:`):
- *   r:<target>:<reaction>  set of voter keys     (count = size)
- *   c:<id>                 hash: one comment
- *   a:<target>             sorted set of approved comment ids, by time
- *   pending                sorted set of pending comment ids, by time
- *   recent                 sorted set of approved comment ids, all targets
- *   ri:<target>:<ip hash>  set of voters one connection added today
- *   rl:<kind>:<who>        hourly rate-limit counter (who: IP hash, or `all`)
+ * Rate-limit buckets (engage_limits): `rl:<kind>:<ip hash>` per connection
+ * and `rl:email:all` for the whole site, each an hourly window.
  */
 
 /**
@@ -39,29 +36,19 @@ export const PENDING_MAX = 500;
 const HOUR = 3600;
 const DAY = 86400;
 
-const K = {
-  reaction: (target, key) => `eng:r:${target}:${key}`,
-  voters: (target, ipHash) => `eng:ri:${target}:${ipHash}`,
-  comment: (id) => `eng:c:${id}`,
-  approved: (target) => `eng:a:${target}`,
-  pending: 'eng:pending',
-  recent: 'eng:recent',
-  rate: (kind, who) => `eng:rl:${kind}:${who}`,
-};
-
 /** Stands in for COMMENTS_SECRET in `next dev` and the tests, never next to real storage. */
 export const DEV_SECRET = 'development-only-comments-secret';
 
 /**
  * The feature's configuration for this environment, or null when it is off.
- * Off in a production build without Redis; off wherever Redis is configured
- * without a COMMENTS_SECRET (the development secret is never used next to
- * real data); off with a secret shorter than 16 characters.
+ * Off in a production build without a database URL; off wherever a database
+ * is configured without a COMMENTS_SECRET (the development secret is never
+ * used next to real data); off with a secret shorter than 16 characters.
  */
 export const engageConfig = (env = process.env) => {
   const store = getStore(env);
   if (!store) return null;
-  const secret = env.COMMENTS_SECRET || (redisEnv(env) || env.NODE_ENV === 'production' ? '' : DEV_SECRET);
+  const secret = env.COMMENTS_SECRET || (databaseUrl(env) || env.NODE_ENV === 'production' ? '' : DEV_SECRET);
   if (secret.length < 16) return null;
   return {
     store,
@@ -73,8 +60,7 @@ export const engageConfig = (env = process.env) => {
 };
 
 /** Counts one action against an hourly budget; true when over it. */
-export const overLimit = async (store, kind, who) =>
-  (await store.incrWindow(K.rate(kind, who), HOUR)) > RATE_LIMITS[kind];
+export const overLimit = async (store, kind, who) => (await store.hit(`rl:${kind}:${who}`, HOUR)) > RATE_LIMITS[kind];
 
 /** One email more this hour, site-wide; false once the hour's budget is spent. */
 export const emailAllowed = async (store) => !(await overLimit(store, 'email', 'all'));
@@ -87,18 +73,14 @@ const publicComment = (c) => ({ id: c.id, name: c.name, text: c.text, createdAt:
  * CDN; each browser remembers its own reactions.
  */
 export const getThread = async ({ store }, { target, page = 1 }) => {
-  const reactions = Object.fromEntries(
-    await Promise.all(REACTION_KEYS.map(async (key) => [key, { count: Number(await store.scard(K.reaction(target, key))) }])),
-  );
-  const total = Number(await store.zcard(K.approved(target)));
-  const pages = Math.max(1, Math.ceil(total / LIMITS.pageSize));
-  const current = Math.min(Math.max(1, Math.floor(Number(page)) || 1), pages);
-  const start = (current - 1) * LIMITS.pageSize;
-  const ids = await store.zrevrange(K.approved(target), start, start + LIMITS.pageSize - 1);
-  const comments = (await Promise.all(ids.map((id) => store.hgetall(K.comment(id)))))
-    .filter((c) => c && c.status === 'approved')
-    .map(publicComment);
-  return { reactions, comments, total, page: current, pages };
+  const wanted = Math.max(1, Math.floor(Number(page)) || 1);
+  let result = await store.thread(target, (wanted - 1) * LIMITS.pageSize, LIMITS.pageSize);
+  const pages = Math.max(1, Math.ceil(result.total / LIMITS.pageSize));
+  const current = Math.min(wanted, pages);
+  // Past the end (the thread shrank): the last page instead.
+  if (current !== wanted) result = await store.thread(target, (current - 1) * LIMITS.pageSize, LIMITS.pageSize);
+  const reactions = Object.fromEntries(REACTION_KEYS.map((key) => [key, { count: Number(result.reactions[key] ?? 0) }]));
+  return { reactions, comments: result.comments.map(publicComment), total: result.total, page: current, pages };
 };
 
 /**
@@ -111,24 +93,12 @@ export const getThread = async ({ store }, { target, page = 1 }) => {
 export const react = async ({ store, keys }, { target, key, on, visitorId, ipHash }) => {
   if (!isTarget(target) || !isReactionKey(key) || typeof on !== 'boolean' || !visitorId) return { error: 'invalid' };
   if (await overLimit(store, 'react', ipHash)) return { error: 'rate' };
-  const setKey = K.reaction(target, key);
   const voter = voterKey(keys, visitorId);
-  if (on) {
-    // Add first, then count, then back out: a burst of parallel requests
-    // cannot all pass a check-then-add.
-    const seen = K.voters(target, ipHash);
-    if (Number(await store.sadd(seen, voter))) {
-      await store.expire(seen, DAY);
-      if (Number(await store.scard(seen)) > VOTERS_PER_NETWORK) {
-        await store.srem(seen, voter);
-        return { error: 'rate' };
-      }
-    }
-    await store.sadd(setKey, voter);
-  } else {
-    await store.srem(setKey, voter);
-  }
-  return { ok: true, count: Number(await store.scard(setKey)), mine: on };
+  // A network may bring at most VOTERS_PER_NETWORK new voters to a thread a
+  // day (checked and recorded in one locked step: no burst overshoot).
+  if (on && !(await store.admitVoter(target, ipHash, voter, VOTERS_PER_NETWORK, DAY))) return { error: 'rate' };
+  const { count } = await store.react(target, key, voter, on);
+  return { ok: true, count, mine: on };
 };
 
 /**
@@ -137,56 +107,71 @@ export const react = async ({ store, keys }, { target, key, on, visitorId, ipHas
  * LIMITS.minFormMs after the token was issued, is "accepted" and dropped.
  * Returns { ok, comment } (comment only when one was stored) or { error }.
  */
-export const submitComment = async ({ store, keys }, { target, name, text, website, token, ipHash, now = Date.now() }) => {
+export const submitComment = async ({ store, keys }, { target, name, text, website, token, ipHash, lang, now = Date.now() }) => {
   if (!isTarget(target)) return { error: 'invalid' };
   const age = formTokenAge(keys, target, token, now);
   if (website || age === null || age < LIMITS.minFormMs || age > DAY * 1000) return { ok: true, dropped: true };
   const checked = validateComment({ name, text });
   if (!checked.ok) return { error: checked.error };
   if (await overLimit(store, 'comment', ipHash)) return { error: 'rate' };
-  if (Number(await store.zcard(K.pending)) >= PENDING_MAX) return { error: 'rate' };
   const comment = {
     id: newCommentId(),
     target,
     name: checked.name,
     text: checked.text,
-    createdAt: String(now),
+    createdAt: now,
     status: 'pending',
     ipHash,
+    // The language of the page it was written on, for the link in the email.
+    lang: lang === 'ar' ? 'ar' : 'en',
   };
-  await store.hset(K.comment(comment.id), comment);
-  await store.zadd(K.pending, now, comment.id);
+  // Refused once PENDING_MAX comments are waiting.
+  if (!(await store.insertComment(comment, PENDING_MAX))) return { error: 'rate' };
   return { ok: true, comment };
 };
 
 /** Approves or deletes a comment. Returns the comment as it was, or null when there is none. */
 export const moderate = async ({ store }, action, id) => {
   if (typeof id !== 'string' || !/^[\w-]{8,32}$/.test(id)) return null;
-  const comment = await store.hgetall(K.comment(id));
-  if (!comment) return null;
-  const at = Number(comment.createdAt);
-  if (action === 'approve') {
-    if (comment.status !== 'approved') {
-      await store.hset(K.comment(id), { status: 'approved' });
-      await store.zrem(K.pending, id);
-      await store.zadd(K.approved(comment.target), at, id);
-      await store.zadd(K.recent, at, id);
-    }
-    return comment;
-  }
-  if (action === 'delete') {
-    await store.zrem(K.pending, id);
-    await store.zrem(K.approved(comment.target), id);
-    await store.zrem(K.recent, id);
-    await store.del(K.comment(id));
-    return comment;
-  }
+  if (action === 'approve') return store.approve(id);
+  if (action === 'delete') return store.remove(id);
   return null;
 };
 
-const list = async (store, key, limit) => {
-  const ids = await store.zrevrange(key, 0, limit - 1);
-  return (await Promise.all(ids.map((id) => store.hgetall(K.comment(id))))).filter(Boolean);
+export const listPending = ({ store }, limit = 100) => store.list('pending', limit);
+export const listRecent = ({ store }, limit = 30) => store.list('approved', limit);
+
+/**
+ * Reaction and approved-comment counts for every case study, for the
+ * project lists: { [slug]: { like, love, fire, clap, idea, comments } },
+ * only for case studies with something to show. One query.
+ */
+export const getSummary = async ({ store }) => {
+  const threads = {};
+  for (const { target, key, count } of await store.summary()) {
+    const slug = target.slice('case:'.length);
+    if (!target.startsWith('case:') || !CASE_STUDY_SLUGS.includes(slug)) continue;
+    if (key !== 'comments' && !REACTION_KEYS.includes(key)) continue;
+    if (count > 0) (threads[slug] ??= {})[key] = count;
+  }
+  return threads;
 };
-export const listPending = ({ store }, limit = 100) => list(store, K.pending, limit);
-export const listRecent = ({ store }, limit = 30) => list(store, K.recent, limit);
+
+/**
+ * What a thread is, for the notification email: the human title (the
+ * project's name, the article's or course's title in the page's language)
+ * and the public path of its page, with /ar for an Arabic page.
+ */
+export const threadInfo = (target, lang = 'en') => {
+  const [kind, id] = String(target).split(':');
+  const arabic = lang === 'ar';
+  const prefix = arabic ? '/ar' : '';
+  if (kind === 'case' && CASE_STUDIES[id]) return { title: CASE_STUDIES[id].name, path: `${prefix}/case-study/${id}` };
+  if (kind === 'post' && BLOG_POSTS[id]) return { title: BLOG_POSTS[id][arabic ? 'ar' : 'en']?.title ?? BLOG_POSTS[id].en.title, path: `${prefix}/blog/${id}` };
+  if (kind === 'teach') {
+    const course = (arabic ? ar : en).translation.teaching?.courses?.[id]?.title;
+    if (course) return { title: course, path: `${prefix}/teaching` };
+  }
+  return { title: String(target), path: prefix || '/' };
+};
+

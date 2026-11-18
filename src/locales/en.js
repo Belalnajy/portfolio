@@ -1194,6 +1194,7 @@ const en = {
       engage: {
         title: 'Reactions and comments',
         reactions_label: 'React to this',
+        add_reaction: 'Add your reaction',
         reactions: {
           like: 'Like',
           love: 'Love',
@@ -1240,7 +1241,7 @@ const en = {
           },
           {
             heading: 'Reactions and comments',
-            body: 'Some pages, such as case studies and articles, have a reactions and comments block, with no account. The first time you react, your browser saves a random anonymous id in localStorage, along with your reactions on this device, so the same reaction is not counted twice; the server stores the reaction against a keyed hash of that id. When you comment, I store the name you give, your comment, the date and a keyed hash of your IP address (for IPv6, of its network). That hash, also used to limit reactions from one connection, only serves to stop spam and floods of messages; your IP address itself is never stored. I see every comment first: nothing appears until I approve it, and I get an email for each one. The data is kept in an Upstash Redis database. To have a comment of yours removed, email me at the address below.'
+            body: 'Some pages, such as case studies and articles, have a reactions and comments block, with no account. The first time you react, your browser saves a random anonymous id in localStorage, along with your reactions on this device, so the same reaction is not counted twice; the server stores the reaction against a keyed hash of that id. When you comment, I store the name you give, your comment, the date and a keyed hash of your IP address (for IPv6, of its network). That hash, also used to limit reactions from one connection, only serves to stop spam and floods of messages; your IP address itself is never stored. I see every comment first: nothing appears until I approve it, and I get an email for each one. The data is kept in a Neon Postgres database. To have a comment of yours removed, email me at the address below.'
           },
           {
             heading: 'Analytics',

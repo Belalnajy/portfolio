@@ -79,8 +79,26 @@ const PUBLIC_ASSET_CACHE = [
 ];
 
 /** @type {import('next').NextConfig} */
+/**
+ * Whether reactions and comments can be on in this build, inlined for the
+ * browser as NEXT_PUBLIC_ENGAGE ("1" or ""). It only says whether the
+ * feature is configured, never a value: a database URL and a
+ * COMMENTS_SECRET of 16+ characters (the same rule as engageConfig), or any
+ * non-production build (memory store). The project lists use it to reserve
+ * the reaction strip's row in the prerendered HTML, so the strip fills in
+ * without moving anything; with it off they render nothing at all.
+ */
+const ENGAGE_CONFIGURED =
+  !isProduction ||
+  Boolean(
+    (process.env.DATABASE_URL || process.env.POSTGRES_URL) && (process.env.COMMENTS_SECRET ?? '').length >= 16,
+  );
+
 const nextConfig = {
   reactStrictMode: true,
+  env: {
+    NEXT_PUBLIC_ENGAGE: ENGAGE_CONFIGURED ? '1' : '',
+  },
   poweredByHeader: false,
   experimental: {
     // One prerendered 404 for the whole app; see src/app/global-not-found.jsx.

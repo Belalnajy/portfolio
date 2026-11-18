@@ -136,3 +136,59 @@ test('a comment waits for approval, then shows as plain text', { skip }, async (
   assert.ok(approved, 'listed on /admin/comments');
   assert.deepEqual(shown, { images: 0, xss: false }, 'the markup in the comment is text, not an element');
 });
+
+test('a reaction from a /work row is the same reaction on the case study', { skip }, async () => {
+  const SLUG = 'toyo228';
+  const context = await browser.createBrowserContext();
+  const page = await context.newPage();
+  await page.setViewport({ width: 1440, height: 900 });
+  await page.goto(`${BASE}/work`, { waitUntil: 'networkidle2' });
+  // The row's strip: the article that links to the case study.
+  const strip = `article:has(a[href="/case-study/${SLUG}"]) [aria-expanded]`;
+  await page.$eval(strip, (el) => el.scrollIntoView({ block: 'center' }));
+  // The counts have arrived when the comments link shows.
+  await page.waitForSelector(`article:has(a[href="/case-study/${SLUG}"]) a[href="/case-study/${SLUG}#comments"]`, { timeout: 15000 });
+
+  // The picker is a disclosure: it opens, Escape closes it, focus comes back.
+  await page.click(strip);
+  const opened = await page.$eval(strip, (trigger) => ({
+    expanded: trigger.getAttribute('aria-expanded'),
+    picker: Boolean(document.getElementById(trigger.getAttribute('aria-controls'))),
+    focusInside: Boolean(document.activeElement.closest(`#${CSS.escape(trigger.getAttribute('aria-controls'))}`)),
+  }));
+  await page.keyboard.press('Escape');
+  await settle(200);
+  const closed = await page.$eval(strip, (trigger) => ({
+    expanded: trigger.getAttribute('aria-expanded'),
+    picker: Boolean(document.getElementById(trigger.getAttribute('aria-controls'))),
+    focusOnTrigger: document.activeElement === trigger,
+  }));
+
+  // Fire, from the picker.
+  await page.click(strip);
+  await page.$eval(strip, (trigger) => {
+    const picker = document.getElementById(trigger.getAttribute('aria-controls'));
+    [...picker.querySelectorAll('button')].find((b) => b.getAttribute('aria-label').startsWith('Fire')).click();
+  });
+  await settle(1200);
+  const onCard = await page.$eval(`article:has(a[href="/case-study/${SLUG}"])`, (article) => {
+    const pill = [...article.querySelectorAll('button[aria-pressed]')].find((b) => b.getAttribute('aria-label').startsWith('Fire'));
+    return pill && { pressed: pill.getAttribute('aria-pressed'), label: pill.getAttribute('aria-label') };
+  });
+
+  await page.goto(`${BASE}/case-study/${SLUG}`, { waitUntil: 'networkidle2' });
+  await page.evaluate(() => window.scrollTo(0, document.body.scrollHeight));
+  await page.waitForSelector(`section[data-engage="case:${SLUG}"]`, { timeout: 15000 });
+  const onPage = await page.evaluate((slug) => {
+    const button = [...document.querySelectorAll(`section[data-engage="case:${slug}"] [role=group] button`)].find((b) =>
+      b.getAttribute('aria-label').startsWith('Fire'),
+    );
+    return { pressed: button.getAttribute('aria-pressed'), label: button.getAttribute('aria-label') };
+  }, SLUG);
+  await context.close();
+
+  assert.deepEqual(opened, { expanded: 'true', picker: true, focusInside: true });
+  assert.deepEqual(closed, { expanded: 'false', picker: false, focusOnTrigger: true });
+  assert.equal(onCard?.pressed, 'true', 'the row shows the reaction');
+  assert.deepEqual(onPage, onCard, 'the case study shows the same reaction and count');
+});

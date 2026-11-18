@@ -96,6 +96,7 @@ import DeviceFrame, { frameKind, hostOf } from './DeviceFrame';
 import { asArray } from '../lib/as-array';
 import ProjectKindLabel from './ProjectKindLabel';
 import SectionHeading from './SectionHeading';
+import ProjectReactions from './engage/ProjectReactions';
 
 // Every technology in the registry has a mark here: a brand icon where one
 // exists, otherwise a plain glyph for what it is (an upload, a payment, a
@@ -417,6 +418,9 @@ const ProjectCard = ({ project, index, onClick, headingAs: CardHeading = 'h3' })
           </span>
         )}
       </div>
+      {/* Reactions in their own quiet row, above the card's stretched title
+          link (z-40). The card clips its overflow, so the picker opens up. */}
+      <ProjectReactions slug={project.slug} className="mt-3" />
     </div>
   </Reveal>
 );
@@ -427,7 +431,7 @@ const ProjectCard = ({ project, index, onClick, headingAs: CardHeading = 'h3' })
  * (see secondaryLink). The archive and any filtered view keep the denser
  * card grid.
  */
-const FeaturedRow = ({ project, index, isArabic, headingAs: RowHeading = 'h3', eager = false, rise = false, clamp = false }) => {
+const FeaturedRow = ({ project, index, isArabic, headingAs: RowHeading = 'h3', eager = false, rise = false, clamp = false, waitForScroll = false }) => {
   const { t } = useTranslation();
   const flip = index % 2 === 1;
   const caseStudyHref = `${isArabic ? '/ar' : ''}${project.caseStudy}`;
@@ -500,6 +504,8 @@ const FeaturedRow = ({ project, index, isArabic, headingAs: RowHeading = 'h3', e
             <TechMark key={tech} tech={tech} />
           ))}
         </div>
+        {/* Reactions: a quiet row of their own, not a third route out. */}
+        <ProjectReactions slug={project.slug} waitForScroll={waitForScroll} className="-mt-3 mb-4 max-md:-mt-2" />
         {/* Two routes out. On phones they are an equal-width pair, the case
             study filled as the primary. */}
         <div className={`flex flex-wrap gap-3 max-md:grid ${secondary ? 'max-md:grid-cols-2' : 'max-md:grid-cols-1'}`}>
@@ -851,6 +857,8 @@ const Projects = ({ variant = 'full' }) => {
                 // The home page is a preview: three lines of description on
                 // a phone; /work gives the whole paragraph.
                 clamp={isHome}
+                // The home page asks for reaction counts only after a scroll.
+                waitForScroll={isHome}
                 // On /work the first screen is the page's LCP element (measured
                 // at 390 and 1440), so it alone is preloaded and rises
                 // in without a fade. On the home page it is not: the hero

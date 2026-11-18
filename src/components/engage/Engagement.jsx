@@ -3,7 +3,7 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { REACTIONS, LIMITS } from '../../lib/engage/shared';
 import { validateComment } from '../../lib/engage/validate';
-import { ago, displayCount, mergeComments } from '../../lib/engage/client';
+import { ago, displayCount, mergeComments, postJson, readMine, sendReaction } from '../../lib/engage/client';
 
 /**
  * Reactions and comments for one thread (`target`: case:<slug>,
@@ -24,51 +24,6 @@ import { ago, displayCount, mergeComments } from '../../lib/engage/client';
  * `white-space: pre-line`: nothing a visitor types is parsed as HTML or
  * turned into a link.
  */
-
-const VISITOR_KEY = 'engage-visitor';
-const MINE_KEY = 'engage-mine';
-let sessionVisitor = '';
-let sessionMine = {};
-
-/** An anonymous id for this browser, created on its first reaction. */
-const visitorId = () => {
-  const fresh = () => (crypto.randomUUID ? crypto.randomUUID() : `${Date.now().toString(16)}-${Math.random().toString(16).slice(2)}`);
-  try {
-    let id = localStorage.getItem(VISITOR_KEY);
-    if (!id) {
-      id = fresh();
-      localStorage.setItem(VISITOR_KEY, id);
-    }
-    return id;
-  } catch {
-    sessionVisitor ||= fresh();
-    return sessionVisitor;
-  }
-};
-
-/** This browser's reactions: { [target]: { [key]: true } }. */
-const readMine = () => {
-  try {
-    return JSON.parse(localStorage.getItem(MINE_KEY) ?? '{}') ?? {};
-  } catch {
-    return sessionMine;
-  }
-};
-const writeMine = (target, key, on) => {
-  const all = readMine();
-  const forTarget = { ...(all[target] ?? {}) };
-  if (on) forTarget[key] = true;
-  else delete forTarget[key];
-  const next = { ...all, [target]: forTarget };
-  try {
-    localStorage.setItem(MINE_KEY, JSON.stringify(next));
-  } catch {
-    sessionMine = next;
-  }
-};
-
-const postJson = (url, body) =>
-  fetch(url, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) });
 
 const When = ({ ms }) => {
   const { t, i18n } = useTranslation();
@@ -101,10 +56,7 @@ const ReactionBar = ({ target, reactions, setReactions }) => {
     setReactions((all) => ({ ...all, [key]: { mine: on, count: Math.max(0, before.count + (on ? 1 : -1)) } }));
     setNotice('');
     try {
-      const response = await postJson('/api/react', { target, emoji: key, on, visitor: visitorId() });
-      if (!response.ok) throw new Error(String(response.status));
-      const result = await response.json();
-      writeMine(target, key, result.mine);
+      const result = await sendReaction(target, key, on);
       setReactions((all) => ({ ...all, [key]: { mine: result.mine, count: result.count } }));
     } catch {
       setReactions((all) => ({ ...all, [key]: before }));
@@ -163,7 +115,7 @@ const CommentList = ({ comments }) => (
 );
 
 const CommentForm = ({ target }) => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const [name, setName] = useState('');
   const [text, setText] = useState('');
   const [state, setState] = useState({ status: 'idle', error: '' });
@@ -205,6 +157,7 @@ const CommentForm = ({ target }) => {
         text: checked.text,
         website: form.elements.website?.value ?? '',
         token: await getToken(),
+        lang: i18n.language === 'ar' ? 'ar' : 'en',
       });
       if (response.status === 202) {
         setText('');

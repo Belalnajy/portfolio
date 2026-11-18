@@ -5,6 +5,8 @@ import { backToAdmin, sessionCookie } from '../../../../lib/engage/admin';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
+// Neon's free plan wakes from idle in up to a few seconds: room for that.
+export const maxDuration = 30;
 
 /** POST /api/admin/login (form: password). The password is COMMENTS_SECRET. */
 export async function POST(request) {

@@ -4,6 +4,8 @@ import { escapeHtml, guarded, htmlPage, off } from '../../../../lib/engage/http'
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
+// Neon's free plan wakes from idle in up to a few seconds: room for that.
+export const maxDuration = 30;
 
 const ACTIONS = new Set(['approve', 'delete']);
 

@@ -89,17 +89,18 @@ export const moderationLink = (keys, action, id) =>
  * comment with every line quoted ("> "), so nothing a visitor typed can pass
  * for a link or an instruction from the site.
  */
-export const buildEmail = (keys, comment) => {
+export const buildEmail = (keys, comment, info = { title: comment.target, path: '/' }) => {
   const oneLine = (value) => String(value).replace(/\s+/g, ' ').trim().slice(0, 60);
   const quote = (value) => String(value).split('\n').map((line) => `> ${line}`).join('\n');
   return {
-    subject: `New comment from ${oneLine(comment.name)} on ${comment.target}`,
+    subject: `New comment from ${oneLine(comment.name)} on ${oneLine(info.title)}`,
     text: [
       `Approve: ${moderationLink(keys, 'approve', comment.id)}`,
       `Delete:  ${moderationLink(keys, 'delete', comment.id)}`,
       `All pending comments: ${SITE_URL}/admin/comments`,
+      `Page: ${SITE_URL}${info.path}`,
       '',
-      `New comment on ${comment.target}, waiting for your approval. Name and text as sent:`,
+      `New comment on ${info.title} (${comment.target}), waiting for your approval. Name and text as sent:`,
       '',
       quote(comment.name),
       '',
@@ -113,9 +114,9 @@ export const buildEmail = (keys, comment) => {
  * throws: a failed email leaves the comment pending, visible on
  * /admin/comments.
  */
-export const notifyOwner = async ({ resendKey, ownerEmail, keys }, comment) => {
+export const notifyOwner = async ({ resendKey, ownerEmail, keys }, comment, info) => {
   if (!resendKey) return false;
-  const { subject, text } = buildEmail(keys, comment);
+  const { subject, text } = buildEmail(keys, comment, info);
   try {
     const response = await fetch('https://api.resend.com/emails', {
       method: 'POST',

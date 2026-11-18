@@ -253,6 +253,13 @@ test('the comments API is off cleanly, or refuses bad input, and never fails wit
 
   const expect = (status, onStatus, label) => assert.equal(status, on ? onStatus : 503, label);
   expect((await get('/api/engage?target=case:no-such-project')).status, 400, 'unknown target');
+  const summary = await get('/api/engage/summary');
+  expect(summary.status, 200, 'the project-list summary');
+  if (on) {
+    assert.equal(JSON.parse(summary.body).enabled, true);
+    assert.equal(summary.headers.get('cache-control'), 'public, max-age=0, must-revalidate');
+  }
+  expect((await get('/api/engage/summary?x=1')).status, 400, 'the summary takes no parameters');
   expect((await get('/api/comment?target=case:no-such-project')).status, 400, 'no form token for an unknown thread');
   const post = (path, body, type = 'application/json') =>
     fetch(`${BASE}${path}`, { method: 'POST', headers: { 'Content-Type': type }, body }).then((res) => res.status);
